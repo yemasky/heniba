@@ -8,7 +8,7 @@ define('__CLOSE_WEB', false);
 define('__WEB_KEY','localhost');
 define('__KEY','xyzABcdeee12345');
 define('__WEB','http://localhost/izhizu/www/');
-define('__RESOURCE','http://localhost/heniba/resource/');
+define('__RESOURCE','http://localhost/xx/trunk/resource/');
 define('__BBS','http://localhost/izhizu/www/bbs/');
 define('__PIC','http://localhost/izhizu/www/');
 

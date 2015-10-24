@@ -249,7 +249,7 @@ h6.shortcodes-caption{
 	padding-right:5000px;
 	margin-left:-5000px;
 	margin-right:-5000px;
-	background:#274472;
+	background:#FFF;
 	color:#e2eaf2;
 	height:130px;
 	padding-top:17px;
@@ -512,7 +512,7 @@ h6.shortcodes-caption{
 	left:0;
 	right:0;
 	bottom:0;
-	border-top:1px solid #fff;
+	border-top:1px solid #dee0e5;
 	border-bottom:1px solid #dee0e5;
 	z-index:0;
 }
@@ -563,6 +563,7 @@ h6.shortcodes-caption{
 	padding:0;
 	display:table;
 	width:100%;
+	border-top: 1px solid #dee0e5;
 }
 
 #navigation ul{
