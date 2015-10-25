@@ -4442,9 +4442,9 @@ a.button.details-button:hover:after{
 .flickr-feed li img,
 #instagram-feed li img{
 	width:100%;
-	border-radius:3px;
-	-webkit-border-radius:3px;
-	-moz-border-radius:3px;
+	border-radius:35px;
+	-webkit-border-radius:35px;
+	-moz-border-radius:35px;
 }
 
 .flickr-feed li a,
@@ -4468,9 +4468,9 @@ a.button.details-button:hover:after{
 	right:3px;
 	top:3px;
 	bottom:3px;
-	border-radius:3px;
-	-webkit-border-radius:3px;
-	-moz-border-radius:3px;
+	border-radius:35px;
+	-webkit-border-radius:35px;
+	-moz-border-radius:35px;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 	filter: alpha(opacity=0);
 	-moz-opacity: 0;

@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<%include file="inc/#head.tpl"%>
-		
-		
+	<%include file="inc/#head.tpl"%>	
 	</head>
-	
 	<body class="sticky-header-on tablet-sticky-header">
-	
 	<div id="fb-root"></div>
-	<!--script>(function(d, s, id) {
+	<script>(function(d, s, id) {
 	  var js, fjs = d.getElementsByTagName(s)[0];
 	  if (d.getElementById(id)) return;
 	  js = d.createElement(s); js.id = id;
 	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
 	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script-->		
+	}(document, 'script', 'facebook-jssdk'));</script>		
 		<!-- Container -->
 		<div class="container">
-			
-			
 			<!-- Header -->
 			<header id="header" class="animate-onscroll">
 				
@@ -29,19 +23,14 @@
 					<div class="container">
 					
 					<div class="row">
-						
-						
-						
+
 						<!-- Logo -->
-						<div id="logo" class="col-lg-3 col-md-3 col-sm-3">
-							
+						<div id="logo" class="col-lg-3 col-md-3 col-sm-3">		
 							<a href="main-v1.html"><img src="<%$__RESOURCE%>img/logo.png" alt="Logo"></a>
 							
 						</div>
 						<!-- /Logo -->
-						
-						
-						
+		
 						<!-- Main Quote -->
 						<div class="col-lg-5 col-md-4 col-sm-4">
 							
@@ -785,7 +774,12 @@
 						<div class="sidebar-box white flickr-photos animate-onscroll">
 							<h3>Flickr Photos</h3>
 							<ul class="flickr-feed">
-							</ul>
+							<li><a target="_blank" href="http://www.flickr.com/photos/76745153@N04/8341985846/"><img alt="Croatia" src="data/userimg/8341985846_b56bd31d24_s.jpg"></a></li>
+							<li><a target="_blank" href="http://www.flickr.com/photos/76745153@N04/8341986486/"><img alt="Montenegro" src="data/userimg/8341986486_5bcf63f5e4_s.jpg"></a></li>
+							<li><a target="_blank" href="http://www.flickr.com/photos/76745153@N04/8341948746/"><img alt="Slovenija" src="data/userimg/8341948746_d401d8421a_s.jpg"></a></li>
+							<li><a target="_blank" href="http://www.flickr.com/photos/76745153@N04/8340889125/"><img alt="Slovenija" src="data/userimg/8341986486_5bcf63f5e4_s.jpg"></a></li>
+							<li><a target="_blank" href="http://www.flickr.com/photos/76745153@N04/8341949480/"><img alt="Slovenija" src="data/userimg/8341949480_d72679044d_s.jpg"></a></li>
+							<li><a target="_blank" href="http://www.flickr.com/photos/76745153@N04/8340890049/"><img alt="Croatia" src="data/userimg/8341949480_d72679044d_s.jpg"></a></li></ul>
 						</div>
 						<!-- /Flickr Photos -->						
 					</div>
@@ -956,8 +950,6 @@ Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi. Aenean nec eros. 
 		<!-- Chosen -->
 		<script type="text/javascript" src="<%$__RESOURCE%>js/chosen.jquery.min.js"></script>
 		
-		<!-- jFlickrFeed -->
-		<script type="text/javascript" src="<%$__RESOURCE%>js/jflickrfeed.min.js"></script>
 		
 		<!-- InstaFeed -->
 		<script type="text/javascript" src="<%$__RESOURCE%>js/instafeed.min.js"></script>
