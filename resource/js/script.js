@@ -79,7 +79,7 @@ $(document).ready(function(){
 	
 	/* Social Media Feeds */
 	
-	enableFlickrFeed(); // Flickr Feed
+	
 	
 	enableInstagramFeed(); // Instagram Feed
 	
@@ -408,29 +408,7 @@ $(document).ready(function(){
 	
 	
 	
-	
-	
-	/* Flickr Feed */
-	function enableFlickrFeed(){
 		
-		$('.flickr-feed').jflickrfeed({
-			limit: 6,
-			qstrings: {
-				id: '76745153@N04'
-			},
-			itemTemplate: 
-			'<li>' +
-				'<a href="{{link}}" target="_blank"><img src="{{image_s}}" alt="{{title}}" /></a>' +
-			'</li>'
-		});
-		
-	}
-	
-	
-	
-	
-	
-	
 	
 	/* Instagram Feed */
 	function enableInstagramFeed(){
