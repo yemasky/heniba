@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v11.27 (32 bit)
-MySQL - 5.6.17 : Database - tourzu
+SQLyog Ultimate v11.24 (32 bit)
+MySQL - 5.6.21 : Database - tourzu
 *********************************************************************
 */
 
@@ -47,7 +47,7 @@ CREATE TABLE `hotel` (
 DROP TABLE IF EXISTS `hotel_images`;
 
 CREATE TABLE `hotel_images` (
-  `hi_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `hi_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '酒店图片ID',
   `h_id` bigint(20) DEFAULT NULL COMMENT '景点地址',
   `hi_path` varchar(255) NOT NULL COMMENT '图片地址',
   `hi_add_date` datetime DEFAULT NULL COMMENT '添加时间',
@@ -61,8 +61,8 @@ CREATE TABLE `hotel_images` (
 DROP TABLE IF EXISTS `hotel_tag`;
 
 CREATE TABLE `hotel_tag` (
-  `h_id` bigint(20) NOT NULL,
-  `t_id` bigint(20) NOT NULL,
+  `h_id` bigint(20) NOT NULL COMMENT '酒店ID',
+  `t_id` bigint(20) NOT NULL COMMENT 'tag ID',
   PRIMARY KEY (`h_id`,`t_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -73,7 +73,7 @@ CREATE TABLE `hotel_tag` (
 DROP TABLE IF EXISTS `member`;
 
 CREATE TABLE `member` (
-  `m_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `m_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '会员ID',
   `m_register_date` datetime NOT NULL COMMENT '注册时间',
   `m_real_name` varchar(50) DEFAULT NULL COMMENT '真实名字',
   `m_sex` enum('男','女','') DEFAULT NULL COMMENT '性别',
@@ -89,11 +89,11 @@ CREATE TABLE `member` (
 DROP TABLE IF EXISTS `member_action`;
 
 CREATE TABLE `member_action` (
-  `ma_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `m_id` bigint(20) NOT NULL,
+  `ma_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '会员动态ID',
+  `m_id` bigint(20) NOT NULL COMMENT '会员ID',
   `ma_action` text NOT NULL COMMENT 'json数组 用户时间轴',
-  `ma_tpye` enum('发表文章') DEFAULT NULL,
-  `ma_add_date` datetime NOT NULL,
+  `ma_tpye` enum('发表文章') DEFAULT NULL COMMENT '动态类型',
+  `ma_add_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
   PRIMARY KEY (`ma_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -104,14 +104,14 @@ CREATE TABLE `member_action` (
 DROP TABLE IF EXISTS `member_images`;
 
 CREATE TABLE `member_images` (
-  `mi_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `m_id` bigint(20) NOT NULL DEFAULT '0',
+  `mi_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '会员图片ID',
+  `m_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '会员ID',
   `s_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '景点',
-  `mi_path` varchar(20) NOT NULL,
-  `mi_host` varchar(10) DEFAULT NULL,
+  `mi_path` varchar(20) NOT NULL COMMENT '路径',
+  `mi_host` varchar(10) DEFAULT NULL COMMENT '图片主机',
   `mi_title` varchar(100) DEFAULT NULL COMMENT '标题',
   `mi_describe` text COMMENT '描述',
-  `mi_add_date` timestamp NOT NULL,
+  `mi_add_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
   PRIMARY KEY (`mi_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -122,12 +122,15 @@ CREATE TABLE `member_images` (
 DROP TABLE IF EXISTS `member_login`;
 
 CREATE TABLE `member_login` (
-  `m_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `ml_mobile` char(11) DEFAULT NULL,
-  `ml_email` varchar(50) DEFAULT NULL,
-  `ml_member_name` varchar(50) DEFAULT NULL,
-  `ml_member_password` varchar(250) DEFAULT NULL,
-  `ml_member_uuid` varchar(50) DEFAULT NULL,
+  `m_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '会员ID',
+  `ml_mobile` char(11) NOT NULL COMMENT '手机号',
+  `ml_moblie_auth` enum('未认证','已认证') NOT NULL DEFAULT '未认证',
+  `ml_email` varchar(50) DEFAULT NULL COMMENT 'email',
+  `ml_email_auth` enum('已认证','未认证') NOT NULL DEFAULT '未认证',
+  `ml_member_name` varchar(50) DEFAULT NULL COMMENT '昵称',
+  `ml_member_password` varchar(250) NOT NULL COMMENT '密码',
+  `ml_member_uuid` varchar(50) NOT NULL COMMENT 'UUID',
+  `ml_add_date` datetime NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`m_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -138,13 +141,22 @@ CREATE TABLE `member_login` (
 DROP TABLE IF EXISTS `member_travel_notes`;
 
 CREATE TABLE `member_travel_notes` (
-  `mtn_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `mtnc_id` int(10) DEFAULT NULL,
-  `m_id` bigint(20) NOT NULL DEFAULT '0',
-  `mtn_title` varchar(255) NOT NULL,
-  `mtn_contents` text,
-  `mtn_add_date` datetime NOT NULL,
-  `mtn_modify_date` text COMMENT 'josn 修改时间',
+  `mtn_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '旅行日记ID',
+  `mtnc_id` int(10) DEFAULT NULL COMMENT '旅行日记类别ID',
+  `s_id` bigint(20) DEFAULT NULL COMMENT '涉及到的景点ID',
+  `m_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `mtn_travel_date_begin` datetime DEFAULT NULL COMMENT '这次旅行的开始时间',
+  `mtn_travel_date_end` datetime DEFAULT NULL COMMENT '结束时间',
+  `mtn_scenery_date_begin` datetime DEFAULT NULL COMMENT '本次景点开始时间',
+  `mtn_scenery_date_end` datetime DEFAULT NULL COMMENT '本次景点结束时间',
+  `mtn_title` varchar(255) NOT NULL COMMENT '标题',
+  `mtn_contents` text COMMENT '内容',
+  `mtn_add_date` datetime NOT NULL COMMENT '添加时间',
+  `mtn_modify_date` text COMMENT 'json 修改时间',
+  `h_id` bigint(20) DEFAULT NULL COMMENT '所住的酒店',
+  `mtn_hotel_describe` text COMMENT '及所住的酒店的描述评价等',
+  `mtn_traffic` text COMMENT '交通',
+  `mtn_active` enum('0','1') DEFAULT NULL COMMENT '是否发表0草稿 1发表',
   PRIMARY KEY (`mtn_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -169,14 +181,41 @@ CREATE TABLE `member_travel_notes_class` (
 DROP TABLE IF EXISTS `member_travel_notes_images`;
 
 CREATE TABLE `member_travel_notes_images` (
-  `mtni_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `m_id` bigint(20) DEFAULT NULL,
-  `mi_id` varchar(20) NOT NULL,
-  `mi_add_date` timestamp NOT NULL,
+  `mtni_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '旅行日记图片ID',
+  `mtn_id` bigint(20) DEFAULT NULL COMMENT '旅行日记ID',
+  `mtns_id` bigint(20) DEFAULT NULL COMMENT '旅行日记章节ID',
+  `m_id` bigint(20) DEFAULT NULL COMMENT '会员ID',
+  `mi_id` varchar(20) NOT NULL COMMENT '图片ID',
+  `mi_add_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
   PRIMARY KEY (`mtni_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Data for the table `member_travel_notes_images` */
+
+/*Table structure for table `member_travel_notes_sections` */
+
+DROP TABLE IF EXISTS `member_travel_notes_sections`;
+
+CREATE TABLE `member_travel_notes_sections` (
+  `mtns_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '旅行日记章节ID',
+  `mtn_id` bigint(20) DEFAULT NULL COMMENT '旅行日记ID',
+  `mtnc_id` int(10) DEFAULT NULL COMMENT '旅行日记类别ID',
+  `s_id` int(10) DEFAULT NULL COMMENT '涉及到的景点ID 1个章节涉及1个景点',
+  `m_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `mtn_travel_date` datetime DEFAULT NULL COMMENT '第几天',
+  `mtn_scenery_date_begin` datetime DEFAULT NULL COMMENT '本次景点开始时间',
+  `mtn_scenery_date_end` datetime DEFAULT NULL COMMENT '本次景点结束时间',
+  `mtns_title` varchar(255) NOT NULL COMMENT '章节标题',
+  `mtns_contents` text COMMENT '章节内容',
+  `mtns_add_date` datetime NOT NULL COMMENT '章节添加时间',
+  `mtns_order` tinyint(3) DEFAULT NULL COMMENT '章节顺序',
+  `mtns_modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `h_id` bigint(20) DEFAULT NULL COMMENT '所住的酒店及',
+  `mtn_hotel_describe` text COMMENT '对所住酒店的描述',
+  PRIMARY KEY (`mtns_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Data for the table `member_travel_notes_sections` */
 
 /*Table structure for table `review` */
 
@@ -277,7 +316,7 @@ DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag` (
   `t_id` int(11) NOT NULL AUTO_INCREMENT,
   `t_name` varchar(200) NOT NULL,
-  `t_add_date` timestamp NOT NULL,
+  `t_add_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`t_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
