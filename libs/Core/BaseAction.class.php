@@ -340,8 +340,8 @@ abstract class BaseAction {
 
 		} catch (Exception $e) {
 			if(__Debug) {
-				print_r($e -> getMessage());
-				print_r($e -> getTraceAsString());
+				echo($e -> getMessage());
+				echo(str_replace("\n", "\n<br>", $e -> getTraceAsString()));
 			}
 			try {
 				//错误处理

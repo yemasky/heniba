@@ -232,6 +232,7 @@ class tmhUtilities {
    */
   public static function read_password($prompt, $stars=false) {
     echo $prompt;
+    $password = $char = '';
     $style = shell_exec('stty -g');
 
     if ($stars === false) {
@@ -239,7 +240,7 @@ class tmhUtilities {
       $password = rtrim(fgets(STDIN), "\n");
     } else {
       shell_exec('stty -icanon -echo min 1 time 0');
-      $password = '';
+      
       while (true) :
         $char = fgetc(STDIN);
         if ($char === "\n") :
