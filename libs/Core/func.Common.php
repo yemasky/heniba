@@ -21,10 +21,10 @@ if (! defined ( "INC_FUNC_COMMON" )) {
 		
 		if ($strpos = strpos ( $class, '\\' ) === false) {
 			$execute_dir = 'Base/';
+			$lib_execute_dir = '';
 		} else {
-			$execute_dir = substr ( $class, $strpos );
+			$lib_execute_dir = $execute_dir = substr ( $class, $strpos );
 		}
-		$classpath = __ROOT_PATH;
 		
 		switch (substr ( $class, $loop )) {
 			case "Action" :
@@ -45,10 +45,10 @@ if (! defined ( "INC_FUNC_COMMON" )) {
 			case "Tool" :
 				$execute_dir = "process/" . $execute_dir . "tool/";
 			default :
-				$execute_dir = 'libs/';
+				$execute_dir = 'libs/' . $lib_execute_dir;
 				break;
 		}
-		$classes_file = $classpath . $execute_dir . $class . ".class.php";
+		$classes_file = __ROOT_PATH . $execute_dir . $class . ".class.php";
 		
 		if (file_exists ( $classes_file )) {
 			include_once ($classes_file);
@@ -117,54 +117,6 @@ if (! defined ( "INC_FUNC_COMMON" )) {
 			throw new Exception ( "parameter error: no the num -> " . $id );
 		}
 	}
-	
-	/*
-	 * function keyED($string, $key) {
-	 * $key_length = strlen($key);
-	 * $string_length = strlen($string);
-	 *
-	 * $rndkey = $box = array();
-	 * $result = '';
-	 *
-	 * for($i = 0; $i <= 255; $i++) {
-	 * $rndkey[$i] = ord($key[$i % $key_length]);
-	 * $box[$i] = $i;
-	 * }
-	 *
-	 * for($j = $i = 0; $i < 256; $i++) {
-	 * $j = ($j + $box[$i] + $rndkey[$i]) % 256;
-	 * $tmp = $box[$i];
-	 * $box[$i] = $box[$j];
-	 * $box[$j] = $tmp;
-	 * }
-	 *
-	 * for($a = $j = $i = 0; $i < $string_length; $i++) {
-	 * $a = ($a + 1) % 256;
-	 * $j = ($j + $box[$a]) % 256;
-	 * $tmp = $box[$a];
-	 * $box[$a] = $box[$j];
-	 * $box[$j] = $tmp;
-	 * $result .= chr(ord($string[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
-	 * }
-	 * return $result;
-	 * }
-	 *
-	 * function encode($string, $key = __WEB) {
-	 * $key = md5($key.__KEY);
-	 * $string = substr(md5($string.$key), 0, 8).$string;
-	 * return str_replace('+', ' ', base64_encode(keyED($string, $key)));
-	 * }
-	 *
-	 * function decode($string, $key = __WEB) {
-	 * $key = md5($key.__KEY);
-	 * $result = keyED(base64_decode(str_replace(' ', '+', $string)), $key);
-	 * if(substr($result, 0, 8) == substr(md5(substr($result, 8).$key), 0, 8)) {
-	 * return substr($result, 8);
-	 * } else {
-	 * return NULL;
-	 * }
-	 * }
-	 */
 	function keyED($txt, $encrypt_key) {
 		$encrypt_key = md5 ( $encrypt_key );
 		$ctr = 0;

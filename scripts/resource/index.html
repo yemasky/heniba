@@ -1,16 +1,33 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<%include file="inc/#head.tpl"%>
+<title>Home</title>
+<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- Custom Theme files -->
+<link href="css/style.css" rel='stylesheet' type='text/css' />
+<!-- Custom Theme files -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!--webfont-->
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/login.js"></script>
+<script src="js/jquery.easydropdown.js"></script>
+<!--Animation-->
+<script src="js/wow.min.js"></script>
+<link href="css/animate.css" rel='stylesheet' type='text/css' />
+<script>
+	new WOW().init();
+</script>
 </head>
 <body>
 <div class="header">
 		   <div class="header-left">
 					 <div class="logo">
-						<a href="index.html"><img src="<%$__RESOURCE%>images/logo.png" alt=""/></a>
+						<a href="index.html"><img src="images/logo.png" alt=""/></a>
 					 </div>
 					 <div class="menu">
-						  <a class="toggleMenu" href="#"><img src="<%$__RESOURCE%>images/nav.png" alt="" /></a>
+						  <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
 						    <ul class="nav" id="nav">
 						    	<li class="active"><a href="index.html">Reality</a></li>
 						    	<li><a href="living.html">Living</a></li>
@@ -19,7 +36,7 @@
 						    	<li><a href="404.html">Mobility</a></li>
 								<div class="clearfix"></div>
 							</ul>
-							<script type="text/javascript" src="<%$__RESOURCE%>js/responsive-nav.js"></script>
+							<script type="text/javascript" src="js/responsive-nav.js"></script>
 				    </div>							
 	    		    <div class="clearfix"></div>
 	    	    </div>
@@ -35,13 +52,13 @@
 							</div>
 						</div>
 						<!----search-scripts---->
-						<script src="<%$__RESOURCE%>js/classie.js"></script>
-						<script src="<%$__RESOURCE%>js/uisearch.js"></script>
+						<script src="js/classie.js"></script>
+						<script src="js/uisearch.js"></script>
 						<script>
 							new UISearch( document.getElementById( 'sb-search' ) );
 						</script>
 						<!----//search-scripts---->
-				       <div id="loginContainer"><a href="#" id="loginButton"><img src="<%$__RESOURCE%>images/login.png"><span>Login</span></a>
+				       <div id="loginContainer"><a href="#" id="loginButton"><img src="images/login.png"><span>Login</span></a>
 						    <div id="loginBox">                
 						        <form id="loginForm">
 						                <fieldset id="body">
@@ -63,10 +80,10 @@
 		                 <div class="clearfix"></div>
 	                 </div>
 	                <div class="clearfix"></div>
-</div>
-<div class="banner wow fadeInUp" data-wow-delay="0.4s">
+   </div>
+   <div class="banner wow fadeInUp" data-wow-delay="0.4s">
    	  <div class="container_wrap">
-   		<h1>那里是您向往的地方?</h1>
+   		<h1>What are you looking for?</h1>
    	       <div class="dropdown-buttons">   
             		  <div class="dropdown-button">           			
             			<select class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
@@ -159,13 +176,13 @@
    			<div class="col-md-3">
    			  <div class="grid1">
    				<div class="view view-first">
-                  <div class="index_img"><img src="<%$__RESOURCE%>images/pic1.jpg" class="img-responsive" alt=""/></div>
+                  <div class="index_img"><img src="images/pic1.jpg" class="img-responsive" alt=""/></div>
    				    <div class="sale">$2.980</div>
    			          <div class="mask">
                         <div class="info"><i class="search"> </i> Show More</div>
                         <ul class="mask_img">
-                        	<li class="star"><img src="<%$__RESOURCE%>images/star.png" alt=""/></li>
-                        	<li class="set"><img src="<%$__RESOURCE%>images/set.png" alt=""/></li>
+                        	<li class="star"><img src="images/star.png" alt=""/></li>
+                        	<li class="set"><img src="images/set.png" alt=""/></li>
                         	<div class="clearfix"> </div>
                         </ul>
                        </div>
@@ -175,7 +192,7 @@
    				 	<h3>2 bedroom house for rent in Dubai</h3>
    				 	<ul class="star1">
    				 	  <h4 class="green">Vision Agency</h4>
-   				 	  <li><a href="#"> <img src="<%$__RESOURCE%>images/star1.png" alt="">(236)</a></li>
+   				 	  <li><a href="#"> <img src="images/star1.png" alt="">(236)</a></li>
    				 	</ul>
    				 </div>
    			   </div>
@@ -183,12 +200,12 @@
    			<div class="col-md-3">
    			  <div class="grid1">
    				<div class="view view-first">
-                  <div class="index_img1"><img src="<%$__RESOURCE%>images/pic6.jpg" class="img-responsive" alt=""/></div>
+                  <div class="index_img1"><img src="images/pic6.jpg" class="img-responsive" alt=""/></div>
    				     <div class="mask">
                         <div class="info"><i class="search"> </i> Show More</div>
                         <ul class="mask_img">
-                        	<li class="star"><img src="<%$__RESOURCE%>images/star.png" alt=""/></li>
-                        	<li class="set"><img src="<%$__RESOURCE%>images/set.png" alt=""/></li>
+                        	<li class="star"><img src="images/star.png" alt=""/></li>
+                        	<li class="set"><img src="images/set.png" alt=""/></li>
                         	<div class="clearfix"> </div>
                         </ul>
                       </div>
@@ -198,7 +215,7 @@
    				 	<h3>2 bedroom house for rent in Dubai</h3>
    				 	<ul class="star1">
    				 	  <h4 class="yellow">Vision Agency</h4>
-   				 	  <li><a href="#"> <img src="<%$__RESOURCE%>images/star2.png" alt="">(136)</a></li>
+   				 	  <li><a href="#"> <img src="images/star2.png" alt="">(136)</a></li>
    				 	</ul>
    				 </div>
    			   </div>
@@ -206,12 +223,12 @@
    			<div class="col-md-3">
    			  <div class="grid1">
    				<div class="view view-first">
-                  <div class="index_img2"><img src="<%$__RESOURCE%>images/pic2.jpg" class="img-responsive" alt=""/></div>
+                  <div class="index_img2"><img src="images/pic2.jpg" class="img-responsive" alt=""/></div>
    				     <div class="mask">
                         <div class="info"><i class="search"> </i> Show More</div>
                         <ul class="mask_img">
-                        	<li class="star"><img src="<%$__RESOURCE%>images/star.png" alt=""/></li>
-                        	<li class="set"><img src="<%$__RESOURCE%>images/set.png" alt=""/></li>
+                        	<li class="star"><img src="images/star.png" alt=""/></li>
+                        	<li class="set"><img src="images/set.png" alt=""/></li>
                         	<div class="clearfix"> </div>
                         </ul>
                       </div>
@@ -221,7 +238,7 @@
    				 	<h3>2 bedroom house for rent in Dubai</h3>
    				 	<ul class="star1">
    				 	  <h4 class="blue">Vision Agency</h4>
-   				 	  <li><a href="#"> <img src="<%$__RESOURCE%>images/star2.png" alt="">(136)</a></li>
+   				 	  <li><a href="#"> <img src="images/star2.png" alt="">(136)</a></li>
    				 	</ul>
    				 </div>
    			   </div>
@@ -229,13 +246,13 @@
    			<div class="col-md-3">
    			  <div class="grid1">
    				<div class="view view-first">
-                  <div class="index_img"><img src="<%$__RESOURCE%>images/pic3.jpg" class="img-responsive" alt=""/></div>
+                  <div class="index_img"><img src="images/pic3.jpg" class="img-responsive" alt=""/></div>
    				     <div class="sale">$2.980</div>
    			          <div class="mask">
                       <div class="info"><i class="search"> </i> Show More</div>
                         <ul class="mask_img">
-                        	<li class="star"><img src="<%$__RESOURCE%>images/star.png" alt=""/></li>
-                        	<li class="set"><img src="<%$__RESOURCE%>images/set.png" alt=""/></li>
+                        	<li class="star"><img src="images/star.png" alt=""/></li>
+                        	<li class="set"><img src="images/set.png" alt=""/></li>
                         	<div class="clearfix"> </div>
                         </ul>
                       </div>
@@ -245,7 +262,7 @@
    				 	<h3>2 bedroom house for rent in Dubai</h3>
    				 	<ul class="star1">
    				 	  <h4 class="green">Vision Agency</h4>
-   				 	  <li><a href="#"> <img src="<%$__RESOURCE%>images/star1.png" alt="">(236)</a></li>
+   				 	  <li><a href="#"> <img src="images/star1.png" alt="">(236)</a></li>
    				 	</ul>
    				  </div>
    			   </div>
@@ -255,17 +272,17 @@
    	    <div class="middle_grid wow fadeInUp" data-wow-delay="0.4s">
    			<div class="col-md-6">
    			   <div class="grid1">
-   			     <div class="index_img"><img src="<%$__RESOURCE%>images/pic4.jpg" class="img-responsive" alt=""/></div>
+   			     <div class="index_img"><img src="images/pic4.jpg" class="img-responsive" alt=""/></div>
    				  <i class="m_home"> </i>
                   <ul class="vision">
                   	 <li>Vision Agency</li>
-                  	 <li class="desc"><a href="#"> <img src="<%$__RESOURCE%>images/star1.png" alt="">(236)</a></li>
+                  	 <li class="desc"><a href="#"> <img src="images/star1.png" alt="">(236)</a></li>
                   </ul>
    				  <div class="inner_wrap1">
    				 	<ul class="item_module">
-   				 	 	<li class="module_left"><img src="<%$__RESOURCE%>images/m1.jpg" class="img-responsive" alt=""/></li>
+   				 	 	<li class="module_left"><img src="images/m1.jpg" class="img-responsive" alt=""/></li>
    				 	 	<li class="module_right">
-   				 	 		<img src="<%$__RESOURCE%>images/m_star.png" class="img-responsive" alt=""/>
+   				 	 		<img src="images/m_star.png" class="img-responsive" alt=""/>
    				 	 		<h5>Lucy-p</h5>
    				 	 		<p>"Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat."</p>
    				 	 		<a href="#" class="content_btn">....read more</a>
@@ -277,17 +294,17 @@
    			</div>
    			<div class="col-md-6">
    			   <div class="grid1">
-   			     <div class="index_img1"><img src="<%$__RESOURCE%>images/pic5.jpg" class="img-responsive" alt=""/></div>
+   			     <div class="index_img1"><img src="images/pic5.jpg" class="img-responsive" alt=""/></div>
    				  <i class="m_home1"> </i>
                   <ul class="vision">
                   	 <li>Vision Agency</li>
-                  	 <li class="desc"><a href="#"> <img src="<%$__RESOURCE%>images/star2.png" alt="">(236)</a></li>
+                  	 <li class="desc"><a href="#"> <img src="images/star2.png" alt="">(236)</a></li>
                   </ul>
    				  <div class="inner_wrap1">
    				 	<ul class="item_module">
-   				 	 	<li class="module_left"><img src="<%$__RESOURCE%>images/m2.jpg" class="img-responsive" alt=""/></li>
+   				 	 	<li class="module_left"><img src="images/m2.jpg" class="img-responsive" alt=""/></li>
    				 	 	<li class="module_right">
-   				 	 		<img src="<%$__RESOURCE%>images/m_star1.png" class="img-responsive" alt=""/>
+   				 	 		<img src="images/m_star1.png" class="img-responsive" alt=""/>
    				 	 		<h5>Lucy-p</h5>
    				 	 		<p>"Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat."</p>
    				 	 		<a href="#" class="content_btn">....read more</a>
@@ -303,13 +320,13 @@
    			<div class="col-md-3">
    			  <div class="grid1">
    				<div class="view view-first">
-                  <div class="index_img"><img src="<%$__RESOURCE%>images/pic1.jpg" class="img-responsive" alt=""/></div>
+                  <div class="index_img"><img src="images/pic1.jpg" class="img-responsive" alt=""/></div>
    				     <div class="sale">$2.980</div>
    			          <div class="mask">
                        <div class="info"><i class="search"> </i> Show More</div>
                         <ul class="mask_img">
-                        	<li class="star"><img src="<%$__RESOURCE%>images/star.png" alt=""/></li>
-                        	<li class="set"><img src="<%$__RESOURCE%>images/set.png" alt=""/></li>
+                        	<li class="star"><img src="images/star.png" alt=""/></li>
+                        	<li class="set"><img src="images/set.png" alt=""/></li>
                         	<div class="clearfix"> </div>
                         </ul>
                         </div>
@@ -319,7 +336,7 @@
    				 	<h3>2 bedroom house for rent in Dubai</h3>
    				 	<ul class="star1">
    				 	  <h4 class="green">Vision Agency</h4>
-   				 	  <li><a href="#"> <img src="<%$__RESOURCE%>images/star1.png" alt="">(236)</a></li>
+   				 	  <li><a href="#"> <img src="images/star1.png" alt="">(236)</a></li>
    				 	</ul>
    				 </div>
    			   </div>
@@ -327,12 +344,12 @@
    			<div class="col-md-3">
    			  <div class="grid1">
    				<div class="view view-first">
-                  <div class="index_img1"><img src="<%$__RESOURCE%>images/pic2.jpg" class="img-responsive" alt=""/></div>
+                  <div class="index_img1"><img src="images/pic2.jpg" class="img-responsive" alt=""/></div>
    				     <div class="mask">
                         <div class="info"><i class="search"> </i> Show More</div>
                         <ul class="mask_img">
-                        	<li class="star"><img src="<%$__RESOURCE%>images/star.png" alt=""/></li>
-                        	<li class="set"><img src="<%$__RESOURCE%>images/set.png" alt=""/></li>
+                        	<li class="star"><img src="images/star.png" alt=""/></li>
+                        	<li class="set"><img src="images/set.png" alt=""/></li>
                         	<div class="clearfix"> </div>
                         </ul>
                       </div>
@@ -342,7 +359,7 @@
    				 	<h3>2 bedroom house for rent in Dubai</h3>
    				 	<ul class="star1">
    				 	  <h4 class="yellow">Vision Agency</h4>
-   				 	  <li><a href="#"> <img src="<%$__RESOURCE%>images/star2.png" alt="">(136)</a></li>
+   				 	  <li><a href="#"> <img src="images/star2.png" alt="">(136)</a></li>
    				 	</ul>
    				 </div>
    			   </div>
@@ -350,12 +367,12 @@
    			<div class="col-md-3">
    			  <div class="grid1">
    				<div class="view view-first">
-                  <div class="index_img2"><img src="<%$__RESOURCE%>images/pic6.jpg" class="img-responsive" alt=""/></div>
+                  <div class="index_img2"><img src="images/pic6.jpg" class="img-responsive" alt=""/></div>
    				     <div class="mask">
                         <div class="info"><i class="search"> </i> Show More</div>
                         <ul class="mask_img">
-                        	<li class="star"><img src="<%$__RESOURCE%>images/star.png" alt=""/></li>
-                        	<li class="set"><img src="<%$__RESOURCE%>images/set.png" alt=""/></li>
+                        	<li class="star"><img src="images/star.png" alt=""/></li>
+                        	<li class="set"><img src="images/set.png" alt=""/></li>
                         	<div class="clearfix"> </div>
                         </ul>
                       </div>
@@ -365,7 +382,7 @@
    				 	<h3>2 bedroom house for rent in Dubai</h3>
    				 	<ul class="star1">
    				 	  <h4 class="blue">Vision Agency</h4>
-   				 	  <li><a href="#"> <img src="<%$__RESOURCE%>images/star2.png" alt="">(136)</a></li>
+   				 	  <li><a href="#"> <img src="images/star2.png" alt="">(136)</a></li>
    				 	</ul>
    				 </div>
    			   </div>
@@ -373,13 +390,13 @@
    			<div class="col-md-3">
    			  <div class="grid1">
    				<div class="view view-first">
-                  <div class="index_img"><img src="<%$__RESOURCE%>images/pic3.jpg" class="img-responsive" alt=""/></div>
+                  <div class="index_img"><img src="images/pic3.jpg" class="img-responsive" alt=""/></div>
    				     <div class="sale">$2.980</div>
    			          <div class="mask">
                       <div class="info"><i class="search"> </i> Show More</div>
                         <ul class="mask_img">
-                        	<li class="star"><img src="<%$__RESOURCE%>images/star.png" alt=""/></li>
-                        	<li class="set"><img src="<%$__RESOURCE%>images/set.png" alt=""/></li>
+                        	<li class="star"><img src="images/star.png" alt=""/></li>
+                        	<li class="set"><img src="images/set.png" alt=""/></li>
                         	<div class="clearfix"> </div>
                         </ul>
                       </div>
@@ -389,7 +406,7 @@
    				 	<h3>2 bedroom house for rent in Dubai</h3>
    				 	<ul class="star1">
    				 	  <h4 class="green">Vision Agency</h4>
-   				 	  <li><a href="#"> <img src="<%$__RESOURCE%>images/star1.png" alt="">(236)</a></li>
+   				 	  <li><a href="#"> <img src="images/star1.png" alt="">(236)</a></li>
    				 	</ul>
    				  </div>
    			   </div>
@@ -399,17 +416,17 @@
    		<div class="bottom_grid wow bounce" data-wow-delay="0.4s">
    		  <div class="col-md-6">
    			   <div class="grid1">
-   			     <div class="index_img1"><img src="<%$__RESOURCE%>images/pic5.jpg" class="img-responsive" alt=""/></div>
+   			     <div class="index_img1"><img src="images/pic5.jpg" class="img-responsive" alt=""/></div>
    				  <i class="m_home1"> </i>
                   <ul class="vision">
                   	 <li>Vision Agency</li>
-                  	 <li class="desc"><a href="#"> <img src="<%$__RESOURCE%>images/star2.png" alt="">(236)</a></li>
+                  	 <li class="desc"><a href="#"> <img src="images/star2.png" alt="">(236)</a></li>
                   </ul>
    				  <div class="inner_wrap1">
    				 	<ul class="item_module">
-   				 	 	<li class="module_left"><img src="<%$__RESOURCE%>images/m2.jpg" class="img-responsive" alt=""/></li>
+   				 	 	<li class="module_left"><img src="images/m2.jpg" class="img-responsive" alt=""/></li>
    				 	 	<li class="module_right">
-   				 	 		<img src="<%$__RESOURCE%>images/m_star.png" class="img-responsive" alt=""/>
+   				 	 		<img src="images/m_star.png" class="img-responsive" alt=""/>
    				 	 		<h5>Lucy-p</h5>
    				 	 		<p>"Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat."</p>
    				 	 		<a href="#" class="content_btn">....read more</a>
@@ -422,13 +439,13 @@
    			<div class="col-md-3">
    			  <div class="grid1">
    				<div class="view view-first">
-                  <div class="index_img"><img src="<%$__RESOURCE%>images/pic3.jpg" class="img-responsive" alt=""/></div>
+                  <div class="index_img"><img src="images/pic3.jpg" class="img-responsive" alt=""/></div>
    				     <div class="sale">$2.980</div>
    			          <div class="mask">
                       <div class="info"><i class="search"> </i> Show More</div>
                         <ul class="mask_img">
-                        	<li class="star"><img src="<%$__RESOURCE%>images/star.png" alt=""/></li>
-                        	<li class="set"><img src="<%$__RESOURCE%>images/set.png" alt=""/></li>
+                        	<li class="star"><img src="images/star.png" alt=""/></li>
+                        	<li class="set"><img src="images/set.png" alt=""/></li>
                         	<div class="clearfix"> </div>
                         </ul>
                       </div>
@@ -438,7 +455,7 @@
    				 	<h3>2 bedroom house for rent in Dubai</h3>
    				 	<ul class="star1">
    				 	  <h4 class="green">Vision Agency</h4>
-   				 	  <li><a href="#"> <img src="<%$__RESOURCE%>images/star1.png" alt="">(236)</a></li>
+   				 	  <li><a href="#"> <img src="images/star1.png" alt="">(236)</a></li>
    				 	</ul>
    				  </div>
    			   </div>
@@ -446,12 +463,12 @@
    			<div class="col-md-3">
    			  <div class="grid1">
    				<div class="view view-first">
-                  <div class="index_img1"><img src="<%$__RESOURCE%>images/pic2.jpg" class="img-responsive" alt=""/></div>
+                  <div class="index_img1"><img src="images/pic2.jpg" class="img-responsive" alt=""/></div>
    				     <div class="mask">
                         <div class="info"><i class="search"> </i> Show More</div>
                         <ul class="mask_img">
-                        	<li class="star"><img src="<%$__RESOURCE%>images/star.png" alt=""/></li>
-                        	<li class="set"><img src="<%$__RESOURCE%>images/set.png" alt=""/></li>
+                        	<li class="star"><img src="images/star.png" alt=""/></li>
+                        	<li class="set"><img src="images/set.png" alt=""/></li>
                         	<div class="clearfix"> </div>
                         </ul>
                       </div>
@@ -461,7 +478,7 @@
    				 	<h3>2 bedroom house for rent in Dubai</h3>
    				 	<ul class="star1">
    				 	  <h4 class="yellow">Vision Agency</h4>
-   				 	  <li><a href="#"> <img src="<%$__RESOURCE%>images/star2.png" alt="">(136)</a></li>
+   				 	  <li><a href="#"> <img src="images/star2.png" alt="">(136)</a></li>
    				 	</ul>
    				 </div>
    			   </div>
@@ -511,7 +528,7 @@
    	   <h3>Subscribe to our newsletter</h3>
    	   <form>
 		<span>
-			<i><img src="<%$__RESOURCE%>images/mail.png" alt=""></i>
+			<i><img src="images/mail.png" alt=""></i>
 		    <input type="text" value="Enter your email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter your email';}">
 		    <label class="btn1 btn2 btn-2 btn-2g"> <input name="submit" type="submit" id="submit" value="Subscribe"> </label>
 		    <div class="clearfix"> </div>

@@ -11,7 +11,7 @@ class BaseCommon {
 					
 	public static function getMeta($index = 'index', $title = NULL, $description = NULL, $keywords = NULL, $content = NULL) {
 		$arrMeta = NULL;
-		include_once(__ROOT_PATH . 'etc/metaConfig.php');
+		include(__ROOT_PATH . 'etc/metaConfig.php');
 		$arrMetaValue = $arrMeta['index'];
 		if(isset($arrMeta[$index])) $arrMetaValue = $arrMeta[$index];
 		$rs['Title'] = $title . $arrMetaValue['title'];

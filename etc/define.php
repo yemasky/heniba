@@ -7,8 +7,8 @@ define('__CLOSE_WEB', false);
 //web  
 define('__WEB_KEY','localhost');
 define('__KEY','xyzABcdeee12345');
-define('__WEB','http://localhost/izhizu/www/');
-define('__RESOURCE','http://localhost/heniba/resource/');
+define('__WEB','http://localhost/heniba/scripts/');
+define('__RESOURCE','http://localhost/heniba/scripts/resource/');
 define('__BBS','http://localhost/izhizu/www/bbs/');
 define('__PIC','http://localhost/izhizu/www/');
 
@@ -28,7 +28,7 @@ define('__HTML_WEB', 'http://localhost/izhizu/www/static/');
 //images
 define('__DEFAULT_PATH',__ROOT_PATH);
 define('__DEFAULT_IMG',__DEFAULT_PATH.'data/images/');
-define('__IMGWEB','http://localhost/izhizu/www/data/images/');
+define('__IMGWEB','http://localhost/heniba/scripts/data/images/');
 
 define('__XML_PATH',__ROOT_PATH);
 define('__XML',__XML_PATH.'data/xml/');

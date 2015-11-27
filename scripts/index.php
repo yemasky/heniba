@@ -3,18 +3,19 @@
 	auther: cooc 
 	email:yemasky@msn.com
 */
-require_once("../etc/define.php");
 
-$model = 'IndexAction';
-if(isset($_REQUEST['model'])) $model = $_REQUEST['model'];
-$action = NULL;
-if(isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+try {
+	require_once("../etc/define.php");
+	$model = 'IndexAction';
+	if (isset($_REQUEST['model'])) $model = ucwords($_REQUEST['model']) . 'Action';
+	$action = NULL;
+	if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+} catch (Exception $e) {
+	print_r($e -> getMessage());
+	print_r($e -> getTraceAsString());
+}
 
-$arrActionRoute = array('validate'=>'Register','login'=>'Register');
-if(isset($arrActionRoute[$model])) {$action = $model; $model = $arrActionRoute[$model];};
-$model = ucwords($model) . 'Action';
-
-try { 
+try {
 	$objAction = new $model();
 	$objAction -> execute($action);
 } catch (Exception $e) {
