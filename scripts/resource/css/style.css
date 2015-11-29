@@ -39,7 +39,7 @@ body a{
 }
 .menu{
 	 float:left;
-	 margin: 13px 0 0;
+	 margin: 10px 0 0;
 }
 .menu li{
 	display:inline-block;
@@ -49,10 +49,10 @@ body a{
 }
 .menu li a{
   	display: block;
-	font-size: 0.85em;
+	font-size: 1.2em;
 	text-transform: uppercase;
 	padding: 5px 15px;
-	color:#96a6a7;
+	color:#333;
 	-webkit-transition: all 0.3s ease;
 	-moz-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
