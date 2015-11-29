@@ -1,5 +1,5 @@
 <meta charset="utf-8"/>
-<title>Home</title>
+<title><%$__Meta['Title']%></title>
 <link href="<%$__RESOURCE%>css/bootstrap.css" rel='stylesheet' type='text/css' />
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!-- Custom Theme files -->

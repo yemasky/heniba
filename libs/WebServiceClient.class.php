@@ -1,11 +1,12 @@
 <?php
 
 /**
- * file_name 2015年11月28日
+ * WebServiceClient 2015年11月28日
  * @author YEMASKY  yemasky@msn.com
  * Copyright 2015
  */
-class WebServiceClient extends SoapClient{
+
+class WebServiceClient {
 	private $method;
 	private $request_url;
 	private $arrayHeader = array ();

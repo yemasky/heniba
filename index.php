@@ -1,31 +1,32 @@
-<?php 
+<?php
 /*
-	auther: cooc 
-	email:yemasky@msn.com
-*/
-
+ * auther: cooc
+ * email:yemasky@msn.com
+ */
 try {
-	require_once("./etc/define.php");
+	require_once ("./etc/define.php");
 	$model = 'IndexAction';
-	if (isset($_REQUEST['model'])) $model = ucwords($_REQUEST['model']) . 'Action';
+	if(isset($_REQUEST['model']))
+		$model = ucwords($_REQUEST['model']) . 'Action';
 	$action = NULL;
-	if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-} catch (Exception $e) {
-	print_r($e -> getMessage());
-	print_r($e -> getTraceAsString());
+	if(isset($_REQUEST['action']))
+		$action = $_REQUEST['action'];
+} catch(Exception $e) {
+	echo ('error: ' . $e->getMessage() . "<br>");
+	echo (str_replace("\n","\n<br>",$e->getTraceAsString()));
 }
 
-try { 
+try {
 	$objAction = new $model();
-	$objAction -> execute($action);
-} catch (Exception $e) {
+	$objAction->execute($action);
+} catch(Exception $e) {
 	if(__Debug) {
-		print_r($e -> getMessage());
-		print_r($e -> getTraceAsString());
+		echo ('error: ' . $e->getMessage() . "<br>");
+		echo (str_replace("\n","\n<br>",$e->getTraceAsString()));
 	}
-	logError($e -> getMessage(), __MODEL_EXCEPTION);
-	logError($e -> getTraceAsString(), __MODEL_EMPTY);
+	logError($e->getMessage(),__MODEL_EXCEPTION);
+	logError($e->getTraceAsString(),__MODEL_EMPTY);
 	$objAction = new NotFound();
-	$objAction -> execute();
+	$objAction->execute();
 }
 ?>

@@ -26,7 +26,7 @@ class ExampleAction extends BaseAction {
 	 */
 	protected function doShowProduct($objRequest, $objResponse) {
 		$objCookie = new Cookie;
-		$arrLoginUser = BaseComm::getLoginUser($objCookie);
+		$arrLoginUser = BaseCommon::getLoginUser($objCookie);
 		
 		//设置值
 		$objResponse -> test = 123456;

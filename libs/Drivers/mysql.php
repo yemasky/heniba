@@ -19,13 +19,13 @@ class mysql {
 	public function __construct($dbConfig) {
 		$this->conn = mysql_connect($dbConfig['host'], $dbConfig['login'], $dbConfig['password']);
 		if($this->conn == false) {
-			throw new SQLException("数据库链接错误: " . mysql_error()); 
+			throw new SQLException("数据库链接错误: " . mysql_error());
 		}
 		if(mysql_select_db($dbConfig['database'], $this->conn)){
 		} else {
 			 throw new SQLException("无法找到数据库，请确认数据库名称正确！");
 		}//		$this -> query();
-		$this->exec('SET NAMES UTF8;');
+		$this->getQueryArrayResult('SET NAMES UTF8;');
 	}
 
 	public function selectDB($databases) {
@@ -39,8 +39,8 @@ class mysql {
 	 * 
 	 * @param sql  执行的SQL语句
 	 */
-	public function getArray($sql) {
-		$result = $this->exec($sql);
+	public function getQueryArrayResult($sql) {
+		$result = $this->execute($sql);
 		$rows = array();
 		while($rows[] = mysql_fetch_array($result,MYSQL_ASSOC)){}
 		mysql_free_result($result);
@@ -51,10 +51,10 @@ class mysql {
 	/**
 	 * 返回当前插入记录的主键ID
 	 */
-	public function newinsertid() {
+	public function getInsertid() {
 		return mysql_insert_id($this->conn);
 	}
-	
+
 	/**
 	 * 格式化带limit的SQL语句
 	 */
@@ -67,7 +67,7 @@ class mysql {
 	 * 
 	 * @param sql 需要执行的SQL语句
 	 */
-	public function exec($sql) {
+	public function execute($sql) {
 		if($result = mysql_query($sql, $this->conn) ){
 			return $result;
 		}else{
@@ -88,8 +88,8 @@ class mysql {
 	 *
 	 * @param tbl_name  表名称
 	 */
-	public function getTable($tbl_name)	{
-		return $this->getArray("DESCRIBE {$tbl_name}");
+	public function getTableDescribe($tbl_name)	{
+		return $this->getQueryArrayResult("DESCRIBE {$tbl_name}");
 	}
 
 	/**
