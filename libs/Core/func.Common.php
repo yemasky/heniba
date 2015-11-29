@@ -11,7 +11,19 @@ if(!defined("INC_FUNC_COMMON")) {
 	define("__MODEL_EXCEPTION", "Exception");
 	
 	date_default_timezone_set('PRC');
-
+	if(isset($_SERVER['argc']) && $_SERVER['argc'] >= 0) {
+		$arrVariables = $_SERVER['argv'];
+		$_REQUEST = NULL;
+		if(!empty($arrVariables[0])) {
+			foreach($arrVariables as $k => $v) {
+				$arrVariable = explode('=', $v);
+				if(!isset($arrVariable[1]))
+					$arrVariable[1] = NULL;
+					$arrParameter[$arrVariable[0]] = $arrVariable[1];
+			}
+		}
+		$_REQUEST = $arrParameter;
+	}
 	function __autoload($class){
 	//function process_autoload($class){
 		$len = strlen($class) - 1;

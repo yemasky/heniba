@@ -29,20 +29,6 @@ class HttpRequest{
 
 	public function __construct(){
 		$this->parameters = $_REQUEST;
-		if(isset($_SERVER['argc']) && $_SERVER['argc'] == 2) {
-			$arrVariables = explode('&', $_SERVER['argv'][1]);
-			$arrParameter = NULL;
-			if(!empty($arrVariables[0])) {
-				foreach($arrVariables as $k => $v) {
-					$arrVariable = explode('=', $v);
-					if(!isset($arrVariable[1]))
-						$arrVariable[1] = NULL;
-					$arrParameter[$arrVariable[0]] = $arrVariable[1];
-				}
-			}
-			$this->parameters = $arrParameter;
-		}
-		
 		if(isset($this->parameters["param"])) {
 			if($this->parameters["param"] != NULL) {
 				$this->parameters = array_merge($this->getParse($this->__get("param")), $this->parameters);
@@ -79,7 +65,7 @@ class HttpRequest{
 		return NULL;
 	}
 
-	private function addArraySlashes($arrRs){
+	public function addArraySlashes($arrRs){
 		foreach($arrRs as $k => $v) {
 			if(is_array($v)) {
 				$arrRs[$k] = $this->addArraySlashes($v);
@@ -235,6 +221,7 @@ abstract class BaseAction{
 	private $_create_html = false;
 	private $_html_name = '';
 	private $_html_dir = __HTML;
+	protected $process_key = NULL;
 
 	/**
 	 * 检查入力参数,若是系统错误(严重错误,则抛出异常)
@@ -323,7 +310,7 @@ abstract class BaseAction{
 	/**
 	 * Controller层的调用入口函数,在scripts中调用
 	 */
-	public function execute($action = NULL){
+	public function execute($action = NULL, $process_key = NULL){
 		$startTime = getMicrotime();
 		try {
 			$error_handler = set_error_handler("ErrorHandler");
@@ -332,6 +319,10 @@ abstract class BaseAction{
 			// 指定action
 			if($action != NULL) {
 				$objRequest->setAction($action);
+			}
+			
+			if($process_key != NULL) {
+				$this->process_key = $process_key;
 			}
 			// 入力检查
 			$this->check($objRequest, $objResponse);
@@ -432,14 +423,14 @@ abstract class BaseAction{
 		// diplay the template
 		$smarty->display($tplName . ".tpl");
 		/*
-		 $temp = new Template(__ROOT_TPLS_TPATH, __ROOT_TPLS_TPATH . "templates_c/");
-		 //$temp -> setTpl($tplName.".htm");
-		 //$temp -> assign($objResponse -> getTplValues());
-		 $temp -> assign("__CHARSET", __CHARSET);
-		 $temp -> assign("__LANGUAGE", __LANGUAGE);
-		 $temp -> assign("__WEB", __WEB);
-		 $temp -> display($tplName . ".tpl");*/
-
+		 * $temp = new Template(__ROOT_TPLS_TPATH, __ROOT_TPLS_TPATH . "templates_c/");
+		 * //$temp -> setTpl($tplName.".htm");
+		 * //$temp -> assign($objResponse -> getTplValues());
+		 * $temp -> assign("__CHARSET", __CHARSET);
+		 * $temp -> assign("__LANGUAGE", __LANGUAGE);
+		 * $temp -> assign("__WEB", __WEB);
+		 * $temp -> display($tplName . ".tpl");
+		 */
 	}
 }
 class NotFound extends BaseAction{
@@ -464,11 +455,13 @@ class NotFound extends BaseAction{
 }
 class DBQuery{
 	private $dsn = NULL;
-    private $conn = NULL;
+	private $conn = NULL;
+	private $limit_num = NULL;
+	private $sort = NULL;
 	private static $instances = array ();
 	private static $defaultDsn = __DEFAULT_DSN;
 	public $table_name = NULL;
-    public $table_key = '*';
+	public $table_key = '*';
 
 	/**
 	 * 构造函数
@@ -482,11 +475,15 @@ class DBQuery{
 		if(strlen($dsn) > 0) {
 			$this->dsn = $dsn;
 		}
-        $arrDsnInfo = $this->explodeDsn($dsn);
-        require_once (__ROOT_PATH . 'libs/Drivers/' . $arrDsnInfo['driver'] . '.php');
+		if(is_array($dsn)) {
+			$dsn = array_rand($dsn);
+		}
+		$arrDsnInfo = $this->explodeDsn($dsn);
+		require_once (__ROOT_PATH . 'libs/Drivers/' . $arrDsnInfo['driver'] . '.php');
 		$startTime = getMicrotime();
-        $this->conn = new $arrDsnInfo['driver']($arrDsnInfo);
-        logDebug("connect use time: " . (getMicrotime() - $startTime));
+		$this->conn = new $arrDsnInfo['driver']($arrDsnInfo);
+		if(__Debug)
+			logDebug("connect use time: " . (getMicrotime() - $startTime));
 		return $this->conn;
 	}
 
@@ -497,9 +494,11 @@ class DBQuery{
 		if(empty($dsn)) {
 			$dsn = self::$defaultDsn;
 		}
-		$instance = self::$instances[$dsn];
-		if(!empty($instance) && is_object($instance)) {
-			return $instance;
+		if(isset(self::$instances[$dsn])) {
+			$instance = self::$instances[$dsn];
+			if(!empty($instance) && is_object($instance)) {
+				return $instance;
+			}
 		}
 		$instance = new DBQuery($dsn);
 		self::$instances[$dsn] = $instance;
@@ -508,7 +507,7 @@ class DBQuery{
 
 	public function setTable($table){
 		$this->table_name = $table;
-        return $this;
+		return $this;
 	}
 
 	/**
@@ -525,7 +524,7 @@ class DBQuery{
 	 *        	limit 返回的结果数量限制，等同于"LIMIT "，如$limit = " 3, 5"，即是从第3条记录（从0开始计算）开始获取，共获取5条记录
 	 *        	如果limit值只有一个数字，则是指代从0条记录开始。
 	 */
-	public function getList($conditions = NULL, $sort = NULL, $fields = NULL, $limit = NULL){
+	public function getList($conditions = NULL, $fields = NULL){
 		$where = "";
 		$fields = empty($fields) ? "*" : $fields;
 		if(is_array($conditions)) {
@@ -538,20 +537,26 @@ class DBQuery{
 			if(NULL != $conditions)
 				$where = "WHERE " . $conditions;
 		}
-		if(NULL != $sort) {
-			$sort = "ORDER BY {$sort}";
+		if($this->sort != NULL) {
+			$sort = "ORDER BY {$this->sort}";
 		} else {
 			if($this->table_key != '*')
 				$sort = "ORDER BY {$this->table_key} DESC";
 		}
 		$sql = "SELECT {$fields} FROM {$this->table_name} {$where} {$sort} ";
-		/*
-		 * if(NULL != $limit)$sql = $this->_db->setlimit($sql, $limit);
-		 * return $this->_db->getArray($sql);
-		 */
-		if(NULL != $limit)
-			$sql = $this->conn->setlimit($sql, $limit);
+		if($this->limit_num != NULL)
+			$sql = $this->conn->setlimit($sql, $this->limit_num);
 		return $this->conn->getQueryArrayResult($sql);
+	}
+
+	public function sort($sort){
+		$this->sort = $sort;
+		return $this;
+	}
+
+	public function limit($limit){
+		$this->limit_num = $limit;
+		return $this;
 	}
 
 	/**
@@ -588,14 +593,14 @@ class DBQuery{
 	 * @param
 	 *        	row 数组形式，数组的键是数据表中的字段名，键对应的值是需要新增的数据。
 	 */
-	public function insert($row){
+	public function insert($row, $insert_type = 'INSERT'){
 		if(!is_array($row))
 			return FALSE;
 		if(empty($row))
 			return FALSE;
 		$cols = $vals = '';
 		foreach($row as $key => $value) {
-			$cols .= $key . ',';
+			$cols .= '`' . $key . '`,';
 			if($value == 'NULL') {
 				$vals .= "NULL" . ',';
 			} else {
@@ -605,9 +610,9 @@ class DBQuery{
 		$cols = trim($cols, ',');
 		$vals = trim($vals, ',');
 		
-		$sql = "INSERT INTO {$this->table_name} ({$cols}) VALUES ($vals)";
-        $this->conn->execute($sql);
-        return $this;
+		$sql = $insert_type . " INTO {$this->table_name} ({$cols}) VALUES ($vals)";
+		$this->conn->execute($sql);
+		return $this;
 	}
 
 	public function getInsertId(){
@@ -633,7 +638,8 @@ class DBQuery{
 				$where = "WHERE ( " . $conditions . ")";
 		}
 		$sql = "DELETE FROM {$this->table_name} {$where}";
-		return $this->conn->execute($sql);;
+		return $this->conn->execute($sql);
+		;
 	}
 
 	/**
@@ -713,7 +719,8 @@ class DBQuery{
 		}
 		$values = join(", ", $vals);
 		$sql = "UPDATE {$this->table_name } SET {$values} {$where}";
-		return $this->conn->execute($sql);;
+		return $this->conn->execute($sql);
+		;
 	}
 
 	public function explodeDsn($dsn){
@@ -727,7 +734,7 @@ class DBQuery{
 		$arrValue = explode(':', $arrValue[0]);
 		$arrDsn['login'] = $arrValue[0];
 		$arrDsn['password'] = $arrValue[1];
-		//$this->strDsn = $arrDsn['driver'] . '://' . $arrDsn['login'] . ':' . $arrDsn['password'] . '@' . $arrDsn['host'];
+		// $this->strDsn = $arrDsn['driver'] . '://' . $arrDsn['login'] . ':' . $arrDsn['password'] . '@' . $arrDsn['host'];
 		// $this -> strDsn = $dsn;
 		return $arrDsn;
 	}
@@ -772,7 +779,7 @@ class DBCache{
 	 * 函数式使用模型辅助类的输入函数
 	 */
 	public function setCallObj(& $obj, $args){
-		$this->model_obj = $obj; // var_dump($args);
+		$this->model_obj = $obj; // var_dump($obj);var_dump($args);
 		$this->input_args = $args;
 		return $this;
 	}
@@ -780,9 +787,8 @@ class DBCache{
 	/**
 	 * 魔术函数，支持多重函数式使用类的方法 不支持自定义缓存文件夹，系统将自动生成缓存文件夹
 	 */
-	public function __call($func_name, $func_args){
-		$md5id = isset($this->input_args[1]) ? $this->input_args[1] : '';
-		$cache_id = md5(get_class($this->model_obj) . $func_name . json_encode($func_args) . $md5id);
+	public function __call($func_name, $func_args){ // var_dump($this->model_obj);
+		$cache_id = md5(serialize($this->model_obj) . json_encode($this->input_args[1]) . $func_name . json_encode($func_args));
 		if($this->input_args[0] == -1)
 			return $this->deleteCache($cache_id);
 		if($this->input_args[0] > 0) {
@@ -790,7 +796,7 @@ class DBCache{
 			$this->cache_dir = $this->cache_dir . $this->life_time . '/';
 		}
 		$display = isset($this->input_args[2]) ? $this->input_args[2] : false;
-		if($this->isValid($cache_id, $this->life_time))
+		if($this->life_time == 0 || $this->isValid($cache_id, $this->life_time))
 			return $this->fetch($cache_id, $display);
 		return $this->cache_obj($cache_id, call_user_func_array(array (
 				$this->model_obj,
@@ -807,7 +813,7 @@ class DBCache{
 
 	public function deleteCache($cacheID, $renew_cachedir = true){
 		$filepath = PathManager::getCacheDir($cacheID, $this->cache_dir, $renew_cachedir);
-		return @unlink($filepath);
+		return @unlink($filepath . $cacheID);
 	}
 
 	public function fetch($cacheID, $display = false, $renew_cachedir = true){
@@ -942,8 +948,24 @@ class Cookie{
 	}
 }
 class process{
+	private static $objProcess;
+	private $classes_file;
 
-	public function __construct($class, $arguments = ''){
+	public function __call($class, $arguments = array()){
+		if(isset(self::$objProcess[$this->classes_file]) && is_object(self::$objProcess[$this->classes_file])) {
+			return new self::$objProcess[$this->classes_file]($arguments);
+		}
+		if(file_exists($this->classes_file)) {
+			include ($this->classes_file);
+			$obj = new $class($arguments);
+			self::$objProcess[$this->classes_file] = $obj;
+			return $obj;
+		} else {
+			throw new Exception("process->unable to load class: $class ,file:" . $this->classes_file);
+		}
+	}
+
+	public function __construct($class){
 		$len = strlen($class) - 1;
 		for($loop = $len; $loop >= 0; $loop--) {
 			if($class[$loop] >= 'A' && $class[$loop] <= 'Z') {
@@ -963,9 +985,7 @@ class process{
 				$class = substr($class, $strrpos + 1);
 			}
 		}
-		if(class_exists($class)) {
-			return new $class();
-		}
+		
 		switch($execute_type){
 			case "Action" :
 				$execute_dir = "process/" . $execute_dir . "action/";
@@ -989,16 +1009,10 @@ class process{
 				$execute_dir = "process/" . $execute_dir . "config/";
 				break;
 			default :
-				throw new Exception("unable to get the class: $class");
+				throw new Exception("unable to suppore type: $class");
 				break;
 		}
-		$classes_file = __ROOT_PATH . $execute_dir . $execute_sub_dir . $class . ".class.php";
-		if(file_exists($classes_file)) {
-			include_once ($classes_file);
-			return new $class();
-		} else {
-			throw new Exception("unable to load class: $class");
-		}
+		$this->classes_file = __ROOT_PATH . $execute_dir . $execute_sub_dir . $class . ".class.php";
 	}
 }
 ?>

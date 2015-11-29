@@ -54,9 +54,6 @@ define('__COMPILE', true);
 
 /// db connection ///
 define('__DEFAULT_DSN','mysql://root:root@127.0.0.1/julev_com'); 
-define('__JULEV_PIC_DSN','mysql://root:root@127.0.0.1/julev_com_pic');  
-define('__BBS_DSN','mysql://root:root@127.0.0.1/yelove_bbs');    
-define('__bbs_tablepre', 'yelove_');
 
 // web charset, language
 define('__CHARSET','utf-8');

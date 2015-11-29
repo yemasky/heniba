@@ -7,23 +7,29 @@
  */
 
 class WebServiceClient {
-	private $method;
-	private $request_url;
+	private $method = '';
+	private $request_url = '';
 	private $arrayHeader = array ();
 	private $request_data = "";
 
+	public function __call($name, $args){
+		$objCallName = new $name($args);
+		$objCallName->setCallObj($this, $args);
+		return $objCallName;
+	}
+
 	public function put(){
-		$this->method = "put";
+		$this->method = "PUT";
 		return $this;
 	}
 
 	public function get(){
-		$this->method = "get";
+		$this->method = "GET";
 		return $this;
 	}
 
 	public function post(){
-		$this->method = "post";
+		$this->method = "POST";
 		return $this;
 	}
 
@@ -55,7 +61,7 @@ class WebServiceClient {
 		}
 		$opts = array (
 				'http' => array (
-						'method' => "GET",
+						'method' => $this->method,
 						'header' => $header 
 				) 
 		);
