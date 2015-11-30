@@ -813,7 +813,13 @@ class DBCache{
 
 	public function deleteCache($cacheID, $renew_cachedir = true){
 		$filepath = PathManager::getCacheDir($cacheID, $this->cache_dir, $renew_cachedir);
-		return @unlink($filepath . $cacheID);
+		if(!file_exists($pathfile.$cacheID)) {
+			return true;
+		}
+		if(!unlink($pathfile.$cacheID)) {
+			throw new Exception(".error: can't delete file:".$pathfile.$cacheID);
+		}
+		return true;
 	}
 
 	public function fetch($cacheID, $display = false, $renew_cachedir = true){
