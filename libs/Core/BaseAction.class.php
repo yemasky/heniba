@@ -788,7 +788,7 @@ class DBCache{
 	 * 魔术函数，支持多重函数式使用类的方法 不支持自定义缓存文件夹，系统将自动生成缓存文件夹
 	 */
 	public function __call($func_name, $func_args){ // var_dump($this->model_obj);
-		$cache_id = md5(serialize($this->model_obj) . json_encode($this->input_args[1]) . $func_name . json_encode($func_args));
+		$cache_id = md5(serialize($this->model_obj) . json_encode($this->input_args) . $func_name . json_encode($func_args));
 		if($this->input_args[0] == -1)
 			return $this->deleteCache($cache_id);
 		if($this->input_args[0] > 0) {

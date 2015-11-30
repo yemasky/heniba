@@ -60,6 +60,7 @@ class BemyguestAction extends BaseAction {
 			foreach ($result['data'] as $k => $v) {
 				$product = $objService->product($v['uuid']);
 				$product = json_decode($product['result'], true);
+				//print_r($product);exit;
 				$objService->checkSaveProduct($product['data']);
 			}
 		}

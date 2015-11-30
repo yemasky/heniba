@@ -31,14 +31,14 @@ class BemyguestService{
 		$url = "https://api.bemyguest.com.sg/v1/products?language=en&currency=CNY&per_page=100&page=" . $pn;
 		$this->objWSClient->url($url)->get();
 		$this->objWSClient->header($this->arrayHeader);
-		return $this->objWSClient->DBCache(0)->execute_file_get_contents($url);
+		return $this->objWSClient->DBCache(0)->execute_cUrl($url);
 	}
 
 	public function product($uuid){
 		$url = "https://api.bemyguest.com.sg/v1/products/$uuid/?currency=CNY&language=ZH-HANS";
 		$this->objWSClient->url($url)->get();
 		$this->objWSClient->header($this->arrayHeader);
-		return $this->objWSClient->DBCache(0)->execute_file_get_contents($uuid);
+		return $this->objWSClient->DBCache(0)->execute_cUrl($uuid);
 	}
 
 	public function checkSaveProduct($arrData){
@@ -55,10 +55,12 @@ class BemyguestService{
 			$objDao = $objProcess->BemyguestDao();
 			$id = $objDao::insertProduct($arrData);
 			if(!empty($id)) {
-				echo "continue :" . $arrData['uuid'] . ', id:' . $id . "\r\n";
+				echo "add :" . $arrData['uuid'] . ', id:' . $id . "\r\n";
 			} else {
-				echo "add code :" . $arrData['uuid'] . "\r\n";
+				echo "continue code :" . $arrData['uuid'] . "\r\n";
 			}
+			ob_flush();
+			flush();
 		}
 	}
 }
