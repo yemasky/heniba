@@ -18,8 +18,8 @@ try {
 }
 
 try {
-	$process_key = 'supplier\\';
-	$objProcess = new process($process_key.$model);
+	$process_key = 'supplier';
+	$objProcess = new Process($process_key);
 	$objAction = $objProcess->$model();
 	$objAction->execute($action, $process_key);//
 } catch(Exception $e) {

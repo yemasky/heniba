@@ -222,6 +222,7 @@ abstract class BaseAction{
 	private $_html_name = '';
 	private $_html_dir = __HTML;
 	protected $process_key = NULL;
+	protected $objProcess = NULL;
 
 	/**
 	 * 检查入力参数,若是系统错误(严重错误,则抛出异常)
@@ -323,6 +324,7 @@ abstract class BaseAction{
 			
 			if($process_key != NULL) {
 				$this->process_key = $process_key;
+				$this->objProcess = new Process($process_key);
 			}
 			// 入力检查
 			$this->check($objRequest, $objResponse);
@@ -813,11 +815,11 @@ class DBCache{
 
 	public function deleteCache($cacheID, $renew_cachedir = true){
 		$filepath = PathManager::getCacheDir($cacheID, $this->cache_dir, $renew_cachedir);
-		if(!file_exists($pathfile.$cacheID)) {
+		if(!file_exists($filepath.$cacheID)) {
 			return true;
 		}
-		if(!unlink($pathfile.$cacheID)) {
-			throw new Exception(".error: can't delete file:".$pathfile.$cacheID);
+		if(!unlink($filepath.$cacheID)) {
+			throw new Exception(".error: can't delete file:".$filepath.$cacheID);
 		}
 		return true;
 	}
@@ -953,25 +955,12 @@ class Cookie{
 		}
 	}
 }
-class process{
+class Process{
 	private static $objProcess;
-	private $classes_file;
+	protected $process_key;
 
 	public function __call($class, $arguments = array()){
-		if(isset(self::$objProcess[$this->classes_file]) && is_object(self::$objProcess[$this->classes_file])) {
-			return new self::$objProcess[$this->classes_file]($arguments);
-		}
-		if(file_exists($this->classes_file)) {
-			include ($this->classes_file);
-			$obj = new $class($arguments);
-			self::$objProcess[$this->classes_file] = $obj;
-			return $obj;
-		} else {
-			throw new Exception("process->unable to load class: $class ,file:" . $this->classes_file);
-		}
-	}
-
-	public function __construct($class){
+		$class = $this->process_key . $class;
 		$len = strlen($class) - 1;
 		for($loop = $len; $loop >= 0; $loop--) {
 			if($class[$loop] >= 'A' && $class[$loop] <= 'Z') {
@@ -979,7 +968,7 @@ class process{
 			}
 		}
 		$execute_type = substr($class, $loop);
-		$execute_dir = 'www/';
+		$execute_dir = 'www\\';
 		$strpos = strpos($class, '\\');
 		$execute_sub_dir = $lib_sub_dir = '';
 		if($strpos !== false) {
@@ -1018,7 +1007,23 @@ class process{
 				throw new Exception("unable to suppore type: $class");
 				break;
 		}
-		$this->classes_file = __ROOT_PATH . $execute_dir . $execute_sub_dir . $class . ".class.php";
+		$classes_file = __ROOT_PATH . $execute_dir . $execute_sub_dir . $class . ".class.php";
+		
+		if(isset(self::$objProcess[$classes_file]) && is_object(self::$objProcess[$classes_file])) {
+			return new self::$objProcess[$classes_file]($arguments);
+		}
+		if(file_exists($classes_file)) {
+			include ($classes_file);
+			$obj = new $class($arguments);
+			self::$objProcess[$classes_file] = $obj;
+			return $obj;
+		} else {
+			throw new Exception("process->unable to load class: $class ,file:" . $classes_file);
+		}
+	}
+
+	public function __construct($process_key){
+		$this->process_key = $process_key . '\\';
 	}
 }
 ?>

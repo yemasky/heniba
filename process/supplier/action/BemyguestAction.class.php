@@ -31,7 +31,6 @@ class BemyguestAction extends BaseAction {
 	 * 首页显示 
 	 */
 	protected function doBase($objRequest, $objResponse) {
-		echo "\'";
 		//赋值
 		//设置类别
 		$objResponse -> nav = 'index';
@@ -41,15 +40,16 @@ class BemyguestAction extends BaseAction {
 	}
 
 	protected function getConfig($objRequest, $objResponse) {
-		$objProcess = new process($this->process_key . 'BemyguestService');
-		$objService = $objProcess->BemyguestService();
+		$this->setDisplay();
+		//$objProcess = new Process($this->process_key . 'BemyguestService');
+		$objService = $this->objProcess->BemyguestService($this->process_key);
 		print_r($objService->config());
 	}
 	
 	protected function getProducts($objRequest, $objResponse) {
 		$this->setDisplay();
-		$objProcess = new process($this->process_key . 'BemyguestService');
-		$objService = $objProcess->BemyguestService($this->process_key);
+		//$objProcess = new Process($this->process_key . 'BemyguestService');
+		$objService = $this->objProcess->BemyguestService($this->process_key);
 		$result = $objService->allproducts();
 		$result = json_decode($result['result'], true);
 

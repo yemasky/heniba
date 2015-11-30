@@ -14,7 +14,7 @@ class BemyguestService{
 	private $DataBemyssguest;
 	private $process_key = '';
 
-	public function __construct($process_key = 0){
+	public function __construct($process_key = NULL){
 		if(is_array($process_key)) {
 			$this->process_key = $process_key[0];
 		}
@@ -24,7 +24,7 @@ class BemyguestService{
 	public function config(){
 		set_time_limit(0);
 		$this->objWSClient->url($this->url)->get()->header($this->arrayHeader);
-		return $this->objWSClient->DBCache(0)->execute_file_get_contents();
+		return $this->objWSClient->DBCache(-1)->execute_file_get_contents();
 	}
 
 	public function allproducts($pn = 1){
@@ -51,7 +51,7 @@ class BemyguestService{
 					$arrData[$k] = addslashes($arrData[$k]);
 				}
 			}
-			$objProcess = new process($this->process_key . 'BemyguestDao');
+			$objProcess = new Process($this->process_key);
 			$objDao = $objProcess->BemyguestDao();
 			$id = $objDao::insertProduct($arrData);
 			if(!empty($id)) {
