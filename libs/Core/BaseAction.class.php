@@ -793,12 +793,12 @@ class DBCache{
 		$cache_id = md5(serialize($this->model_obj) . json_encode($this->input_args) . $func_name . json_encode($func_args));
 		if($this->input_args[0] == -1)
 			return $this->deleteCache($cache_id);
-		if($this->input_args[0] > 0) {
-			$this->life_time = $this->input_args[0];
+		if($this->input_args[0] >= 0) {
+			$this->life_time = $this->input_args[0] == 0 ? 5184000 : $this->input_args[0];
 			$this->cache_dir = $this->cache_dir . $this->life_time . '/';
 		}
 		$display = isset($this->input_args[2]) ? $this->input_args[2] : false;
-		if($this->life_time == 0 || $this->isValid($cache_id, $this->life_time))
+		if($this->isValid($cache_id, $this->life_time))
 			return $this->fetch($cache_id, $display);
 		return $this->cache_obj($cache_id, call_user_func_array(array (
 				$this->model_obj,

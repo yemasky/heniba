@@ -43,24 +43,46 @@ class BemyguestService{
 
 	public function checkSaveProduct($arrData){
 		if(!empty($arrData)) {
-			foreach($arrData as $k => $v) {
-				if(is_array($v)) {
-					$arrData[$k] = json_encode($v);
-				}
-				if(strpos($arrData[$k], "'") !== false) {
-					$arrData[$k] = addslashes($arrData[$k]);
-				}
-			}
 			$objProcess = new Process($this->process_key);
 			$objDao = $objProcess->BemyguestDao();
-			$id = $objDao::insertProduct($arrData);
-			if(!empty($id)) {
-				echo "add :" . $arrData['uuid'] . ', id:' . $id . "\r\n";
+			if(isset($arrData['0'])) {
+				foreach($arrData as $k => $v) {//print_r($v);
+					foreach($v as $kk => $vv) {
+						if(is_array($vv)) {
+							$v[$kk] = json_encode($vv);
+						}
+						if(strpos($v[$kk], "'") !== false) {
+							$v[$kk] = addslashes($vv);
+						}
+					}
+					$id = $objDao::insertProduct($v);
+					if(!empty($id)) {
+						echo "add :" . $v['uuid'] . ', id:' . $id . "\r\n";
+					} else {
+						echo "continue code :" . $v['uuid'] . "\r\n";
+					}
+					ob_flush();
+					flush();
+				}
 			} else {
-				echo "continue code :" . $arrData['uuid'] . "\r\n";
+				foreach($arrData as $k => $v) {
+					if(is_array($v)) {
+						$arrData[$k] = json_encode($v);
+					}
+					if(strpos($arrData[$k], "'") !== false) {
+						$arrData[$k] = addslashes($arrData[$k]);
+					}
+				}
+				
+				$id = $objDao::insertProduct($arrData);
+				if(!empty($id)) {
+					echo "add :" . $arrData['uuid'] . ', id:' . $id . "\r\n";
+				} else {
+					echo "continue code :" . $arrData['uuid'] . "\r\n";
+				}
+				ob_flush();
+				flush();
 			}
-			ob_flush();
-			flush();
 		}
 	}
 }

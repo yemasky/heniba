@@ -48,13 +48,15 @@ class BemyguestAction extends BaseAction {
 	
 	protected function getProducts($objRequest, $objResponse) {
 		$this->setDisplay();
+		$pn = $objRequest->pn;
+		$pn = empty($pn) ? 1 : $pn;
 		//$objProcess = new Process($this->process_key . 'BemyguestService');
 		$objService = $this->objProcess->BemyguestService($this->process_key);
 		$result = $objService->allproducts();
 		$result = json_decode($result['result'], true);
 
 		$total_pages = $result['meta']['pagination']['total_pages'];
-		for($i = 1; $i <= $total_pages; $i++ ) {
+		for($i = $pn; $i <= $total_pages; $i++ ) {
 			$result = $objService->allproducts($i);
 			$result = json_decode($result['result'], true);
 			foreach ($result['data'] as $k => $v) {
