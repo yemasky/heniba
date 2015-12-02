@@ -48,7 +48,7 @@ define('__SQLITE_DATA', __DATA_PATH.'data/sqlite/');
 define('__COMPILE', true);
 
 /// db connection ///
-define('__DEFAULT_DSN','mysql://root:root@127.0.0.1/julev_com'); 
+define('__DEFAULT_DSN','mysql://root:root@127.0.0.1/heniba'); 
 
 //debug
 define('__Debug',true);

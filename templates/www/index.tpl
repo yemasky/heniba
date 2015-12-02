@@ -1,6 +1,6 @@
 <div class="banner wow fadeInUp" data-wow-delay="0.4s">
     <div class="container_wrap">
-        <h1>搜索是您向往的地方，巴厘岛，法国...</h1>
+        <h1>搜索您向往的地方，巴厘岛，法国...</h1>
         <div class="dropdown-buttons">
             <div class="dropdown-button">
                 <select class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
