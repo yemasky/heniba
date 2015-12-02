@@ -96,7 +96,11 @@ if(!defined("INC_FUNC_COMMON")) {
 	}
 
 	function writeLog($filename, $msg){
-		$fp = fopen(__ROOT_LOGS_PATH . $filename, "a+");
+		if(defined(__WWW_LOGS_PATH)) {
+			$fp = fopen(__WWW_LOGS_PATH . $filename, "a+");
+		} else {
+			$fp = fopen(__ROOT_LOGS_PATH . $filename, "a+");
+		}
 		$uri = '';
 		if(isset($_SERVER['REQUEST_URI']))
 			$uri = $_SERVER['REQUEST_URI'];

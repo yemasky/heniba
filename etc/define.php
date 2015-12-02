@@ -6,6 +6,8 @@ define('DEFINE_PHP','YES');
 define('__ROOT_PATH',substr(dirname(__FILE__), 0, -3));
 define('__ROOT_TPLS_TPATH',__ROOT_PATH.'templates/');
 define('__ROOT_TEMPLATES_TPATH', __ROOT_TPLS_TPATH);
+define('__ROOT_LOGS_PATH',__ROOT_PATH.'etc/cache/logs/');
+
 
 // web charset, language
 define('__CHARSET','utf-8');

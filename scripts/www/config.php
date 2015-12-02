@@ -1,18 +1,19 @@
 <?php
-if( !defined('DEFINE_PHP') ){
-define('DEFINE_PHP','YES');
+if( !defined('CONFIG_PHP') ){
+define('CONFIG_PHP','YES');
 require_once ("../../etc/define.php");
 ///close web
 define('__CLOSE_WEB', false);
 //web  
 define('__WEB_KEY','localhost');
 define('__KEY','xyzABcdeee12345');
-define('__WEB','http://localhost/heniba/scripts/');
-define('__RESOURCE','http://localhost/heniba/scripts/resource/');
+define('__WEB','http://localhost/heniba/scripts/www/');
+define('__RESOURCE','http://localhost/heniba/scripts/www/resource/');
 define('__BBS','http://localhost/izhizu/www/bbs/');
 define('__PIC','http://localhost/izhizu/www/');
 
 define('__WWW_PATH',substr(dirname(__FILE__), 0, -3));
+define('__WWW_PATH_CONFIG',__WWW_PATH.'www/config/');
 define('__HTML', __WWW_PATH.'static/');
 define('__HTML_WEB', 'http://localhost/izhizu/www/static/');
 
@@ -34,7 +35,7 @@ define('__USER_IMGWEB','http://localhost/izhizu/www/data/userimg/');//
 define('__CACHE',__WWW_PATH.'cache/');
 define('__CACHE_FILE',__CACHE.'filecache/');
 define('__USER_CACHE',__CACHE.'user/');
-define('__ROOT_LOGS_PATH',__CACHE.'logs/');
+define('__WWW_LOGS_PATH',__CACHE.'logs/');
 define('__CRAWL',__CACHE . 'crawl/');
 define('__ETAG', false);
 
