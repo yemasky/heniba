@@ -11,7 +11,7 @@
 
 class BemyguestAction extends BaseAction {
 	protected function check($objRequest, $objResponse) {
-
+		$this->setDisplay();
 	}
 
 	protected function service($objRequest, $objResponse) {
@@ -40,18 +40,16 @@ class BemyguestAction extends BaseAction {
 	}
 
 	protected function getConfig($objRequest, $objResponse) {
-		$this->setDisplay();
 		//$objProcess = new Process($this->process_key . 'BemyguestService');
-		$objService = $this->objProcess->BemyguestService($this->process_key);
+		$objService = $this->objProcess->BemyguestService($this->objProcess);
 		print_r($objService->config());
 	}
 	
 	protected function getProducts($objRequest, $objResponse) {
-		$this->setDisplay();
 		$pn = $objRequest->pn;
 		$pn = empty($pn) ? 1 : $pn;
 		//$objProcess = new Process($this->process_key . 'BemyguestService');
-		$objService = $this->objProcess->BemyguestService($this->process_key);
+		$objService = $this->objProcess->BemyguestService($this->objProcess);
 		$result = $objService->allproducts();
 		$result = json_decode($result['result'], true);
 

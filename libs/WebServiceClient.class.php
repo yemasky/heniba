@@ -32,7 +32,8 @@ class WebServiceClient{
 		return $this;
 	}
 
-	public function post(){
+	public function post($requestData){
+		$this->request_data = $requestData;
 		$this->method = "POST";
 		return $this;
 	}
@@ -48,11 +49,6 @@ class WebServiceClient{
 
 	public function url($url){
 		$this->request_url = $url;
-		return $this;
-	}
-
-	public function data($requestData){
-		$this->request_data = $requestData;
 		return $this;
 	}
 

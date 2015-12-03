@@ -1,7 +1,6 @@
 <?php
 if( !defined('CONFIG_PHP') ){
 define('CONFIG_PHP','YES');
-require_once ("../../etc/define.php");
 ///close web
 define('__CLOSE_WEB', false);
 //web  
@@ -12,8 +11,8 @@ define('__RESOURCE','http://localhost/heniba/scripts/www/resource/');
 define('__BBS','http://localhost/izhizu/www/bbs/');
 define('__PIC','http://localhost/izhizu/www/');
 
-define('__WWW_PATH',substr(dirname(__FILE__), 0, -3));
-define('__WWW_PATH_CONFIG',__WWW_PATH.'www/config/');
+define('__WWW_PATH',dirname(__FILE__) . '/');
+define('__WWW_PATH_CONFIG',__WWW_PATH.'config/');
 define('__HTML', __WWW_PATH.'static/');
 define('__HTML_WEB', 'http://localhost/izhizu/www/static/');
 
@@ -52,5 +51,6 @@ define('__DEFAULT_DSN','mysql://root:root@127.0.0.1/heniba');
 
 //debug
 define('__Debug',true);
+require_once ("../../etc/define.php");
 }
 ?>

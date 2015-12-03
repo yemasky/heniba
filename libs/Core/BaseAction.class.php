@@ -211,7 +211,7 @@ abstract class BaseAction{
 	private $displayDisabled = false;
 	private $showErrorPage = true;
 	private $isHeader = false;
-	private $compiler = __COMPILE;
+	private $compiler = false;
 	private $dbrollback = false;
 	private $_cache = false;
 	private $_cache_id = '';
@@ -1025,5 +1025,10 @@ class Process{
 	public function __construct($process_key){
 		$this->process_key = $process_key . '\\';
 	}
+	
+	public function setProcessKey($process_key){
+		$this->process_key = $process_key . '\\';
+	}
+	
 }
 ?>

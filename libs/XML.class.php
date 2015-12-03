@@ -13,7 +13,7 @@
  * about runtime xml file load and store
  */
 class XML {
-	public $localEncoding = "UTF-8";
+	public $localEncoding = NULL;
 	
 	/**
 	 * 装截运行时XML文件
@@ -34,8 +34,8 @@ class XML {
 	 * 取得XML字符串到数组
 	 */
 	public function parseToArray($str) {
-//		$doc = new DOMDocument();
-		$doc = DOMDocument::loadXML($str);
+		$doc = new DOMDocument();
+		$doc->loadXML($str);
 		$root = $doc->documentElement;
 		$arr = $this->nodeToArray($root);
 		
@@ -135,7 +135,7 @@ class XML {
 			return $str;
 		}
 		$str = iconv($this->localEncoding, "UTF-8//IGNORE", $str);
-		$str = str_replace($this->enclosure, $this->enclosure.$this->enclosure, $str);
+		//$str = str_replace($this->enclosure, $this->enclosure.$this->enclosure, $str);
 
 		return $str;
 	}
@@ -145,7 +145,7 @@ class XML {
 			return $str;
 		}
 		$str = iconv("UTF-8", $this->localEncoding."//IGNORE", $str);
-		$str = str_replace($this->enclosure.$this->enclosure, $this->enclosure, $str);
+		//$str = str_replace($this->enclosure.$this->enclosure, $this->enclosure, $str);
 
 		return $str;
 	}

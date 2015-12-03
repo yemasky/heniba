@@ -4,7 +4,7 @@
  * email:yemasky@msn.com
  */
 try {
-	require_once ("../../etc/define.php");	
+	require_once ("config.php");	
 
 	$model = 'IndexAction';
 	if(isset($_REQUEST['model']))

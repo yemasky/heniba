@@ -33,7 +33,7 @@ class File {
 			return;
 		} 
 		if(mkdir($dir) == false) {
-			throw new Exception(".error: can't create dir $dir.");
+			throw new Exception(".error: can't create dir[ $dir ]");
 		}
 		return chmod($dir, $mode);
 	}

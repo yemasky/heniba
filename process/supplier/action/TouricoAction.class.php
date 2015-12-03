@@ -7,6 +7,7 @@
 class TouricoAction extends BaseAction{
 
 	protected function check($objRequest, $objResponse){
+		$this->setDisplay();
 	}
 
 	protected function service($objRequest, $objResponse){
@@ -26,6 +27,9 @@ class TouricoAction extends BaseAction{
 	 * 首页显示
 	 */
 	protected function doBase($objRequest, $objResponse){
+		//$this->objProcess->TouricoService($this->objProcess)->GetDestination();
+		//$this->objProcess->TouricoService($this->objProcess)->GetHotelsByDestination();
+		$this->objProcess->TouricoService($this->objProcess)->GetHotelDetailsV3();
 	}
 }
 

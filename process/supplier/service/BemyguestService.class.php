@@ -12,11 +12,11 @@ class BemyguestService{
 			'Content-Type' => 'application/json' 
 	);
 	private $DataBemyssguest;
-	private $process_key = '';
+	private $objProcess = '';
 
-	public function __construct($process_key = NULL){
-		if(is_array($process_key)) {
-			$this->process_key = $process_key[0];
+	public function __construct($($ = NULL){
+		if(is_array($objProcess)) {
+			$this->objProcess = $objProcess[0];
 		}
 		$this->objWSClient = new WebServiceClient();
 	}
@@ -43,8 +43,7 @@ class BemyguestService{
 
 	public function checkSaveProduct($arrData){
 		if(!empty($arrData)) {
-			$objProcess = new Process($this->process_key);
-			$objDao = $objProcess->BemyguestDao();
+			$objDao = $this->objProcess->BemyguestDao();
 			if(isset($arrData['0'])) {
 				foreach($arrData as $k => $v) {//print_r($v);
 					foreach($v as $kk => $vv) {
