@@ -14,7 +14,7 @@ class TouricoConfig {
 
 	public $SOAPActionGetDestination = 'http://touricoholidays.com/WSDestinations/2008/08/Contracts/IDestinationContracts/GetDestination';
 	public $SOAPActionGetHotelsByDestination = 'http://touricoholidays.com/WSDestinations/2008/08/Contracts/IDestinationContracts/GetHotelsByDestination';
-	public $SOAPActionSearchHotelsById = 'http://demo-hotelws.touricoholidays.com/HotelFlow.svc/bas';
+	public $SOAPActionSearchHotelsById = 'http://tourico.com/webservices/hotelv3/IHotelFlow/SearchHotelsById';
 	public $SOAPActionGetHotelDetailsV3 = 'http://tourico.com/webservices/hotelv3/IHotelFlow/GetHotelDetailsV3';
 
 	//searchHotels(SearchHotelsById, SearchHotelsByDestinationIds) -> GetHotelDetailsV3

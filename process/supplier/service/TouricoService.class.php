@@ -69,11 +69,10 @@ class TouricoService
         $postData = $this->objTouricoConfig->SearchHotelsByIdXml($arrayHotelId, $RoomsInformation, $arrayCheckData);
         $arrayHeader = array("SOAPAction" => $this->objTouricoConfig->SOAPActionSearchHotelsById,
             "Content-type" => "text/xml", "Content-length" => strlen($postData));
-        $arrayContinent = $this->objTouricoConfig->arrayContinent;
-        $requestUrl = $this->objTouricoConfig->destinationsWSUrl;
+        $requestUrl = $this->objTouricoConfig->hotelV3WSUrl;
 
         $this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
-        $arrayResult = $this->objWSClient->DBCache(0)->execute_cUrl();
+        $arrayResult = $this->objWSClient->execute_cUrl();
         if($arrayResult['httpcode'] == 200) {
             $objXML = new XML;
             $arrayXML = $objXML->parseToArray($arrayResult['result']);
