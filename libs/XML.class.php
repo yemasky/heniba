@@ -77,14 +77,13 @@ class XML {
 	 */
 	public function nodeToArray($node) {
 		$arr = array();
-
 		if(is_object($node) == false) {
 			return NULL;
 		}
 		//取得Attributes
 		if ($node->hasAttributes()) {
 			foreach ($node->attributes as $attribute) {
-				$arr[$this->decode($attribute->name)] = 
+				$arr[$this->decode($attribute->name)] =
 					$this->decode($attribute->value);
 			}
 		}
@@ -93,9 +92,12 @@ class XML {
 		if($node->hasChildNodes() == false) {
 			return $arr;
 		}
-		
+
 		foreach($node->childNodes as $element) {
 			$nodeName = $element->nodeName;
+			if($nodeName == '#text') {
+				return $node->nodeValue;
+			}
 			if(empty($nodeName) || substr($nodeName, 0, 1) == "#") {
 				continue;
 			}
@@ -104,7 +106,7 @@ class XML {
 				echo "object.".$element->nodeValue;
 				continue;
 			}
-			$arr[$element->nodeName][] = $this->nodeToArray($element);
+			$arr[$nodeName][] = $this->nodeToArray($element);
 		}
 		return $arr;
 	}

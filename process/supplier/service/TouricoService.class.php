@@ -74,7 +74,10 @@ class TouricoService
         //echo $postData;exit;
         //print_r($arrayHeader);
         $this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
-        $arrayResult = $this->objWSClient->execute_cUrl();
+        //$arrayResult = $this->objWSClient->execute_cUrl();
+        //print_r($arrayResult['result']);exit;
+        $arrayResult['httpcode'] = 200;
+        $arrayResult['result'] = '<Rooms><Room seqNum="2"><AdultNum>1</AdultNum><ChildNum>0</ChildNum><ChildAges><ChildAge age="0"/></ChildAges></Room></Rooms>';
         if($arrayResult['httpcode'] == 200) {
             $objXML = new XML;
             $arrayXML = $objXML->parseToArray($arrayResult['result']);
