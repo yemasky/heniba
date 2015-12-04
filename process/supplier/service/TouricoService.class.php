@@ -63,7 +63,21 @@ class TouricoService
 
     public function SearchHotelsById()
     {
+        $arrayHotelId = array(array('1356675','1216326'));
+        $RoomsInformation = array('AdultNum'=>5, 'ChildNum'=>5, 'ChildAge'=>array(3,4,5,6,7));
+        $arrayCheckData = array('CheckIn'=>'2015-12-24', 'CheckOut'=>'2015-12-30');
+        $postData = $this->objTouricoConfig->SearchHotelsByIdXml($arrayHotelId, $RoomsInformation, $arrayCheckData);
+        $arrayHeader = array("SOAPAction" => $this->objTouricoConfig->SOAPActionSearchHotelsById,
+            "Content-type" => "text/xml", "Content-length" => strlen($postData));
+        $arrayContinent = $this->objTouricoConfig->arrayContinent;
+        $requestUrl = $this->objTouricoConfig->destinationsWSUrl;
 
+        $this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
+        $arrayResult = $this->objWSClient->DBCache(0)->execute_cUrl();
+
+        $objXML = new XML;
+        $arrayXML = $objXML->parseToArray($arrayResult['result']);
+        print_r($arrayXML);
     }
 
     public function SearchHotelsByDestinationIds()

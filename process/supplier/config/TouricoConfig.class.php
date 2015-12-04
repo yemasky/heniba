@@ -11,7 +11,11 @@ class TouricoConfig {
 			"South America/Caribbean");
 	public $destinationsWSUrl = 'http://destservices.touricoholidays.com/DestinationsService.svc?wsdl';
 	public $hotelV3WSUrl = 'http://demo-hotelws.touricoholidays.com/HotelFlow.svc/bas';
-	
+
+	public $SOAPActionGetDestination = 'http://touricoholidays.com/WSDestinations/2008/08/Contracts/IDestinationContracts/GetDestination';
+	public $SOAPActionGetHotelsByDestination = 'http://touricoholidays.com/WSDestinations/2008/08/Contracts/IDestinationContracts/GetHotelsByDestination';
+	public $SOAPActionSearchHotelsById = 'http://demo-hotelws.touricoholidays.com/HotelFlow.svc/bas';
+	public $SOAPActionGetHotelDetailsV3 = 'http://tourico.com/webservices/hotelv3/IHotelFlow/GetHotelDetailsV3';
 
 	//searchHotels(SearchHotelsById, SearchHotelsByDestinationIds) -> GetHotelDetailsV3
 	//->GetCancellationPolicies->CheckAvailabilityAndPrices->BookHotelV3->(CostAmend->DoAmend)
@@ -141,18 +145,57 @@ class TouricoConfig {
 		$xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:aut="http://schemas.tourico.com/webservices/authentication" xmlns:hot="http://tourico.com/webservices/hotelv3" xmlns:hot1="http://schemas.tourico.com/webservices/hotelv3">'
 		         .$this->HotelV3WSAutHeader()
 		         .'<soapenv:Body><hot:BookHotelV3><hot:request>'
-                 .$this->BookHotelV3RequestXml()
+                 .$this->BookHotelV3requestXml()
 				 .'</hot:request><hot:BookHotelV3></soapenv:Body></soapenv:Envelope>';
 		return $xml;
 	}
 	
-	public function BookHotelV3RequestXml() {
+	public function BookHotelV3requestXml() {
 		$xml = '<hot1:RecordLocatorId>0</hot1:RecordLocatorId>'
 		      .'<hot1:HotelId>1203719</hot1:HotelId>'
 			  .'<hot1:HotelRoomTypeId>1699316</hot1:HotelRoomTypeId>'
 			  .'<hot1:CheckIn>2013-11-15</hot1:CheckIn>'
 			  .'<hot1:CheckOut>2013-11-20</hot1:CheckOut>'
 			  .'<hot1:RoomsInfo>';
+	}
+
+	public function SearchHotelsByIdXml($arrayHotelId, $RoomsInformation, $arrayCheckData) {
+		$xml = '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:m0="http://schemas.tourico.com/webservices/hotelv3">'
+			.$this->HotelV3WSHeader()
+			.'<SOAP-ENV:Body><m:SearchHotelsById xmlns:m="http://tourico.com/webservices/hotelv3"><m:request>'
+			.$this->SearchHotelsByIdrequestXml()
+			.'</m:request></m:SearchHotelsById></SOAP-ENV:Body></SOAP-ENV:Envelope>';
+		return $xml;
+	}
+
+	/*
+	 * parameter $arrayHotelId  RoomsInformation
+	 */
+	public function SearchHotelsByIdrequestXml($arrayHotelId, $RoomsInformation, $arrayCheckData) {
+		$strHotelid = '';
+		foreach($arrayHotelId as $k => $v) {
+			$strHotelid .= '<m0:HotelIdInfo id="'.$v.'"/>';
+		}
+		$strChildAge = '';
+		if(count($RoomsInformation['ChildAge'] > 0)) {
+			foreach ($RoomsInformation['ChildAge'] as $k => $v) {
+				$strChildAge .= '<m0:ChildAge age="' . $v . '"/>';
+			}
+		} else {
+			$strChildAge = '<m0:ChildAge age="0"/>';
+		}
+		$xml = '<m0:HotelIdsInfo>'
+			.$this->HotelV3WSHeader()
+			.'<SOAP-ENV:Body><m:SearchHotelsById xmlns:m="http://tourico.com/webservices/hotelv3"><m:request><m0:HotelIdsInfo>'
+			.$strHotelid
+			.'</m0:HotelIdsInfo>'
+			.'<m0:CheckIn>'.$arrayCheckData['CheckIn'].'</m0:CheckIn><m0:CheckOut>'.$arrayCheckData['CheckOut'].'</m0:CheckOut>'
+			.'<m0:RoomsInformation><m0:RoomInfo><m0:AdultNum>'.$RoomsInformation['AdultNum'].'</m0:AdultNum>'
+			.'<m0:ChildNum>'.$RoomsInformation['ChildNum'].'</m0:ChildNum>'
+			.'<m0:ChildAges>'.$strChildAge.'</m0:ChildAges>'
+			.'</m0:RoomInfo></m0:RoomsInformation>'
+			.'<m0:MaxPrice>0</m0:MaxPrice><m0:StarLevel>0</m0:StarLevel><m0:AvailableOnly>true</m0:AvailableOnly>';
+		return $xml;
 	}
 	
 	

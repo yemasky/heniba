@@ -29,7 +29,8 @@ class TouricoAction extends BaseAction{
 	protected function doBase($objRequest, $objResponse){
 		//$this->objProcess->TouricoService($this->objProcess)->GetDestination();
 		//$this->objProcess->TouricoService($this->objProcess)->GetHotelsByDestination();
-		$this->objProcess->TouricoService($this->objProcess)->GetHotelDetailsV3();
+		//$this->objProcess->TouricoService($this->objProcess)->GetHotelDetailsV3();
+		$this->objProcess->TouricoService($this->objProcess)->SearchHotelsById();
 	}
 }
 
