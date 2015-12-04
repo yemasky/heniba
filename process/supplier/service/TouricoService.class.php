@@ -71,7 +71,7 @@ class TouricoService
             "Content-type" => "text/xml", "Content-length" => strlen($postData));
         $requestUrl = $this->objTouricoConfig->hotelV3WSUrl;
 
-        echo $postData;exit;
+        //echo $postData;exit;
         //print_r($arrayHeader);
         $this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
         $arrayResult = $this->objWSClient->execute_cUrl();
