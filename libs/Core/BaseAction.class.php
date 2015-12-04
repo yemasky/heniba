@@ -968,13 +968,13 @@ class Process{
 			}
 		}
 		$execute_type = substr($class, $loop);
-		$execute_dir = 'www\\';
-		$strpos = strpos($class, '\\');
+		$execute_dir = 'www/';
+		$strpos = strpos($class, '/');
 		$execute_sub_dir = $lib_sub_dir = '';
 		if($strpos !== false) {
 			$execute_dir = $lib_sub_dir = substr($class, 0, $strpos + 1);
 			$class = substr($class, $strpos + 1);
-			$strrpos = strrpos($class, '\\');
+			$strrpos = strrpos($class, '/');
 			if($strrpos > 0) {
 				$execute_sub_dir = substr($class, 0, $strrpos + 1);
 				$class = substr($class, $strrpos + 1);
@@ -1023,7 +1023,7 @@ class Process{
 	}
 
 	public function __construct($process_key){
-		$this->process_key = $process_key . '\\';
+		$this->process_key = $process_key . '/';
 	}
 	
 	public function setProcessKey($process_key){
