@@ -11,11 +11,17 @@ class TouricoConfig {
 			"South America/Caribbean");
 	public $destinationsWSUrl = 'http://destservices.touricoholidays.com/DestinationsService.svc?wsdl';
 	public $hotelV3WSUrl = 'http://demo-hotelws.touricoholidays.com/HotelFlow.svc/bas';
+	public $ReservationsServiceUrl = 'http://demo-wsnew.touricoholidays.com/ReservationsService.asmx'; //用于ReservationsService
 
 	public $SOAPActionGetDestination = 'http://touricoholidays.com/WSDestinations/2008/08/Contracts/IDestinationContracts/GetDestination';
 	public $SOAPActionGetHotelsByDestination = 'http://touricoholidays.com/WSDestinations/2008/08/Contracts/IDestinationContracts/GetHotelsByDestination';
+
 	public $SOAPActionSearchHotelsById = 'http://tourico.com/webservices/hotelv3/IHotelFlow/SearchHotelsById';
 	public $SOAPActionGetHotelDetailsV3 = 'http://tourico.com/webservices/hotelv3/IHotelFlow/GetHotelDetailsV3';
+	public $SOAPActionGetCancellationPolicies = 'http://tourico.com/webservices/hotelv3/IHotelFlow/GetCancellationPolicies';
+	public $SOAPActionCheckAvailabilityAndPrices = 'http://tourico.com/webservices/hotelv3/IHotelFlow/CheckAvailabilityAndPrices';
+
+	public $SOAPActionGetCancellationPoliciesWS = 'http://tourico.com/webservices/GetCancellationPolicies'; //用于ReservationsService
 
 	//searchHotels(SearchHotelsById, SearchHotelsByDestinationIds) -> GetHotelDetailsV3
 	//->GetCancellationPolicies->CheckAvailabilityAndPrices->BookHotelV3->(CostAmend->DoAmend)
@@ -57,6 +63,16 @@ class TouricoConfig {
                  .'<trav:culture>'.$this->culture.'</trav:culture>'
                  .'<trav:version>'.$this->version.'</trav:version>'
 				 .'</web:LoginHeader></soapenv:Header>';
+		return $header;
+	}
+
+	protected function ReservationSoapHeader() {
+		$header = '<soap:Header><web:LoginHeader>'
+			.'<trav:username>'.$this->LoginName.'</trav:username>'
+			.'<trav:password>'.$this->LoginNamePassword.'</trav:password>'
+			.'<trav:culture>'.$this->culture.'</trav:culture>'
+			.'<trav:version>'.$this->version.'</trav:version>'
+			.'</web:LoginHeader></soap:Header>';
 		return $header;
 	}
 	
@@ -109,35 +125,65 @@ class TouricoConfig {
 		return $xml;
 	}
 	
-	public function GetCancellationPoliciesXml($nResID) {
+	public function GetCancellationPoliciesByHotelXml($arrayHotelInfo = null) {
+		$strnResID = '';
+		if(!empty($arrayHotelInfo)) {
+			$strnResID = ' <hot:hotelId>'.$arrayHotelInfo['hotelId'].'</hot:hotelId><hot:hotelRoomTypeId>'.$arrayHotelInfo['hotelRoomTypeId'].'</hot:hotelRoomTypeId>'
+				        .'<hot:dtCheckIn>'.$arrayHotelInfo['dtCheckIn'].'</hot:dtCheckIn><hot:dtCheckOut>'.$arrayHotelInfo['dtCheckOut'].'</hot:dtCheckOut>'
+				        .'<hot:productId></hot:productId>';
+		}
+		$xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:aut="http://schemas.tourico.com/webservices/authentication" xmlns:hot="http://tourico.com/webservices/hotelv3">'
+		         .$this->HotelV3WSAutHeader()
+		         .'<soapenv:Body><hot:GetCancellationPolicies>'
+                 .$strnResID
+				 .'</hot:GetCancellationPolicies></soapenv:Body></soapenv:Envelope>';
+		return $xml;
+	}
+
+	public function GetCancellationPoliciesXml($nResID = null, $arrayHotelInfo = null) {//用于ReservationsService
+		$strnResID = '';
+		if(!empty($strnResID)) $strnResID = '<web:nResID>'.nResID.'</web:nResID>';
+		if(!empty($arrayHotelInfo)) {
+			$strnResID = ' <web:hotelId>'.$arrayHotelInfo['hotelId'].'</web:hotelId><web:hotelRoomTypeId>'.$arrayHotelInfo['hotelRoomTypeId'].'</web:hotelRoomTypeId>'
+				.'<web:dtCheckIn>'.$arrayHotelInfo['dtCheckIn'].'</web:dtCheckIn><web:dtCheckOut>'.$arrayHotelInfo['dtCheckOut'].'</web:dtCheckOut>'
+				.'<web:productId></web:productId>';
+		}
 		$xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://tourico.com/webservices/" xmlns:trav="http://tourico.com/travelservices/">'
-		         .$this->ReservationWSHeader()
-		         .'<soapenv:Body><web:GetCancellationPolicies>'
-                 .'<web:nResID>'.nResID.'</web:nResID>'
-				 .'</web:GetCancellationPolicies></soapenv:Body></soapenv:Envelope>';
+			.$this->ReservationWSHeader()
+			.'<soapenv:Body><web:GetCancellationPolicies>'
+			.$strnResID
+			.'</web:GetCancellationPolicies></soapenv:Body></soapenv:Envelope>';
 		return $xml;
 	}
 	
-	//未完成
-	public function CheckAvailabilityAndPricesXml($arrayHotelId, $checkIn, $checkOut) {
+	//
+	public function CheckAvailabilityAndPricesXml($arrayHotelId, $RoomsInformation, $arrayCheckData) {
 		$strHotelid = '';
 		foreach($arrayHotelId as $k => $v) {
-			$strHotelid .= '<hot:HotelID id="'.$v.'"/>';
+			$strHotelid .= '<hot1:HotelIdInfo id="'.$v.'"/>';
 		}
+
+		$strRoomsInformation = '';
+		foreach($RoomsInformation as $k => $v) {
+			$strChildAge = '';
+			foreach ($v['ChildAge'] as $CAk => $CAv) {
+				$strChildAge .= '<hot1:ChildAge age="' . $CAv . '"/>';
+			}
+			$strRoomsInformation .= '<hot1:RoomInfo><hot1:AdultNum>'.$v['AdultNum'].'</hot1:AdultNum>'
+				.'<hot1:ChildNum>'.$v['ChildNum'].'</hot1:ChildNum>'
+				.'<hot1:ChildAges>'.$strChildAge.'</hot1:ChildAges></hot1:RoomInfo>';
+		}
+
 		$xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:aut="http://schemas.tourico.com/webservices/authentication" xmlns:hot="http://tourico.com/webservices/hotelv3" xmlns:hot1="http://schemas.tourico.com/webservices/hotelv3">'
 		         .$this->HotelV3WSAutHeader()
 		         .'<soapenv:Body><hot:CheckAvailabilityAndPrices><hot:request>'
                  .'<hot1:HotelIdsInfo>'.$strHotelid.'</hot1:HotelIdsInfo>'
-				 .'<hot1:CheckIn>'.$checkIn.'</hot1:CheckIn><hot1:CheckOut>'.$checkOut.'</hot1:CheckOut>'
-				 .'<hot1:RoomsInformation><hot1:RoomInfo>'
-				 .'</hot1:RoomInfo></hot1:RoomsInformation>'
-				 .'<hot1:AdultNum>2</hot1:AdultNum>'
-				 .'<hot1:ChildNum>0</hot1:ChildNum>'
-				 .'<hot1:ChildAges>
-                     <hot1:ChildAge age="0"/>
-                  </hot1:ChildAges>'
+				 .'<hot1:CheckIn>'.$arrayCheckData['CheckIn'].'</hot1:CheckIn><hot1:CheckOut>'.$arrayCheckData['CheckOut'].'</hot1:CheckOut>'
+				 .'<hot1:RoomsInformation>'
+				 .$strRoomsInformation
+				 .'</hot1:RoomsInformation>'
 				 .'<hot1:MaxPrice>0</hot1:MaxPrice><hot1:StarLevel>0</hot1:StarLevel><hot1:AvailableOnly>true</hot1:AvailableOnly>'
-				 .'</hot:request><hot:CheckAvailabilityAndPrices></soapenv:Body></soapenv:Envelope>';
+				 .'</hot:request></hot:CheckAvailabilityAndPrices></soapenv:Body></soapenv:Envelope>';
 		return $xml;
 	}
 	
@@ -150,13 +196,45 @@ class TouricoConfig {
 		return $xml;
 	}
 	
-	public function BookHotelV3requestXml() {
-		$xml = '<hot1:RecordLocatorId>0</hot1:RecordLocatorId>'
-		      .'<hot1:HotelId>1203719</hot1:HotelId>'
-			  .'<hot1:HotelRoomTypeId>1699316</hot1:HotelRoomTypeId>'
-			  .'<hot1:CheckIn>2013-11-15</hot1:CheckIn>'
-			  .'<hot1:CheckOut>2013-11-20</hot1:CheckOut>'
-			  .'<hot1:RoomsInfo>';
+	public function BookHotelV3requestXml($arrayBookInfo) {
+		$strRoomInfo = '';
+		foreach($arrayBookInfo['RoomsInfo'] as $k => $v) {
+			$strChildAge = '';
+			foreach($v['ChildAge'] as $CAk => $VAv) {
+				$strChildAge .= '<hot1:ChildAge age="'.$VAv.'"/>';
+			}
+			$strRoomInfo .='<hot1:RoomReserveInfo><hot1:RoomId>'.$k.'</hot1:RoomId>'
+				         .'<hot1:ContactPassenger><hot1:FirstName>'.$v['FirstName'].'</hot1:FirstName>'
+						 .'<hot1:MiddleName>'.$v['FirstName'].'</hot1:MiddleName>'
+				.'<hot1:MiddleName>'.$v['MiddleName'].'</hot1:MiddleName>'
+				.'<hot1:LastName>'.$v['LastName'].'</hot1:LastName>'
+				.'<hot1:HomePhone>'.$v['HomePhone'].'</hot1:HomePhone>'
+				.'<hot1:MobilePhone>'.$v['MobilePhone'].'</hot1:MobilePhone>'
+				.'<hot1:SelectedBoardBase><hot1:Id>'.$v['Id'].'</hot1:Id><hot1:Price>'.$v['Price'].'</hot1:Price></hot1:SelectedBoardBase>'
+				.'<hot1:SelectedSupplements><hot1:SupplementInfo suppId="'.$v['suppId'].'" supTotalPrice="'.$v['supTotalPrice'].'" suppType="'.$v['suppType'].'">'
+				.'<hot1:SupAgeGroup><hot1:SuppAges suppFrom="'.$v['suppFrom'].'" suppTo="'.$v['suppTo'].'" suppQuantity="'.$v['suppQuantity'].'" suppPrice="'.$v['suppPrice'].'"/></hot1:SupAgeGroup></hot1:SupplementInfo></hot1:SelectedSupplements>'
+				.'<hot1:Bedding>'.$v['Bedding'].'</hot1:Bedding>'
+				.'<hot1:Note>'.$v['Note'].'</hot1:Note>'
+				.'<hot1:AdultNum>'.$v['AdultNum'].'</hot1:AdultNum><hot1:ChildNum>'.$v['ChildNum'].'</hot1:ChildNum>'
+				.'<hot1:ChildAges>'.$strChildAge.'</hot1:ChildAges></hot1:RoomReserveInfo>';
+		}
+		$xml = '<hot1:RecordLocatorId>'.$arrayBookInfo['RecordLocatorId'].'</hot1:RecordLocatorId>'
+		      .'<hot1:HotelId>'.$arrayBookInfo['HotelId'].'</hot1:HotelId>'
+			  .'<hot1:HotelRoomTypeId>'.$arrayBookInfo['HotelRoomTypeId'].'</hot1:HotelRoomTypeId>'
+			  .'<hot1:CheckIn>'.$arrayBookInfo['CheckIn'].'</hot1:CheckIn>'
+			  .'<hot1:CheckOut>'.$arrayBookInfo['CheckOut'].'</hot1:CheckOut>'
+			  .'<hot1:RoomsInfo>'.$strRoomInfo.'</hot1:RoomsInfo>'
+			.'<hot1:PaymentType>'.$arrayBookInfo['PaymentType'].'</hot1:PaymentType>'
+			.'<hot1:AgentRefNumber>'.$arrayBookInfo['AgentRefNumber'].'</hot1:AgentRefNumber>'
+			.'<hot1:ContactInfo>'.$arrayBookInfo['ContactInfo'].'</hot1:ContactInfo>'
+			.'<hot1:RequestedPrice>'.$arrayBookInfo['RequestedPrice'].'</hot1:RequestedPrice><hot1:DeltaPrice>'.$arrayBookInfo['DeltaPrice'].'</hot1:DeltaPrice>'
+			.'<hot1:Currency>'.$arrayBookInfo['Currency'].'</hot1:Currency>'
+			.'<hot1:DeltaPrice>'.$arrayBookInfo['DeltaPrice'].'</hot1:DeltaPrice><hot1:Currency>'.$arrayBookInfo['Currency'].'</hot1:Currency>'
+			.'<hot1:ConfirmationEmail>'.$arrayBookInfo['ConfirmationEmail'].'</hot1:ConfirmationEmail>'
+			.'<hot1:ConfirmationLogo/>'.$arrayBookInfo['ConfirmationLogo'].'</hot1:ConfirmationLogo>'
+			.'</hot:request></hot:BookHotelV3></soapenv:Body></soapenv:Envelope>';
+
+		;
 	}
 
 	public function SearchHotelsByIdXml($arrayHotelId, $RoomsInformation, $arrayCheckData) {
@@ -173,7 +251,6 @@ class TouricoConfig {
 	 */
 	public function SearchHotelsByIdrequestXml($arrayHotelId, $RoomsInformation, $arrayCheckData) {
 		$strHotelid = '';
-		$strRoomInfo = '';
 		foreach($arrayHotelId as $k => $v) {
 			$strHotelid .= '<m0:HotelIdInfo id="'.$v.'"/>';
 		}
@@ -197,6 +274,8 @@ class TouricoConfig {
 			  .'</m0:RoomsInformation><m0:MaxPrice>0</m0:MaxPrice><m0:StarLevel>0</m0:StarLevel><m0:AvailableOnly>true</m0:AvailableOnly>';
 		return $xml;
 	}
+
+
 	
 	
 	

@@ -30,7 +30,9 @@ class TouricoAction extends BaseAction{
 		//$this->objProcess->TouricoService($this->objProcess)->GetDestination();
 		//$this->objProcess->TouricoService($this->objProcess)->GetHotelsByDestination();
 		//$this->objProcess->TouricoService($this->objProcess)->GetHotelDetailsV3();
-		$this->objProcess->TouricoService($this->objProcess)->SearchHotelsById();
+		//$this->objProcess->TouricoService($this->objProcess)->SearchHotelsById();
+		//$this->objProcess->TouricoService($this->objProcess)->GetCancellationPolicies();
+		$this->objProcess->TouricoService($this->objProcess)->CheckAvailabilityAndPrices();
 	}
 }
 
