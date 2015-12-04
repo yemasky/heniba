@@ -71,8 +71,8 @@ class TouricoService
             "Content-type" => "text/xml", "Content-length" => strlen($postData));
         $requestUrl = $this->objTouricoConfig->hotelV3WSUrl;
 
-        //echo $postData;
-        //print_r($arrayHeader);exit;
+        echo $postData;exit;
+        //print_r($arrayHeader);
         $this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
         $arrayResult = $this->objWSClient->execute_cUrl();
         if($arrayResult['httpcode'] == 200) {

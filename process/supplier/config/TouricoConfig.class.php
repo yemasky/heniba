@@ -181,8 +181,8 @@ class TouricoConfig {
 		$strRoomsInformation = '';
 		foreach($RoomsInformation as $k => $v) {
 			$strChildAge = '';
-			foreach ($v['ChildAge'] as $k => $v) {
-				$strChildAge .= '<m0:ChildAge age="' . $v . '"/>';
+			foreach ($v['ChildAge'] as $CAk => $CAv) {
+				$strChildAge .= '<m0:ChildAge age="' . $CAv . '"/>';
 			}
 			$strRoomsInformation .= '<m0:RoomInfo><m0:AdultNum>'.$v['AdultNum'].'</m0:AdultNum>'
 				.'<m0:ChildNum>'.$v['ChildNum'].'</m0:ChildNum>'
