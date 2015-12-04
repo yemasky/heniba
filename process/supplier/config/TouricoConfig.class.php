@@ -173,26 +173,28 @@ class TouricoConfig {
 	 */
 	public function SearchHotelsByIdrequestXml($arrayHotelId, $RoomsInformation, $arrayCheckData) {
 		$strHotelid = '';
+		$strRoomInfo = '';
 		foreach($arrayHotelId as $k => $v) {
 			$strHotelid .= '<m0:HotelIdInfo id="'.$v.'"/>';
 		}
-		$strChildAge = '';
-		if(count($RoomsInformation['ChildAge'] > 0)) {
-			foreach ($RoomsInformation['ChildAge'] as $k => $v) {
+
+		$strRoomsInformation = '';
+		foreach($RoomsInformation as $k => $v) {
+			$strChildAge = '';
+			foreach ($v['ChildAge'] as $k => $v) {
 				$strChildAge .= '<m0:ChildAge age="' . $v . '"/>';
 			}
-		} else {
-			$strChildAge = '<m0:ChildAge age="0"/>';
+			$strRoomsInformation .= '<m0:RoomInfo><m0:AdultNum>'.$v['AdultNum'].'</m0:AdultNum>'
+				.'<m0:ChildNum>'.$v['ChildNum'].'</m0:ChildNum>'
+				.'<m0:ChildAges>'.$strChildAge.'</m0:ChildAges></m0:RoomInfo>';
 		}
+
 		$xml = '<m0:HotelIdsInfo>'
 			  .$strHotelid
 			  .'</m0:HotelIdsInfo>'
-			  .'<m0:CheckIn>'.$arrayCheckData['CheckIn'].'</m0:CheckIn><m0:CheckOut>'.$arrayCheckData['CheckOut'].'</m0:CheckOut>'
-			  .'<m0:RoomsInformation><m0:RoomInfo><m0:AdultNum>'.$RoomsInformation['AdultNum'].'</m0:AdultNum>'
-			  .'<m0:ChildNum>'.$RoomsInformation['ChildNum'].'</m0:ChildNum>'
-			  .'<m0:ChildAges>'.$strChildAge.'</m0:ChildAges>'
-			  .'</m0:RoomInfo></m0:RoomsInformation>'
-			  .'<m0:MaxPrice>0</m0:MaxPrice><m0:StarLevel>0</m0:StarLevel><m0:AvailableOnly>true</m0:AvailableOnly>';
+			  .'<m0:CheckIn>'.$arrayCheckData['CheckIn'].'</m0:CheckIn><m0:CheckOut>'.$arrayCheckData['CheckOut'].'</m0:CheckOut><m0:RoomsInformation>'
+			  .$strRoomsInformation
+			  .'</m0:RoomsInformation><m0:MaxPrice>0</m0:MaxPrice><m0:StarLevel>0</m0:StarLevel><m0:AvailableOnly>true</m0:AvailableOnly>';
 		return $xml;
 	}
 	

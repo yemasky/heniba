@@ -76,7 +76,6 @@ class WebServiceClient{
 	}
 
 	public function execute_cUrl(){
-		set_time_limit(0);
 		$process = curl_init();
 		curl_setopt($process, CURLOPT_URL, $this->request_url);
 		
