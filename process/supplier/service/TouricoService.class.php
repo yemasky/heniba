@@ -64,7 +64,7 @@ class TouricoService
     public function SearchHotelsById()
     {
         $arrayHotelId = array('1356675','1216326');
-        $RoomsInformation = array('AdultNum'=>5, 'ChildNum'=>5, 'ChildAge'=>array(3,4,5,6,7));
+        $RoomsInformation = array('AdultNum'=>2, 'ChildNum'=>1, 'ChildAge'=>array(3));
         $arrayCheckData = array('CheckIn'=>'2015-12-24', 'CheckOut'=>'2015-12-30');
         $postData = $this->objTouricoConfig->SearchHotelsByIdXml($arrayHotelId, $RoomsInformation, $arrayCheckData);
         $arrayHeader = array("SOAPAction" => $this->objTouricoConfig->SOAPActionSearchHotelsById,
