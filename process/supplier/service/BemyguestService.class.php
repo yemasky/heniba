@@ -14,7 +14,7 @@ class BemyguestService{
 	private $DataBemyssguest;
 	private $objProcess = '';
 
-	public function __construct($($ = NULL){
+	public function __construct($objProcess = NULL){
 		if(is_array($objProcess)) {
 			$this->objProcess = $objProcess[0];
 		}
