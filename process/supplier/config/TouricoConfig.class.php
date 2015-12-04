@@ -163,7 +163,7 @@ class TouricoConfig {
 		$xml = '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:m0="http://schemas.tourico.com/webservices/hotelv3">'
 			.$this->HotelV3WSHeader()
 			.'<SOAP-ENV:Body><m:SearchHotelsById xmlns:m="http://tourico.com/webservices/hotelv3"><m:request>'
-			.$this->SearchHotelsByIdrequestXml()
+			.$this->SearchHotelsByIdrequestXml($arrayHotelId, $RoomsInformation, $arrayCheckData)
 			.'</m:request></m:SearchHotelsById></SOAP-ENV:Body></SOAP-ENV:Envelope>';
 		return $xml;
 	}
