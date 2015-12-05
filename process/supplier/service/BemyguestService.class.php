@@ -18,6 +18,8 @@ class BemyguestService{
 	public function __construct($objProcess = NULL){
 		if(is_array($objProcess)) {
 			$this->objProcess = $objProcess[0];
+		} elseif(is_object($objProcess)) {
+			$this->objProcess = $objProcess;
 		}
 		$this->objWSClient = new WebServiceClient();
 	}
@@ -55,7 +57,7 @@ class BemyguestService{
 							$v[$kk] = addslashes($vv);
 						}
 					}
-					$id = $objDao::insertProduct($v);
+					$id = $objDao->insertProduct($v);
 					if(!empty($id)) {
 						echo "add :" . $v['uuid'] . ', id:' . $id . "\r\n";
 					} else {
@@ -74,7 +76,7 @@ class BemyguestService{
 					}
 				}
 				
-				$id = $objDao::insertProduct($arrData);
+				$id = $objDao->insertProduct($arrData);
 				if(!empty($id)) {
 					echo "add :" . $arrData['uuid'] . ', id:' . $id . "\r\n";
 				} else {

@@ -17,6 +17,9 @@ class TouricoAction extends BaseAction{
 				break;
 			case 'allproducts' :
 				$this->getProducts($objRequest, $objResponse);
+			case 'parserdestination' :
+				$this->parserDestination($objRequest, $objResponse);
+				break;
 			default :
 				$this->doBase($objRequest, $objResponse);
 				break;
@@ -27,12 +30,18 @@ class TouricoAction extends BaseAction{
 	 * 首页显示
 	 */
 	protected function doBase($objRequest, $objResponse){
-		//$this->objProcess->TouricoService($this->objProcess)->GetDestination();
+		//$result = $this->objProcess->TouricoService($this->objProcess)->GetDestination('Asia/Far East', 'China');
 		//$this->objProcess->TouricoService($this->objProcess)->GetHotelsByDestination();
-		//$this->objProcess->TouricoService($this->objProcess)->GetHotelDetailsV3();
+		$result = $this->objProcess->TouricoService($this->objProcess)->GetHotelDetailsV3();
 		//$this->objProcess->TouricoService($this->objProcess)->SearchHotelsById();
 		//$this->objProcess->TouricoService($this->objProcess)->GetCancellationPolicies();
-		$this->objProcess->TouricoService($this->objProcess)->CheckAvailabilityAndPrices();
+		//$this->objProcess->TouricoService($this->objProcess)->CheckAvailabilityAndPrices();
+		print_r($result);
+	}
+	
+	protected function parserDestination($objRequest, $objResponse) {
+		//$this->objProcess->TouricoService($this->objProcess)->insertDestination();
+		$this->objProcess->TouricoTool($this->objProcess)->insertDestination();
 	}
 }
 

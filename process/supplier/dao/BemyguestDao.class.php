@@ -6,10 +6,10 @@
  */
 
 class BemyguestDao {
-	private static $dsn = 'mysql://root:@127.0.0.1/supplier';
+	private $dsn = 'mysql://root:@127.0.0.1/supplier';
 
-	public static function insertProduct($arrData) {
-		return DBQuery::instance(self::$dsn)->setTable('bemyguest_tour')->insert($arrData, 'INSERT IGNORE')->getInsertId();
+	public function insertProduct($arrData) {
+		return DBQuery::instance($this->dsn)->setTable('bemyguest_tour')->insert($arrData, 'INSERT IGNORE')->getInsertId();
 	}
 	
 }
