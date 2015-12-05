@@ -269,7 +269,7 @@ abstract class BaseAction{
 	/**
 	 * 缓存页面
 	 */
-	public function setCache($_cache_id = NULL, $flag = true, $_cache_time = 7200, $_cache_dir = __CACHE, $_renew_cachedir = true){
+	public function setCache($_cache_id = NULL, $_cache_time = 7200, $flag = true, $_cache_dir = __CACHE, $_renew_cachedir = true){
 		if(empty($_cache_id)) {
 			throw new Exception("_cache_id cann't empty.");
 		}
@@ -767,7 +767,7 @@ class DBCache{
 	/**
 	 * 模型对象
 	 */
-	private $model_obj = null;
+	private $objModel = null;
 	
 	/**
 	 * 调用时输入的参数
@@ -780,8 +780,8 @@ class DBCache{
 	/**
 	 * 函数式使用模型辅助类的输入函数
 	 */
-	public function setCallObj(& $obj, $args){
-		$this->model_obj = $obj; // var_dump($obj);var_dump($args);
+	public function setCallObj(& $objModel, $args){
+		$this->objModel = $objModel; // var_dump($obj);var_dump($args);
 		$this->input_args = $args;
 		return $this;
 	}
@@ -789,30 +789,23 @@ class DBCache{
 	/**
 	 * 魔术函数，支持多重函数式使用类的方法 不支持自定义缓存文件夹，系统将自动生成缓存文件夹
 	 */
-	public function __call($func_name, $func_args){ // var_dump($this->model_obj);
-		$cache_id = md5(serialize($this->model_obj) . json_encode($this->input_args) . $func_name . json_encode($func_args));
+	public function __call($func_name, $func_args){ // var_dump($this->objModel);
+		$cache_id = md5(serialize($this->objModel) . json_encode($this->input_args) . $func_name . json_encode($func_args));
 		if($this->input_args[0] == -1)
 			return $this->deleteCache($cache_id);
 		if($this->input_args[0] >= 0) {
-			$this->life_time = $this->input_args[0] == 0 ? 5184000 : $this->input_args[0];
+			$this->life_time = $this->input_args[0];
 			$this->cache_dir = $this->cache_dir . $this->life_time . '/';
 		}
 		$display = isset($this->input_args[2]) ? $this->input_args[2] : false;
 		if($this->isValid($cache_id, $this->life_time))
 			return $this->fetch($cache_id, $display);
-		return $this->cache_obj($cache_id, call_user_func_array(array (
-				$this->model_obj,
-				$func_name 
-		), $func_args));
+		return $this->cache($cache_id, call_user_func_array(array($this->objModel, $func_name), $func_args));
 	}
-
-	/**
-	 */
-	public function cache_obj($cache_id, $run_result, $renew_cachedir = true){
+	public function cache($cache_id, $run_result, $renew_cachedir = true){
 		$this->cachePage($cache_id, $run_result, $renew_cachedir);
 		return $run_result;
 	}
-
 	public function deleteCache($cacheID, $renew_cachedir = true){
 		$filepath = PathManager::getCacheDir($cacheID, $this->cache_dir, $renew_cachedir);
 		if(!file_exists($filepath.$cacheID)) {
@@ -840,6 +833,7 @@ class DBCache{
 		if(!is_readable($_cacheFile)) {
 			return false;
 		} // clearstatcache(); //clearn filemtime function cache
+		if($this->life_time == 0) return true;
 		$now = time();
 		$fileMTime = filemtime($_cacheFile);
 		return ($now - $fileMTime) < $cacheTime;

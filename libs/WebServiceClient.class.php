@@ -11,13 +11,22 @@ class WebServiceClient{
 	private $arrayHeader = array ();
 	private $request_data = "";
 	private $ssl = false;
+	private $time_limit = 0;
+	private $execute_timeout = 172800;
 
 	public function __call($name, $args){
 		$objCallName = new $name($args);
 		$objCallName->setCallObj($this, $args);
 		return $objCallName;
 	}
-
+	public function timelimit($time) {
+		$this->time_limit = $time;
+		return $this;
+	}
+	public function timeout($time) {
+		$this->execute_timeout = $time;
+		return $this;
+	}
 	public function ssl(){
 		$this->ssl = true;
 		return $this;
@@ -62,7 +71,7 @@ class WebServiceClient{
 		$opts = array (
 				'http' => array (
 						'method' => $this->method,
-						'timeout' => 120,
+						'timeout' => $this->execute_timeout,
 						'header' => $header 
 				) 
 		);
@@ -76,12 +85,15 @@ class WebServiceClient{
 	}
 
 	public function execute_cUrl(){
+		//if($this->time_limit != '') {
+			set_time_limit(0);
+		//}
 		$process = curl_init();
 		curl_setopt($process, CURLOPT_URL, $this->request_url);
 		
 		curl_setopt($process, CURLOPT_HEADER, TRUE);
 		curl_setopt($process, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($process, CURLOPT_TIMEOUT, 120);
+		curl_setopt($process, CURLOPT_TIMEOUT, $this->execute_timeout);
 		curl_setopt($process, CURLOPT_DNS_CACHE_TIMEOUT, 172800);
 		if($this->ssl == false) {
 			curl_setopt($process, CURLOPT_SSL_VERIFYPEER, FALSE);
