@@ -30,13 +30,13 @@ class TouricoService{
 		);
 		$arrayContinent = $this->objTouricoConfig->arrayContinent;
 		$requestUrl = $this->objTouricoConfig->destinationsWSUrl;
-		$this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl)->timeout(1728000);
+		$this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl)->timeout(1728000)->gzip();
 		$arrayResult = $this->objWSClient->DBCache(0)->execute_cUrl();
 		return $this->parserXml($arrayResult);
 	}
 
-	public function GetHotelsByDestination($Continent){
-		$postData = $this->objTouricoConfig->GetHotelsByDestinationXml($Continent);
+	public function GetHotelsByDestination($Continent, $country = null){
+		$postData = $this->objTouricoConfig->GetHotelsByDestinationXml($Continent, $country);
 		$arrayHeader = array (
 				"SOAPAction" => "http://touricoholidays.com/WSDestinations/2008/08/Contracts/IDestinationContracts/GetHotelsByDestination",
 				"Content-type" => "text/xml",
@@ -45,9 +45,9 @@ class TouricoService{
 		$arrayContinent = $this->objTouricoConfig->arrayContinent;
 		$requestUrl = $this->objTouricoConfig->destinationsWSUrl;
 		
-		$this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
-		$arrayResult = $this->objWSClient->DBCache(0)->execute_cUrl();
-		
+		$this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl)->timeout(1728000)->gzip();
+		$arrayResult = $this->objWSClient->DBCache(0)->execute_cUrl('GetHotelsByDestination_'.$Continent.'_' . $country);
+		//echo $arrayResult['result'];exit;
 		return $this->parserXml($arrayResult);
 	}
 
@@ -106,27 +106,28 @@ class TouricoService{
 	// end search
 	//
 	// 2、 More Info
-	public function GetHotelDetailsV3(){
-		$postData = $this->objTouricoConfig->GetHotelDetailsV3Xml(array (
-				'1356675',
-				'1216326' 
-		));
+	public function GetHotelDetailsV3($arrayHotelIds){
+		//$arrayHotelIds = array ('1356675','1216326');
+		$postData = $this->objTouricoConfig->GetHotelDetailsV3Xml($arrayHotelIds);
 		$arrayHeader = array (
 				"SOAPAction" => "http://tourico.com/webservices/hotelv3/IHotelFlow/GetHotelDetailsV3",
 				"Content-type" => "text/xml",
 				"Content-length" => strlen($postData) 
 		);
 		$requestUrl = $this->objTouricoConfig->hotelV3WSUrl;
-		
-		$this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
-		$arrayResult = $this->objWSClient->DBCache(0)->execute_cUrl();
+		$this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl)->gzip();
+		$arrayResult = $this->objWSClient->DBCache(0)->execute_cUrl($arrayHotelIds);
 		//echo $arrayResult['result'];
 		if($arrayResult['httpcode'] == 200) {
 			preg_match('/<TWS_HotelDetailsV3([\s\S]+?)TWS_HotelDetailsV3>/', $arrayResult['result'], $arrayResultMatch);
 			$arrayResult = '';
 			$arrayResult['result'] = $arrayResultMatch[0];
 			$arrayResult['httpcode'] = 200;
-		} 
+		} else {
+			logError(json_encode($postData));
+			logError(json_encode($arrayResult));
+			return false;
+		}
 		return $this->parserXml($arrayResult);
 	}
 	// end More Info

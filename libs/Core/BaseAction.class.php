@@ -840,6 +840,7 @@ class DBCache{
 	}
 
 	public function cachePage($cacheID, $contents, $renew_cachedir = true){
+		if(isset($contents['ioy_cooc_cache']) && $contents['ioy_cooc_cache'] == false) return;
 		$filepath = PathManager::createCacheDir($cacheID, $this->cache_dir, $renew_cachedir);
 		$contents = json_encode($contents);
 		return File::creatFile($cacheID, $contents, $filepath);

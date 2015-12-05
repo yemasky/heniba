@@ -12,4 +12,8 @@ class TouricoDao {
 		return DBQuery::instance($this->dsn)->setTable('tourico_destination')->insert($arrData, 'INSERT IGNORE')->getInsertId();
 	}
 	
+	public function insertHotel($arrData) {
+		return DBQuery::instance($this->dsn)->setTable('tourico_hotel')->insert($arrData, 'INSERT IGNORE');
+	}
+	
 }

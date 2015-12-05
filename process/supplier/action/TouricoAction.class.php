@@ -20,6 +20,9 @@ class TouricoAction extends BaseAction{
 			case 'parserdestination' :
 				$this->parserDestination($objRequest, $objResponse);
 				break;
+			case 'disposehotels' :
+				$this->disposeHotels($objRequest, $objResponse);
+				break;	
 			default :
 				$this->doBase($objRequest, $objResponse);
 				break;
@@ -31,17 +34,23 @@ class TouricoAction extends BaseAction{
 	 */
 	protected function doBase($objRequest, $objResponse){
 		//$result = $this->objProcess->TouricoService($this->objProcess)->GetDestination('Asia/Far East', 'China');
-		//$this->objProcess->TouricoService($this->objProcess)->GetHotelsByDestination();
-		$result = $this->objProcess->TouricoService($this->objProcess)->GetHotelDetailsV3();
+		$result = $this->objProcess->TouricoService($this->objProcess)->GetHotelsByDestination('Africa');
+		//$result = $this->objProcess->TouricoService($this->objProcess)->GetHotelDetailsV3();
 		//$this->objProcess->TouricoService($this->objProcess)->SearchHotelsById();
 		//$this->objProcess->TouricoService($this->objProcess)->GetCancellationPolicies();
 		//$this->objProcess->TouricoService($this->objProcess)->CheckAvailabilityAndPrices();
 		print_r($result);
+		echo json_encode($result);
 	}
 	
 	protected function parserDestination($objRequest, $objResponse) {
 		//$this->objProcess->TouricoService($this->objProcess)->insertDestination();
 		$this->objProcess->TouricoTool($this->objProcess)->insertDestination();
+	}
+	
+	protected function disposeHotels($objRequest, $objResponse) {
+		//$this->objProcess->TouricoService($this->objProcess)->insertDestination();
+		$this->objProcess->TouricoTool($this->objProcess)->disposeHotels();
 	}
 }
 

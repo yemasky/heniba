@@ -13,6 +13,7 @@ class WebServiceClient{
 	private $ssl = false;
 	private $time_limit = 0;
 	private $execute_timeout = 172800;
+	private $gzip = false;
 
 	public function __call($name, $args){
 		$objCallName = new $name($args);
@@ -21,6 +22,10 @@ class WebServiceClient{
 	}
 	public function timelimit($time) {
 		$this->time_limit = $time;
+		return $this;
+	}
+	public function gzip() {
+		$this->gzip = true;
 		return $this;
 	}
 	public function timeout($time) {
@@ -103,13 +108,17 @@ class WebServiceClient{
 			curl_setopt($process, CURLOPT_POST, true);
 			curl_setopt($process, CURLOPT_POSTFIELDS, $this->request_data);
 		}
+		$arrayHeader = array();
 		if(!empty($this->arrayHeader)) {
-			$arrayHeader = array();
 			foreach($this->arrayHeader as $k => $v) {
 				$arrayHeader[] = $k . ": " . $v;
 			}
-			curl_setopt($process, CURLOPT_HTTPHEADER, $arrayHeader);
 		}
+		if($this->gzip) {
+			$arrayHeader[] = 'Accept-Encoding: gzip';
+			curl_setopt($process, CURLOPT_ENCODING, "gzip");
+		}
+		if(!empty($arrayHeader)) curl_setopt($process, CURLOPT_HTTPHEADER, $arrayHeader);
 		
 		$DataBemyssguest = curl_exec($process);
 		$curl_getinfo = curl_getinfo($process);
@@ -127,6 +136,8 @@ class WebServiceClient{
 		$return['httpcode'] = $httpcode;
 		$return['error'] = $error;
 		$return['curl_getinfo'] = $curl_getinfo;
+		$return['ioy_cooc_cache'] = $httpcode == 200 ? true : false;
+		
 		return $return;
 	}
 }

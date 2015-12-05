@@ -4,10 +4,9 @@
  * @author YEMASKY  yemasky@msn.com
  * Copyright 2015  
  */
-
-class TouricoTool {
+class TouricoTool{
 	private $objProcess = '';
-	
+
 	public function __construct($objProcess = NULL){
 		if(is_array($objProcess)) {
 			$this->objProcess = $objProcess[0];
@@ -15,11 +14,11 @@ class TouricoTool {
 			$this->objProcess = $objProcess;
 		}
 	}
-	
+
 	/*
 	 * insertDestination
 	 */
-	public function insertDestination() {
+	public function insertDestination(){
 		$objTouricoDao = $this->objProcess->TouricoDao();
 		$objTouricoService = $this->objProcess->TouricoService($this->objProcess);
 		$arrayDestination = $objTouricoService->GetDestination();
@@ -32,7 +31,7 @@ class TouricoTool {
 			$arrayData['destination_type'] = 'Continent';
 			$Continent_id = $objTouricoDao->insertDestination($arrayData);
 			$arrayData = null;
-			foreach ($Continent['Country'] as $kk => $Country) {
+			foreach($Continent['Country'] as $kk => $Country) {
 				$arrayData['Continent_id'] = $Continent_id;
 				$arrayData['name'] = addslashes($Country['name']);
 				$arrayData['elementType'] = $Country['elementType'];
@@ -45,7 +44,7 @@ class TouricoTool {
 				echo "over Country_id:$Country_id \r\n";
 				ob_flush();
 				flush();
-				foreach ($Country['State'][0]['City'] as $kkk => $City) {
+				foreach($Country['State'][0]['City'] as $kkk => $City) {
 					$arrayData['Continent_id'] = $Continent_id;
 					$arrayData['Country_id'] = $Country_id;
 					$arrayData['name'] = addslashes($City['name']);
@@ -63,7 +62,7 @@ class TouricoTool {
 					flush();
 					$arrayData = null;
 					if(isset($City['CityLocation'])) {
-						foreach ($City['CityLocation'] as $kkkk => $CityLocation) {
+						foreach($City['CityLocation'] as $kkkk => $CityLocation) {
 							$arrayData['Continent_id'] = $Continent_id;
 							$arrayData['Country_id'] = $Country_id;
 							$arrayData['City_id'] = $City_id;
@@ -87,7 +86,66 @@ class TouricoTool {
 		}
 	}
 
-	public function insertHotel() {
-		
+	public function disposeHotels(){
+		$objTouricoDao = $this->objProcess->TouricoDao();
+		$objTouricoService = $this->objProcess->TouricoService($this->objProcess);
+		$arrayHotelIds = array ();
+		$arrayHotels = array ();
+		$arrayDestination = $objTouricoService->GetDestination();
+		foreach($arrayDestination['s:Body'][0]['DestinationResponse'][0]['DestinationResult'][0]['Continent'] as $k => $Continent) {
+			foreach($Continent['Country'] as $ck => $ContinentCountry) {
+				$arrayHotelsByDestination = $objTouricoService->GetHotelsByDestination($Continent['name'], $ContinentCountry['name']);
+				$ContinentHotel = $arrayHotelsByDestination['s:Body'][0]['HotelsByDestinationResponse'][0]['DestinationResult'][0]['Continent'];
+				foreach($ContinentHotel as $kk => $Country) {
+					foreach($Country['Country'][0]['State'][0]['City'] as $kkk => $City) {
+						foreach($City['Hotels'][0]['Hotel'] as $kkkk => $hotels) {
+							$arrayHotelIds[] = $hotels['hotelId'];
+							if(count($arrayHotelIds) >= 10) {
+								$arrayHotels = $objTouricoService->GetHotelDetailsV3($arrayHotelIds);
+								if($arrayHotels == false) continue;
+								$this->insertHotels($arrayHotels);
+								$arrayHotelIds = array ();
+							}
+						}
+						if(count($arrayHotelIds) > 0) {
+							$arrayHotels = $objTouricoService->GetHotelDetailsV3($arrayHotelIds);
+							if($arrayHotels == false) continue;
+							$this->insertHotels($arrayHotels);
+							$arrayHotelIds = array ();
+						}
+					}
+				}
+				echo "over ContinentCountry:" . $ContinentCountry['name'] . " \r\n";
+				ob_flush();
+				flush();
+			}
+			echo "over Continent:" . $Continent['name'] . " \r\n";
+			ob_flush();
+			flush();
+		}
+	}
+
+	public function insertHotels($arrayHotels){
+		$objTouricoDao = $this->objProcess->TouricoDao();
+		$arrayHotesData = array ();
+		if(!isset($arrayHotels['Hotel']) || empty($arrayHotels['Hotel'])) {
+			if(isset($arrayHotels['StatusCode'][0]['type'][0]) && $arrayHotels['StatusCode'][0]['type'][0] == 'Error') {
+				logError(json_encode($arrayHotels));
+				return;
+			}
+			throw new Exception(json_encode($arrayHotels));
+		}
+		foreach($arrayHotels['Hotel'] as $k => $hotel) {
+			foreach($hotel as $kk => $value) {
+				if(is_array($value))
+					$hotel[$kk] = json_encode($value);
+				$hotel[$kk] = addslashes($hotel[$kk]);
+			}
+			$hotel['Home'] = addslashes(json_encode($arrayHotels['Home'][$k]));
+			$objTouricoDao->insertHotel($hotel);
+			echo "over hotel:" . $hotel['hotelID'] . " \r\n";
+			ob_flush();
+			flush();
+		}
 	}
 }

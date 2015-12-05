@@ -88,18 +88,18 @@ if(!defined("INC_FUNC_COMMON")) {
 	}
 
 	function logError($message, $model = "", $level = "ERROR"){
-		writeLog("#error.log", $message);
+		writeLog("#error", $message);
 	}
 
 	function logDebug($message, $model = "", $level = "DEBUG"){
-		writeLog("#debug.log", $message);
+		writeLog("#debug", $message);
 	}
 
 	function writeLog($filename, $msg){
 		if(defined(__WWW_LOGS_PATH)) {
-			$fp = fopen(__WWW_LOGS_PATH . $filename, "a+");
+			$fp = fopen(__WWW_LOGS_PATH . $filename . '.' . date("z") . '.log', "a+");
 		} else {
-			$fp = fopen(__ROOT_LOGS_PATH . $filename, "a+");
+			$fp = fopen(__ROOT_LOGS_PATH . $filename . '.' . date("z") . '.log', "a+");
 		}
 		$uri = '';
 		if(isset($_SERVER['REQUEST_URI']))
