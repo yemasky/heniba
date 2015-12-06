@@ -9,7 +9,7 @@
 <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，现在网站暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
   以获得更好的体验！</p>
 <![endif]-->
-<iframe src="index.php?action=admin_header" allowtransparency="1" frameborder="0" height="50px" width="100%" marginheight="0" marginwidth="0"></iframe>
+<%include file="merchant/inc/admin_header.tpl"%>
 <div class="am-cf admin-main">
   <!-- sidebar start -->
   <%include file="merchant/inc/admin_sidebar.tpl"%>
@@ -142,27 +142,27 @@
                 <th>访问量</th>
               </tr>
               <tr>
-                <td class="am-text-center"><img src="assets/i/examples/admin-chrome.png" alt=""></td>
+                <td class="am-text-center"><img src="<%$__RESOURCE%>assets/i/examples/admin-chrome.png" alt=""></td>
                 <td>Google Chrome</td>
                 <td>3,005</td>
               </tr>
               <tr>
-                <td class="am-text-center"><img src="assets/i/examples/admin-firefox.png" alt=""></td>
+                <td class="am-text-center"><img src="<%$__RESOURCE%>assets/i/examples/admin-firefox.png" alt=""></td>
                 <td>Mozilla Firefox</td>
                 <td>2,505</td>
               </tr>
               <tr>
-                <td class="am-text-center"><img src="assets/i/examples/admin-ie.png" alt=""></td>
+                <td class="am-text-center"><img src="<%$__RESOURCE%>assets/i/examples/admin-ie.png" alt=""></td>
                 <td>Internet Explorer</td>
                 <td>1,405</td>
               </tr>
               <tr>
-                <td class="am-text-center"><img src="assets/i/examples/admin-opera.png" alt=""></td>
+                <td class="am-text-center"><img src="<%$__RESOURCE%>assets/i/examples/admin-opera.png" alt=""></td>
                 <td>Opera</td>
                 <td>4,005</td>
               </tr>
               <tr>
-                <td class="am-text-center"><img src="assets/i/examples/admin-safari.png" alt=""></td>
+                <td class="am-text-center"><img src="<%$__RESOURCE%>assets/i/examples/admin-safari.png" alt=""></td>
                 <td>Safari</td>
                 <td>505</td>
               </tr>

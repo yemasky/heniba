@@ -54,13 +54,17 @@ class IndexAction extends BaseAction {
 		$arrayLoginInfo['mu_login_email'] = $objRequest->email;
 		$arrayLoginInfo['mu_login_password'] = $objRequest->password;
 		$remember_me = $objRequest->remember_me;
+		$method = $objRequest->method;
+		if($method == 'logout') {
+			$this->objProcess->CommonService($this->objProcess)->logout();
+			redirect(__WEB);
+		}
 		$error_login = 0;
 		if(!empty($arrayLoginInfo['mu_login_email'] && !empty($arrayLoginInfo['mu_login_password']))) {
-			$objMUService = $this->objProcess->MerchantUserService($this->objProcess);
-			$arrayUserInfo = $objMUService->checkLogin($arrayLoginInfo);
+			$arrayUserInfo = $this->objProcess->MerchantUserService($this->objProcess)->checkLogin($arrayLoginInfo);
 			if(!empty($arrayUserInfo)) {
 				$arrayUserInfo[0]['mu_login_email'] = $arrayLoginInfo['mu_login_email'];
-				$objMUService->setLoginUserCookie($arrayUserInfo[0], $remember_me);
+				$this->objProcess->CommonService($this->objProcess)->setLoginUserCookie($arrayUserInfo[0], $remember_me);
 				redirect(__WEB);
 			} else {
 				$error_login = 1;

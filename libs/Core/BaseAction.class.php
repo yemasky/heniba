@@ -941,7 +941,9 @@ class Cookie{
 	}
 
 	public function __unset($name){
-		setcookie($this->arrHash[md5(__WEB . $name)], '', time() - 3600);
+		if(isset($this->arrHash[md5(__WEB . $name)])) {
+			setcookie($this->arrHash[md5(__WEB . $name)], '', time() - 36000, "/", "", false, true);
+		}
 	}
 
 	public function delSimpleCookie($name){
