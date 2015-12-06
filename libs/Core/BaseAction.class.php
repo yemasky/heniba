@@ -963,7 +963,7 @@ class Process{
 			}
 		}
 		$execute_type = substr($class, $loop);
-		$execute_dir = 'www/';
+		$execute_dir = 'base/';
 		$strpos = strpos($class, '/');
 		$execute_sub_dir = $lib_sub_dir = '';
 		if($strpos !== false) {

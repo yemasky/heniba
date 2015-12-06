@@ -4,7 +4,8 @@
  * email:yemasky@msn.com
  */
 try {
-	require_once ("config.php");
+	require_once ("config.php");	
+
 	$model = 'IndexAction';
 	if(isset($_REQUEST['model']))
 		$model = ucwords($_REQUEST['model']) . 'Action';
@@ -17,8 +18,10 @@ try {
 }
 
 try {
-	$objAction = new $model();
-	$objAction->execute($action);
+	$process_key = 'merchant';
+	$objProcess = new Process($process_key);
+	$objAction = $objProcess->$model();
+	$objAction->execute($action, $process_key);//
 } catch(Exception $e) {
 	if(__Debug) {
 		echo ('error: ' . $e->getMessage() . "<br>");

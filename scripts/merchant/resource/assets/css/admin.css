@@ -343,14 +343,14 @@ gallery.html css
 .fixed-layout .admin-main {
   position: relative;
   height: 100%;
-  padding-top: 51px;
+  padding-top: 1.5px;
 }
 
 .fixed-layout .admin-content,
 .fixed-layout .admin-sidebar {
   height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .fixed-layout .admin-sidebar.am-active {

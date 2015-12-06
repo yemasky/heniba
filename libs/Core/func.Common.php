@@ -33,7 +33,7 @@ if(!defined("INC_FUNC_COMMON")) {
 			}
 		}
 		$execute_type = substr($class, $loop);
-		$execute_dir = 'www/';
+		$execute_dir = 'base/';
 		
 		switch($execute_type){
 			case "Action" :
