@@ -7,7 +7,9 @@
 
 class IndexAction extends BaseAction {
 	protected function check($objRequest, $objResponse) {
-	
+		if($objRequest->getAction() != 'login') {
+			$this->objProcess->CommonService($this->objProcess)->checkLoginUser();
+		}
 	}
 	
 	protected function service($objRequest, $objResponse) {
@@ -49,7 +51,22 @@ class IndexAction extends BaseAction {
 	}
 
 	protected function admin_login($objRequest, $objResponse) {
-		$this->objProcess->CommonService($this->objProcess)->getLoginMerchantUser();
+		$arrayLoginInfo['mu_login_email'] = $objRequest->email;
+		$arrayLoginInfo['mu_login_password'] = $objRequest->password;
+		$remember_me = $objRequest->remember_me;
+		$error_login = 0;
+		if(!empty($arrayLoginInfo['mu_login_email'] && !empty($arrayLoginInfo['mu_login_password']))) {
+			$objMUService = $this->objProcess->MerchantUserService($this->objProcess);
+			$arrayUserInfo = $objMUService->checkLogin($arrayLoginInfo);
+			if(!empty($arrayUserInfo)) {
+				$arrayUserInfo[0]['mu_login_email'] = $arrayLoginInfo['mu_login_email'];
+				$objMUService->setLoginUserCookie($arrayUserInfo[0], $remember_me);
+				redirect(__WEB);
+			} else {
+				$error_login = 1;
+			}
+		}
+		$objResponse -> setTplValue('error_login', $error_login);
 		//设置Meta(共通)
 		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
 		$objResponse -> setTplName("merchant/admin_login");

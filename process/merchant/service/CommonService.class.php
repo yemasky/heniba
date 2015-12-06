@@ -8,8 +8,45 @@
  */
 class CommonService extends BaseService
 {
-    public function getLoginMerchantUser() {
-        var_dump($this->objProcess);
+
+    public static function getLoginUser($objCookie = NULL, $isSession = false) {
+        if(!is_object($objCookie) && $isSession == false){
+            $objCookie = new Cookie;
+        }
+        $loginKey = 'loginuser' . date("z");
+        if($isSession == false) {
+            $loginuser = $objCookie -> $loginKey;
+            if(empty($loginuser)) {//只针对cookie用户 session保存1个月占服务器太长时间
+                $loginKey = 'loginuser' . 2592000;//一个月
+                $loginuser = $objCookie -> $loginKey;
+            }
+        } else {
+            $objSession = new Session();
+            $loginuser = $objSession -> $loginKey;
+        }
+
+        if(!empty($loginuser)) {
+            $arrUser = explode("\t", $loginuser);
+            $arrUserInfo['mu_id'] = $arrUser[0];
+            $arrUserInfo['m_id'] = $arrUser[1];
+            $arrUserInfo['mu_login_email'] = $arrUser[2];
+            $arrUserInfo['mu_nickname'] = $arrUser[3];
+            return $arrUserInfo;
+        }
+        return NULL;
+    }
+
+    public static function checkLoginUser($objCookie = NULL, $isSession = false) {
+        if(!is_object($objCookie) && $isSession == false){
+            $objCookie = new Cookie();
+        }
+        if($isSession == false) {
+            $arrUserInfo = self::getLoginUser($objCookie);
+        } else {
+            $arrUserInfo = self::getLoginUser(NULL, true);
+        }
+        if(empty($arrUserInfo)) redirect(__WEB . 'index.php?action=login');
+        return $arrUserInfo;
     }
 
 }

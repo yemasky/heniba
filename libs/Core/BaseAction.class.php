@@ -462,8 +462,9 @@ class DBQuery{
 	private $sort = NULL;
 	private static $instances = array ();
 	private static $defaultDsn = __DEFAULT_DSN;
-	public $table_name = NULL;
-	public $table_key = '*';
+	private $table_name = NULL;
+	private $table_key = '*';
+	private $groupby = NULL;
 
 	/**
 	 * 构造函数
@@ -512,6 +513,11 @@ class DBQuery{
 		return $this;
 	}
 
+	public function setKey($table_key){
+		$this->table_key = $table_key;
+		return $this;
+	}
+
 	/**
 	 * 从数据表中查找记录
 	 *
@@ -527,7 +533,7 @@ class DBQuery{
 	 *        	如果limit值只有一个数字，则是指代从0条记录开始。
 	 */
 	public function getList($conditions = NULL, $fields = NULL){
-		$where = "";
+		$where = $sort = $groupby = "";
 		$fields = empty($fields) ? "*" : $fields;
 		if(is_array($conditions)) {
 			$join = array ();
@@ -545,14 +551,22 @@ class DBQuery{
 			if($this->table_key != '*')
 				$sort = "ORDER BY {$this->table_key} DESC";
 		}
-		$sql = "SELECT {$fields} FROM {$this->table_name} {$where} {$sort} ";
+		if($this->groupby != NULL) {
+			$groupby = "GROUP BY" . $this->groupby;
+		}
+		$sql = "SELECT {$fields} FROM {$this->table_name} {$where} {$groupby} {$sort} ";
 		if($this->limit_num != NULL)
 			$sql = $this->conn->setlimit($sql, $this->limit_num);
 		return $this->conn->getQueryArrayResult($sql);
 	}
 
-	public function sort($sort){
+	public function order($sort){
 		$this->sort = $sort;
+		return $this;
+	}
+
+	public function group($group){
+		$this->groupby = $group;
 		return $this;
 	}
 
@@ -901,7 +915,7 @@ class Cookie{
 		}
 	}
 
-	public function setCookie($name, $value = NULL, $time = NULL, $path = "", $domain = "", $secure = false, $httponly = true){
+	public function setCookie($name, $value = NULL, $time = NULL, $path = "/", $domain = "", $secure = false, $httponly = true){
 		if(!is_object(self::$objEncrypt))
 			self::$objEncrypt = new Encrypt();
 		if($time != NULL) {

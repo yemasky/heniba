@@ -48,7 +48,7 @@ class mysql{
 		while($rows[] = mysql_fetch_array($result, MYSQL_ASSOC)) {
 		}
 		mysql_free_result($result);
-		// array_pop($rows);
+		array_pop($rows);
 		return $rows;
 	}
 

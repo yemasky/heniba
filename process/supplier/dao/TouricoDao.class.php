@@ -6,14 +6,13 @@
  */
 
 class TouricoDao {
-	private $dsn = 'mysql://root:@127.0.0.1/supplier';
 
 	public function insertDestination($arrData) {
-		return DBQuery::instance($this->dsn)->setTable('tourico_destination')->insert($arrData, 'INSERT IGNORE')->getInsertId();
+		return DBQuery::instance(DbConfig::$supplier_dsn)->setTable('tourico_destination')->insert($arrData, 'INSERT IGNORE')->getInsertId();
 	}
 	
 	public function insertHotel($arrData) {
-		return DBQuery::instance($this->dsn)->setTable('tourico_hotel')->insert($arrData, 'INSERT IGNORE');
+		return DBQuery::instance(DbConfig::$supplier_dsn)->setTable('tourico_hotel')->insert($arrData, 'INSERT IGNORE');
 	}
 	
 }

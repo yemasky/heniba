@@ -35,21 +35,26 @@
     </div>
     <br>
     <br>
-
-    <form method="post" class="am-form">
+    <%if $error_login==1%>
+    <div class="am-alert am-alert-danger" data-am-alert>
+      <button type="button" class="am-close">&times;</button>
+      <p>登录失败，请检查您的登录邮箱和密码！</p>
+    </div>
+    <%/if%>
+    <form method="post" class="am-form" action="index.php?action=login">
       <label for="email">邮箱:</label>
-      <input type="email" name="" id="email" value="">
+      <input type="email" name="email" id="email" value="">
       <br>
       <label for="password">密码:</label>
-      <input type="password" name="" id="password" value="">
+      <input type="password" name="password" id="password" value="">
       <br>
       <label for="remember-me">
-        <input id="remember-me" type="checkbox">
+        <input id="remember-me" value="1" name="remember_me" type="checkbox">
         记住密码
       </label>
       <br />
       <div class="am-cf">
-        <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl">
+        <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm am-icon-send am-fl">
         <input type="submit" name="" value="忘记密码 ^_^? " class="am-btn am-btn-default am-btn-sm am-fr">
       </div>
     </form>
