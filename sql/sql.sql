@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v11.27 (32 bit)
-MySQL - 5.6.17 : Database - heniba
+SQLyog Ultimate v11.24 (32 bit)
+MySQL - 5.6.21 : Database - heniba
 *********************************************************************
 */
 
@@ -33,8 +33,6 @@ CREATE TABLE `country` (
   `c_type` enum('towns','county','city','state','region','country','continent') DEFAULT NULL COMMENT '类型'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-/*Data for the table `country` */
-
 /*Table structure for table `tourism` */
 
 DROP TABLE IF EXISTS `tourism`;
@@ -49,9 +47,9 @@ CREATE TABLE `tourism` (
   `t_title_cn` varchar(200) DEFAULT NULL COMMENT '中文标题',
   `t_description` text COMMENT '短描述',
   `t_description_cn` text COMMENT '短中文描述',
-  `t_images` varchar(255) DEFAULT NULL COMMENT '图片',
-  `t_latitude` varchar(100) DEFAULT NULL,
-  `t_longitude` varchar(100) DEFAULT NULL,
+  `t_images` text COMMENT '图片数组',
+  `t_latitude` varchar(100) DEFAULT NULL COMMENT '纬度',
+  `t_longitude` varchar(100) DEFAULT NULL COMMENT '经度',
   `t_currency` varchar(50) DEFAULT NULL COMMENT '货币',
   `t_price` float DEFAULT NULL COMMENT '价格',
   `t_review_count` mediumint(8) DEFAULT NULL COMMENT '评论数',
@@ -88,11 +86,11 @@ CREATE TABLE `tourism` (
   `t_attr14_value` varchar(100) DEFAULT NULL,
   `t_attr15` int(11) DEFAULT NULL,
   `t_attr15_value` varchar(100) DEFAULT NULL,
+  `t_is_valid` enum('0','1') DEFAULT NULL COMMENT '是否有效',
+  `t_add_date` datetime NOT NULL COMMENT '添加时间',
   `t_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`t_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/*Data for the table `tourism` */
 
 /*Table structure for table `tourism_attribute` */
 
@@ -108,8 +106,6 @@ CREATE TABLE `tourism_attribute` (
   PRIMARY KEY (`ta_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-/*Data for the table `tourism_attribute` */
-
 /*Table structure for table `tourism_attribute_value` */
 
 DROP TABLE IF EXISTS `tourism_attribute_value`;
@@ -123,8 +119,6 @@ CREATE TABLE `tourism_attribute_value` (
   KEY `atrid` (`ta_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-/*Data for the table `tourism_attribute_value` */
-
 /*Table structure for table `tourism_category` */
 
 DROP TABLE IF EXISTS `tourism_category`;
@@ -135,8 +129,6 @@ CREATE TABLE `tourism_category` (
   `tc_title` varchar(100) DEFAULT NULL COMMENT '标题',
   PRIMARY KEY (`tc_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/*Data for the table `tourism_category` */
 
 /*Table structure for table `tourism_review` */
 
@@ -160,7 +152,24 @@ CREATE TABLE `tourism_review` (
   PRIMARY KEY (`tr_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-/*Data for the table `tourism_review` */
+/*Table structure for table `tourism_tag` */
+
+DROP TABLE IF EXISTS `tourism_tag`;
+
+CREATE TABLE `tourism_tag` (
+  `tt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tt_name` varchar(100) DEFAULT NULL COMMENT '标签名',
+  PRIMARY KEY (`tt_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `tourism_tag_value` */
+
+DROP TABLE IF EXISTS `tourism_tag_value`;
+
+CREATE TABLE `tourism_tag_value` (
+  `t_id` bigint(19) NOT NULL,
+  `tt_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -9,7 +9,7 @@ class BemyguestService{
 	private $url = 'https://api.bemyguest.com.sg/v1/config';
 	private $arrayHeader = array (
 			'X-Authorization' => '0396f6d91697994390d7f47f0bf41b37cb2f96f0',
-			'Content-Type' => 'application/json'
+			'Content-Type' => 'application/json' 
 	);
 	private $DataBemyssguest;
 	private $objProcess = '';
@@ -48,7 +48,7 @@ class BemyguestService{
 		if(!empty($arrData)) {
 			$objDao = $this->objProcess->BemyguestDao();
 			if(isset($arrData['0'])) {
-				foreach($arrData as $k => $v) {//print_r($v);
+				foreach($arrData as $k => $v) { // print_r($v);
 					foreach($v as $kk => $vv) {
 						if(is_array($vv)) {
 							$v[$kk] = json_encode($vv);
@@ -88,7 +88,7 @@ class BemyguestService{
 		}
 	}
 
-	public function createbooking($productTypeUuid, $timeSlotUuid, $addonsuuid) {
+	public function createbooking($productTypeUuid, $timeSlotUuid, $addonsuuid){
 		set_time_limit($this->time_out);
 		$arrData['salutation'] = "Mr.";
 		$arrData['firstName'] = 'firstName';
@@ -102,37 +102,37 @@ class BemyguestService{
 		if(!empty($timeSlotUuid)) {
 			$arrData['timeSlotUuid'] = $timeSlotUuid;
 		} else {
-			//$arrData['timeSlotUuid'] = "";
+			// $arrData['timeSlotUuid'] = "";
 		}
 		if(!empty($addonsuuid)) {
 			$arrData['addons'][0]['uuid'] = $addonsuuid;
 			$arrData['addons'][0]['quantity'] = '1';
 		} else {
-			//$arrData['addons'] = "";
+			// $arrData['addons'] = "";
 		}
 		$arrData['arrivalDate'] = '2015-12-07';
 		$arrData['partnerReference'] = time() . "";
 		$arrData['usePromotion'] = false;
 		$postData = json_encode($arrData);
-
-		//$url = "https://private-anon-de10e2970-bemyguest.apiary-mock.com/v1/bookings";
+		
+		// $url = "https://private-anon-de10e2970-bemyguest.apiary-mock.com/v1/bookings";
 		$url = "https://apidemo.bemyguest.com.sg/v1/bookings";
-
+		
 		$header = "POST: HTTP/1.1\r\n";
 		$header .= "X-Authorization: e8a00fcac36a19e53c6dc9b1a87aa2c5051f571f\r\n";
 		$header .= "Content-Type: application/json\r\n";
-		$header .= "Content-Length: ".strlen($postData)."\r\n";
-
+		$header .= "Content-Length: " . strlen($postData) . "\r\n";
+		
 		echo $arrData['partnerReference'] . ":" . $url . "\r\n";
-
-		$opts = array(
-			'http' => array(
-				'method' => "POST",
-				'header' => $header,
-				'content' => $postData,
-			)
+		
+		$opts = array (
+				'http' => array (
+						'method' => "POST",
+						'header' => $header,
+						'content' => $postData 
+				) 
 		);
-
+		
 		$context = stream_context_create($opts);
 		$string = file_get_contents($url, "r", $context);
 		print_r($http_response_header);
@@ -141,16 +141,15 @@ class BemyguestService{
 		$string = json_decode($string, true);
 		$createbookuuid = $string['data']['uuid'];
 		$param = "productTypeUuid/$productTypeUuid/timeSlotUuid/$timeSlotUuid/addonsuuid/$addonsuuid/partnerReference/" . $arrData['partnerReference'] . "/createbookuuid/" . $createbookuuid;
-		$url =  __ROOT__  . "/index.php/Viator/BemyguestDemo/checkbooking/".$param;
-
+		$url = __ROOT__ . "/index.php/Viator/BemyguestDemo/checkbooking/" . $param;
+		
 		echo "\r\n<br>click  <a href='$url'>here</a> checkbooking.\r\n<br>";
 	}
 
-	public function checkbooking($productTypeUuid, $timeSlotUuid, $addonsuuid, $partnerReference, $createbookuuid)
-	{
+	public function checkbooking($productTypeUuid, $timeSlotUuid, $addonsuuid, $partnerReference, $createbookuuid){
 		ini_set('memory_limit', '5120M');
 		set_time_limit(0);
-
+		
 		$arrData['salutation'] = "Mr.";
 		$arrData['firstName'] = 'firstName';
 		$arrData['lastName'] = 'lastName';
@@ -163,115 +162,112 @@ class BemyguestService{
 		if(!empty($timeSlotUuid)) {
 			$arrData['timeSlotUuid'] = $timeSlotUuid;
 		} else {
-			//$arrData['timeSlotUuid'] = "";
+			// $arrData['timeSlotUuid'] = "";
 		}
 		if(!empty($addonsuuid)) {
 			$arrData['addons'][0]['uuid'] = $addonsuuid;
 			$arrData['addons'][0]['quantity'] = '1';
 		} else {
-			//$arrData['addons'] = "";
+			// $arrData['addons'] = "";
 		}
 		$arrData['arrivalDate'] = '2015-12-07';
 		$arrData['partnerReference'] = time() . "";
 		$arrData['usePromotion'] = false;
 		$postData = json_encode($arrData);
-
-		//$url = "https://private-anon-de10e2970-bemyguest.apiary-mock.com/v1/bookings/check";
+		
+		// $url = "https://private-anon-de10e2970-bemyguest.apiary-mock.com/v1/bookings/check";
 		$url = "https://apidemo.bemyguest.com.sg/v1/bookings/check";
 		$header = "POST: HTTP/1.1\r\n";
 		$header .= "X-Authorization: e8a00fcac36a19e53c6dc9b1a87aa2c5051f571f\r\n";
 		$header .= "Content-Type: application/json\r\n";
-		$header .= "Content-Length: ".strlen($postData)."\r\n";
-
+		$header .= "Content-Length: " . strlen($postData) . "\r\n";
+		
 		echo $arrData['partnerReference'] . ":" . $url . "\r\n";
-
-		$opts = array(
-			'http' => array(
-				'method' => "POST",
-				'header' => $header,
-				'content' => $postData,
-			)
+		
+		$opts = array (
+				'http' => array (
+						'method' => "POST",
+						'header' => $header,
+						'content' => $postData 
+				) 
 		);
-
+		
 		$context = stream_context_create($opts);
 		$string = file_get_contents($url, "r", $context);
 		print_r($http_response_header);
 		var_dump($string);
 		print_r($postData);
 		$returnString = json_decode($string, true);
-
+		
 		$uuid = $createbookuuid;
 		$param = "uuid/" . $uuid;
-		$url =  __ROOT__  . "/index.php/Viator/BemyguestDemo/getkbookingstatus/".$param;
-
+		$url = __ROOT__ . "/index.php/Viator/BemyguestDemo/getkbookingstatus/" . $param;
+		
 		echo "\r\n<br>click  <a href='$url'>here</a> getkbookingstatus.\r\n<br>";
-
 	}
 
-	public function getkbookingstatus($uuid)
-	{
-		set_time_limit(0);//
+	public function getkbookingstatus($uuid){
+		set_time_limit(0); //
 		$string = '';
-
-		//$url = "https://apidemo.bemyguest.com.sg/v1/bookings/uuid";
+		
+		// $url = "https://apidemo.bemyguest.com.sg/v1/bookings/uuid";
 		$url = "https://apidemo.bemyguest.com.sg/v1/bookings/" . $uuid;
 		$header = "GET: HTTP/1.1\r\n";
 		$header .= "X-Authorization: e8a00fcac36a19e53c6dc9b1a87aa2c5051f571f\r\n";
 		echo $url . "\r\n";
-		$opts = array(
-			'http' => array(
-				'method' => "GET",
-				'header' => $header,
-			)
+		$opts = array (
+				'http' => array (
+						'method' => "GET",
+						'header' => $header 
+				) 
 		);
-
+		
 		$context = stream_context_create($opts);
 		$string = file_get_contents($url, 'r', $context);
-
-
+		
 		$string = json_decode($string, true);
 		print_r($string);
 		print_r($http_response_header);
 		$param = "uuid/" . $uuid . "/status/";
-		$url1 =  __ROOT__  . "/index.php/Viator/BemyguestDemo/updatekbookingstatus/".$param . "confirm";
-		$url2 =  __ROOT__  . "/index.php/Viator/BemyguestDemo/updatekbookingstatus/".$param . "cancel";;
-
+		$url1 = __ROOT__ . "/index.php/Viator/BemyguestDemo/updatekbookingstatus/" . $param . "confirm";
+		$url2 = __ROOT__ . "/index.php/Viator/BemyguestDemo/updatekbookingstatus/" . $param . "cancel";
+		;
+		
 		echo "\r\n<br>click  <a href='$url1'>confirm the booking</a> \r\n<br>";
 		echo "\r\n<br>click  <a href='$url2'>cancel the booking</a> \r\n<br>";
 	}
 
-	public function updatekbookingstatus($uuid, $status)
-	{
-		set_time_limit(0);//
+	public function updatekbookingstatus($uuid, $status){
+		set_time_limit(0); //
 		$string = '';
-
-		//$url = "https://private-anon-de10e2970-bemyguest.apiary-mock.com/v1/bookings/uuid/status";
-		$url = "https://apidemo.bemyguest.com.sg/v1/bookings/".$uuid."/".$status;
+		
+		// $url = "https://private-anon-de10e2970-bemyguest.apiary-mock.com/v1/bookings/uuid/status";
+		$url = "https://apidemo.bemyguest.com.sg/v1/bookings/" . $uuid . "/" . $status;
 		$header = "PUT: HTTP/1.1\r\n";
 		$header .= "Content-Type: application/json\r\n";
 		$header .= "X-Authorization: e8a00fcac36a19e53c6dc9b1a87aa2c5051f571f\r\n";
 		echo $url . "\r\n";
-		$opts = array(
-			'http' => array(
-				'method' => "PUT",
-				'header' => $header,
-			)
+		$opts = array (
+				'http' => array (
+						'method' => "PUT",
+						'header' => $header 
+				) 
 		);
-
+		
 		$context = stream_context_create($opts);
 		$string = file_get_contents($url, 'r', $context);
-
+		
 		var_dump($string);
 		print_r($http_response_header);
-
-
-		/*$string = file_put_contents($url, 'r', $context);
-
-        $string = json_decode($string, true);
-        var_dump($string);
-        print_r($http_response_header);
-
-        return $string;*/
-
+		
+		/*
+		 * $string = file_put_contents($url, 'r', $context);
+		 *
+		 * $string = json_decode($string, true);
+		 * var_dump($string);
+		 * print_r($http_response_header);
+		 *
+		 * return $string;
+		 */
 	}
 }
