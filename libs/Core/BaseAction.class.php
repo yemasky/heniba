@@ -1040,7 +1040,7 @@ class Process{
 	}
 	
 	public function setProcessKey($process_key){
-		$this->process_key = $process_key . '\\';
+		$this->process_key = $process_key . '/';
 	}
 	
 }

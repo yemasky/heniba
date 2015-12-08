@@ -9,6 +9,7 @@ class IndexAction extends BaseAction {
 	protected function check($objRequest, $objResponse) {
 		if($objRequest->getAction() != 'login') {
 			$objResponse->arrUserInfo = $this->objProcess->CommonService($this->objProcess)->checkLoginUser();
+			$objResponse->arrMerchantMenu = $this->objProcess->CommonService($this->objProcess)->getMerchantMenu($objResponse->arrUserInfo['mu_id']);
 		}
 	}
 	
@@ -39,6 +40,7 @@ class IndexAction extends BaseAction {
 		//赋值
 		//设置类别
 		$objResponse -> nav = 'index';
+		$objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);
 		//设置Meta(共通)
 		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
 		$objResponse -> setTplName("merchant/base");

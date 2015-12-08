@@ -69,4 +69,21 @@ class CommonService extends BaseService
     	unset($objCookie->$loginKey);
     }
 
+    public function getMerchantUserAuthorize($mu_id) {
+        return $this->objProcess->ModulesAuthorizeDao()->getMerchantUserAuthorize($mu_id);
+    }
+
+    public function getMerchantMenu($mu_id) {
+        $arrayUserModels = NULL;
+        $arrayAuthorize = $this->getMerchantUserAuthorize($mu_id);
+        if(!empty($arrayAuthorize)) {
+            $arrayMc_id = array();
+            foreach($arrayAuthorize as $k => $v) {
+                $arrayMc_id[] = $v['mc_id'];
+            }
+            $arrayUserModels = $this->objProcess->ModulesAuthorizeDao()->getMerchantUserModules($arrayMc_id);
+        }
+        return $arrayUserModels;
+    }
+
 }

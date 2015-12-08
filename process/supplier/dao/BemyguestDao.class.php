@@ -8,17 +8,17 @@
 class BemyguestDao {
 
 	public function insertProduct($arrData) {
-		return DBQuery::instance(DbConfig::$supplier_dsn)->setTable('bemyguest_tour')->insert($arrData, 'INSERT IGNORE')->getInsertId();
+		return DBQuery::instance(DbConfig::supplier_dsn)->setTable('bemyguest_tour')->insert($arrData, 'INSERT IGNORE')->getInsertId();
 	}
 	
 	public function selectTourAsTourism() {
 		$field = 'typeName, locations, title, titleTranslated, description, descriptionTranslated, photosUrl, photos, latitude, '
 				.'longitude, currency, basePrice, reviewCount, reviewAverageScore';
-		return DBQuery::instance(DbConfig::$supplier_dsn)->setTable('bemyguest_tour')->getList(null, $field);
+		return DBQuery::instance(DbConfig::supplier_dsn)->setTable('bemyguest_tour')->getList(null, $field);
 	}
 
 	public function insertTourism($arrData) {
-		return DBQuery::instance(DbConfig::$tourism_dsn_write)->setTable('tourism')->insert($arrData, 'INSERT IGNORE')->getInsertId();
+		return DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('tourism')->insert($arrData, 'INSERT IGNORE')->getInsertId();
 	}
 	
 }
