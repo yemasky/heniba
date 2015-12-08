@@ -19,8 +19,8 @@
 <body>
 <div class="header">
   <div class="am-g">
-    <h1>Web ide</h1>
-    <p>Integrated Development Environment<br/>代码编辑，代码生成，界面设计，调试，编译</p>
+    <h1><img src="<%$__RESOURCE%>assets/i/favicon.png" width="100"/></h1>
+    <p>The world tourism<br/>旅游世家</p>
   </div>
   <hr />
 </div>

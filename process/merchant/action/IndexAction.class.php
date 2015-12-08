@@ -60,7 +60,7 @@ class IndexAction extends BaseAction {
 			redirect(__WEB);
 		}
 		$error_login = 0;
-		if(!empty($arrayLoginInfo['mu_login_email'] && !empty($arrayLoginInfo['mu_login_password']))) {
+		if(!empty($arrayLoginInfo['mu_login_email']) && !empty($arrayLoginInfo['mu_login_password'])) {
 			$arrayUserInfo = $this->objProcess->MerchantUserService($this->objProcess)->getLoginUser($arrayLoginInfo);
 			if(!empty($arrayUserInfo)) {
 				$arrayUserInfo['mu_login_email'] = $arrayLoginInfo['mu_login_email'];
