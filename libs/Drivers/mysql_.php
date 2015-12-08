@@ -5,7 +5,7 @@
  */
 class SQLException extends Exception{
 }
-class mysql{
+class mysql_{
 	/**
 	 * 数据库链接句柄
 	 */
