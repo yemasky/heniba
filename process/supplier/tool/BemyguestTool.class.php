@@ -1,14 +1,11 @@
 <?php
-
 /**
- * Created by PhpStorm.
- * User: CooC
- * Date: 2015/12/8
- * Time: 10:37
+ * file_name 2015年12月8日
+ * @author YEMASKY  yemasky@msn.com
+ * Copyright 2015  
  */
-class BemyguestTool extends BaseTool
-{
-    public function insertToTourism() {
-        $bemyguestData = $this->objProcess->BemyguestDao->selectTourAsTourism();
-    }
+
+class BemyguestTool extends BaseTool {
+	
+	
 }
