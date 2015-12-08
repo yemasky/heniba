@@ -22,7 +22,10 @@ class TouricoAction extends BaseAction{
 				break;
 			case 'disposehotels' :
 				$this->disposeHotels($objRequest, $objResponse);
-				break;	
+				break;
+			case 'insertcountry' :
+				$this->insertCountry($objRequest, $objResponse);
+				break;
 			default :
 				$this->doBase($objRequest, $objResponse);
 				break;
@@ -51,6 +54,10 @@ class TouricoAction extends BaseAction{
 	protected function disposeHotels($objRequest, $objResponse) {
 		//$this->objProcess->TouricoService($this->objProcess)->insertDestination();
 		$this->objProcess->TouricoTool($this->objProcess)->disposeHotels();
+	}
+
+	protected function insertCountry($objRequest, $objResponse) {
+		$this->objProcess->TouricoTool($this->objProcess)->insertCountryFromTouricoDestination();
 	}
 }
 

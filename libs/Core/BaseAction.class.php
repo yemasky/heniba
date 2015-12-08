@@ -637,6 +637,11 @@ class DBQuery{
 		return $this->conn->getInsertid();
 	}
 
+	public function execute($sql){
+		$this->conn->execute($sql);
+		return $this;
+	}
+
 	/**
 	 * 按条件删除记录
 	 *

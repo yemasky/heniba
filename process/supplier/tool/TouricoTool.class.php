@@ -139,4 +139,24 @@ class TouricoTool extends BaseTool {
 			flush();
 		}
 	}
+
+	public function insertCountryFromTouricoDestination() {
+		$arrarTouricoDestination = $this->objProcess->TourismDao()->getTouricoDestination();
+		$field = '(c_id, c_continent_id, c_country_id, c_city_id, c_name, c_latitude, c_longitude, c_type)';
+		$sql = '';
+		foreach($arrarTouricoDestination as $k => $v) {
+			$sql .= "('".$v['c_id']."','".$v['c_continent_id']."','".$v['c_country_id']."','".$v['c_city_id']."','"
+					.addslashes($v['c_name'])."','".$v['c_latitude']."','".$v['c_longitude']."','".$v['c_type']."'),";
+			if(($k % 30) == 0) {
+			$sql = "INSERT INTO country" . $field ." VALUES " . $sql;
+				$this->objProcess->TourismDao()->insertCountry(trim($sql, ','));
+				$sql = '';
+			}
+		}
+		if(!empty($sql)) {
+			$sql = "INSERT INTO country" . $field ." VALUES " . $sql;
+			$this->objProcess->TourismDao()->insertCountry(trim($sql, ','));
+		}
+		echo "over.";
+	}
 }

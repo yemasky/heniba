@@ -8,7 +8,7 @@
         <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-<%$merchantMenu[menu].mc_ico%>"></span> <%$merchantMenu[menu].mc_name%> <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
         <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
       <%else%>
-          <li><a <%if $merchantMenu[menu].mc_module!=''%>href="index.php?model=<%$merchantMenu[menu].mc_module%>&action=<%$merchantMenu[menu].mc_module_action%>"<%/if%><%if $merchantMenu[menu].mc_new==1%> class="am-cf"<%/if%>><span class="am-icon-<%$merchantMenu[menu].mc_ico%>"></span> <%$merchantMenu[menu].mc_name%><%if $merchantMenu[menu].mc_new==1%><span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span><%/if%></a></li>
+          <li><a <%if $merchantMenu[menu].mc_module!=''%>target="main_frame" href="index.php?model=<%$merchantMenu[menu].mc_module%>&action=<%$merchantMenu[menu].mc_module_action%>"<%/if%><%if $merchantMenu[menu].mc_new==1%> class="am-cf"<%/if%>><span class="am-icon-<%$merchantMenu[menu].mc_ico%>"></span> <%$merchantMenu[menu].mc_name%><%if $merchantMenu[menu].mc_new==1%><span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span><%/if%></a></li>
       <%/if%>
       <%if !$smarty.section.menu.last && $merchantMenu[menu].mc_id!=$merchantMenu[menu].mc_father_id && $merchantMenu[menu.index_next].mc_id==$merchantMenu[menu.index_next].mc_father_id%>
         </ul>
@@ -36,14 +36,14 @@
     <div class="am-panel am-panel-default admin-sidebar-panel">
       <div class="am-panel-bd">
         <p><span class="am-icon-bookmark"></span> 公告</p>
-        <p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>
+        <p>暂无公告。—— Amaze UI</p>
       </div>
     </div>
 
     <div class="am-panel am-panel-default admin-sidebar-panel">
       <div class="am-panel-bd">
         <p><span class="am-icon-tag"></span> wiki</p>
-        <p>Welcome to the Amaze UI wiki!</p>
+        <p>Welcome to 旅游之家!</p>
       </div>
     </div>
   </div>

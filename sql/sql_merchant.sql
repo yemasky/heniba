@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v11.27 (32 bit)
-MySQL - 5.6.17 : Database - merchant
+SQLyog Ultimate v11.24 (32 bit)
+MySQL - 5.6.21 : Database - merchant
 *********************************************************************
 */
 
@@ -30,7 +30,7 @@ CREATE TABLE `merchant` (
   `m_city_id` mediumint(8) DEFAULT NULL,
   `m_county_id` mediumint(8) DEFAULT NULL,
   `m_address` varchar(255) DEFAULT NULL COMMENT '商户地址',
-  `m_update_date` timestamp NOT NULL,
+  `m_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `m_add_date` datetime NOT NULL,
   PRIMARY KEY (`m_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -49,7 +49,7 @@ CREATE TABLE `merchant_user` (
   `mu_login_password` varchar(50) NOT NULL,
   `mu_uuid` varchar(50) DEFAULT NULL,
   `mu_nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
-  `mu_update_date` timestamp NOT NULL,
+  `mu_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `mu_add_date` datetime NOT NULL,
   PRIMARY KEY (`mu_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

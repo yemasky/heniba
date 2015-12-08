@@ -11,9 +11,9 @@ class BemyguestDao {
 		return DBQuery::instance(DbConfig::supplier_dsn)->setTable('bemyguest_tour')->insert($arrData, 'INSERT IGNORE')->getInsertId();
 	}
 	
-	public function selectTourAsTourism() {
+	public function getTourProduct() {
 		$field = 'typeName, locations, title, titleTranslated, description, descriptionTranslated, photosUrl, photos, latitude, '
-				.'longitude, currency, basePrice, reviewCount, reviewAverageScore';
+				.'longitude, currency, basePrice, reviewCount, reviewAverageScore, categories';
 		return DBQuery::instance(DbConfig::supplier_dsn)->setTable('bemyguest_tour')->getList(null, $field);
 	}
 

@@ -21,6 +21,10 @@ class BemyguestAction extends BaseAction {
 			break;
 			case 'allproducts':
 				$this->getProducts($objRequest, $objResponse);
+			break;
+			case 'totourism':
+				$this->insertToTourism($objRequest, $objResponse);
+			break;
 			default:
 				$this->doBase($objRequest, $objResponse);
 			break;
@@ -67,7 +71,9 @@ class BemyguestAction extends BaseAction {
 		echo "over";
 	}
 	
-
+    protected function insertToTourism($objRequest, $objResponse) {
+		$this->objProcess->BemyguestTool($this->objProcess)->parserTourProduct();
+	}
 
 
 }

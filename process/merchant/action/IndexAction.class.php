@@ -15,8 +15,8 @@ class IndexAction extends BaseAction {
 	
 	protected function service($objRequest, $objResponse) {
 		switch($objRequest->getAction()) {
-			case 'admin_header':
-				$this->admin_header($objRequest, $objResponse);
+			case 'admin_content':
+				$this->admin_content($objRequest, $objResponse);
 				break;
 			case 'login':
 				$this->admin_login($objRequest, $objResponse);
@@ -46,10 +46,10 @@ class IndexAction extends BaseAction {
 		$objResponse -> setTplName("merchant/base");
 	}
 
-	protected function admin_header($objRequest, $objResponse) {
+	protected function admin_content($objRequest, $objResponse) {
 		//设置Meta(共通)
 		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
-		$objResponse -> setTplName("merchant/inc/admin_header");
+		$objResponse -> setTplName("merchant/admin_content");
 	}
 
 	protected function admin_login($objRequest, $objResponse) {

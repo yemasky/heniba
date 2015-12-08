@@ -8,11 +8,11 @@
 class TouricoDao {
 
 	public function insertDestination($arrData) {
-		return DBQuery::instance(DbConfig::$supplier_dsn)->setTable('tourico_destination')->insert($arrData, 'INSERT IGNORE')->getInsertId();
+		return DBQuery::instance(DbConfig::supplier_dsn)->setTable('tourico_destination')->insert($arrData, 'INSERT IGNORE')->getInsertId();
 	}
 	
 	public function insertHotel($arrData) {
-		return DBQuery::instance(DbConfig::$supplier_dsn)->setTable('tourico_hotel')->insert($arrData, 'INSERT IGNORE');
+		return DBQuery::instance(DbConfig::supplier_dsn)->setTable('tourico_hotel')->insert($arrData, 'INSERT IGNORE');
 	}
 	
 }
