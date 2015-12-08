@@ -47,7 +47,7 @@ define('__SQLITE_DATA', __DATA_PATH.'data/sqlite/');
 define('__COMPILE', true);
 
 /// db connection ///
-define('__DEFAULT_DSN','mysql://root:@127.0.0.1/merchant');
+define('__DEFAULT_DSN','mysqli_://root:@127.0.0.1/merchant');
 
 //debug
 define('__Debug',true);

@@ -8,7 +8,7 @@
 class IndexAction extends BaseAction {
 	protected function check($objRequest, $objResponse) {
 		if($objRequest->getAction() != 'login') {
-			$this->objProcess->CommonService($this->objProcess)->checkLoginUser();
+			$objResponse->arrUserInfo = $this->objProcess->CommonService($this->objProcess)->checkLoginUser();
 		}
 	}
 	
@@ -61,10 +61,10 @@ class IndexAction extends BaseAction {
 		}
 		$error_login = 0;
 		if(!empty($arrayLoginInfo['mu_login_email'] && !empty($arrayLoginInfo['mu_login_password']))) {
-			$arrayUserInfo = $this->objProcess->MerchantUserService($this->objProcess)->checkLogin($arrayLoginInfo);
+			$arrayUserInfo = $this->objProcess->MerchantUserService($this->objProcess)->getLoginUser($arrayLoginInfo);
 			if(!empty($arrayUserInfo)) {
-				$arrayUserInfo[0]['mu_login_email'] = $arrayLoginInfo['mu_login_email'];
-				$this->objProcess->CommonService($this->objProcess)->setLoginUserCookie($arrayUserInfo[0], $remember_me);
+				$arrayUserInfo['mu_login_email'] = $arrayLoginInfo['mu_login_email'];
+				$this->objProcess->CommonService($this->objProcess)->setLoginUserCookie($arrayUserInfo, $remember_me);
 				redirect(__WEB);
 			} else {
 				$error_login = 1;

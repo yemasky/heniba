@@ -8,7 +8,7 @@
  */
 class MerchantUserService extends BaseService{
 
-	public function checkLogin($arrayLoginInfo){
+	public function getLoginUser($arrayLoginInfo){
 		return $this->objProcess->MerchantUserDao()->getLoginUser($arrayLoginInfo);
 	}
 }

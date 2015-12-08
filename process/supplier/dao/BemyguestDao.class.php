@@ -16,5 +16,9 @@ class BemyguestDao {
 				.'longitude, currency, basePrice, reviewCount, reviewAverageScore';
 		return DBQuery::instance(DbConfig::$supplier_dsn)->setTable('bemyguest_tour')->getList(null, $field);
 	}
+
+	public function insertTourism($arrData) {
+		return DBQuery::instance(DbConfig::$tourism_dsn_write)->setTable('tourism')->insert($arrData, 'INSERT IGNORE')->getInsertId();
+	}
 	
 }

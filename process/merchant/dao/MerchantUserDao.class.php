@@ -9,6 +9,6 @@
 class MerchantUserDao{
 
 	public function getLoginUser($arrayLoginInfo){
-		return DBQuery::instance(__DEFAULT_DSN)->setTable('merchant_user')->getList($arrayLoginInfo, 'mu_id, m_id, mu_nickname');
+		return DBQuery::instance(__DEFAULT_DSN)->setTable('merchant_user')->getRow($arrayLoginInfo, 'mu_id, m_id, mu_nickname');
 	}
 }

@@ -465,6 +465,7 @@ class DBQuery{
 	private $table_name = NULL;
 	private $table_key = '*';
 	private $groupby = NULL;
+    //private $where = NULL;
 
 	/**
 	 * 构造函数
@@ -518,6 +519,37 @@ class DBQuery{
 		return $this;
 	}
 
+    public function order($sort){
+        $this->sort = $sort;
+        return $this;
+    }
+
+    public function group($group){
+        $this->groupby = $group;
+        return $this;
+    }
+
+    public function limit($limit){
+        $this->limit_num = $limit;
+        return $this;
+    }
+
+    public function where($conditions){
+        $where = '';
+        if(is_array($conditions)) {
+            $join = array ();
+            foreach($conditions as $key => $condition) {
+                $join[] = "`{$key}` = '{$condition}'";
+            }
+            $where = "WHERE " . join(" AND ", $join);
+        } else {
+            if(!empty($conditions))
+                $where = "WHERE " . $conditions;
+        }
+        //$this->where = $where;
+        return $where;
+    }
+
 	/**
 	 * 从数据表中查找记录
 	 *
@@ -532,19 +564,9 @@ class DBQuery{
 	 *        	limit 返回的结果数量限制，等同于"LIMIT "，如$limit = " 3, 5"，即是从第3条记录（从0开始计算）开始获取，共获取5条记录
 	 *        	如果limit值只有一个数字，则是指代从0条记录开始。
 	 */
-	public function getList($conditions = NULL, $fields = NULL){
-		$where = $sort = $groupby = "";
-		$fields = empty($fields) ? "*" : $fields;
-		if(is_array($conditions)) {
-			$join = array ();
-			foreach($conditions as $key => $condition) {
-				$join[] = "`{$key}` = '{$condition}'";
-			}
-			$where = "WHERE " . join(" AND ", $join);
-		} else {
-			if(NULL != $conditions)
-				$where = "WHERE " . $conditions;
-		}
+	public function getList($conditions = NULL, $fields = '*'){
+		$sort = $groupby = "";
+        $where = $this->where($conditions);
 		if($this->sort != NULL) {
 			$sort = "ORDER BY {$this->sort}";
 		} else {
@@ -560,21 +582,6 @@ class DBQuery{
 		return $this->conn->getQueryArrayResult($sql);
 	}
 
-	public function order($sort){
-		$this->sort = $sort;
-		return $this;
-	}
-
-	public function group($group){
-		$this->groupby = $group;
-		return $this;
-	}
-
-	public function limit($limit){
-		$this->limit_num = $limit;
-		return $this;
-	}
-
 	/**
 	 * 从数据表中查找一条记录
 	 *
@@ -586,21 +593,16 @@ class DBQuery{
 	 * @param
 	 *        	fields 返回的字段范围，默认为返回全部字段的值
 	 */
-	public function getRow($conditions = NULL, $fields = NULL){
-		if($record = $this->getList($conditions, NULL, $fields, 1)) {
-			return array_pop($record);
-		} else {
-			return FALSE;
-		}
+	public function getRow($conditions = NULL, $fields = '*'){
+        $where = $this->where($conditions);
+        $sql = "SELECT {$fields} FROM {$this->table_name} {$where};";
+        return $this->conn->getQueryRowResult($sql);
 	}
 
-	public function getOne($conditions = NULL, $fields = NULL){
-		$arrRow = $this->getRow($conditions, $fields);
-		if(is_array($arrRow)) {
-			$arrRow = array_values($arrRow);
-			return $arrRow[0];
-		}
-		return false;
+	public function getOne($conditions = NULL, $fields){
+        $where = $this->where($conditions);
+        $sql = "SELECT {$fields} FROM {$this->table_name} {$where};";
+        return $this->conn->getQueryOneResult($sql);
 	}
 
 	/**
@@ -736,7 +738,6 @@ class DBQuery{
 		$values = join(", ", $vals);
 		$sql = "UPDATE {$this->table_name } SET {$values} {$where}";
 		return $this->conn->execute($sql);
-		;
 	}
 
 	public function explodeDsn($dsn){
@@ -1021,7 +1022,8 @@ class Process{
 		$classes_file = __ROOT_PATH . $execute_dir . $execute_sub_dir . $class . ".class.php";
 		
 		if(isset(self::$objProcess[$classes_file]) && is_object(self::$objProcess[$classes_file])) {
-			return new self::$objProcess[$classes_file]($arguments);
+			//return new self::$objProcess[$classes_file]($arguments);
+			return self::$objProcess[$classes_file];
 		}
 		if(file_exists($classes_file)) {
 			include ($classes_file);

@@ -52,6 +52,19 @@ class mysql{
 		return $rows;
 	}
 
+	public function getQueryRowResult($sql){
+		$result = $this->execute($sql);
+		$row = mysql_fetch_assoc($result);
+		mysql_free_result($result);
+		return $row;
+	}
+
+	public function getQueryOneResult($sql){
+		$result = $this->execute($sql);
+		$row = mysql_fetch_row($result);
+		mysql_free_result($result);
+		return $row[0];
+	}
 	/**
 	 * 返回当前插入记录的主键ID
 	 */
@@ -99,9 +112,9 @@ class mysql{
 	}
 
 	/**
-	 * 析构函数
+	 * 析构函数 __destruct
 	 */
-	public function __destruct(){
+	public function close(){
 		mysql_close($this->conn);
 	}
 }
