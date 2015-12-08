@@ -93,7 +93,7 @@ CREATE TABLE `modules_config` (
 
 /*Data for the table `modules_config` */
 
-insert  into `modules_config`(`mc_id`,`mc_father_id`,`mc_name`,`mc_module`,`mc_module_action`,`mc_module_action_field`,`mc_ico`,`mc_new`) values (1,1,'管理模块',NULL,NULL,NULL,'file','0'),(2,1,'旅游产品','tourism',NULL,NULL,'university','1'),(3,1,'酒店产品','hotel',NULL,NULL,'hotel','0'),(4,1,'地图查找','maps',NULL,NULL,'marker','0'),(5,1,'用户管理','member',NULL,NULL,'users','0'),(6,1,'订单管理',NULL,NULL,NULL,'table','0'),(7,7,'系统日志',NULL,NULL,NULL,'calendar','0'),(8,8,'表单',NULL,NULL,NULL,'pencil-square-o','0');
+insert  into `modules_config`(`mc_id`,`mc_father_id`,`mc_name`,`mc_module`,`mc_module_action`,`mc_module_action_field`,`mc_ico`,`mc_new`) values (1,1,'管理模块',NULL,NULL,NULL,'file','0'),(2,1,'旅游产品','tourism',NULL,NULL,'university','1'),(3,1,'酒店产品','hotel',NULL,NULL,'hotel','0'),(4,1,'地图查找','maps',NULL,NULL,'map-marker','0'),(5,1,'用户管理','member',NULL,NULL,'users','0'),(6,1,'订单管理',NULL,NULL,NULL,'table','0'),(7,7,'系统日志',NULL,NULL,NULL,'calendar','0'),(8,8,'表单',NULL,NULL,NULL,'pencil-square-o','0');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

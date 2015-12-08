@@ -10,6 +10,10 @@ ul {
   color: #ffbe40;
 }
 
+.admin-icon-red {
+  color: #FF0000;
+}
+
 .admin-header {
   font-size: 1.4rem;
   margin-bottom: 0;
