@@ -459,7 +459,7 @@ class DBQuery{
 	private $dsn = NULL;
 	private $conn = NULL;
 	private $limit_num = NULL;
-	private $sort = NULL;
+	private $order = NULL;
 	private static $instances = array ();
 	private static $defaultDsn = __DEFAULT_DSN;
 	private $table_name = NULL;
@@ -519,8 +519,8 @@ class DBQuery{
 		return $this;
 	}
 
-    public function order($sort){
-        $this->sort = $sort;
+    public function order($order){
+        $this->order = $order;
         return $this;
     }
 
@@ -565,18 +565,18 @@ class DBQuery{
 	 *        	如果limit值只有一个数字，则是指代从0条记录开始。
 	 */
 	public function getList($conditions = NULL, $fields = '*'){
-		$sort = $groupby = "";
+		$order = $groupby = "";
         $where = $this->where($conditions);
-		if($this->sort != NULL) {
-			$sort = "ORDER BY {$this->sort}";
+		if(!empty($this->order)) {
+			$order = "ORDER BY {$this->order}";
 		} else {
 			if($this->table_key != '*')
-				$sort = "ORDER BY {$this->table_key} DESC";
+				$order = "ORDER BY {$this->table_key} DESC";
 		}
-		if($this->groupby != NULL) {
+		if(!empty($this->groupby)) {
 			$groupby = "GROUP BY" . $this->groupby;
 		}
-		$sql = "SELECT {$fields} FROM {$this->table_name} {$where} {$groupby} {$sort} ";
+		$sql = "SELECT {$fields} FROM {$this->table_name} {$where} {$groupby} {$order} ";
 		if($this->limit_num != NULL)
 			$sql = $this->conn->setlimit($sql, $this->limit_num);
 		return $this->conn->getQueryArrayResult($sql);

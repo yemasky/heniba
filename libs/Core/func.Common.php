@@ -303,6 +303,34 @@ if(!defined("INC_FUNC_COMMON")) {
 		return substr($str, 0, $loop);
 	}
 
+	function page($pn, $all_page_num, $show_pages = 10) {
+		$arrayResultPage = "";
+		$mod_pn = $pn % $show_pages;
+		if($mod_pn != 0) {
+		} else {
+			$mod_pn = $show_pages;
+		}
+		if($pn > $show_pages) {
+			$arrayResultPage[0] = $pn - $mod_pn - $show_pages + 1;
+		} else {
+			$arrayResultPage[0] = '';
+		}
+		if(($all_page_num -  $pn) < $show_pages) {
+			if($mod_pn <= ($all_page_num % $show_pages)) {
+				$show_pages = $all_page_num % $show_pages;
+			}
+		}
+		for($i = 1; $i <= $show_pages; $i++) {
+			$arrayResultPage[$i] = $pn - $mod_pn + $i;
+		}
+		if($pn < ($all_page_num - $show_pages)) {
+			$arrayResultPage[$i] = $arrayResultPage[$i -1] + 1;
+		} else {
+			$arrayResultPage[$i] = '';
+		}
+		return $arrayResultPage;
+	}
+
 	function getModelByUri(){
 		$model = 'index'; // REDIRECT_URL
 		if(isset($_SERVER['REDIRECT_URL'])) {
