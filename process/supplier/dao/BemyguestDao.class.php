@@ -13,7 +13,7 @@ class BemyguestDao {
 	
 	public function getTourProduct() {
 		$field = 'typeName, locations, title, titleTranslated, description, descriptionTranslated, photosUrl, photos, latitude, '
-				.'longitude, currency, basePrice, reviewCount, reviewAverageScore, categories';
+				.'longitude, currency, basePrice, reviewCount, reviewAverageScore, categories, uuid';
 		return DBQuery::instance(DbConfig::supplier_dsn)->setTable('bemyguest_tour')->getList(null, $field);
 	}
 
