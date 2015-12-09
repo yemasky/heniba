@@ -23,17 +23,17 @@ class TourismAction extends BaseAction {
     }
 
     /**
-     * Ê×Ò³ÏÔÊ¾
+     * é¦–é¡µæ˜¾ç¤º
      */
     protected function doBase($objRequest, $objResponse) {
-        //¸³Öµ
-        //ÉèÖÃÀà±ð
+        //èµ‹å€¼
+        //è®¾ç½®ç±»åˆ«
         $pn = $objRequest->pn;
         $pn = empty($pn) ? 1 : $pn;
         $list_count = $objRequest->list_count;
         $list_count = empty($list_count) ? 20 : $list_count;
         $conditions['order'] = null;
-        $conditions['limit'] = ($pn - 1) . ", $list_count";
+        $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
         $conditions['condition'] = null;
         $objResponse -> setTplValue('tourism', $this->objProcess->TourismDao()->getTourism($conditions));
         $tourismCount = $this->objProcess->TourismDao()->getTourismCount($conditions);
@@ -43,8 +43,8 @@ class TourismAction extends BaseAction {
         $objResponse -> setTplValue('pn', $pn);
         $objResponse -> setTplValue('show_pages', 10);
         $objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);
-        //ÉèÖÃMeta(¹²Í¨)
-        $objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '¹ÜÀíºóÌ¨', '¹ÜÀíºóÌ¨', '¹ÜÀíºóÌ¨'));
+        //è®¾ç½®Meta(å…±é€š)
+        $objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', 'ç®¡ç†åŽå°', 'ç®¡ç†åŽå°', 'ç®¡ç†åŽå°'));
         $objResponse -> setTplName("merchant/tourism_list");
     }
 

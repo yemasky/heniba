@@ -18,15 +18,18 @@ class BemyguestTool extends BaseTool {
             }
             $categories = json_decode($v['categories'], true);
             //print_r($categories);
-            foreach($categories as $kc => $categorie) {
-                $arrayTagData[$categorie['name']]['tt_id'] = $this->objProcess->TourismDao()->getTagIdByName($categorie['name']);
-                if(empty($arrayTagData[$categorie['name']]['tt_id'])) {
-                    $sql = "INSERT INTO tourism_tag (tt_name) VALUES ('".addslashes($categorie['name'])."')";
-                    $arrayTagData[$categorie['name']]['tt_id'] = $this->objProcess->TourismDao()->insertCountry($sql);
-                }
-                echo "tag over:".$arrayTagData[$categorie['name']]['tt_id']."\r\n<br>";
+            $arrayTagData =  array();
+            if(!empty($categories)) {
+	            foreach($categories as $kc => $categorie) {
+	                $arrayTagData[$categorie['name']]['tt_id'] = $this->objProcess->TourismDao()->getTagIdByName($categorie['name']);
+	                if(empty($arrayTagData[$categorie['name']]['tt_id'])) {
+	                    $sql = "INSERT INTO tourism_tag (tt_name) VALUES ('".addslashes($categorie['name'])."')";
+	                    $arrayTagData[$categorie['name']]['tt_id'] = $this->objProcess->TourismDao()->insertCountry($sql);
+	                }
+	                //*echo "tag over:".$arrayTagData[$categorie['name']]['tt_id']."\r\n<br>";
+	            }
+	            sort($arrayTagData);
             }
-            sort($arrayTagData);
             //print_r($arrayTagData);
             //exit();
             $arrayData['t_images'] = json_encode($arrayData['t_images']);
@@ -35,7 +38,7 @@ class BemyguestTool extends BaseTool {
             if(empty($arrayData['tc_id'])) {
                 $arrayData['tc_id'] = $this->objProcess->TourismDao()->insertTCategory($tc_name);
             }
-            echo "Category over:".$arrayData['tc_id']."\r\n<br>";
+            //*echo "Category over:".$arrayData['tc_id']."\r\n<br>";
             //
             $arrayLocations = json_decode($v['locations'], true);
             $destinationAliasConfig = DestinationAliasConfig::$destinationAliasConfig;
@@ -47,10 +50,11 @@ class BemyguestTool extends BaseTool {
             //print_r($arrayData);
 
             if(empty($arrayData['c_country_id'])) {
-                throw new Exception('c_country_id is null:' . $arrayLocations[0]['country']);
+            	print_r($arrayLocations);
+                throw new Exception('c_country_id is null:' . $arrayLocations[0]['country'] . ";uuid:" . $v['uuid']);
             }
 
-            $conditions = array('c_name'=>$arrayLocations[0]['state'], 'c_country_id'=>$arrayData['c_country_id']);
+            $conditions = array('c_name'=>addslashes($arrayLocations[0]['state']), 'c_country_id'=>$arrayData['c_country_id']);
             $arrayResult = $this->objProcess->TourismDao()->getCountryIdByName($conditions);
             $arrayData['c_state_id'] = $arrayResult['c_id'];
             if(empty($arrayData['c_state_id'])) {
@@ -59,14 +63,14 @@ class BemyguestTool extends BaseTool {
                 $arrayData['c_state_id'] = $this->objProcess->TourismDao()->insertCountry($sql);
                 //echo $sql;
             }
-            echo "c_state_id over:".$arrayData['c_state_id']."\r\n<br>";
+            //*echo "c_state_id over:".$arrayData['c_state_id']."\r\n<br>";
             $conditions = array('c_name'=>addslashes($arrayLocations[0]['city']), 'c_country_id'=>$arrayData['c_country_id'], 'c_state_id'=>$arrayData['c_state_id']);
             $arrayResult = $this->objProcess->TourismDao()->getCountryIdByName($conditions);
-            echo $arrayLocations[0]['city'] . "<br>";
-            print_r($arrayResult);
+            //*echo $arrayLocations[0]['city'] . "<br>";
+            //*print_r($arrayResult);
             //print_r($v);
             $arrayData['c_city_id'] = $arrayResult['c_id'];
-            var_dump($arrayData['c_city_id']);
+            //*var_dump($arrayData['c_city_id']);
             if(empty($arrayData['c_city_id'])) {
                 $sql = 'INSERT INTO country (c_name, c_country_id, c_continent_id, c_state_id, c_type) VALUES(\''.addslashes($arrayLocations[0]['city']).'\','
                       .$arrayData['c_country_id'].','.$arrayData['c_continent_id'].','.$arrayData['c_state_id'].',\'City\')';
@@ -74,9 +78,9 @@ class BemyguestTool extends BaseTool {
             } elseif(empty($arrayResult['c_state_id'])) {
                 $sql = 'UPDATE country SET c_state_id=' .$arrayData['c_state_id'] . ' WHERE c_city_id = ' . $arrayData['c_city_id'];
                 $this->objProcess->TourismDao()->insertCountry($sql);
-                echo "UPDATE over:".$arrayData['c_state_id']."\r\n<br>";
+                //*echo "UPDATE over:".$arrayData['c_state_id']."\r\n<br>";
             }
-            echo "c_city_id over:".$arrayData['c_city_id']."\r\n<br>";
+            //*echo "c_city_id over:".$arrayData['c_city_id']."\r\n<br>";
             //exit;
             //
             $arrayData['t_title'] = addslashes($v['title']);
@@ -103,22 +107,26 @@ class BemyguestTool extends BaseTool {
             $arrayData['t_review_average_score'] = $v['reviewAverageScore'];
             $arrayData['t_supplier'] = 'bemyguest';
             $arrayData['t_supplier_code'] = $v['uuid'];
+            $arrayData['t_add_date'] = getDateTime();
             unset($arrayData['c_continent_id']);
             //print_r($arrayData);exit;
             $t_id = $this->objProcess->TourismDao()->insertTourism($arrayData);
             if(empty($t_id)) {
                 $t_id = $this->objProcess->TourismDao()->getTourismT_idByCode($v['uuid']);
             }
-            foreach($arrayTagData as $tagk => $tagv) {
-                $this->objProcess->TourismDao()->insertTourismTagProduct(array('tt_id'=>$tagv['tt_id'], 't_id'=>$t_id));
+            if(!empty($arrayTagData)) {
+	            foreach($arrayTagData as $tagk => $tagv) {
+	                $this->objProcess->TourismDao()->insertTourismTagProduct(array('tt_id'=>$tagv['tt_id'], 't_id'=>$t_id));
+	            }
             }
-            echo "over :" . $t_id .  "\r\n<br>";
+            //echo "over :" . $t_id .  "\r\n<br>";
             ob_flush();
             flush();
             //exit;
             //print_r($arrayData);exit();
 
         }
+        echo "over";
     }
 
 }
