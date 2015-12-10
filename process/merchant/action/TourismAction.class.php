@@ -42,7 +42,7 @@ class TourismAction extends BaseAction {
         $objResponse -> setTplValue('pn', $pn);
         $objResponse -> setTplValue('show_pages', 10);
         $objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);
-        //设置Meta(共�??)
+        //设置Meta
         $objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/tourism_list");
     }

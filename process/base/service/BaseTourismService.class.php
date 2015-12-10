@@ -7,12 +7,12 @@
  * Time: 13:34
  */
 class BaseTourismService extends  BaseService{
-    private static $objBaseTourosmService = null;
+    private static $objBaseTourismService = null;
 
     public static function instance($objProcess = NULL) {
-        if(is_object(self::$objBaseTourosmService)) return self::$objBaseTourosmService;
-        self::$objBaseTourosmService = new BaseTourosmService($objProcess);
-        return self::$objBaseTourosmService;
+        if(is_object(self::$objBaseTourismService)) return self::$objBaseTourismService;
+        self::$objBaseTourismService = new BaseTourismService($objProcess);
+        return self::$objBaseTourismService;
     }
 
     public function getSupplierTourism($supplierCode) {

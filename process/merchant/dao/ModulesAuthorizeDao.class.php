@@ -14,7 +14,7 @@ class ModulesAuthorizeDao {
 
     public function getMerchantUserModules($arrayMc_id) {
         $fileid = 'mc_id, mc_father_id, mc_name, mc_module, mc_module_action, mc_module_action_field, mc_ico, mc_new';
-        $conditions = 'mc_id in(' . implode(',', $arrayMc_id) .')';
+        $conditions = 'mc_id in(' . implode(',', $arrayMc_id) .') AND mc_show = \'1\'';
         return DBQuery::instance(DbConfig::merchant_dsn)->setTable('modules_config')->DBCache(1800)->getList($conditions, $fileid);
     }
 }
