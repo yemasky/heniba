@@ -6,5 +6,11 @@
  */
 
 class TourismService extends BaseService {
-	
+	public function getTourism($conditions, $fileid = NULL) {
+        return BaseTourismDao::instance()->DBCache(1800)->getTourism($conditions, $fileid);
+    }
+
+    public function getTourismCount($conditions) {
+        return BaseTourismDao::instance()->DBCache(1800)->getTourismCount($conditions);
+    }
 }

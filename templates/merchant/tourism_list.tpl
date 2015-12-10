@@ -14,18 +14,7 @@
     <!--<![endif]-->
     <script src="<%$__RESOURCE%>assets/js/amazeui.min.js"></script>
     <script src="<%$__RESOURCE%>assets/js/app.js"></script>
-    <script language="JavaScript">
-        $.preloadImages = function () {
-            for (var i = 0; i < arguments.length; i++) {
-                $('<img>').attr('src', arguments[i]);
-            }
-        };
 
-        $.preloadImages('http://s.amazeui.org/media/i/demos/pure-4.jpg', 'http://s.amazeui.org/media/i/demos/pure-1.jpg');
-        $('img').load(function () {
-            console.log('image load successful');
-        });
-    </script>
 </head>
 <body>
 <!--[if lte IE 9]>
@@ -61,11 +50,12 @@
           <tr>
               <td><%$tourism[i].t_id%></td>
               <td width="175">
+                  <a href="index.php?model=tourism&action=product&id=<%$tourism[i].t_id%>" target="_blank">
                   <div class="am-slider am-slider-default" data-am-flexslider id="img-slider-<%$tourism[i].t_id%>">
                       <ul class="am-slides" id="img-<%$tourism[i].t_id%>">
-
                       </ul>
                   </div>
+                  </a>
                   <script language="JavaScript">
                       obj = jQuery.parseJSON('<%$tourism[i].t_images%>');
                       img = '';

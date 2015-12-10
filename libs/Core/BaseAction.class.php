@@ -262,14 +262,14 @@ abstract class BaseAction{
 	/**
 	 * 禁用显示
 	 */
-	public function setDisplay($flag = true){
+	protected function setDisplay($flag = true){
 		$this->displayDisabled = $flag;
 	}
 
 	/**
 	 * 缓存页面
 	 */
-	public function setCache($_cache_id = NULL, $_cache_time = 7200, $flag = true, $_cache_dir = __CACHE, $_renew_cachedir = true){
+	protected function setCache($_cache_id = NULL, $_cache_time = 7200, $flag = true, $_cache_dir = __CACHE, $_renew_cachedir = true){
 		if(empty($_cache_id)) {
 			throw new Exception("_cache_id cann't empty.");
 		}
@@ -280,7 +280,7 @@ abstract class BaseAction{
 		$this->_renew_cachedir = $_renew_cachedir;
 	}
 
-	public function setCreateHtml($_html_name, $_html_dir = __HTML, $flag = true){
+	protected function setCreateHtml($_html_name, $_html_dir = __HTML, $flag = true){
 		$this->_create_html = $flag;
 		$this->_html_name = $_html_name;
 		$this->_html_dir = $_html_dir;
@@ -289,14 +289,14 @@ abstract class BaseAction{
 	/**
 	 * 事务回滚
 	 */
-	public function dbRollback($flag = true){
+	protected function dbRollback($flag = true){
 		$this->dbrollback = $flag;
 	}
 
 	/**
 	 * 是否Header
 	 */
-	public function sendHeader($flag = true){
+	protected function sendHeader($flag = true){
 		$this->isHeader = $flag;
 	}
 
@@ -304,8 +304,26 @@ abstract class BaseAction{
 	 * *
 	 * 受否编译模板
 	 */
-	public function setCompiler($flag = true){
+	protected function setCompiler($flag = true){
 		$this->compiler = $flag;
+	}
+
+	protected function check_null($parameter, $key = null) {
+		if(empty($parameter)) {
+			throw new Exception("parameter is null:" . $key . '=>' . $parameter);
+		}
+	}
+
+	protected function check_int($int, $key = null) {
+		$this->check_null($int, $key);
+		if(!is_numeric($int)) {
+			throw new Exception("parameter not int:" . $key . '=>' . $int);
+		}
+		if((int)$int == $int) {
+			return (int)$int;
+		} else {
+			throw new Exception("parameter not int:" . $key . '=>' . $int);
+		}
 	}
 
 	/**
