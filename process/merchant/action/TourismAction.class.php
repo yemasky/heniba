@@ -54,7 +54,7 @@ class TourismAction extends BaseAction {
         $supplierCode = $this->objProcess->TourismService($this->objProcess)->getTourism($conditions, 't_supplier, t_supplier_code');
         $tourism_product[0] = null;
         if(!empty($supplierCode)) {
-            $tourism_product = BaseTourosmService::instance($this->objProcess)->getSupplierTourism($supplierCode[0]);
+            $tourism_product = BaseTourismService::instance($this->objProcess)->getSupplierTourism($supplierCode[0]);
         }
         $conditions = DbConfig::$db_query_conditions;
         $conditions['condition'] = "t_id > $t_id AND t_id < " . (($t_id + 50));

@@ -470,7 +470,7 @@ class NotFound extends BaseAction{
 	 * 首页显示
 	 */
 	protected function doShowPage($objRequest, $objResponse){
-		$objResponse->setTplName("www/NotFound");
+		$objResponse->setTplName("NotFound");
 	}
 }
 class DBQuery{
@@ -1064,6 +1064,10 @@ class Process{
 	
 	public function setProcessKey($process_key){
 		$this->process_key = $process_key . '/';
+	}
+
+	public function getProcessKey(){
+		return trim($this->process_key, '/');
 	}
 	
 }
