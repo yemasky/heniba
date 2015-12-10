@@ -56,6 +56,16 @@
       text-align: center;
     }
   </style>
+  <!--[if lt IE 9]>
+  <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+  <script src="<%$__RESOURCE%>assets/js/amazeui.ie8polyfill.min.js"></script>
+  <![endif]-->
+
+  <!--[if (gte IE 9)|!(IE)]><!-->
+  <script src="<%$__RESOURCE%>assets/js/jquery.min.js"></script>
+  <!--<![endif]-->
+  <script src="<%$__RESOURCE%>assets/js/amazeui.min.js"></script>
 </head>
 <body>
 <header class="am-topbar">
@@ -103,13 +113,25 @@
       <h4 class="am-article-meta blog-meta">by <a href="">open</a> posted on 2014/06/17 under <a href="#">字体</a></h4>
 
       <div class="am-g blog-content">
-        <div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0">
-          <ul class="am-slides">
-            <li><img src="http://s.amazeui.org/media/i/demos/bing-1.jpg" /></li>
-            <li><img src="http://s.amazeui.org/media/i/demos/bing-2.jpg" /></li>
+        <div class="am-slider am-slider-default" data-am-flexslider id="product-slider-0">
+          <ul class="am-slides" id="img-<%$tourism_product.id%>">
+
           </ul>
         </div>
       </div>
+      <script language="JavaScript">
+        var obj = jQuery.parseJSON('<%$tourism_product.photos%>');
+        var img = '';
+        var path = '<%$tourism_product.photosUrl%>';
+        $.each(obj, function(i, item){
+          $.each(item.paths, function(k, k_item) {
+            if(k == '680x325') {
+              img += '<li><img src="' + path + k_item + '"></li>';
+              $('#img-<%$tourism_product.id%>').html(img);
+            }
+          })
+        });
+      </script>
       <div class="am-g">
         <div class="am-u-sm-12">
           <p>看著自己的作品，你的喜悅之情溢於言表，差點就要說出我要感謝我的父母之類的得獎感言。但在你對面的客戶先是一點表情也沒有，又瞬間轉為陰沉，抿了抿嘴角冷冷的說……</p>
@@ -332,31 +354,19 @@
       <section class="am-panel am-panel-default">
         <div class="am-panel-hd">团队成员</div>
         <div class="am-panel-bd">
-          <ul class="am-avg-sm-4 blog-team">
-            <li><img class="am-thumbnail"
-                     src="http://img4.duitang.com/uploads/blog/201406/15/20140615230220_F5LiM.thumb.224_0.jpeg" alt=""/>
+          <ul class="am-avg-sm-2 blog-team">
+            <%section name=i loop=$relation_tourism%>
+            <li><a href="index.php?model=tourism&action=product&id=<%$relation_tourism[i].t_id%>" target="_blank"><img class="am-thumbnail" id="relation_img_<%$relation_tourism[i].t_id%>" alt=""/></a>
+              <%$relation_tourism[i].t_title%>
             </li>
-            <li><img class="am-thumbnail"
-                     src="http://img4.duitang.com/uploads/blog/201406/15/20140615230220_F5LiM.thumb.224_0.jpeg" alt=""/>
-            </li>
-            <li><img class="am-thumbnail"
-                     src="http://img4.duitang.com/uploads/blog/201406/15/20140615230220_F5LiM.thumb.224_0.jpeg" alt=""/>
-            </li>
-            <li><img class="am-thumbnail"
-                     src="http://img4.duitang.com/uploads/blog/201406/15/20140615230220_F5LiM.thumb.224_0.jpeg" alt=""/>
-            </li>
-            <li><img class="am-thumbnail"
-                     src="http://img4.duitang.com/uploads/blog/201406/15/20140615230159_kjTmC.thumb.224_0.jpeg" alt=""/>
-            </li>
-            <li><img class="am-thumbnail"
-                     src="http://img4.duitang.com/uploads/blog/201406/15/20140615230220_F5LiM.thumb.224_0.jpeg" alt=""/>
-            </li>
-            <li><img class="am-thumbnail"
-                     src="http://img4.duitang.com/uploads/blog/201406/15/20140615230220_F5LiM.thumb.224_0.jpeg" alt=""/>
-            </li>
-            <li><img class="am-thumbnail"
-                     src="http://img4.duitang.com/uploads/blog/201406/15/20140615230159_kjTmC.thumb.224_0.jpeg" alt=""/>
-            </li>
+            <script language="JavaScript">
+              obj = jQuery.parseJSON('<%$relation_tourism[i].t_images%>');
+              $.each(obj, function(k, item){
+                $('#relation_img_<%$relation_tourism[i].t_id%>').attr('src', item);
+                return true;
+              });
+            </script>
+            <%/section%>
           </ul>
         </div>
       </section>
@@ -371,16 +381,7 @@
   </p>
 </footer>
 
-<!--[if lt IE 9]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="<%$__RESOURCE%>assets/js/amazeui.ie8polyfill.min.js"></script>
-<![endif]-->
 
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="<%$__RESOURCE%>assets/js/jquery.min.js"></script>
-<!--<![endif]-->
-<script src="<%$__RESOURCE%>assets/js/amazeui.min.js"></script>
 
 </body>
 </html>

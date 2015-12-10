@@ -56,7 +56,12 @@ class TourismAction extends BaseAction {
         if(!empty($supplierCode)) {
             $tourism_product = BaseTourosmService::instance($this->objProcess)->getSupplierTourism($supplierCode[0]);
         }
+        $conditions = DbConfig::$db_query_conditions;
+        $conditions['condition'] = "t_id > $t_id AND t_id < " . (($t_id + 50));
+        $conditions['limit'] = "0, 10";
+        $relation_tourism = $this->objProcess->TourismService($this->objProcess)->getTourism($conditions, 't_id, t_title, t_title_cn, t_images');
         $objResponse -> setTplValue('tourism_product', $tourism_product[0]);
+        $objResponse -> setTplValue('relation_tourism', $relation_tourism);
         $objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/tourism_product");
     }
