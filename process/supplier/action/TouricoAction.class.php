@@ -53,7 +53,7 @@ class TouricoAction extends BaseAction{
 	
 	protected function disposeHotels($objRequest, $objResponse) {
 		//$this->objProcess->TouricoService($this->objProcess)->insertDestination();
-		//$this->objProcess->TouricoTool($this->objProcess)->disposeHotels();
+		$this->objProcess->TouricoTool($this->objProcess)->disposeHotels();
 	}
 
 	protected function insertCountry($objRequest, $objResponse) {

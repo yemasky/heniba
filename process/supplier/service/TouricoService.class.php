@@ -57,5 +57,16 @@ class TouricoService{
 	public function GetHotelDetailsV3($arrayHotelIds) {
 		return BaseBookTouricoService::instance($this->objProcess)->GetHotelDetailsV3($arrayHotelIds);
 	}
+
+	//
+	public function parserXml($arrayResult) {
+		if($arrayResult['httpcode'] == 200 && empty($arrayResult['error'])) {
+			$objXML = new XML();
+			$arrayXML = $objXML->parseToArray($arrayResult['result']);
+			return $arrayXML;
+		} else {
+			throw new Exception(json_encode($arrayResult));
+		}
+	}
 	
 }
