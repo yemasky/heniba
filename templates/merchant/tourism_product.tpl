@@ -122,13 +122,17 @@
       <script language="JavaScript">
         var obj = jQuery.parseJSON('<%$tourism_product.photos%>');
         var img = '';
+        var error_img = '';
         var path = '<%$tourism_product.photosUrl%>';
         $.each(obj, function(i, item){
           $.each(item.paths, function(k, k_item) {
-            if(k == '680x325') {
-              img += '<li><img src="' + path + k_item + '"></li>';
-              $('#img-<%$tourism_product.id%>').html(img);
-            }
+	       	  if(k == '680x325') {
+	       		error_img = path + k_item;
+	       	  }
+	          if(k == '1280x720') {
+	            img += '<li><img src="' + path + k_item + '" onerror="this.src=\''+error_img+'\'"></li>';
+	            $('#img-<%$tourism_product.id%>').html(img);
+	          }
           })
         });
       </script>
