@@ -136,7 +136,7 @@
           })
         });
       </script>
-      <div data-am-widget="slider" class="am-slider am-slider-d3" data-am-slider='{&quot;controlNav&quot;:&quot;thumbnails&quot;,&quot;directionNav&quot;:false}' >
+      <div data-am-widget="slider" class="am-slider am-slider-d3" data-am-slider='{controlNav&quot;:&quot;thumbnails&quot;,&quot;directionNav&quot;:false}' >
         <ul class="am-slides">
           <li data-thumb="http://s.amazeui.org/media/i/demos/bing-1.jpg">
             <img src="http://s.amazeui.org/media/i/demos/bing-1.jpg">
@@ -361,17 +361,16 @@
         <section class="am-panel am-panel-default">
           <div class="am-panel-hd">预定须知：</div>
           <div class="am-panel-bd">
-            <p>前所未有的中文云端字型服务，让您在 web 平台上自由使用高品质中文字体，跨平台、可搜寻，而且超美。云端字型是我们的事业，推广字型学知识是我们的志业。从字体出发，关心设计与我们的生活，justfont blog
-              正是為此而生。</p>
-            <label class="am-form-label am-u-md-10" for="datepicker">选择日期</label>
+            <p><%$tourism_product.highlights%></p>
+            <label class="am-form-label am-u-md-10" for="arrivalDate">选择日期</label>
             <div class="am-form-group am-input-group am-u-md-10">
               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i></span>
-              <input type="text" class="am-form-field" id="datepicker" placeholder="YYYY-MM-DD" data-am-datepicker="{theme: 'success'}" style="cursor: hand;"/>
+              <input name="arrivalDate" type="text" class="am-form-field" id="arrivalDate" placeholder="YYYY-MM-DD" />
             </div>
-            <label class="am-form-label am-u-md-10" for="select_num">选择人数</label>
+            <label class="am-form-label am-u-md-10" for="pax">选择人数</label>
             <div class="am-form-group am-input-group am-u-md-10">
               <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i></span>
-              <select data-am-selected="{searchBox: 1}" class="am-form-field" id="select_num" >
+              <select name="pax" data-am-selected="{searchBox: 1}" class="am-form-field" id="pax" >
                 <option value="a">1 人</option>
                 <option value="b">Banana</option>
                 <option value="o">Orange</option>
@@ -442,7 +441,37 @@
   </p>
 </footer>
 
+<script>
+  $(function() {
+    var nowTemp = new Date();
+    var nowDay = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0).valueOf();
+    var nowMoth = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), 1, 0, 0, 0, 0).valueOf();
+    var nowYear = new Date(nowTemp.getFullYear(), 0, 1, 0, 0, 0, 0).valueOf();
+    var $arrivalDate = $('#arrivalDate');
 
+    var checkin = $arrivalDate.datepicker({
+      onRender: function(date, viewMode) {
+        // 默认 days 视图，与当前日期比较
+        var viewDate = nowDay;
 
+        switch (viewMode) {
+          // moths 视图，与当前月份比较
+          case 1:
+            viewDate = nowMoth;
+            break;
+          // years 视图，与当前年份比较
+          case 2:
+            viewDate = nowYear;
+            break;
+        }
+
+        return date.valueOf() < viewDate ? 'am-disabled' : '';
+      }
+    }).on('changeDate.datepicker.amui', function(ev) {
+
+      checkin.close();
+    }).data('amui.datepicker');
+  });
+</script>
 </body>
 </html>
