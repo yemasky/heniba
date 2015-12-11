@@ -9,9 +9,9 @@
 class BaseTourismDao extends BaseDao{
     private static $objBaseTourismDao = null;
 
-    public static function instance() {
+    public static function instance($objProcess = NULL) {
         if(is_object(self::$objBaseTourismDao)) return self::$objBaseTourismDao;
-        self::$objBaseTourismDao = new BaseTourismDao();
+        self::$objBaseTourismDao = new BaseTourismDao($objProcess);
         return self::$objBaseTourismDao;
     }
 
@@ -29,14 +29,4 @@ class BaseTourismDao extends BaseDao{
         return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('tourism')->getOne($conditions, $fileid);
     }
 
-    public function getBemyguestTourism($conditions, $fileid = NULL) {
-        if(empty($fileid)) {
-            $fileid = 'id, title, titleTranslated, description, descriptionTranslated, highlights, highlightsTranslated, additionalInfo, additionalInfoTranslated,'
-                . 'priceIncludes, priceIncludesTranslated, priceExcludes, priceExcludesTranslated, itinerary, itineraryTranslated, warnings, warningsTranslated,'
-                . 'safety, safetyTranslated, latitude, longitude, minPax, maxPax, basePrice, currency, reviewCount, reviewAverageScore, typeName, photosUrl, '
-                . 'businessHoursFrom, businessHoursTo, meetingTime, meetingLocation, meetingLocationTranslated, photos, categories, productTypes, addons,'
-                . 'locations';
-        }
-        return DBQuery::instance(DbConfig::supplier_dsn)->setTable('bemyguest_tour')->setKey('id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['condition'], $fileid);
-    }
 }
