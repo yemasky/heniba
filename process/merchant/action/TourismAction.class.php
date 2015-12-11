@@ -56,6 +56,7 @@ class TourismAction extends BaseAction {
         if(!empty($supplierCode)) {
             $tourism_product = BaseTourismService::instance($this->objProcess)->getSupplierTourism($supplierCode[0]);
         }
+
         $conditions = DbConfig::$db_query_conditions;
         $conditions['condition'] = "t_id > $t_id AND t_id < " . (($t_id + 50));
         $conditions['limit'] = "0, 10";

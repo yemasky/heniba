@@ -70,7 +70,7 @@ class CommonService extends BaseService
     }
 
     public function getMerchantUserAuthorize($mu_id) {
-        return $this->objProcess->ModulesAuthorizeDao()->getMerchantUserAuthorize($mu_id);
+        return $this->objProcess->ModulesAuthorizeDao()->DBCache(1800)->getMerchantUserAuthorize($mu_id);
     }
 
     public function getMerchantMenu($mu_id) {
@@ -81,7 +81,7 @@ class CommonService extends BaseService
             foreach($arrayAuthorize as $k => $v) {
                 $arrayMc_id[] = $v['mc_id'];
             }
-            $arrayUserModels = $this->objProcess->ModulesAuthorizeDao()->getMerchantUserModules($arrayMc_id);
+            $arrayUserModels = $this->objProcess->ModulesAuthorizeDao()->DBCache(1800)->getMerchantUserModules($arrayMc_id);
         }
         return $arrayUserModels;
     }
