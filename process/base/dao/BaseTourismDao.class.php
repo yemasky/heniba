@@ -15,6 +15,10 @@ class BaseTourismDao extends BaseDao{
         return self::$objBaseTourismDao;
     }
 
+    public function insertTourism($arrData) {
+        return DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('tourism')->insert($arrData, 'INSERT IGNORE')->getInsertId();
+    }
+
     public function getTourism($conditions, $fileid = NULL) {
         if(empty($fileid)) {
             $fileid = 't_id, tc_id, c_country_id, c_state_id, c_city_id, t_title, t_title_cn, t_description, '

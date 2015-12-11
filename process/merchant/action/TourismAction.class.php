@@ -26,7 +26,7 @@ class TourismAction extends BaseAction {
      * 首页显示
      */
     protected function doBase($objRequest, $objResponse) {
-        //赋�??
+        //
         //设置类别
         $pn = $objRequest->pn;
         $pn = empty($pn) ? 1 : $pn;
@@ -55,13 +55,31 @@ class TourismAction extends BaseAction {
         $tourism_product[0] = null;
         if(!empty($supplierCode)) {
             $tourism_product = BaseTourismService::instance($this->objProcess)->getSupplierTourism($supplierCode[0]);
+            $supplier = ucfirst($supplierCode[0]['t_supplier']) . 'Config';
+            if(!empty($tourism_product)) {
+            	$objProcess = new Process('supplier');
+            	$field_config = $objProcess->$supplier()->tour_field;
+            	$tourismAttr = array();
+            	$i = 0;
+            	foreach ($tourism_product[0] as $k => $v) {
+            		 if(isset($field_config[$k]) && !empty($v)) {
+            		 	$tourismAttr[$i]['v'] = $v;
+            		 	$tourismAttr[$i]['k'] = $k;
+            		 	$tourismAttr[$i]['n'] = $field_config[$k];
+            		 	$i++;
+            		 }
+            	}
+            	//print_r($tourismAttr);
+            }
         }
 
         $conditions = DbConfig::$db_query_conditions;
         $conditions['condition'] = "t_id > $t_id AND t_id < " . (($t_id + 50));
         $conditions['limit'] = "0, 10";
         $relation_tourism = $this->objProcess->TourismService($this->objProcess)->getTourism($conditions, 't_id, t_title, t_title_cn, t_images');
+        $objResponse -> setTplValue('tourism_supplier_tpl', 'tour_' . $supplierCode[0]['t_supplier']);
         $objResponse -> setTplValue('tourism_product', $tourism_product[0]);
+        $objResponse -> setTplValue('tourismAttr', $tourismAttr);
         $objResponse -> setTplValue('relation_tourism', $relation_tourism);
         $objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/tourism_product");

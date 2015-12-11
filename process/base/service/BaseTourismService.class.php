@@ -16,12 +16,17 @@ class BaseTourismService extends  BaseService{
     }
 
     public function getSupplierTourism($supplierCode) {
+        if($this->objProcess->getProcessKey() == 'supplier') {
+            $objProcess = $this->objProcess;
+        } else {
+            $objProcess = new Process('supplier');
+        }
         $arraySupplierTourism = null;
         $conditions = DbConfig::$db_query_conditions;
         switch ($supplierCode['t_supplier']) {
             case 'bemyguest':
                 $conditions['condition']['uuid'] = $supplierCode['t_supplier_code'];
-                $arraySupplierTourism = BaseTourismDao::instance()->getBemyguestTourism($conditions);
+                $arraySupplierTourism = $objProcess->BemyguestDao()->getBemyguestTour($conditions);
                 break;
             default:
                 break;

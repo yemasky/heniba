@@ -7,7 +7,7 @@
 
 class BemyguestTool extends BaseTool {
 	public function parserTourProduct() {
-        $arrarTourProduct = $this->objProcess->BemyguestDao()->getTourProduct();
+        $arrarTourProduct = $this->objProcess->BemyguestDao()->getSimpleBemyguestTour();
         foreach($arrarTourProduct as $k => $v) {
             //print_r($v);exit;
             $arrayPhoto = json_decode($v['photos'], true);

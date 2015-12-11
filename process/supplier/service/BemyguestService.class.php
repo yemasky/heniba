@@ -6,9 +6,8 @@
  */
 class BemyguestService{
 	private $objWSClient;
-	private $url = 'https://api.bemyguest.com.sg/v1/config';
 	private $arrayHeader = array (
-			'X-Authorization' => '0396f6d91697994390d7f47f0bf41b37cb2f96f0',
+			'X-Authorization' => BemyguestConfig::XAuthorization,
 			'Content-Type' => 'application/json' 
 	);
 	private $DataBemyssguest;
@@ -26,19 +25,19 @@ class BemyguestService{
 
 	public function config(){
 		set_time_limit(0);
-		$this->objWSClient->url($this->url)->get()->header($this->arrayHeader);
-		return $this->objWSClient->DBCache(-1)->execute_file_get_contents();
+		$this->objWSClient->url(BemyguestConfig::config_url)->get()->header($this->arrayHeader);
+		return $this->objWSClient->DBCache(0)->execute_file_get_contents();
 	}
 
 	public function allproducts($pn = 1){
-		$url = "https://api.bemyguest.com.sg/v1/products?language=en&currency=CNY&per_page=100&page=" . $pn;
+		$url = BemyguestConfig::allproduct_url . $pn;
 		$this->objWSClient->url($url)->get();
 		$this->objWSClient->header($this->arrayHeader);
 		return $this->objWSClient->DBCache(0)->execute_cUrl($url);
 	}
 
 	public function product($uuid){
-		$url = "https://api.bemyguest.com.sg/v1/products/$uuid/?currency=CNY&language=ZH-HANS";
+		$url = BemyguestConfig::product_url . $uuid . "/?currency=CNY&language=ZH-HANS";
 		$this->objWSClient->url($url)->get();
 		$this->objWSClient->header($this->arrayHeader);
 		return $this->objWSClient->DBCache(0)->execute_cUrl($uuid);
@@ -85,6 +84,20 @@ class BemyguestService{
 				ob_flush();
 				flush();
 			}
+		}
+	}
+
+	public function resolveProductTypes($productTypes) {
+		$arrayProductTypes = json_decode($productTypes, true);
+		return $arrayProductTypes;
+	}
+
+	public function resolveProductTypesByUuid($uuid) {
+		$conditions = DbConfig::$db_query_conditions;
+		$conditions['condition']['uuid'] = $uuid;
+		$arrayResult = BaseBemyguestDao::instance()->getBemyguestTour($conditions, 'productTypes');
+		if(!empty($productTypes)) {
+			return $this->resolveProductTypes($arrayResult[0]['productTypes']);
 		}
 	}
 
