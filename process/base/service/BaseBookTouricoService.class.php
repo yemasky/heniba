@@ -28,6 +28,7 @@ class BaseBookTouricoService extends BaseService {
         return self::$objBaseBookTouricoService;
     }
 
+    //hotel部分
     /*
          * 1、Search
          *

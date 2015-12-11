@@ -333,16 +333,34 @@
 
   <div class="am-u-md-4 blog-sidebar">
     <div class="am-panel-group">
-      <section class="am-panel am-panel-default">
-        <div class="am-panel-hd">关于我</div>
-        <div class="am-panel-bd">
-          <p>前所未有的中文云端字型服务，让您在 web 平台上自由使用高品质中文字体，跨平台、可搜寻，而且超美。云端字型是我们的事业，推广字型学知识是我们的志业。从字体出发，关心设计与我们的生活，justfont blog
-            正是為此而生。</p>
-          <div class="am-dropdown" data-am-dropdown>
-            <button class="am-btn am-btn-warning am-round" type="button"><i class="am-icon-shopping-cart"></i>　预　定</button>
+      <div data-am-sticky>
+        <section class="am-panel am-panel-default">
+          <div class="am-panel-hd">关于我</div>
+          <div class="am-panel-bd">
+            <p>前所未有的中文云端字型服务，让您在 web 平台上自由使用高品质中文字体，跨平台、可搜寻，而且超美。云端字型是我们的事业，推广字型学知识是我们的志业。从字体出发，关心设计与我们的生活，justfont blog
+              正是為此而生。</p>
+            <div class="am-input-group">
+              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i></span>
+              <input type="text" class="am-form-field" placeholder="YYYY-MM-DD" data-am-datepicker="{theme: 'success'}" style="cursor: hand;"/>
+            </div>
+            <div class="am-input-group">
+              <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i></span>
+              <select data-am-selected="{searchBox: 1}" class="am-form-field" >
+                <option value="a">Apple</option>
+                <option value="b">Banana</option>
+                <option value="o">Orange</option>
+                <option value="m">Mango</option>
+                <option value="phone">iPhone</option>
+                <option value="im">iMac</option>
+                <option value="mbp">Macbook Pro</option>
+              </select>
+              </div>
+            <div class="am-dropdown" data-am-dropdown>
+              <button class="am-btn am-btn-warning am-round" type="button" data-am-modal="{target: '#order-popup'}" ><i class="am-icon-shopping-cart"></i>　预　定</button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
       <section class="am-panel am-panel-default">
         <div class="am-panel-hd">文章目录</div>
         <ul class="am-list blog-list">
@@ -377,6 +395,19 @@
     </div>
   </div>
 
+</div>
+
+<div class="am-popup" id="order-popup">
+  <div class="am-popup-inner">
+    <div class="am-popup-hd">
+      <h4 class="am-popup-title">预定：<%$tourism_product.title%></h4>
+      <span data-am-modal-close
+            class="am-close">&times;</span>
+    </div>
+    <div class="am-popup-bd">
+      ...
+    </div>
+  </div>
 </div>
 
 <footer class="blog-footer">
