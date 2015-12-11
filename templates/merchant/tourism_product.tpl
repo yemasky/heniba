@@ -136,6 +136,30 @@
           })
         });
       </script>
+      <div data-am-widget="slider" class="am-slider am-slider-d3" data-am-slider='{&quot;controlNav&quot;:&quot;thumbnails&quot;,&quot;directionNav&quot;:false}' >
+        <ul class="am-slides">
+          <li data-thumb="http://s.amazeui.org/media/i/demos/bing-1.jpg">
+            <img src="http://s.amazeui.org/media/i/demos/bing-1.jpg">
+            <div class="am-slider-desc"><h2 class="am-slider-title">远方 有一个地方 那里种有我们的梦想</h2><p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内</p></div>
+
+          </li>
+          <li data-thumb="http://s.amazeui.org/media/i/demos/bing-2.jpg">
+            <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg">
+            <div class="am-slider-desc"><h2 class="am-slider-title">某天 也许会相遇 相遇在这个好地方</h2><p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内</p></div>
+
+          </li>
+          <li data-thumb="http://s.amazeui.org/media/i/demos/bing-3.jpg">
+            <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg">
+            <div class="am-slider-desc"><h2 class="am-slider-title">不要太担心 只因为我相信 终会走过这条遥远的道路</h2><p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内</p></div>
+
+          </li>
+          <li data-thumb="http://s.amazeui.org/media/i/demos/bing-4.jpg">
+            <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg">
+            <div class="am-slider-desc"><h2 class="am-slider-title">OH PARA PARADISE 是否那么重要 你是否那么地遥远</h2><p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内</p></div>
+
+          </li>
+        </ul>
+      </div>
       <div class="am-g">
         <div class="am-u-sm-12">
           <p>看著自己的作品，你的喜悅之情溢於言表，差點就要說出我要感謝我的父母之類的得獎感言。但在你對面的客戶先是一點表情也沒有，又瞬間轉為陰沉，抿了抿嘴角冷冷的說……</p>
@@ -335,18 +359,20 @@
     <div class="am-panel-group">
       <div data-am-sticky>
         <section class="am-panel am-panel-default">
-          <div class="am-panel-hd">关于我</div>
+          <div class="am-panel-hd">预定须知：</div>
           <div class="am-panel-bd">
             <p>前所未有的中文云端字型服务，让您在 web 平台上自由使用高品质中文字体，跨平台、可搜寻，而且超美。云端字型是我们的事业，推广字型学知识是我们的志业。从字体出发，关心设计与我们的生活，justfont blog
               正是為此而生。</p>
-            <div class="am-input-group">
+            <label class="am-form-label am-u-md-10" for="datepicker">选择日期</label>
+            <div class="am-form-group am-input-group am-u-md-10">
               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i></span>
-              <input type="text" class="am-form-field" placeholder="YYYY-MM-DD" data-am-datepicker="{theme: 'success'}" style="cursor: hand;"/>
+              <input type="text" class="am-form-field" id="datepicker" placeholder="YYYY-MM-DD" data-am-datepicker="{theme: 'success'}" style="cursor: hand;"/>
             </div>
-            <div class="am-input-group">
+            <label class="am-form-label am-u-md-10" for="select_num">选择人数</label>
+            <div class="am-form-group am-input-group am-u-md-10">
               <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i></span>
-              <select data-am-selected="{searchBox: 1}" class="am-form-field" >
-                <option value="a">Apple</option>
+              <select data-am-selected="{searchBox: 1}" class="am-form-field" id="select_num" >
+                <option value="a">1 人</option>
                 <option value="b">Banana</option>
                 <option value="o">Orange</option>
                 <option value="m">Mango</option>
@@ -354,9 +380,9 @@
                 <option value="im">iMac</option>
                 <option value="mbp">Macbook Pro</option>
               </select>
-              </div>
-            <div class="am-dropdown" data-am-dropdown>
-              <button class="am-btn am-btn-warning am-round" type="button" data-am-modal="{target: '#order-popup'}" ><i class="am-icon-shopping-cart"></i>　预　定</button>
+            </div>
+            <div class="am-cf" data-am-dropdown>
+              <button class="am-btn am-btn-warning am-round am-fr" type="button" data-am-modal="{target: '#order-popup'}" ><i class="am-icon-shopping-cart"></i>　预　定</button>
             </div>
           </div>
         </section>
@@ -397,7 +423,7 @@
 
 </div>
 
-<div class="am-popup" id="order-popup">
+<div class="am-popup am-radius" id="order-popup">
   <div class="am-popup-inner">
     <div class="am-popup-hd">
       <h4 class="am-popup-title">预定：<%$tourism_product.title%></h4>

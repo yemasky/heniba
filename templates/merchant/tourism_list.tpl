@@ -39,7 +39,7 @@
 	<%/if%>
     <div class="am-g">
       <div class="am-u-sm-12">
-        <table class="am-table am-table-bd am-table-striped admin-content-table">
+        <table class="am-table am-table-bordered am-table-bd am-table-striped admin-content-table">
           <thead>
           <tr>
             <th>ID</th><th>图片</th><th>标题</th><th>基价</th><th>售价</th><th> </th>
