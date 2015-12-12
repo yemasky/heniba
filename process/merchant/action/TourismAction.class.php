@@ -69,7 +69,32 @@ class TourismAction extends BaseAction {
             		 	$i++;
             		 }
             	}
-            	//print_r($tourismAttr);
+                $tourism_product[0]['productTypes'] = json_decode($tourism_product[0]['productTypes'], true);
+                $tourism_product[0]['locations'] = json_decode($tourism_product[0]['locations'], true);
+                $arrayMaxPax = null;
+                for($i = $tourism_product[0]['minPax']; $i<= $tourism_product[0]['maxPax']; $i++) {
+                    $arrayMaxPax[] = $i;
+                }
+                if(!empty($tourism_product[0]['titleTranslated']))
+                    $tourism_product[0]['title'] = $tourism_product[0]['titleTranslated'];
+                if(!empty($tourism_product[0]['descriptionTranslated']))
+                    $tourism_product[0]['description'] = $tourism_product[0]['descriptionTranslated'];
+                if(!empty($tourism_product[0]['highlightsTranslated']))
+                    $tourism_product[0]['highlights'] = $tourism_product[0]['highlightsTranslated'];
+                if(!empty($tourism_product[0]['additionalInfoTranslated']))
+                    $tourism_product[0]['additionalInfo'] = $tourism_product[0]['additionalInfoTranslated'];
+                if(!empty($tourism_product[0]['priceIncludesTranslated']))
+                    $tourism_product[0]['priceIncludes'] = $tourism_product[0]['priceIncludesTranslated'];
+                if(!empty($tourism_product[0]['priceExcludesTranslated']))
+                    $tourism_product[0]['priceExcludes'] = $tourism_product[0]['priceExcludesTranslated'];
+                if(!empty($tourism_product[0]['itineraryTranslated']))
+                    $tourism_product[0]['itinerary'] = $tourism_product[0]['itineraryTranslated'];
+                if(!empty($tourism_product[0]['warningsTranslated']))
+                    $tourism_product[0]['warnings'] = $tourism_product[0]['warningsTranslated'];
+                if(!empty($tourism_product[0]['safetyTranslated']))
+                    $tourism_product[0]['safety'] = $tourism_product[0]['safetyTranslated'];
+                if(!empty($tourism_product[0]['meetingLocationTranslated']))
+                    $tourism_product[0]['meetingLocation'] = $tourism_product[0]['meetingLocationTranslated'];
             }
         }
 
@@ -80,6 +105,8 @@ class TourismAction extends BaseAction {
         $objResponse -> setTplValue('tourism_supplier_tpl', 'tour_' . $supplierCode[0]['t_supplier']);
         $objResponse -> setTplValue('tourism_product', $tourism_product[0]);
         $objResponse -> setTplValue('tourismAttr', $tourismAttr);
+        $objResponse -> setTplValue('maxPax', $arrayMaxPax);
+        $objResponse -> setTplValue('today', substr(getDateTime(), 0, 10));
         $objResponse -> setTplValue('relation_tourism', $relation_tourism);
         $objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/tourism_product");

@@ -5,7 +5,6 @@
   <style>
     @media only screen and (min-width: 1200px) {.blog-g-fixed {max-width: 1200px;}}
     @media only screen and (min-width: 641px) {.blog-sidebar {font-size: 1.4rem;}}
-    .blog-main {padding: 20px 0;}
     .blog-title {margin: 10px 0 20px 0;}
 	.blog-meta {font-size: 14px;margin: 10px 0 20px 0;color: #222;}
 	.blog-meta a {color: #27ae60;}
@@ -15,7 +14,6 @@
 	.blog-content img,.blog-team img {max-width: 100%;height: auto;}
 	.blog-footer {padding: 10px 0;text-align: center;}
   </style>
-  <style>.scrollspy-nav{top:0;z-index:100;background:#0e90d2;width:100%;padding:0 10px}.scrollspy-nav ul{margin:0;padding:0}.scrollspy-nav li{display:inline-block;list-style:none}.scrollspy-nav a{color:#eee;padding:10px 20px;display:inline-block}.scrollspy-nav a.am-active{color:#fff;font-weight:700}.am-panel{margin-top:20px}</style>
   <!--[if lt IE 9]>
   <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
   <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>

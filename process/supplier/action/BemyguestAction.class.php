@@ -20,7 +20,7 @@ class BemyguestAction extends BaseAction {
 				$this->getConfig($objRequest, $objResponse);
 			break;
 			case 'allproducts':
-				$this->getProducts($objRequest, $objResponse);
+				$this->getAndInsertProducts($objRequest, $objResponse);
 			break;
 			case 'totourism':
 				$this->insertToTourism($objRequest, $objResponse);
@@ -49,7 +49,7 @@ class BemyguestAction extends BaseAction {
 		print_r($objService->config());
 	}
 	
-	protected function getProducts($objRequest, $objResponse) {
+	protected function getAndInsertProducts($objRequest, $objResponse) {
 		$pn = $objRequest->pn;
 		$pn = empty($pn) ? 1 : $pn;
 		//$objProcess = new Process($this->process_key . 'BemyguestService');
