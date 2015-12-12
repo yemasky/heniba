@@ -42,19 +42,22 @@
     </div>
     <%/if%>
     <form method="post" class="am-form" action="index.php?action=login">
-      <label for="email">邮箱:</label>
-      <div class="am-input-group">
+      <div class="am-cf">
+      <label for="email" class="am-u-md-8 am-padding-0">邮箱:</label><br>
+      <div class="am-input-group am-u-md-5 am-padding-0">
         <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
         <input class="am-form-field" type="email" name="email" id="email" value="" placeholder="example@example.com">
       </div>
        <br>
-      <label for="password">密码:</label>
-      <div class="am-input-group">
+      <label for="password" class="am-u-md-8 am-padding-0">密码:</label>
+      <br>
+      <div class="am-input-group am-u-md-5 am-padding-0">
         <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
         <input class="am-form-field" type="password" name="password" id="password" value="" placeholder="password">
       </div>
+      </div>
       <br>
-      <label for="remember-me">
+      <label for="remember-me am-u-md-8 am-cf">
         <input id="remember-me" value="1" name="remember_me" type="checkbox">
         保持1个月登录
       </label>

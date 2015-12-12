@@ -16,11 +16,10 @@
         </ul>
       	</div>
    	  	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-3 am-avg-sm-4 am-gallery-imgbordered" data-am-gallery="{pureview: 1}" id="thumb_img-<%$tourism_product.id%>"></ul>
-		      	
       </div>
       <script language="JavaScript">
         var obj = jQuery.parseJSON('<%$tourism_product.photos%>');
-        var img = '';
+        var html_masonry = '';
         var thumb_img = '';
         var big_img = '';
         var error_img = '';
@@ -33,7 +32,7 @@
 	       		error_img = path + k_item;
 	       	  }
 	          if(k == '1280x720') {
-	            big_img = path + k_item;         
+	            big_img = path + k_item;
 	          }
 	          if(k == '175x112') {
 	        	  thumb_img = path + k_item;
@@ -45,10 +44,11 @@
           if(i == 1) {
 			$('#img-<%$tourism_product.id%>').attr('src', original);
           }
-          html_img += '<li><div class="am-gallery-item"><img class="am-thumbnail" src="' 
+          html_img += '<li><div class="am-gallery-item"><img class="am-thumbnail" src="'
 	            + thumb_img + '" onerror="this.src=\''+error_img+'\'" '
 	            +'alt="<%$tourism_product.title%>" data-rel="'+original+'"/></div></li>';
       		$('#thumb_img-<%$tourism_product.id%>').html(html_img);
+
         });
       </script>
       <div class="am-g">
@@ -87,59 +87,47 @@
     </ul>
   </div>
 
-  <div class="am-u-md-4 blog-sidebar">
-    <div class="am-panel-group">
-      <div data-am-sticky>
+  <div class="am-u-md-4">
         <section class="am-panel am-panel-default">
           <div class="am-panel-hd">旅游特色：</div>
           <div class="am-panel-bd">
             <p><%$tourism_product.highlights%></p>
           </div>
-          <div class="am-panel-hd">预订：</div>
-          <div class="am-panel-bd">
-          <label class="am-form-label am-u-md-10" for="pax">游玩类型</label>
-            <div class="am-form-group am-input-group am-u-md-10">
-              <span class="am-input-group-label"><i class="am-icon-puzzle-piece am-icon-fw"></i></span>
-              <select name="pax" data-am-selected="{searchBox: 1}" class="am-form-field" id="pax" >
-                <option value="a">1 人</option>
-                <option value="b">Banana</option>
-                <option value="o">Orange</option>
-                <option value="m">Mango</option>
-                <option value="phone">iPhone</option>
-                <option value="im">iMac</option>
-                <option value="mbp">Macbook Pro</option>
-              </select>
-            </div>
-            <label class="am-form-label am-u-md-10" for="arrivalDate">选择日期</label>
-            <div class="am-form-group am-input-group am-u-md-10">
-              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i></span>
-              <input name="arrivalDate" type="text" class="am-form-field" id="arrivalDate" placeholder="YYYY-MM-DD" />
-            </div>
-            <label class="am-form-label am-u-md-10" for="pax">选择人数</label>
-            <div class="am-form-group am-input-group am-u-md-10">
-              <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i></span>
-              <select name="pax" data-am-selected="{searchBox: 1}" class="am-form-field" id="pax" >
-                <option value="a">1 人</option>
-                <option value="b">Banana</option>
-                <option value="o">Orange</option>
-                <option value="m">Mango</option>
-                <option value="phone">iPhone</option>
-                <option value="im">iMac</option>
-                <option value="mbp">Macbook Pro</option>
-              </select>
-            </div>
-            <label class="am-form-label am-u-md-10" for="pax">价格标准</label>
-            <div class="am-form-group am-input-group am-u-md-10">
-            	<span class="am-input-group-label" id="currency"></span>
-            	<input type="text" class="am-form-field" readonly>
-            	<span class="am-input-group-label">.00</span>
-            </div>
-            <div class="am-cf" data-am-dropdown>
-              <button class="am-btn am-btn-warning am-round am-fr" type="button" data-am-modal="{target: '#order-popup'}" ><i class="am-icon-shopping-cart"></i>　预　定</button>
-            </div>
-          </div>
         </section>
-      </div>
+          <div data-am-sticky class="am-panel am-panel-default">
+          	<div class="am-panel-hd">预订：</div>
+              <div class="am-panel-bd">
+                <label class="am-form-label am-u-md-10" for="arrivalDate">选择日期</label>
+                <div class="am-form-group am-input-group am-u-md-10">
+                  <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i></span>
+                  <input name="arrivalDate" type="text" class="am-form-field" id="arrivalDate" placeholder="YYYY-MM-DD" readonly />
+                </div>
+                <label class="am-form-label am-u-md-10" for="pax">选择人数</label>
+                <div class="am-form-group am-input-group am-u-md-10">
+                  <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i></span>
+                  <select name="pax" data-am-selected="{searchBox: 1}" class="am-form-field" id="pax" >
+                    <option value="a">1 人</option>
+                    <option value="b">Banana</option>
+                    <option value="o">Orange</option>
+                    <option value="m">Mango</option>
+                    <option value="phone">iPhone</option>
+                    <option value="im">iMac</option>
+                    <option value="mbp">Macbook Pro</option>
+                  </select>
+                </div>
+                <label class="am-form-label am-u-md-10" for="pax">价格标准</label>
+                <div class="am-form-group am-input-group am-u-md-10">
+                    <span class="am-input-group-label" id="currency"></span>
+                    <input type="text" class="am-form-field" readonly>
+                    <span class="am-input-group-label">.00</span>
+                </div>
+                <div class="am-cf" data-am-dropdown>
+                  <button class="am-btn am-btn-warning am-round am-fr" type="button" data-am-modal="{target: '#order-popup'}" ><i class="am-icon-shopping-cart"></i>　预　定</button>
+                </div>
+              </div>
+          </div>
+        
+      
       <section class="am-panel am-panel-default">
         <div class="am-panel-hd">文章目录</div>
         <ul class="am-list blog-list">
@@ -171,7 +159,6 @@
           </ul>
         </div>
       </section>
-    </div>
   </div>
 
 </div>
@@ -188,7 +175,7 @@
     </div>
   </div>
 </div>
-<script>
+<script language="javascript">
   $(function() {
     var nowTemp = new Date();
     var nowDay = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0).valueOf();
@@ -215,9 +202,37 @@
         return date.valueOf() < viewDate ? 'am-disabled' : '';
       }
     }).on('changeDate.datepicker.amui', function(ev) {
-
       checkin.close();
     }).data('amui.datepicker');
   });
 </script>
 <script language="JavaScript">obj = jQuery.parseJSON('<%$tourism_product.currency%>');$('#currency').text(obj.code);</script>
+<script language="JavaScript">obj = jQuery.parseJSON('<%$tourism_product.productTypes%>');</script>
+<script language="JavaScript">
+  var productType = {
+    init:function(json_obj, data, man) {
+
+    },
+    show:function() {
+
+    }
+  };
+  Date.prototype.Format = function(fmt) {
+    var o = {
+      "M+" : this.getMonth()+1,                 //月份
+      "d+" : this.getDate(),                    //日
+      "h+" : this.getHours(),                   //小时
+      "m+" : this.getMinutes(),                 //分
+      "s+" : this.getSeconds(),                 //秒
+      "q+" : Math.floor((this.getMonth()+3)/3), //季度
+      "S"  : this.getMilliseconds()             //毫秒
+    };
+    if(/(y+)/.test(fmt))
+      fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    for(var k in o)
+      if(new RegExp("("+ k +")").test(fmt))
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+    return fmt;
+  }
+  var today = new Date().Format("yyyy-MM-dd");
+</script>
