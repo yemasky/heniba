@@ -20,6 +20,7 @@
         <!--/div-->
       </div>
       <script language="JavaScript">
+	  	var product_price = eval('(<%$productprice%>)');
         var obj = jQuery.parseJSON('<%$tourism_product.photos%>');
         var html_masonry = '';
         var thumb_img = '';
@@ -68,7 +69,7 @@
             <label class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="pax">人数:</label>
             <div class="am-input-group am-input-group-sm am-form-select am-u-sm-6">
               <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i></span>
-              <select name="pax" class="am-form-field am-input-sm" id="pax" >
+              <select name="pax" class="am-form-field am-input-sm" id="pax" onChange="setProductPrice($('#arrivalDate').val(), $('#pax').val(), product_price)">
                 <%section name=iPax loop=$maxPax%>
                 <option value="<%$maxPax[iPax]%>"><%$maxPax[iPax]%> 人</option>
                 <%/section%>
@@ -85,7 +86,7 @@
                 <div class="am-input-group am-input-group-sm am-u-md-3">
                   <span class="am-input-group-label" id="currency"></span>
                   <input id="product_<%$smarty.section.i.index%>" type="text" value="" class="am-form-field am-input-sm" readonly>
-                  <span class="am-input-group-label">.00</span>
+                  <span class="am-input-group-label">每人</span>
                 </div>
               </div>
             </li>
@@ -209,6 +210,7 @@
       }
     }).on('changeDate.datepicker.amui', function(ev) {
       checkin.close();
+	  setProductPrice($('#arrivalDate').val(), $('#pax').val(), product_price);
     }).data('amui.datepicker');
   });
 </script>
@@ -233,16 +235,22 @@
   var today = new Date().Format("yyyy-MM-dd");
 </script>
 <script language="JavaScript">
-  obj = jQuery.parseJSON('<%$productprice%>').toArray();
-  setProductPrice('2016-01-01',1,obj);
+  setProductPrice('2016-01-01', 2, product_price);
   //pax
-  function setProductPrice(date, pax, obj) {
-    alert(date);
-    alert(obj[date][pax][1]);
-    $.each(obj, function(k_date, k_pax_price){
-
-
-    });
+  function setProductPrice(date, pax, product_price) {
+	  if(product_price[date] == undefined) {
+	  	alert('undefined');
+		$.getJSON('index.php?model=supplier&action=gettourism&id=<%$t_id%>&checkdate='+date,function(){});
+	  }
+	  var prices = product_price[date][pax];
+	  for(var i = 0; i<= <%$productTypeNum%>; i++) {
+		  if(prices[i] == undefined) {
+			  $('#product_'+i).val('已售完');
+		  } else {
+			$('#product_'+i).val(prices[i]);
+		  }
+	  }
+	  
   }
 
 </script>
