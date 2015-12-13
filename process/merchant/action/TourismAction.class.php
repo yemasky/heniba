@@ -70,6 +70,16 @@ class TourismAction extends BaseAction {
             		 }
             	}
                 $tourism_product[0]['productTypes'] = json_decode($tourism_product[0]['productTypes'], true);
+                $arrayProductPrice = array();
+                foreach($tourism_product[0]['productTypes'] as $k => $prices) {
+                    foreach($prices['prices'] as $kk => $date) {
+                        if(isset($date['regular']['adult'])) {
+                            foreach ($date['regular']['adult'] as $kkk => $price) {
+                                $arrayProductPrice[$kk][$kkk][$k] = $price;
+                            }
+                        }
+                    }
+                }
                 $tourism_product[0]['locations'] = json_decode($tourism_product[0]['locations'], true);
                 $arrayMaxPax = null;
                 for($i = $tourism_product[0]['minPax']; $i<= $tourism_product[0]['maxPax']; $i++) {
@@ -104,6 +114,7 @@ class TourismAction extends BaseAction {
         $relation_tourism = $this->objProcess->TourismService($this->objProcess)->getTourism($conditions, 't_id, t_title, t_title_cn, t_images');
         $objResponse -> setTplValue('tourism_supplier_tpl', 'tour_' . $supplierCode[0]['t_supplier']);
         $objResponse -> setTplValue('tourism_product', $tourism_product[0]);
+        $objResponse -> setTplValue('productprice', json_encode($arrayProductPrice));
         $objResponse -> setTplValue('tourismAttr', $tourismAttr);
         $objResponse -> setTplValue('maxPax', $arrayMaxPax);
         $objResponse -> setTplValue('today', substr(getDateTime(), 0, 10));

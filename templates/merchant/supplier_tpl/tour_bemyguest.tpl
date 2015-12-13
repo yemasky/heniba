@@ -56,39 +56,48 @@
           <div class="am-panel-bd"><p><%$tourism_product.highlights%></p></div>
       </div>
 	<div class="am-panel am-panel-default">
-        <div class="am-panel-hd">预订：</div>
-        <form class="am-form am-form-horizontal">
-          <div class="am-panel-bd">
-            <div class="am-form-group">
-              <label class="am-form-label am-u-sm-2 am-padding-left-0 am-padding-right-0" for="arrivalDate">选择日期:</label>
-              <div class="am-input-group am-u-sm-3">
-                <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i></span>
-                <input name="arrivalDate" type="text" class="am-form-field" id="arrivalDate" placeholder="<%$today%>" readonly />
-              </div>
-              <label class="am-form-label am-u-sm-2 am-padding-left-0 am-padding-right-0" for="pax">选择人数:</label>
-              <div class="am-input-group am-u-sm-5">
-                <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i></span>
-                <select name="pax" data-am-selected="{searchBox: 1}" class="am-form-field" id="pax" >
-                  <%section name=i loop=$maxPax%>
-                  <option value="<%$maxPax[i]%>"><%$maxPax[i]%> 人</option>
-                  <%/section%>
-                </select>
-              </div>
+        <div class="am-panel-hd">游玩类型：</div>
+      <form class="am-form am-form-horizontal">
+        <div class="am-panel-bd am-padding-bottom-0 am-margin-0">
+          <div class="am-form-group am-padding-0 am-margin-0">
+            <label class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="arrivalDate">选择日期:</label>
+            <div class="am-input-group am-input-group-sm am-u-sm-4">
+              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i></span>
+              <input name="arrivalDate" type="text" class="am-form-field" id="arrivalDate" placeholder="<%$today%>" readonly />
             </div>
+            <label class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="pax">人数:</label>
+            <div class="am-input-group am-input-group-sm am-form-select am-u-sm-6">
+              <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i></span>
+              <select name="pax" class="am-form-field am-input-sm" id="pax" >
+                <%section name=iPax loop=$maxPax%>
+                <option value="<%$maxPax[iPax]%>"><%$maxPax[iPax]%> 人</option>
+                <%/section%>
+              </select>
+            </div>
+          </div>
+        </div>
+
+          <ul class="am-list am-list-static">
             <%section name=i loop=$tourism_product.productTypes%>
-            <label class="am-form-label am-u-md-10" for="pax">价格</label>
-            <div class="am-form-group am-input-group am-u-md-10">
-                <span class="am-input-group-label" id="currency"></span>
-                <input type="text" value="" class="am-form-field" readonly>
-                <span class="am-input-group-label">.00</span>
-            </div>
+            <li>
+              <div class="am-form-group am-padding-0 am-margin-0">
+                <label class="am-form-label am-u-md-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="pax">价格</label>
+                <div class="am-input-group am-input-group-sm am-u-md-3">
+                  <span class="am-input-group-label" id="currency"></span>
+                  <input id="product_<%$smarty.section.i.index%>" type="text" value="" class="am-form-field am-input-sm" readonly>
+                  <span class="am-input-group-label">.00</span>
+                </div>
+              </div>
+            </li>
             <%/section%>
+          </ul>
+          <div class="am-panel-bd">
             <div class="am-cf" data-am-dropdown>
               <button class="am-btn am-btn-warning am-round am-fr" type="button" data-am-modal="{target: '#order-popup'}" ><i class="am-icon-shopping-cart"></i>　预　定</button>
             </div>
           </div>
         </form>
-      </div>
+    </div>
     <article class="blog-main">
         <div class="am-panel am-panel-default">
             <div class="am-panel-hd">景点介绍</div>
@@ -123,10 +132,8 @@
           <div class="am-panel-hd">地图：</div>
           <div class="am-panel-bd">
               <iframe src="http://www.google.cn/maps/embed?pb=!1m14!1m8!1m3!1d3668.6122398251186!2d<%$tourism_product.longitude%>!3d<%$tourism_product.latitude%>!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s!5e0!3m2!1szh-CN!2scn!4v1449945641309" width="350" height="280" frameborder="0" style="border:0" allowfullscreen></iframe>
-
           </div>
       </section>
-      <div id="map">uuuuu</div>
       <section class="am-panel am-panel-default">
         <div class="am-panel-hd">旅游文章</div>
         <ul class="am-list blog-list">
@@ -226,68 +233,39 @@
   var today = new Date().Format("yyyy-MM-dd");
 </script>
 <script language="JavaScript">
+  obj = jQuery.parseJSON('<%$productprice%>').toArray();
+  setProductPrice('2016-01-01',1,obj);
+  //pax
+  function setProductPrice(date, pax, obj) {
+    alert(date);
+    alert(obj[date][pax][1]);
+    $.each(obj, function(k_date, k_pax_price){
+
+
+    });
+  }
+
+</script>
+<!--script>
 
     function initMap() {
-        var chicago = new google.maps.LatLng(<%$tourism_product.longitude%>, <%$tourism_product.latitude%>);
+        var myLatLng = {lat: <%$tourism_product.longitude%>, lng: <%$tourism_product.latitude%>};
 
         var map = new google.maps.Map(document.getElementById('map'), {
-            center: chicago,
-            zoom: 3
+            zoom: 4,
+            center: myLatLng
         });
 
-        var coordInfoWindow = new google.maps.InfoWindow();
-        coordInfoWindow.setContent(createInfoWindowContent(chicago, map.getZoom()));
-        coordInfoWindow.setPosition(chicago);
-        coordInfoWindow.open(map);
-
-        map.addListener('zoom_changed', function() {
-            coordInfoWindow.setContent(createInfoWindowContent(chicago, map.getZoom()));
-            coordInfoWindow.open(map);
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Hello World!'
         });
-    }
-
-    var TILE_SIZE = 256;
-
-    function createInfoWindowContent(latLng, zoom) {
-        var scale = 1 << zoom;
-
-        var worldCoordinate = project(latLng);
-
-        var pixelCoordinate = new google.maps.Point(
-                Math.floor(worldCoordinate.x * scale),
-                Math.floor(worldCoordinate.y * scale));
-
-        var tileCoordinate = new google.maps.Point(
-                Math.floor(worldCoordinate.x * scale / TILE_SIZE),
-                Math.floor(worldCoordinate.y * scale / TILE_SIZE));
-
-        return [
-            'Chicago, IL',
-            'LatLng: ' + latLng,
-            'Zoom level: ' + zoom,
-            'World Coordinate: ' + worldCoordinate,
-            'Pixel Coordinate: ' + pixelCoordinate,
-            'Tile Coordinate: ' + tileCoordinate
-        ].join('<br>');
-    }
-
-    // The mapping between latitude, longitude and pixels is defined by the web
-    // mercator projection.
-    function project(latLng) {
-        var siny = Math.sin(latLng.lat() * Math.PI / 180);
-
-        // Truncating to 0.9999 effectively limits latitude to 89.189. This is
-        // about a third of a tile past the edge of the world tile.
-        siny = Math.min(Math.max(siny, -0.9999), 0.9999);
-
-        return new google.maps.Point(
-                TILE_SIZE * (0.5 + latLng.lng() / 360),
-                TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
     }
 
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJR6VQ6XJkPt3eFNE1oSglfdWl3N1kTro&signed_in=true&callback=initMap">
-</script>
+</script-->
 
 <style>.scrollspy-nav{top:0;z-index:100;background:#666666;width:100%;padding:0px}.scrollspy-nav ul{margin:0;padding:0}.scrollspy-nav li{display:inline-block;list-style:none}.scrollspy-nav a{color:#eee;padding:10px 20px;display:inline-block}.scrollspy-nav a.am-active{color:#fff;font-weight:700}.am-panel{margin-top:0px}</style>
