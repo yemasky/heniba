@@ -312,6 +312,7 @@ abstract class BaseAction{
 		if(empty($parameter)) {
 			throw new Exception("parameter is null:" . $key . '=>' . $parameter);
 		}
+		return $parameter;
 	}
 
 	protected function check_int($int, $key = null) {

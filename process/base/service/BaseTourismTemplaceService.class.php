@@ -24,4 +24,14 @@ class BaseTourismTemplaceService extends BaseService {
                 break;
         }
     }
+
+    public function tourismSourceProductTemplace($supplierCode, $checkdate) {
+        switch($supplierCode['t_supplier']) {
+            case 'bemyguest':
+                return BaseBemyguestTool::instance($this->objProcess)->tourismSourceProductDatePrice($supplierCode, $checkdate);
+                break;
+            default:
+                break;
+        }
+    }
 }

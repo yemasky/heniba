@@ -30,12 +30,15 @@ class SupplierAction extends BaseAction {
     }
 
     protected function getTourism($objRequest, $objResponse) {
+        $this->setDisplay();
         $t_id = $this->check_int($objRequest->id, 'id');
         $checkdate = $this->check_null($objRequest->checkdate, 'checkdate');
         $conditions = DbConfig::$db_query_conditions;
         $conditions['condition']['t_id'] = $t_id;
         $supplierCode = $this->objProcess->TourismService($this->objProcess)->getTourism($conditions, 't_supplier, t_supplier_code');
-
+        if(!empty($supplierCode)) {
+            BaseTourismTemplaceService::instance($this->objProcess)->tourismSourceProductTemplace($supplierCode[0], $checkdate);
+        }
 
     }
 

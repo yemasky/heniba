@@ -73,5 +73,29 @@ class BaseBemyguestTool extends BaseTool {
         $objResponse -> setTplValue('productTypeNum', $productTypeNum);
         $objResponse -> setTplValue('tourismAttr', $tourismAttr);
         $objResponse -> setTplValue('maxPax', $arrayMaxPax);
+		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', $tourism_product[0]['title'] . '-管理后台', '管理后台', '管理后台'));
+    }
+
+    public function tourismSourceProductDatePrice($supplierCode, $checkdate) {
+        $arrayDate['date_start'] = $checkdate;
+        $arrayDate['date_end'] = $checkdate;
+        $objProcess = new Process('supplier');
+        $arrayResult = $objProcess->BemyguestService($objProcess)->product($supplierCode['t_supplier_code'], $arrayDate);
+        if($arrayResult['httpcode'] != 200) {
+            throw new Exception('get bemyguest product error: uuid ' . $supplierCode['t_supplier_code']);
+        } else {
+            $arrayProductPrice = '';
+            $tourism_product = json_decode($arrayResult['result'], true);
+            foreach($tourism_product['data']['productTypes'] as $k => $prices) {
+                foreach($prices['prices'] as $kk => $date) {
+                    if(isset($date['regular']['adult'])) {
+                        foreach ($date['regular']['adult'] as $kkk => $price) {
+                            $arrayProductPrice[$kk][$kkk][$k] = $price;
+                        }
+                    }
+                }
+            }
+            echo json_encode($arrayProductPrice);
+        }
     }
 }

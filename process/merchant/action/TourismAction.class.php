@@ -65,7 +65,6 @@ class TourismAction extends BaseAction {
         $objResponse -> setTplValue('t_id', $t_id);
         $objResponse -> setTplValue('today', substr(getDateTime(), 0, 10));
         $objResponse -> setTplValue('relation_tourism', $relation_tourism);
-        $objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/tourism_product");
     }
 

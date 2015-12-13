@@ -37,9 +37,12 @@ class BemyguestService{
 		return $this->objWSClient->DBCache(0)->execute_cUrl($url);
 	}
 
-	public function product($uuid){
+	public function product($uuid, $arrayDate = null){
 		//$uuid = 'a97e2cfa-acca-596c-8c92-320a0df90753';
 		$url = $this->objBemyguestConfig->product_url . $uuid . "/?currency=CNY&language=ZH-HANS";
+		if(!empty($arrayDate)) {
+			$url .= '&date_start=' . $arrayDate['date_start'] . '&date_end=' . $arrayDate['date_end'];
+		}
 		$this->objWSClient->url($url)->get();
 		$this->objWSClient->header($this->arrayHeader);
 		return $this->objWSClient->DBCache(0)->execute_cUrl($uuid);

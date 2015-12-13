@@ -9759,7 +9759,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  '<div class="am-pureview-counter"><span class="am-pureview-current"></span> / ' +
 	  '<span class="am-pureview-total"></span></div></div>' +
 	  '<div class="am-pureview-actions am-active">' +
-	  '<a href="javascript: void(0)" class="am-icon-chevron-left" ' +
+	  '<a href="javascript: void(0)" class="am-close am-close-alt am-icon-times" ' +
 	  'data-am-close="pureview"></a></div>' +
 	  '</div>',
 

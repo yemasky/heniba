@@ -1,3 +1,4 @@
+<style>.am-pureview-direction a:before{font-size: 60px;}.am-pureview-actions a{text-align: right; width: 99%;font-size: 60px; color:#FFFFFF; margin-top:10px;}</style>
 <div class="am-g am-g-fixed blog-g-fixed">
   <div class="am-u-md-8">
     <article class="blog-main am-cf">
@@ -20,7 +21,7 @@
         <!--/div-->
       </div>
       <script language="JavaScript">
-	  	var product_price = eval('(<%$productprice%>)');
+	    var product_price = eval('(<%$productprice%>)');
         var obj = jQuery.parseJSON('<%$tourism_product.photos%>');
         var html_masonry = '';
         var thumb_img = '';
@@ -64,7 +65,7 @@
             <label class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="arrivalDate">选择日期:</label>
             <div class="am-input-group am-input-group-sm am-u-sm-4">
               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i></span>
-              <input name="arrivalDate" type="text" class="am-form-field" id="arrivalDate" placeholder="<%$today%>" readonly />
+              <input name="arrivalDate" type="text" class="am-form-field" id="arrivalDate" value="<%$today%>" placeholder="<%$today%>" readonly />
             </div>
             <label class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="pax">人数:</label>
             <div class="am-input-group am-input-group-sm am-form-select am-u-sm-6">
@@ -182,6 +183,14 @@
     </div>
   </div>
 </div>
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">正在载入...</div>
+    <div class="am-modal-bd">
+      <span class="am-icon-spinner am-icon-spin"></span>
+    </div>
+  </div>
+</div>
 <script language="javascript">
   $(function() {
     var nowTemp = new Date();
@@ -235,23 +244,46 @@
   var today = new Date().Format("yyyy-MM-dd");
 </script>
 <script language="JavaScript">
-  setProductPrice('2016-01-01', 2, product_price);
+  setProductPrice($('#arrivalDate').val(), $('#pax').val(), product_price);
   //pax
   function setProductPrice(date, pax, product_price) {
 	  if(product_price[date] == undefined) {
-	  	alert('undefined');
-		$.getJSON('index.php?model=supplier&action=gettourism&id=<%$t_id%>&checkdate='+date,function(){});
+		$('#my-modal-loading').modal('open');
+		$.getJSON('index.php?model=supplier&action=gettourism&id=<%$t_id%>&checkdate='+date,function(result){
+			$('#my-modal-loading').modal('close');
+			if(result == "") {
+				setPrice(result);
+				return;
+			}
+			$.each(result, function(k_date, k_pax){
+				product_price[k_date] = new Array();
+				$.each(k_pax, function(v_pax, prices){
+					product_price[k_date][v_pax] = new Array();
+					$.each(prices, function(id, price){
+						product_price[k_date][v_pax][id] = price;
+					});
+				});
+				
+				if(pax == k_pax) {
+					setPrice(product_price[k_date][v_pax]);
+				}
+			});
+		});
+	  } else {
+		  var prices = product_price[date][pax];
+		  setPrice(prices);
 	  }
-	  var prices = product_price[date][pax];
-	  for(var i = 0; i<= <%$productTypeNum%>; i++) {
+  }
+  function setPrice(prices) {
+  	for(var i = 0; i<= <%$productTypeNum%>; i++) {
 		  if(prices[i] == undefined) {
-			  $('#product_'+i).val('已售完');
+			  $('#product_'+i).val('已售完,请选其它时间');
 		  } else {
 			$('#product_'+i).val(prices[i]);
 		  }
-	  }
-	  
+	 }
   }
+	  
 
 </script>
 <!--script>
