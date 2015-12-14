@@ -64,7 +64,7 @@
       <br />
       <div class="am-cf">
         <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"><span class="am-icon-user"></span>　登 录</button>
-        <input type="submit" name="" value="忘记密码 ^_^? " class="am-btn am-btn-default am-btn-sm am-fr">
+        <!--input type="submit" name="" value="忘记密码 ^_^? " class="am-btn am-btn-default am-btn-sm am-fr"-->
       </div>
     </form>
     <hr>

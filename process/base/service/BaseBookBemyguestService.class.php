@@ -17,51 +17,6 @@ class BaseBookBemyguestService extends BaseService {
      * 请注意所有的预订请求都需要提供正确的 Content-Type header.
      */
     public function createBooking() {
-
-    }
-
-    /*
-     * 查验创建预订可能性的请求
-     * 这个请求和正式创建预订的请求是一样的。
-     * 在创建预订前，我们建议先运行此请求:
-     * 它会先测试预订创建的可能性，而不改写任何BMG的数据库
-     * 它将为所选服务提供正确的总金额
-     * 如果合作伙伴使用缓存产品的数据库，在创建预订之前，应使用这个请求 - 任何缓存的价格（在合作伙伴方）和当前的价格差异可以被发现
-     * 如果合作伙伴发现总金额有差别，那么他就可以在自己的客户端接口采取相应的行动 (例如 - 要求客户接受最终改变价格)
-     * 这两者的主要区别是，预约是否在系统中创建和JSON响应对象在某些领域有NULL值。
-     * 这两者的主要区别是，预约是否在系统中创建和JSON响应对象在某些领域有NULL值。
-     * 如果你尝试使用之前相同的partnerReference值来检查新的预订， 你会得到 GEN-FORBIDDEN / 403 / Booking with this partnerReference already exists （此partnerReference的预订已经存在）错误响应信息
-     */
-    public function checkBooking() {
-
-    }
-
-    /*
-     * 获取预订状态
-     * 获取预订状态信息
-     * reserved - 预订已创建，但未经合伙人证实
-     * waiting - 预订已被合作伙伴确认 (例如：合作伙伴已确认收费)
-     * approved - 供应商已批准客人预订
-     * cancelled - 合作伙伴或BeMyGuest取消预订
-     * expired - 供应商或BeMyGuest没有任何行动，预订已过期
-     * rejected - 供应商拒绝预订
-     */
-    public function getBookingStatus() {
-
-    }
-
-    /*
-     * 更新预订状态
-     * 更新预订状态信息。 状态 新创建的预订状态为 reserved。此状态尚未在BeMyGuest库存表中的产品数量扣除。 改变预订的状态，从reserved到waiting后, 库存将被锁定。(confirm提交动作)。
-     * 在第一次创建预订时，它被标记为reserved。库存没有任何更改。一旦合作伙伴决定确认该预订, 库存状态将从reserved改为waiting状态。
-     * 在预订日期后的5天， 所有被标记为waiting的库存状态将被标记为expired
-     * 第三个是自选提交动作，你可以利用resend的调用动作。 如果confirmationEmailSentAt的值不是null那么系统将会再次发送确认邮件给合作伙伴。此字段的时间戳值将被更新。
-     */
-    public function updateBookingStatus() {
-
-    }
-
-    public function createbookings($productTypeUuid, $timeSlotUuid, $addonsuuid){
         set_time_limit($this->time_out);
         $arrData['salutation'] = "Mr.";
         $arrData['firstName'] = 'firstName';
@@ -69,9 +24,10 @@ class BaseBookBemyguestService extends BaseService {
         $arrData['email'] = 'kefu@yelove.cn';
         $arrData['phone'] = '+6591591923';
         $arrData['message'] = 'message';
-        $arrData['productTypeUuid'] = $productTypeUuid;
+        $arrData['productTypeUuid'] = "";
         $arrData['pax'] = '2';
         $arrData['children'] = '0';
+        $productTypeUuid = '';
         if(!empty($timeSlotUuid)) {
             $arrData['timeSlotUuid'] = $timeSlotUuid;
         } else {
@@ -119,10 +75,22 @@ class BaseBookBemyguestService extends BaseService {
         echo "\r\n<br>click  <a href='$url'>here</a> checkbooking.\r\n<br>";
     }
 
-    public function checkbookings($productTypeUuid, $timeSlotUuid, $addonsuuid, $partnerReference, $createbookuuid){
+    /*
+     * 查验创建预订可能性的请求
+     * 这个请求和正式创建预订的请求是一样的。
+     * 在创建预订前，我们建议先运行此请求:
+     * 它会先测试预订创建的可能性，而不改写任何BMG的数据库
+     * 它将为所选服务提供正确的总金额
+     * 如果合作伙伴使用缓存产品的数据库，在创建预订之前，应使用这个请求 - 任何缓存的价格（在合作伙伴方）和当前的价格差异可以被发现
+     * 如果合作伙伴发现总金额有差别，那么他就可以在自己的客户端接口采取相应的行动 (例如 - 要求客户接受最终改变价格)
+     * 这两者的主要区别是，预约是否在系统中创建和JSON响应对象在某些领域有NULL值。
+     * 这两者的主要区别是，预约是否在系统中创建和JSON响应对象在某些领域有NULL值。
+     * 如果你尝试使用之前相同的partnerReference值来检查新的预订， 你会得到 GEN-FORBIDDEN / 403 / Booking with this partnerReference already exists （此partnerReference的预订已经存在）错误响应信息
+     */
+    public function checkBooking() {
         ini_set('memory_limit', '5120M');
         set_time_limit(0);
-
+        $productTypeUuid = '';
         $arrData['salutation'] = "Mr.";
         $arrData['firstName'] = 'firstName';
         $arrData['lastName'] = 'lastName';
@@ -179,7 +147,17 @@ class BaseBookBemyguestService extends BaseService {
         echo "\r\n<br>click  <a href='$url'>here</a> getkbookingstatus.\r\n<br>";
     }
 
-    public function getkbookingstatus($uuid){
+    /*
+     * 获取预订状态
+     * 获取预订状态信息
+     * reserved - 预订已创建，但未经合伙人证实
+     * waiting - 预订已被合作伙伴确认 (例如：合作伙伴已确认收费)
+     * approved - 供应商已批准客人预订
+     * cancelled - 合作伙伴或BeMyGuest取消预订
+     * expired - 供应商或BeMyGuest没有任何行动，预订已过期
+     * rejected - 供应商拒绝预订
+     */
+    public function getBookingStatus($uuid) {
         set_time_limit(0); //
         $string = '';
 
@@ -210,7 +188,14 @@ class BaseBookBemyguestService extends BaseService {
         echo "\r\n<br>click  <a href='$url2'>cancel the booking</a> \r\n<br>";
     }
 
-    public function updatekbookingstatus($uuid, $status){
+    /*
+     * 更新预订状态
+     * 更新预订状态信息。 状态 新创建的预订状态为 reserved。此状态尚未在BeMyGuest库存表中的产品数量扣除。 改变预订的状态，从reserved到waiting后, 库存将被锁定。(confirm提交动作)。
+     * 在第一次创建预订时，它被标记为reserved。库存没有任何更改。一旦合作伙伴决定确认该预订, 库存状态将从reserved改为waiting状态。
+     * 在预订日期后的5天， 所有被标记为waiting的库存状态将被标记为expired
+     * 第三个是自选提交动作，你可以利用resend的调用动作。 如果confirmationEmailSentAt的值不是null那么系统将会再次发送确认邮件给合作伙伴。此字段的时间戳值将被更新。
+     */
+    public function updateBookingStatus($uuid, $status) {
         set_time_limit(0); //
         $string = '';
 

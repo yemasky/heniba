@@ -58,7 +58,7 @@ class TourismAction extends BaseAction {
         }
 
         $conditions = DbConfig::$db_query_conditions;
-        $conditions['condition'] = "t_id > $t_id AND t_id < " . (($t_id + 50));
+        $conditions['condition'] = "t_id > ".($t_id - 5)." AND t_id < " . ($t_id + 50) . ' AND t_id != ' . $t_id;
         $conditions['limit'] = "0, 10";
         $relation_tourism = $this->objProcess->TourismService($this->objProcess)->getTourism($conditions, 't_id, t_title, t_title_cn, t_images');
         $objResponse -> setTplValue('tourism_supplier_tpl', 'tour_' . $supplierCode[0]['t_supplier']);

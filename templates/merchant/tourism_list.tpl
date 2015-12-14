@@ -39,7 +39,7 @@
 	<%/if%>
     <div class="am-g">
       <div class="am-u-sm-12">
-        <table class="am-table am-table-bordered am-table-bd am-table-striped admin-content-table">
+        <table class="am-table am-table-bd am-table-striped admin-content-table">
           <thead>
           <tr>
             <th>ID</th><th>图片</th><th>标题</th><th>基价</th><th>售价</th><th> </th>
@@ -65,12 +65,14 @@
                       });
                   </script>
                   </td><td><%$tourism[i].t_title%><br><%$tourism[i].t_title_cn%></td>
-              <td><a href="#"><%$tourism[i].t_currency%>:<%$tourism[i].t_price%></a></td>
+              <td><a href="#"><%$tourism[i].t_currency%>:<%$tourism[i].t_price|ceil%></a></td>
               <td><span class="am-badge am-badge-success">+20</span></td>
               <td>
+                  <a href="index.php?model=tourism&action=product&id=<%$tourism[i].t_id%>" target="_blank">
                   <div class="am-dropdown" data-am-dropdown>
                       <button class="am-btn am-btn-warning am-round" type="button"><i class="am-icon-shopping-cart"></i>　预 定</button>
                   </div>
+                  </a>
               </td>
           </tr>
           <%/section%>

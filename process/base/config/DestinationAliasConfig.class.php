@@ -7,6 +7,6 @@
  * Time: 13:52
  */
 class DestinationAliasConfig {
-    public static $destinationAliasConfig = array('United States'=>'USA','Russia'=>'Russian Federation'
+    public static $destinationAliasConfig = array('United States'=>'USA','Russia'=>'Russian Federation','South Korea'=>'Korea, Republic Of'
     );
 }

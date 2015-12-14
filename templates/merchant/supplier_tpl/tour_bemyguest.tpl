@@ -130,6 +130,50 @@
               <button class="am-btn am-btn-warning am-round am-fr" id="order-popup-button" type="button" ><i class="am-icon-shopping-cart"></i>　预　定</button>
             </div>
           </div>
+        <div class="am-popup am-radius" id="order-popup">
+          <div class="am-popup-inner">
+            <div class="am-popup-hd">
+              <h4 class="am-popup-title">填写预订信息</h4>
+              <span data-am-modal-close class="am-close">&times;</span>
+            </div>
+            <div class="am-popup-bd">
+            	<div class="">
+                    <span class="am-input-group-labe">身份证</span>
+                    <div class="am-form-group am-form-icon">
+                        
+                        <i class="am-icon-newspaper-o"></i> 
+                        <input name="id_card_no" type="text" placeholder="身份证，必填" class="am-form-field">
+                    </div>
+                    <span class="am-input-group-labe">请选择称呼</span>
+                    <div class="am-form-group am-form-select">
+                        <select name="salutation" class="am-input-sm">
+                            <option value="">请选择称呼</option>
+                            <option value="先生">先生</option>
+                            <option value="夫人">夫人</option>
+                            <option value="小姐">小姐</option>
+                        </select>
+                    </div>
+                    <span class="am-input-group-labe">姓名</span>
+                    <div class="am-form-group am-form-icon"><i class="am-icon-male"></i> 
+                        <input name="lastName_firstName" type="text" placeholder="姓名，必填" class="am-form-field">
+                    </div>
+                    <span class="am-input-group-labe">电子邮件</span>
+                    <div class="am-form-group am-form-icon"><i class="am-icon-envelope"></i> 
+                        <input name="email" type="text" placeholder="电子邮件，必填" class="am-form-field">
+                    </div>
+                    <span class="am-input-group-labe">移动电话</span>
+                    <div class="am-form-group am-form-icon"><i class="am-icon-mobile"></i> 
+                        <input name="mobile" type="text" placeholder="移动电话，必填" class="am-form-field">
+                    </div>
+                    <span class="am-input-group-labe">客户备注</span>
+                    <div class="am-form-group am-form-icon"><i class="am-icon-commenting-o"></i> 
+                        <input name="message" type="text" placeholder="客户备注" class="am-form-field">
+                    </div>
+                </div>
+            </div>
+            <div class="am-center am-padding"><button class="am-btn am-btn-primary am-center">开始预订 <i class="am-icon-check-circle"></i></button></div>
+          </div>
+        </div>
         </form>
     </div>
     <article class="blog-main">
@@ -155,10 +199,6 @@
     </article>
 
     <hr class="am-article-divider blog-hr">
-    <ul class="am-pagination blog-pagination">
-      <li class="am-pagination-prev"><a href="">&laquo; 上一页</a></li>
-      <li class="am-pagination-next"><a href="">下一页 &raquo;</a></li>
-    </ul>
   </div>
 
   <div class="am-u-md-4">
@@ -169,7 +209,7 @@
           </div>
       </section>
       <section class="am-panel am-panel-default">
-        <div class="am-panel-hd">旅游文章</div>
+        <div class="am-panel-hd">旅游新闻</div>
         <ul class="am-list blog-list">
           <li><a href="#">受日本地震影响，今年预期去日本旅游的人数将减少</a></li>
           <li><a href="#">浙江近期旅游大热，很多景点人多为患</a></li>
@@ -199,18 +239,6 @@
           </ul>
         </div>
       </section>
-  </div>
-</div>
-<div class="am-popup am-radius" id="order-popup">
-  <div class="am-popup-inner">
-    <div class="am-popup-hd">
-      <h4 class="am-popup-title">输入预订信息</h4>
-      <span data-am-modal-close
-            class="am-close">&times;</span>
-    </div>
-    <div class="am-popup-bd">
-      ...
-    </div>
   </div>
 </div>
 <div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">

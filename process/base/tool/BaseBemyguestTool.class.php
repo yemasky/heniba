@@ -38,7 +38,7 @@ class BaseBemyguestTool extends BaseTool {
                 foreach($prices['prices'] as $kk => $date) {
                     if(isset($date['regular']['adult'])) {
                         foreach ($date['regular']['adult'] as $kkk => $price) {
-                            $arrayProductPrice[$kk][$kkk][$k] = $price;
+                            $arrayProductPrice[$kk][$kkk][$k] = ceil($price);
                         }
                     }
                 }
@@ -93,7 +93,7 @@ class BaseBemyguestTool extends BaseTool {
                 foreach($prices['prices'] as $kk => $date) {
                     if(isset($date['regular']['adult'])) {
                         foreach ($date['regular']['adult'] as $kkk => $price) {
-                            $arrayProductPrice[$kk][$kkk][$k] = $price;
+                            $arrayProductPrice[$kk][$kkk][$k] = ceil($price);
                         }
                     }
                 }
