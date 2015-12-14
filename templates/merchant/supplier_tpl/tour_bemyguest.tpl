@@ -90,10 +90,10 @@
                   <div><%$tourism_product.productTypes[i].titleTranslated%></div>
                   <div><%$tourism_product.productTypes[i].descriptionTranslated%></div>
                 </div>
-                <div class="am-u-sm-5 am-padding-left-0 am-padding-right-0">
+                <div class="am-u-sm-6 am-padding-left-0 am-padding-right-0">
                   <div class="am-form-group am-padding-0 am-margin-0 am-btn-group">
                     <div data-am-button class="am-btn-group">
-                      <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o"><input type="radio" id="option1" value="选项 1" name="options">套餐<%$smarty.section.i.index+1%></label>
+                      <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o"><input type="radio" id="option<%$smarty.section.i.index%>" value="选项 <%$smarty.section.i.index%>" name="options">套餐<%$smarty.section.i.index+1%></label>
                     </div>
                     <!--<label class="am-btn am-btn-default am-btn-xs am-btn-primary am-margin-0 am-padding-left-0">
                       <input type="radio" name="options" value="选项 1" id="option1">选项 1
@@ -113,14 +113,21 @@
             </li>
             <%/section%>
           </ul>
-          <div class="am-panel-bd">
-            <div class="am-input-group am-input-group-sm am-u-md-9 am-padding-left-0 am-padding-right-0">
-              <span class="am-input-group-label<%if $currency=='CNY'%> am-icon-rmb<%/if%>" id="currency"> <%$currency%></span>
-              <input id="product_all" type="text" value="" class="am-form-field am-input-sm" readonly>
-              <span class="am-input-group-label">总共</span>
+          <div class="am-panel-bd am-cf">
+            <div class="am-g am-margin-left-0 am-padding-bottom">
+              <div class="am-u-sm-7">
+              </div>
+              <div class="am-u-sm-6 am-padding-left-0 am-padding-right-0">
+                <div class="am-input-group am-input-group-sm am-u-md-11 am-padding-left-0 am-padding-right-0">
+                  <span class="am-input-group-label<%if $currency=='CNY'%> am-icon-rmb<%/if%>" id="currency"> <%$currency%></span>
+                  <input id="product_all" type="text" value="" class="am-form-field am-input-sm" readonly>
+                  <span class="am-input-group-label">总共</span>
+                </div>
+              </div>
             </div>
-            <div class="am-cf" data-am-dropdown>
-              <button class="am-btn am-btn-warning am-round am-fr" type="button" id="order-popup" ><i class="am-icon-shopping-cart"></i>　预　定</button>
+
+            <div class="am-cf am-padding-right" data-am-dropdown>
+              <button class="am-btn am-btn-warning am-round am-fr" id="order-popup-button" type="button" ><i class="am-icon-shopping-cart"></i>　预　定</button>
             </div>
           </div>
         </form>
@@ -158,20 +165,18 @@
       <section class="am-panel am-panel-default">
           <div class="am-panel-hd">地图：</div>
           <div class="am-panel-bd">
-            <!--
               <iframe src="http://www.google.cn/maps/embed?pb=!1m14!1m8!1m3!1d3668.6122398251186!2d<%$tourism_product.longitude%>!3d<%$tourism_product.latitude%>!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s!5e0!3m2!1szh-CN!2scn!4v1449945641309" width="350" height="280" frameborder="0" style="border:0" allowfullscreen></iframe>
-            -->
           </div>
       </section>
       <section class="am-panel am-panel-default">
         <div class="am-panel-hd">旅游文章</div>
         <ul class="am-list blog-list">
-          <li><a href="#">Google fonts 的字體（sans-serif 篇）</a></li>
-          <li><a href="#">[but]服貿最前線？－再訪桃園機場</a></li>
-          <li><a href="#">到日星鑄字行學字型</a></li>
-          <li><a href="#">glyph font vs. 漢字（上）</a></li>
-          <li><a href="#">浙江民間書刻體上線</a></li>
-          <li><a href="#">[極短篇] Android v.s iOS，誰的字體好讀？</a></li>
+          <li><a href="#">受日本地震影响，今年预期去日本旅游的人数将减少</a></li>
+          <li><a href="#">浙江近期旅游大热，很多景点人多为患</a></li>
+          <li><a href="#">美国旅游人数增加，多为中国人，占28%</a></li>
+          <li><a href="#">欧洲热门景点，马上去看看</a></li>
+          <li><a href="#">泰国一日游今年人数明显比往年增加</a></li>
+          <li><a href="#">今年台湾旅游出台了很多优惠政策</a></li>
         </ul>
       </section>
 
@@ -181,7 +186,7 @@
           <ul class="am-avg-sm-2 blog-team">
             <%section name=i loop=$relation_tourism%>
             <li><a href="index.php?model=tourism&action=product&id=<%$relation_tourism[i].t_id%>" target="_blank"><img class="am-thumbnail" id="relation_img_<%$relation_tourism[i].t_id%>" alt=""/></a>
-              <%$relation_tourism[i].t_title%>
+              <%if $relation_tourism[i].t_title_cn != ''%><%$relation_tourism[i].t_title_cn%><%else%><%$relation_tourism[i].t_title%><%/if%>
             </li>
             <script language="JavaScript">
               obj = jQuery.parseJSON('<%$relation_tourism[i].t_images%>');
@@ -195,13 +200,11 @@
         </div>
       </section>
   </div>
-
 </div>
-
 <div class="am-popup am-radius" id="order-popup">
   <div class="am-popup-inner">
     <div class="am-popup-hd">
-      <h4 class="am-popup-title">输入预定信息</h4>
+      <h4 class="am-popup-title">输入预订信息</h4>
       <span data-am-modal-close
             class="am-close">&times;</span>
     </div>
@@ -261,33 +264,34 @@
         if($($radios[k]).is(':checked')) {
           //$($radios[k].parentElement).removeClass('am-icon-check-square-o');
           //$($radios[k].parentElement).addClass('am-icon-square-o');
+          $('#product_all').val($('#product_'+k).val() * $('#pax').val());
         }
       });
       $(this.parentElement).removeClass('am-icon-square-o');
       $(this.parentElement).addClass('am-icon-check-square-o');
+      $('#order-popup-button').popover('close');
     });
-    $('#order-popup').popover({
-      alert($radios[0]);
-    content: 'Popover via JavaScript'
-  })
-  });
-</script>
-<script language="JavaScript">
-  $(function() {
 
-    /*var $modal = $('#order-popup');
-    $modal.siblings('.am-btn').on('click', function(e) {
-      alert($radios);
-      var $target = $(e.target);
-      if (($target).hasClass('js-modal-open')) {
-        $modal.modal();
-      } else if (($target).hasClass('js-modal-close')) {
-        $modal.modal('close');
-      } else {
-        $modal.modal('toggle');
+    $('#order-popup-button').on('click', function(e) {
+      //alert($radios);
+      var $modal = $('#order-popup');
+      var is_select = false;
+      $.each($radios, function(k, item){
+        if($($radios[k]).is(':checked')) {
+          is_select = true;
+          $modal.modal();
+          is_select = false;
+          return;
+        }
+      });
+      if(is_select == false) {
+        //alert(1);
+        var options = {content: '请选择套餐'};
+        $('#order-popup-button').popover(options)
+        $('#order-popup-button').popover('open');
+        //$('#order-popup-button').popover('open');
       }
-    });*/
-
+    });
   });
 </script>
 <script language="JavaScript">
@@ -330,7 +334,7 @@
 						product_price[k_date][v_pax][id] = price;
 					});
 				});
-				
+
 				if(pax == k_pax) {
 					setPrice(product_price[k_date][v_pax]);
 				}
@@ -359,8 +363,15 @@
             }
 		  }
 	 }
+    $radios_price = $('[name="options"]');
+    $.each($radios_price, function(k, item){
+      if($($radios_price[k]).is(':checked')) {
+        $('#product_all').val($('#product_'+k).val() * $('#pax').val());
+        return;
+      }
+    });
   }
-	  
+
 
 </script>
 <!--script>
