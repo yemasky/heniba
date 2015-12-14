@@ -17,7 +17,9 @@ try {
 }
 
 try {
-	$objAction = new $model();
+	$process_key = 'www';
+	$objProcess = new Process($process_key);
+	$objAction = $objProcess->$model();
 	$objAction->execute($action);
 } catch(Exception $e) {
 	logError($e->getMessage(),__MODEL_EXCEPTION);
