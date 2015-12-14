@@ -38,7 +38,7 @@ class BemyguestService{
 	}
 
 	public function product($uuid, $arrayDate = null){
-		//$uuid = 'a97e2cfa-acca-596c-8c92-320a0df90753';
+		//$uuid = '50a55f6c-3deb-50a2-a7d0-7ca404c9494f';
 		$url = $this->objBemyguestConfig->product_url . $uuid . "/?currency=CNY&language=ZH-HANS";
 		if(!empty($arrayDate)) {
 			$url .= '&date_start=' . $arrayDate['date_start'] . '&date_end=' . $arrayDate['date_end'];

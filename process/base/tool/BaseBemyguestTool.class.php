@@ -17,7 +17,8 @@ class BaseBemyguestTool extends BaseTool {
 
     public function tourismTemplace($supplierCode, $objResponse) {
         $tourism_product = BaseTourismService::instance($this->objProcess)->getSupplierTourism($supplierCode);
-        $arrayProductPrice = $arrayProductPrice = $productTypeNum = $tourismAttr = $arrayMaxPax = NULL;;
+        $arrayProductPrice = $arrayProductPrice = $productTypeNum = $tourismAttr = $arrayMaxPax = NULL;
+        $arrayCurrency['code'] = '';
         $supplier = ucfirst($supplierCode['t_supplier']) . 'Config';
         if(!empty($tourism_product)) {
             $objProcess = new Process('supplier');
@@ -67,10 +68,12 @@ class BaseBemyguestTool extends BaseTool {
                 $tourism_product[0]['safety'] = $tourism_product[0]['safetyTranslated'];
             if(!empty($tourism_product[0]['meetingLocationTranslated']))
                 $tourism_product[0]['meetingLocation'] = $tourism_product[0]['meetingLocationTranslated'];
+            $arrayCurrency = json_decode($tourism_product[0]['currency'], true);
         }
         $objResponse -> setTplValue('tourism_product', $tourism_product[0]);
         $objResponse -> setTplValue('productprice', json_encode($arrayProductPrice));
         $objResponse -> setTplValue('productTypeNum', $productTypeNum);
+        $objResponse -> setTplValue('currency', $arrayCurrency['code']);
         $objResponse -> setTplValue('tourismAttr', $tourismAttr);
         $objResponse -> setTplValue('maxPax', $arrayMaxPax);
 		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', $tourism_product[0]['title'] . '-管理后台', '管理后台', '管理后台'));

@@ -1,4 +1,7 @@
-<style>.am-pureview-direction a:before{font-size: 60px;}.am-pureview-actions a{text-align: right; width: 99%;font-size: 60px; color:#FFFFFF; margin-top:10px;}</style>
+<style>.scrollspy-nav{top:0;z-index:100;background:#666666;width:100%;padding:0px}.scrollspy-nav ul{margin:0;padding:0}.scrollspy-nav li{display:inline-block;list-style:none}.scrollspy-nav a{color:#eee;padding:10px 20px;display:inline-block}.scrollspy-nav a.am-active{color:#fff;font-weight:700}.am-panel{margin-top:0px}</style>
+<style>.am-pureview-direction a:before{font-size: 60px;} .am-pureview-actions a{text-align: right; width: 99%;font-size: 60px; color:#FFFFFF; margin-top:10px;} .am-pureview-bar{font-size: 24px;}
+  /*.am-active .am-btn-primary.am-dropdown-toggle, .am-btn-primary.am-active, .am-btn-primary:active {}*/
+</style>
 <div class="am-g am-g-fixed blog-g-fixed">
   <div class="am-u-md-8">
     <article class="blog-main am-cf">
@@ -82,20 +85,42 @@
           <ul class="am-list am-list-static">
             <%section name=i loop=$tourism_product.productTypes%>
             <li>
-              <div class="am-form-group am-padding-0 am-margin-0">
-                <label class="am-form-label am-u-md-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="pax">价格</label>
-                <div class="am-input-group am-input-group-sm am-u-md-3">
-                  <span class="am-input-group-label" id="currency"></span>
-                  <input id="product_<%$smarty.section.i.index%>" type="text" value="" class="am-form-field am-input-sm" readonly>
-                  <span class="am-input-group-label">每人</span>
+              <div class="am-g am-margin-left-0">
+                <div class="am-u-sm-7">
+                  <div><%$tourism_product.productTypes[i].titleTranslated%></div>
+                  <div><%$tourism_product.productTypes[i].descriptionTranslated%></div>
+                </div>
+                <div class="am-u-sm-5 am-padding-left-0 am-padding-right-0">
+                  <div class="am-form-group am-padding-0 am-margin-0 am-btn-group">
+                    <div data-am-button class="am-btn-group">
+                      <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o"><input type="radio" id="option1" value="选项 1" name="options">套餐<%$smarty.section.i.index+1%></label>
+                    </div>
+                    <!--<label class="am-btn am-btn-default am-btn-xs am-btn-primary am-margin-0 am-padding-left-0">
+                      <input type="radio" name="options" value="选项 1" id="option1">选项 1
+                    </label>
+                    <label class="am-btn am-btn-default am-btn-xs am-btn-primary am-margin-0 am-padding-left-0">
+                      <input type="radio" name="options" value="选项 2" id="option2">选项 2
+                    </label>
+                    label class="am-form-label am-u-md-2 am-padding-left-0 am-padding-right-0 am-text-sm" for="pax">价格</label-->
+                    <div class="am-input-group am-input-group-sm am-u-md-9 am-padding-left-0 am-padding-right-0">
+                      <span class="am-input-group-label<%if $currency=='CNY'%> am-icon-rmb<%/if%>" id="currency"> <%$currency%></span>
+                      <input id="product_<%$smarty.section.i.index%>" type="text" value="" class="am-form-field am-input-sm" readonly>
+                      <span class="am-input-group-label">每人</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </li>
             <%/section%>
           </ul>
           <div class="am-panel-bd">
+            <div class="am-input-group am-input-group-sm am-u-md-9 am-padding-left-0 am-padding-right-0">
+              <span class="am-input-group-label<%if $currency=='CNY'%> am-icon-rmb<%/if%>" id="currency"> <%$currency%></span>
+              <input id="product_all" type="text" value="" class="am-form-field am-input-sm" readonly>
+              <span class="am-input-group-label">总共</span>
+            </div>
             <div class="am-cf" data-am-dropdown>
-              <button class="am-btn am-btn-warning am-round am-fr" type="button" data-am-modal="{target: '#order-popup'}" ><i class="am-icon-shopping-cart"></i>　预　定</button>
+              <button class="am-btn am-btn-warning am-round am-fr" type="button" id="order-popup" ><i class="am-icon-shopping-cart"></i>　预　定</button>
             </div>
           </div>
         </form>
@@ -133,7 +158,9 @@
       <section class="am-panel am-panel-default">
           <div class="am-panel-hd">地图：</div>
           <div class="am-panel-bd">
+            <!--
               <iframe src="http://www.google.cn/maps/embed?pb=!1m14!1m8!1m3!1d3668.6122398251186!2d<%$tourism_product.longitude%>!3d<%$tourism_product.latitude%>!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s!5e0!3m2!1szh-CN!2scn!4v1449945641309" width="350" height="280" frameborder="0" style="border:0" allowfullscreen></iframe>
+            -->
           </div>
       </section>
       <section class="am-panel am-panel-default">
@@ -174,7 +201,7 @@
 <div class="am-popup am-radius" id="order-popup">
   <div class="am-popup-inner">
     <div class="am-popup-hd">
-      <h4 class="am-popup-title">预定：<%$tourism_product.title%></h4>
+      <h4 class="am-popup-title">输入预定信息</h4>
       <span data-am-modal-close
             class="am-close">&times;</span>
     </div>
@@ -221,6 +248,46 @@
       checkin.close();
 	  setProductPrice($('#arrivalDate').val(), $('#pax').val(), product_price);
     }).data('amui.datepicker');
+  });
+</script>
+<script language="JavaScript">
+  $(function() {
+    var $radios = $('[name="options"]');
+    $radios.on('change',function() {
+      //alert('单选框当前选中的是：', $radios.filter(':checked').val());
+      $.each($radios, function(k, item){
+        $($radios[k].parentElement).removeClass('am-active am-icon-check-square-o');
+        $(this.parentElement).addClass('am-icon-square-o');
+        if($($radios[k]).is(':checked')) {
+          //$($radios[k].parentElement).removeClass('am-icon-check-square-o');
+          //$($radios[k].parentElement).addClass('am-icon-square-o');
+        }
+      });
+      $(this.parentElement).removeClass('am-icon-square-o');
+      $(this.parentElement).addClass('am-icon-check-square-o');
+    });
+    $('#order-popup').popover({
+      alert($radios[0]);
+    content: 'Popover via JavaScript'
+  })
+  });
+</script>
+<script language="JavaScript">
+  $(function() {
+
+    /*var $modal = $('#order-popup');
+    $modal.siblings('.am-btn').on('click', function(e) {
+      alert($radios);
+      var $target = $(e.target);
+      if (($target).hasClass('js-modal-open')) {
+        $modal.modal();
+      } else if (($target).hasClass('js-modal-close')) {
+        $modal.modal('close');
+      } else {
+        $modal.modal('toggle');
+      }
+    });*/
+
   });
 </script>
 <script language="JavaScript">
@@ -275,11 +342,21 @@
 	  }
   }
   function setPrice(prices) {
+    if(prices == undefined) {
+      for(var i = 0; i<= <%$productTypeNum%>; i++) {
+          $('#product_'+i).val('选其它日期/人数');
+      }
+      return;
+    }
   	for(var i = 0; i<= <%$productTypeNum%>; i++) {
 		  if(prices[i] == undefined) {
-			  $('#product_'+i).val('已售完,请选其它时间');
+			  $('#product_'+i).val('选其它日期/人数');
 		  } else {
-			$('#product_'+i).val(prices[i]);
+            if(prices[i] == 0) {
+              $('#product_'+i).val('选其它日期/人数');
+            } else {
+			  $('#product_'+i).val(prices[i]);
+            }
 		  }
 	 }
   }
@@ -307,5 +384,3 @@
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJR6VQ6XJkPt3eFNE1oSglfdWl3N1kTro&signed_in=true&callback=initMap">
 </script-->
-
-<style>.scrollspy-nav{top:0;z-index:100;background:#666666;width:100%;padding:0px}.scrollspy-nav ul{margin:0;padding:0}.scrollspy-nav li{display:inline-block;list-style:none}.scrollspy-nav a{color:#eee;padding:10px 20px;display:inline-block}.scrollspy-nav a.am-active{color:#fff;font-weight:700}.am-panel{margin-top:0px}</style>
