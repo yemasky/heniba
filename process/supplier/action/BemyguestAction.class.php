@@ -72,6 +72,7 @@ class BemyguestAction extends BaseAction {
 				$product = json_decode($product['result'], true);
 				//print_r($product);exit;
 				$objService->checkSaveProduct($product['data']);
+				$product = null;
 			}
 		}
 		echo "over";
