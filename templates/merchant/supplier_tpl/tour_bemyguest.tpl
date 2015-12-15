@@ -148,9 +148,9 @@
                     <div class="am-form-group am-form-select">
                         <select name="salutation" class="am-input-sm">
                             <option value="">请选择称呼</option>
-                            <option value="先生">先生</option>
-                            <option value="夫人">夫人</option>
-                            <option value="小姐">小姐</option>
+                            <option value="Mr.">先生</option>
+                            <option value="Ms.">女士</option>
+                            <option value="Mrs.">夫人</option>
                         </select>
                     </div>
                     <span class="am-input-group-labe">姓名</span>
