@@ -140,6 +140,9 @@ class BemyguestTool extends BaseTool {
                 $product = json_decode($product['result'], true);
                 //print_r($product);exit;
                 $objService->checkSaveProduct($product['data']);
+                echo "re save uuid:" . $v['uuid'] . "\r\n";
+                ob_flush();
+                flush();
             }
         }
     }
