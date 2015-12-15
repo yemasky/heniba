@@ -48,7 +48,7 @@ class TouricoAction extends BaseAction{
 	
 	protected function parserDestination($objRequest, $objResponse) {
 		//$this->objProcess->TouricoService($this->objProcess)->insertDestination();
-		//$this->objProcess->TouricoTool($this->objProcess)->insertDestination();
+		$this->objProcess->TouricoTool($this->objProcess)->insertDestination();
 	}
 	
 	protected function disposeHotels($objRequest, $objResponse) {
@@ -57,7 +57,7 @@ class TouricoAction extends BaseAction{
 	}
 
 	protected function insertCountry($objRequest, $objResponse) {
-		//$this->objProcess->TouricoTool($this->objProcess)->insertCountryFromTouricoDestination();
+		$this->objProcess->TouricoTool($this->objProcess)->insertCountryFromTouricoDestination();
 	}
 }
 
