@@ -28,6 +28,9 @@ class BemyguestAction extends BaseAction {
 			case 'checkerror':
 				$this->checkErrorProduct($objRequest, $objResponse);
 				break;
+			case 'getsource':
+				$this->getBemyguestSourceProduct($objRequest, $objResponse);
+				break;
 			default:
 				$this->doBase($objRequest, $objResponse);
 			break;
@@ -80,6 +83,17 @@ class BemyguestAction extends BaseAction {
 
 	protected function checkErrorProduct($objRequest, $objResponse) {
 		$this->objProcess->BemyguestTool($this->objProcess)->reSaveErrorProduct();
+	}
+
+	protected function getBemyguestSourceProduct($objRequest, $objResponse) {
+		$uuid = $objRequest->uuid;
+		$arrayResult = $this->objProcess->BemyguestService($this->objProcess)->product($uuid, NULL, -1);
+		if($arrayResult['httpcode'] == 200) {
+			print_r(json_decode($arrayResult['result'], true));
+		} else {
+			print_r($arrayResult);
+		}
+
 	}
 
 }

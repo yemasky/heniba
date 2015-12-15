@@ -65,6 +65,12 @@ class BemyguestService{
 						if($v[$kk] != '') {
 							$v[$kk] = addslashes($vv);
 						}
+						if($kk == 'paxMin' && empty($v[$kk])) {
+							$v[$kk] = $v['productTypes'][0]['paxMin'];
+						}
+						if($kk == 'paxMax' && empty($v[$kk])) {
+							$v[$kk] = $v['productTypes'][0]['paxMax'];
+						}
 						//}
 					}
 					if(empty($updateCondition)) {
@@ -90,6 +96,12 @@ class BemyguestService{
 					//if(strpos($arrData[$k], "'") !== false) {
 					if($arrData[$k] != '') {
 						$arrData[$k] = addslashes($arrData[$k]);
+					}
+					if($k == 'paxMin' && empty($arrData[$k])) {
+						$arrData[$k] = $arrData['productTypes'][0]['paxMin'];
+					}
+					if($k == 'paxMax' && empty($arrData[$k])) {
+						$arrData[$k] = $arrData['productTypes'][0]['paxMax'];
 					}
 
 					//}
