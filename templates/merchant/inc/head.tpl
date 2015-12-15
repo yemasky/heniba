@@ -10,4 +10,3 @@
 <link rel="apple-touch-icon-precomposed" href="<%$__RESOURCE%>assets/i/app-icon72x72@2x.png">
 <meta name="apple-mobile-web-app-title" content="Amaze UI" />
 <link rel="stylesheet" href="<%$__RESOURCE%>assets/css/amazeui.min.css"/>
-<style>.am-btn{line-height: 1.3;}</style>

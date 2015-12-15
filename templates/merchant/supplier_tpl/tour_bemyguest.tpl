@@ -1,6 +1,7 @@
 <style>.scrollspy-nav{top:0;z-index:100;background:#666666;width:100%;padding:0px}.scrollspy-nav ul{margin:0;padding:0}.scrollspy-nav li{display:inline-block;list-style:none}.scrollspy-nav a{color:#eee;padding:10px 20px;display:inline-block}.scrollspy-nav a.am-active{color:#fff;font-weight:700}.am-panel{margin-top:0px}</style>
 <style>.am-pureview-direction a:before{font-size: 60px;} .am-pureview-actions a{text-align: right; width: 99%;font-size: 60px; color:#FFFFFF; margin-top:10px;} .am-pureview-bar{font-size: 24px;}
   /*.am-active .am-btn-primary.am-dropdown-toggle, .am-btn-primary.am-active, .am-btn-primary:active {}*/
+  .am-form-field{background:#FFFFFF;}
 </style>
 <div class="am-g am-g-fixed blog-g-fixed">
   <div class="am-u-md-8">
@@ -65,44 +66,37 @@
       <form class="am-form am-form-horizontal">
         <div class="am-panel-bd am-padding-bottom-0 am-margin-0">
           <div class="am-form-group am-padding-0 am-margin-0">
-            <label class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="arrivalDate">选择日期:</label>
-            <div class="am-input-group am-input-group-sm am-u-sm-4">
-              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i></span>
+            <label class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="arrivalDate"></label>
+            <div class="am-input-group am-input-group-sm am-u-sm-6">
+              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 选择日期</span>
               <input name="arrivalDate" type="text" class="am-form-field" id="arrivalDate" value="<%$today%>" placeholder="<%$today%>" readonly />
-            </div>
-            <label class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="pax">人数:</label>
-            <div class="am-input-group am-input-group-sm am-form-select am-u-sm-6">
-              <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i></span>
-              <select name="pax" class="am-form-field am-input-sm" id="pax" onChange="setProductPrice($('#arrivalDate').val(), $('#pax').val(), product_price)">
-                <%section name=iPax loop=$maxPax%>
-                <option value="<%$maxPax[iPax]%>"><%$maxPax[iPax]%> 人</option>
-                <%/section%>
-              </select>
             </div>
           </div>
         </div>
-
           <ul class="am-list am-list-static">
             <%section name=i loop=$tourism_product.productTypes%>
             <li>
               <div class="am-g am-margin-left-0">
-                <div class="am-u-sm-7">
+                <div class="am-u-sm-6">
                   <div><%$tourism_product.productTypes[i].titleTranslated%></div>
                   <div><%$tourism_product.productTypes[i].descriptionTranslated%></div>
                 </div>
-                <div class="am-u-sm-6 am-padding-left-0 am-padding-right-0">
+                <div class="am-u-sm-8 am-padding-left-0 am-padding-right-sm">
                   <div class="am-form-group am-padding-0 am-margin-0 am-btn-group">
                     <div data-am-button class="am-btn-group">
                       <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o"><input type="radio" id="option<%$smarty.section.i.index%>" value="选项 <%$smarty.section.i.index%>" name="options">套餐<%$smarty.section.i.index+1%></label>
                     </div>
-                    <!--<label class="am-btn am-btn-default am-btn-xs am-btn-primary am-margin-0 am-padding-left-0">
-                      <input type="radio" name="options" value="选项 1" id="option1">选项 1
-                    </label>
-                    <label class="am-btn am-btn-default am-btn-xs am-btn-primary am-margin-0 am-padding-left-0">
-                      <input type="radio" name="options" value="选项 2" id="option2">选项 2
-                    </label>
-                    label class="am-form-label am-u-md-2 am-padding-left-0 am-padding-right-0 am-text-sm" for="pax">价格</label-->
-                    <div class="am-input-group am-input-group-sm am-u-md-9 am-padding-left-0 am-padding-right-0">
+                    <div class="am-input-group am-input-group-sm am-form-select am-u-sm-4 am-padding-0">
+                      <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i> 人数</span>
+                      <select name="pax" class="am-form-field am-input-sm" id="pax_<%$smarty.section.i.index%>" onChange="setProductPrice($('#arrivalDate').val(), <%$smarty.section.i.index%>)">
+                        <%section name=iPax loop=$tourism_product.productTypes[i].paxMax%>
+                          <%if ($smarty.section.iPax.index+$tourism_product.productTypes[i].paxMin) <=  $tourism_product.productTypes[i].paxMax%>
+                            <option value="<%$smarty.section.iPax.index+$tourism_product.productTypes[i].paxMin%>"><%$smarty.section.iPax.index+$tourism_product.productTypes[i].paxMin%> 人</option>
+                          <%/if%>
+                        <%/section%>
+                      </select>
+                    </div>
+                    <div class="am-input-group am-input-group-sm am-u-md-6 am-padding-left-0 am-padding-right-xl">
                       <span class="am-input-group-label<%if $currency=='CNY'%> am-icon-rmb<%/if%>" id="currency"> <%$currency%></span>
                       <input id="product_<%$smarty.section.i.index%>" type="text" value="" class="am-form-field am-input-sm" readonly>
                       <span class="am-input-group-label">每人</span>
@@ -277,7 +271,7 @@
       }
     }).on('changeDate.datepicker.amui', function(ev) {
       checkin.close();
-	  setProductPrice($('#arrivalDate').val(), $('#pax').val(), product_price);
+	  setProductPrice($('#arrivalDate').val(), -1);
     }).data('amui.datepicker');
   });
 </script>
@@ -292,7 +286,7 @@
         if($($radios[k]).is(':checked')) {
           //$($radios[k].parentElement).removeClass('am-icon-check-square-o');
           //$($radios[k].parentElement).addClass('am-icon-square-o');
-          $('#product_all').val($('#product_'+k).val() * $('#pax').val());
+          $('#product_all').val($('#product_'+k).val() * $('#pax_'+k).val());
         }
       });
       $(this.parentElement).removeClass('am-icon-square-o');
@@ -343,9 +337,9 @@
   var today = new Date().Format("yyyy-MM-dd");
 </script>
 <script language="JavaScript">
-  setProductPrice($('#arrivalDate').val(), $('#pax').val(), product_price);
+  setProductPrice($('#arrivalDate').val(), -1);
   //pax
-  function setProductPrice(date, pax, product_price) {
+  function setProductPrice(date, index) {
 	  if(product_price[date] == undefined) {
 		$('#my-modal-loading').modal('open');
 		$.getJSON('index.php?model=supplier&action=gettourism&id=<%$t_id%>&checkdate='+date,function(result){
@@ -362,39 +356,37 @@
 						product_price[k_date][v_pax][id] = price;
 					});
 				});
-
-				if(pax == k_pax) {
-					setPrice(product_price[k_date][v_pax]);
-				}
 			});
+          setPrice(product_price[k_date], index);
 		});
 	  } else {
-		  var prices = product_price[date][pax];
-		  setPrice(prices);
+          setPrice(product_price[date], index);
 	  }
   }
-  function setPrice(prices) {
-    if(prices == undefined) {
+  function setPrice(prices, index) {
+    var pax;
+    if(prices == undefined || prices == "") {
       for(var i = 0; i<= <%$productTypeNum%>; i++) {
           $('#product_'+i).val('选其它日期/人数');
       }
       return;
     }
-  	for(var i = 0; i<= <%$productTypeNum%>; i++) {
-		  if(prices[i] == undefined) {
-			  $('#product_'+i).val('选其它日期/人数');
-		  } else {
-            if(prices[i] == 0) {
-              $('#product_'+i).val('选其它日期/人数');
-            } else {
-			  $('#product_'+i).val(prices[i]);
-            }
-		  }
-	 }
+    for (var i = 0; i <= <%$productTypeNum%>; i++) {
+      pax = $('#pax_' + i).val();
+      if (prices[pax] == undefined || prices[pax] == "") {
+        $('#product_' + i).val('选其它日期/人数');
+      } else {
+        if (prices[pax][i] == 0 || prices[pax][i] == "" || prices[pax][i] == undefined) {
+          $('#product_' + i).val('选其它日期/人数');
+        } else {
+          $('#product_' + i).val(prices[pax][i]);
+        }
+      }
+    }
     $radios_price = $('[name="options"]');
     $.each($radios_price, function(k, item){
       if($($radios_price[k]).is(':checked')) {
-        $('#product_all').val($('#product_'+k).val() * $('#pax').val());
+        $('#product_all').val($('#product_'+k).val() * $('#pax_'+k).val());
         return;
       }
     });

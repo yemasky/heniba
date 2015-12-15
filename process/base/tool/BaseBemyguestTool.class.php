@@ -33,21 +33,21 @@ class BaseBemyguestTool extends BaseTool {
                 }
             }
             $tourism_product[0]['productTypes'] = json_decode($tourism_product[0]['productTypes'], true);
-
+            if(empty($tourism_product[0]['productTypes'])) {
+                throw new Exception('productTypes is null. t_supplier:' . $supplierCode['t_supplier'] . "; code:" . $supplierCode['t_supplier_code']);
+            }
             foreach($tourism_product[0]['productTypes'] as $k => $prices) {
-                foreach($prices['prices'] as $kk => $date) {
-                    if(isset($date['regular']['adult'])) {
+                foreach($prices['prices'] as $kk => $date) {//日期
+                    if(isset($date['regular']['adult'])) {//人数
                         foreach ($date['regular']['adult'] as $kkk => $price) {
-                            $arrayProductPrice[$kk][$kkk][$k] = ceil($price);
+                            $arrayProductPrice[$kk][$kkk][$k] = ceil($price);//价格
                         }
                     }
                 }
             }
             $productTypeNum = $k;
             $tourism_product[0]['locations'] = json_decode($tourism_product[0]['locations'], true);
-            for($i = $tourism_product[0]['minPax']; $i<= $tourism_product[0]['maxPax']; $i++) {
-                $arrayMaxPax[] = $i;
-            }
+
             if(!empty($tourism_product[0]['titleTranslated']))
                 $tourism_product[0]['title'] = $tourism_product[0]['titleTranslated'];
             if(!empty($tourism_product[0]['descriptionTranslated']))
@@ -75,7 +75,6 @@ class BaseBemyguestTool extends BaseTool {
         $objResponse -> setTplValue('productTypeNum', $productTypeNum);
         $objResponse -> setTplValue('currency', $arrayCurrency['code']);
         $objResponse -> setTplValue('tourismAttr', $tourismAttr);
-        $objResponse -> setTplValue('maxPax', $arrayMaxPax);
 		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', $tourism_product[0]['title'] . '-管理后台', '管理后台', '管理后台'));
     }
 
