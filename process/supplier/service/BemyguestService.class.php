@@ -37,7 +37,7 @@ class BemyguestService{
 		return $this->objWSClient->DBCache(0)->execute_cUrl($url);
 	}
 
-	public function product($uuid, $arrayDate = null){
+	public function product($uuid, $arrayDate = null, $cacheTime = 0){
 		//$uuid = '50a55f6c-3deb-50a2-a7d0-7ca404c9494f';
 		$url = $this->objBemyguestConfig->product_url . $uuid . "/?currency=CNY&language=ZH-HANS";
 		if(!empty($arrayDate)) {
@@ -45,7 +45,11 @@ class BemyguestService{
 		}
 		$this->objWSClient->url($url)->get();
 		$this->objWSClient->header($this->arrayHeader);
-		return $this->objWSClient->DBCache(0)->execute_cUrl($uuid);
+		if($cacheTime >= 0) {
+			return $this->objWSClient->DBCache($cacheTime)->execute_cUrl($uuid);
+		} else {
+			return $this->objWSClient->execute_cUrl($uuid);
+		}
 	}
 
 	public function checkSaveProduct($arrData){

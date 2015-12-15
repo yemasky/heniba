@@ -25,6 +25,9 @@ class BemyguestAction extends BaseAction {
 			case 'totourism':
 				$this->insertToTourism($objRequest, $objResponse);
 			break;
+			case 'checkerror':
+				$this->checkErrorProduct($objRequest, $objResponse);
+				break;
 			default:
 				$this->doBase($objRequest, $objResponse);
 			break;
@@ -75,6 +78,9 @@ class BemyguestAction extends BaseAction {
 		$this->objProcess->BemyguestTool($this->objProcess)->parserTourProduct();
 	}
 
+	protected function checkErrorProduct($objRequest, $objResponse) {
+		$this->objProcess->BemyguestTool($this->objProcess)->reSaveErrorProduct();
+	}
 
 }
 ?>
