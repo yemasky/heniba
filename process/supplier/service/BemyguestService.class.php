@@ -52,7 +52,7 @@ class BemyguestService{
 		}
 	}
 
-	public function checkSaveProduct($arrData){
+	public function checkSaveProduct($arrData, $updateCondition = NULL){
 		if(!empty($arrData)) {
 			$objBemyguestDao = $this->objProcess->BemyguestDao();
 			if(isset($arrData['0'])) {
@@ -62,14 +62,22 @@ class BemyguestService{
 							$v[$kk] = json_encode($vv);
 						}
 						//if(strpos($v[$kk], "'") !== false) {
+						if($v[$kk] != '') {
 							$v[$kk] = addslashes($vv);
+						}
 						//}
 					}
-					$id = $objBemyguestDao->insertProduct($v);
+					if(empty($updateCondition)) {
+						$id = $objBemyguestDao->insertProduct($v);
+					} else {
+						$objBemyguestDao->updateBemyguestTour($updateCondition, $v);
+					}
 					if(!empty($id)) {
 						echo "add :" . $v['uuid'] . ', id:' . $id . "\r\n";
-					} else {
+					} elseif(empty($updateCondition)) {
 						echo "continue code :" . $v['uuid'] . "\r\n";
+					} else {
+						echo "re save code :" . $v['uuid'] . "\r\n";
 					}
 					ob_flush();
 					flush();
@@ -80,15 +88,23 @@ class BemyguestService{
 						$arrData[$k] = json_encode($v);
 					}
 					//if(strpos($arrData[$k], "'") !== false) {
+					if($arrData[$k] != '') {
 						$arrData[$k] = addslashes($arrData[$k]);
+					}
+
 					//}
 				}
-
-				$id = $objBemyguestDao->insertProduct($arrData);
+				if(empty($updateCondition)) {
+					$id = $objBemyguestDao->insertProduct($arrData);
+				} else {
+					$objBemyguestDao->updateBemyguestTour($updateCondition, $arrData);
+				}
 				if(!empty($id)) {
 					echo "add :" . $arrData['uuid'] . ', id:' . $id . "\r\n";
-				} else {
+				} elseif(empty($updateCondition)) {
 					echo "continue code :" . $arrData['uuid'] . "\r\n";
+				} else {
+					echo "re save code :" . $arrData['uuid'] . "\r\n";
 				}
 				ob_flush();
 				flush();

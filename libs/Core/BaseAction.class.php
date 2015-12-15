@@ -715,17 +715,7 @@ class DBQuery{
 	 *        	请注意在使用字符串时将需要开发者自行使用escape来对输入值进行过滤
 	 */
 	public function getCount($conditions = NULL){
-		$where = "";
-		if(is_array($conditions)) {
-			$join = array ();
-			foreach($conditions as $key => $condition) {
-				$join[] = "{$key} = '{$condition}'";
-			}
-			$where = "WHERE " . join(" AND ", $join);
-		} else {
-			if(NULL != $conditions)
-				$where = "WHERE " . $conditions;
-		}
+		$where = $this->where($conditions);
 		$sql = "SELECT COUNT({$this->table_key}) AS SP_COUNTER FROM {$this->table_name} {$where}";
 		$result = $this->conn->getQueryArrayResult($sql);
 		return $result[0]['SP_COUNTER'];
@@ -741,21 +731,9 @@ class DBQuery{
 	 *        	此参数的格式用法与insertData的$row是相同的。在符合条件的记录中，将对$row设置的字段的数据进行修改。
 	 */
 	public function update($conditions, $row){
-		$where = "";
+		$where = $this->where($conditions);
 		if(empty($row))
 			return false;
-		if(is_array($conditions)) {
-			if(empty($conditions))
-				return false;
-			$join = array ();
-			foreach($conditions as $key => $condition) {
-				$join[] = "{$key} = '{$condition}'";
-			}
-			$where = "WHERE " . join(" AND ", $join);
-		} else {
-			if(NULL != $conditions)
-				$where = "WHERE " . $conditions;
-		}
 		foreach($row as $key => $value) {
 			$vals[] = "{$key} = '{$value}'";
 		}
