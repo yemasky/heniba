@@ -63,7 +63,7 @@
       </div>
 	<div class="am-panel am-panel-default">
         <div class="am-panel-hd">游玩类型：</div>
-      <form class="am-form am-form-horizontal">
+      <form class="am-form am-form-horizontal" id="form-book">
         <div class="am-panel-bd am-padding-bottom-0 am-margin-0">
           <div class="am-form-group am-padding-0 am-margin-0">
             <label class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="arrivalDate"></label>
@@ -124,50 +124,7 @@
               <button class="am-btn am-btn-warning am-round am-fr" id="order-popup-button" type="button" ><i class="am-icon-shopping-cart"></i>　预　定</button>
             </div>
           </div>
-        <div class="am-popup am-radius" id="order-popup">
-          <div class="am-popup-inner">
-            <div class="am-popup-hd">
-              <h4 class="am-popup-title">填写预订信息</h4>
-              <span data-am-modal-close class="am-close">&times;</span>
-            </div>
-            <div class="am-popup-bd">
-            	<div class="">
-                    <span class="am-input-group-labe">身份证</span>
-                    <div class="am-form-group am-form-icon">
-                        
-                        <i class="am-icon-newspaper-o"></i> 
-                        <input name="id_card_no" type="text" placeholder="身份证，必填" class="am-form-field">
-                    </div>
-                    <span class="am-input-group-labe">请选择称呼</span>
-                    <div class="am-form-group am-form-select">
-                        <select name="salutation" class="am-input-sm">
-                            <option value="">请选择称呼</option>
-                            <option value="Mr.">先生</option>
-                            <option value="Ms.">女士</option>
-                            <option value="Mrs.">夫人</option>
-                        </select>
-                    </div>
-                    <span class="am-input-group-labe">姓名</span>
-                    <div class="am-form-group am-form-icon"><i class="am-icon-male"></i> 
-                        <input name="lastName_firstName" type="text" placeholder="姓名，必填" class="am-form-field">
-                    </div>
-                    <span class="am-input-group-labe">电子邮件</span>
-                    <div class="am-form-group am-form-icon"><i class="am-icon-envelope"></i> 
-                        <input name="email" type="text" placeholder="电子邮件，必填" class="am-form-field">
-                    </div>
-                    <span class="am-input-group-labe">移动电话</span>
-                    <div class="am-form-group am-form-icon"><i class="am-icon-mobile"></i> 
-                        <input name="mobile" type="text" placeholder="移动电话，必填" class="am-form-field">
-                    </div>
-                    <span class="am-input-group-labe">客户备注</span>
-                    <div class="am-form-group am-form-icon"><i class="am-icon-commenting-o"></i> 
-                        <input name="message" type="text" placeholder="客户备注" class="am-form-field">
-                    </div>
-                </div>
-            </div>
-            <div class="am-center am-padding"><button class="am-btn am-btn-primary am-center">开始预订 <i class="am-icon-check-circle"></i></button></div>
-          </div>
-        </div>
+        <%include file="order/order_from_userinfo.tpl"%>
         </form>
     </div>
     <article class="blog-main">
@@ -198,22 +155,11 @@
   <div class="am-u-md-4">
       <section class="am-panel am-panel-default">
           <div class="am-panel-hd">地图：</div>
-          <div class="am-panel-bd">
-              <iframe src="http://www.google.cn/maps/embed?pb=!1m14!1m8!1m3!1d3668.6122398251186!2d<%$tourism_product.longitude%>!3d<%$tourism_product.latitude%>!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s!5e0!3m2!1szh-CN!2scn!4v1449945641309" width="350" height="280" frameborder="0" style="border:0" allowfullscreen></iframe>
+          <div class="am-panel-bd am-padding-0">
+              <iframe src="http://www.google.cn/maps/embed?pb=!1m14!1m8!1m3!1d3668.6122398251186!2d<%$tourism_product.longitude%>!3d<%$tourism_product.latitude%>!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s!5e0!3m2!1szh-CN!2scn!4v1449945641309" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
           </div>
       </section>
-      <section class="am-panel am-panel-default">
-        <div class="am-panel-hd">旅游新闻</div>
-        <ul class="am-list blog-list">
-          <li><a href="#">受日本地震影响，今年预期去日本旅游的人数将减少</a></li>
-          <li><a href="#">浙江近期旅游大热，很多景点人多为患</a></li>
-          <li><a href="#">美国旅游人数增加，多为中国人，占28%</a></li>
-          <li><a href="#">欧洲热门景点，马上去看看</a></li>
-          <li><a href="#">泰国一日游今年人数明显比往年增加</a></li>
-          <li><a href="#">今年台湾旅游出台了很多优惠政策</a></li>
-        </ul>
-      </section>
-
+      <%include file="news/tour_product_news.tpl"%>
       <section class="am-panel am-panel-default">
         <div class="am-panel-hd">推荐景点</div>
         <div class="am-panel-bd">
