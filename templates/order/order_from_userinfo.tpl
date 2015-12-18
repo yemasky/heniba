@@ -43,17 +43,20 @@
 </div>
 <script language="JavaScript">
     $('#id_card_no').blur(function(){
-        alert(0);
     });
-    $('#form-book').validator({
+    $('#form-book').submit(function(){
+    });
+    /*$('#form-book').validator({
         submit: function() {
             var formValidity = this.isFormValid();
 
             $.when(formValidity).then(function() {
+                return false;
                 // 验证成功的逻辑
             }, function() {
+                return false;
                 // 验证失败的逻辑
             });
         }
-    });
+    });*/
 </script>
