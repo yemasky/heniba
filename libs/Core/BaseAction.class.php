@@ -327,6 +327,14 @@ abstract class BaseAction{
 		}
 	}
 
+	protected function check_numeric($numeric, $key = null) {
+		$this->check_null($numeric, $key);
+		if(!is_numeric($numeric)) {
+			throw new Exception("parameter not numeric:" . $key . '=>' . $numeric);
+		}
+		return $numeric;
+	}
+
 	/**
 	 * Controller层的调用入口函数,在scripts中调用
 	 */

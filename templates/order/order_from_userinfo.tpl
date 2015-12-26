@@ -5,12 +5,15 @@
             <span data-am-modal-close class="am-close">&times;</span>
         </div>
         <div class="am-popup-bd">
-            <div class="">
+            <div>
                 <span class="am-input-group-labe">身份证</span>
                 <div class="am-form-group am-form-icon">
                     <i class="am-icon-newspaper-o"></i>
                     <input name="id_card_no" id="id_card_no" type="text" placeholder="身份证，必填" class="am-form-field" minlength="10" maxlength="18" required/>
                 </div>
+                <div class="am-center am-padding"><button class="am-btn am-btn-primary am-center" type="submit">下一步 <i class="am-icon-check-circle"></i></button></div>
+            </div>
+            <div class="am-hide">
                 <span class="am-input-group-labe">请选择称呼</span>
                 <div class="am-form-group am-form-select">
                     <select name="salutation" class="am-input-sm" required>
@@ -36,13 +39,18 @@
                 <div class="am-form-group am-form-icon"><i class="am-icon-commenting-o"></i>
                     <input name="message" type="text" placeholder="客户备注" class="am-form-field">
                 </div>
+                <div class="am-center am-padding"><button class="am-btn am-btn-primary am-center" type="submit">开始预订 <i class="am-icon-check-circle"></i></button></div>
             </div>
         </div>
-        <div class="am-center am-padding"><button class="am-btn am-btn-primary am-center" type="submit">开始预订 <i class="am-icon-check-circle"></i></button></div>
     </div>
 </div>
 <script language="JavaScript">
     $('#id_card_no').blur(function(){
+        $.getJSON('index.php?model=book&action=ajax_check_identity', {id_card_no:$('#id_card_no').val()}, function(result){
+            if(result.error == 1) {
+                alert(result.error_message);
+            }
+        });
     });
     $('#form-book').submit(function(){
     });
