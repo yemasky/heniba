@@ -7,9 +7,9 @@
  * PHP versions 5
 
 **/
+namespace supplier;
 
-
-class IndexAction extends BaseAction {
+class IndexAction extends \BaseAction {
 	
 	protected function check($objRequest, $objResponse) {
 
@@ -34,7 +34,7 @@ class IndexAction extends BaseAction {
 		//设置类别
 		$objResponse -> nav = 'index';
 		//设置Meta(共通)
-		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '我的网站', '我的网站', '我的网站'));
+		$objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '我的网站', '我的网站', '我的网站'));
 		$objResponse -> setTplName("www/base");
 	}
 	

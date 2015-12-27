@@ -133,18 +133,19 @@ class BemyguestTool extends \BaseTool {
     }
 
     public function reSaveErrorProduct() {
-        $objService = $this->objProcess->BemyguestService($this->objProcess);
-        $conditions = DbConfig::$db_query_conditions;
+        $objBemyguestDao = new BemyguestDao();
+        $BemyguestService = new BemyguestService();
+        $conditions = \DbConfig::$db_query_conditions;
         $conditions['condition'] = "locations = '' OR locations IS NULL OR currency = '' OR currency IS NULL OR minPax = '' OR minPax IS NULL OR maxPax = '' OR maxPax IS NULL";
-        $arrayErrorProduct = $this->objProcess->BemyguestDao()->getBemyguestTour($conditions, 'uuid, id');
+        $arrayErrorProduct = $objBemyguestDao->getBemyguestTour($conditions, 'uuid, id');
         //print_r($arrayErrorProduct);
         if(!empty($arrayErrorProduct)) {
             foreach($arrayErrorProduct as $k => $v) {//product($uuid, $arrayDate = null, $cacheTime = 0)
-                $product = $objService->product($v['uuid'], null, null);
+                $product = $BemyguestService->product($v['uuid'], null, null);
                 $product = json_decode($product['result'], true);
                 //print_r($product);exit;
                 $conditions = "id = '".$v['id']."' AND `uuid` = '" . $v['uuid'] . "'";
-                $objService->checkSaveProduct($product['data'], $conditions);
+                $BemyguestService->checkSaveProduct($product['data'], $conditions);
                 echo "re save uuid:" . $v['uuid'] . "\r\n";
                 ob_flush();
                 flush();

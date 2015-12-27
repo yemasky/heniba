@@ -4,7 +4,9 @@
  * @author YEMASKY  yemasky@msn.com
  * Copyright 2015  
  */
-class TouricoAction extends BaseAction{
+namespace supplier;
+
+class TouricoAction extends \BaseAction{
 
 	protected function check($objRequest, $objResponse){
 		$this->setDisplay();
@@ -36,8 +38,9 @@ class TouricoAction extends BaseAction{
 	 * 首页显示
 	 */
 	protected function doBase($objRequest, $objResponse){
+		$objTouricoService = new TouricoService();
 		//$result = $this->objProcess->TouricoService($this->objProcess)->GetDestination('Asia/Far East', 'China');
-		$result = $this->objProcess->TouricoService($this->objProcess)->GetHotelsByDestination('Africa');
+		$result = $objTouricoService->GetHotelsByDestination('Africa');
 		//$result = $this->objProcess->TouricoService($this->objProcess)->GetHotelDetailsV3();
 		//$this->objProcess->TouricoService($this->objProcess)->SearchHotelsById();
 		//$this->objProcess->TouricoService($this->objProcess)->GetCancellationPolicies();
@@ -47,17 +50,20 @@ class TouricoAction extends BaseAction{
 	}
 	
 	protected function parserDestination($objRequest, $objResponse) {
+		$objTouricoTool = new TouricoTool();
 		//$this->objProcess->TouricoService($this->objProcess)->insertDestination();
-		$this->objProcess->TouricoTool($this->objProcess)->insertDestination();
+		$objTouricoTool->insertDestination();
 	}
 	
 	protected function disposeHotels($objRequest, $objResponse) {
+		$objTouricoTool = new TouricoTool();
 		//$this->objProcess->TouricoService($this->objProcess)->insertDestination();
-		$this->objProcess->TouricoTool($this->objProcess)->disposeHotels();
+		$objTouricoTool->disposeHotels();
 	}
 
 	protected function insertCountry($objRequest, $objResponse) {
-		$this->objProcess->TouricoTool($this->objProcess)->insertCountryFromTouricoDestination();
+		$objTouricoTool = new TouricoTool();
+		$objTouricoTool->insertCountryFromTouricoDestination();
 	}
 }
 

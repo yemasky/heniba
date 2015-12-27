@@ -4,14 +4,16 @@
  * @author YEMASKY  yemasky@msn.com
  * Copyright 2015  
  */
-class TouricoTool extends BaseTool {
+namespace supplier;
+
+class TouricoTool extends \BaseTool {
 
 	/*
 	 * insertDestination
 	 */
 	public function insertDestination(){
-		$objTouricoDao = $this->objProcess->TouricoDao();
-		$objTouricoService = $this->objProcess->TouricoService($this->objProcess);
+		$objTouricoDao = new TouricoDao();
+		$objTouricoService = new TouricoService();
 		$arrayDestination = $objTouricoService->GetDestination();
 		foreach($arrayDestination['s:Body'][0]['DestinationResponse'][0]['DestinationResult'][0]['Continent'] as $k => $Continent) {
 			$arrayData['name'] = $Continent['name'];
@@ -78,8 +80,8 @@ class TouricoTool extends BaseTool {
 	}
 
 	public function disposeHotels(){
-		$objTouricoDao = $this->objProcess->TouricoDao();
-		$objTouricoService = $this->objProcess->TouricoService($this->objProcess);
+		$objTouricoDao = new TouricoDao();
+		$objTouricoService = new TouricoService();
 		$arrayHotelIds = array ();
 		$arrayHotels = array ();
 		$arrayDestination = $objTouricoService->GetDestination();
@@ -117,7 +119,7 @@ class TouricoTool extends BaseTool {
 	}
 
 	public function insertHotels($arrayHotels){
-		$objTouricoDao = $this->objProcess->TouricoDao();
+		$objTouricoDao = new TouricoDao();
 		$arrayHotesData = array ();
 		if(!isset($arrayHotels['Hotel']) || empty($arrayHotels['Hotel'])) {
 			if(isset($arrayHotels['StatusCode'][0]['type'][0]) && $arrayHotels['StatusCode'][0]['type'][0] == 'Error') {
@@ -141,7 +143,8 @@ class TouricoTool extends BaseTool {
 	}
 
 	public function insertCountryFromTouricoDestination() {
-		$arrarTouricoDestination = $this->objProcess->TourismDao()->getTouricoDestination();
+		$objTourismDao = new TourismDao();
+		$arrarTouricoDestination = $objTourismDao->getTouricoDestination();
 		$field = '(c_id, c_continent_id, c_country_id, c_city_id, c_name, c_latitude, c_longitude, c_type)';
 		$sql = '';
 		foreach($arrarTouricoDestination as $k => $v) {
@@ -149,13 +152,13 @@ class TouricoTool extends BaseTool {
 					.addslashes($v['c_name'])."','".$v['c_latitude']."','".$v['c_longitude']."','".$v['c_type']."'),";
 			if(($k % 30) == 0) {
 			$sql = "INSERT INTO country" . $field ." VALUES " . $sql;
-				$this->objProcess->TourismDao()->insertCountry(trim($sql, ','));
+				$objTourismDao->insertCountry(trim($sql, ','));
 				$sql = '';
 			}
 		}
 		if(!empty($sql)) {
 			$sql = "INSERT INTO country" . $field ." VALUES " . $sql;
-			$this->objProcess->TourismDao()->insertCountry(trim($sql, ','));
+			$objTourismDao->insertCountry(trim($sql, ','));
 		}
 		echo "over.";
 	}

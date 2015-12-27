@@ -7,9 +7,9 @@
  * PHP versions 5
 
 **/
+namespace supplier;
 
-
-class BemyguestAction extends BaseAction {
+class BemyguestAction extends \BaseAction {
 	protected function check($objRequest, $objResponse) {
 		$this->setDisplay();
 	}
@@ -45,33 +45,32 @@ class BemyguestAction extends BaseAction {
 		//设置类别
 		$objResponse -> nav = 'index';
 		//设置Meta(共通)
-		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '我的网站', '我的网站', '我的网站'));
+		$objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '我的网站', '我的网站', '我的网站'));
 		$objResponse -> setTplName("www/base");
 	}
 
 	protected function getConfig($objRequest, $objResponse) {
-		//$objProcess = new Process($this->process_key . 'BemyguestService');
-		$objService = $this->objProcess->BemyguestService($this->objProcess);
-		print_r($objService->config());
+		$objBemyguestService = new BemyguestService();
+		print_r($objBemyguestService->config());
 	}
 	
 	protected function getAndInsertProducts($objRequest, $objResponse) {
 		$pn = $objRequest->pn;
 		$pn = empty($pn) ? 1 : $pn;
-		//$objProcess = new Process($this->process_key . 'BemyguestService');
-		$objService = $this->objProcess->BemyguestService($this->objProcess);
-		$result = $objService->allproducts();
+		$objBemyguestService = new BemyguestService();
+
+		$result = $objBemyguestService->allproducts();
 		$result = json_decode($result['result'], true);
 
 		$total_pages = $result['meta']['pagination']['total_pages'];
 		for($i = $pn; $i <= $total_pages; $i++ ) {
-			$result = $objService->allproducts($i);
+			$result = $objBemyguestService->allproducts($i);
 			$result = json_decode($result['result'], true);
 			foreach ($result['data'] as $k => $v) {
-				$product = $objService->product($v['uuid']);
+				$product = $objBemyguestService->product($v['uuid']);
 				$product = json_decode($product['result'], true);
 				//print_r($product);exit;
-				$objService->checkSaveProduct($product['data']);
+				$objBemyguestService->checkSaveProduct($product['data']);
 				$product = null;
 			}
 		}
@@ -79,16 +78,19 @@ class BemyguestAction extends BaseAction {
 	}
 	
     protected function insertToTourism($objRequest, $objResponse) {
-		$this->objProcess->BemyguestTool($this->objProcess)->parserTourProduct();
+		$ojbBemyguestTool = new BemyguestTool();
+		$ojbBemyguestTool->parserTourProduct();
 	}
 
 	protected function checkErrorProduct($objRequest, $objResponse) {
-		$this->objProcess->BemyguestTool($this->objProcess)->reSaveErrorProduct();
+		$ojbBemyguestTool = new BemyguestTool();
+		$ojbBemyguestTool->reSaveErrorProduct();
 	}
 
 	protected function getBemyguestSourceProduct($objRequest, $objResponse) {
 		$uuid = $objRequest->uuid;
-		$arrayResult = $this->objProcess->BemyguestService($this->objProcess)->product($uuid, NULL, -1);
+		$objBemyguestService = new BemyguestService();
+		$arrayResult = $objBemyguestService->product($uuid, NULL, -1);
 		if($arrayResult['httpcode'] == 200) {
 			print_r(json_decode($arrayResult['result'], true));
 		} else {

@@ -5,19 +5,15 @@
  * @author YEMASKY  yemasky@msn.com
  * Copyright 2015
  */
+namespace supplier;
+
 class TouricoService{
 	private $objWSClient;
-	private $objProcess = '';
 	private $objTouricoConfig = '';
 
-	public function __construct($objProcess = NULL){
-		if(is_array($objProcess)) {
-			$this->objProcess = $objProcess[0];
-		} elseif(is_object($objProcess)) {
-			$this->objProcess = $objProcess;
-		}
-		$this->objWSClient = new WebServiceClient();
-		$this->objTouricoConfig = $this->objProcess->TouricoConfig();
+	public function __construct(){
+		$this->objWSClient = new \WebServiceClient();
+		$this->objTouricoConfig = new TouricoConfig();
 	}
 	
 	// Methods included in the Destinations WS
@@ -55,7 +51,7 @@ class TouricoService{
 	}
 
 	public function GetHotelDetailsV3($arrayHotelIds) {
-		return BaseBookTouricoService::instance($this->objProcess)->GetHotelDetailsV3($arrayHotelIds);
+		return \BaseBookTouricoService::instance($this->objProcess)->GetHotelDetailsV3($arrayHotelIds);
 	}
 
 	//
