@@ -6,9 +6,10 @@
  * Date: 2015/12/6
  * Time: 16:56
  */
-class MerchantUserDao {
+namespace merchant;
+class MerchantUserDao extends \BaseDao {
 
 	public function getLoginUser($arrayLoginInfo){
-		return DBQuery::instance(DbConfig::merchant_dsn)->setTable('merchant_user')->getRow($arrayLoginInfo, 'mu_id, m_id, mu_nickname');
+		return \DBQuery::instance(\DbConfig::merchant_dsn)->setTable('merchant_user')->getRow($arrayLoginInfo, 'mu_id, m_id, mu_nickname');
 	}
 }

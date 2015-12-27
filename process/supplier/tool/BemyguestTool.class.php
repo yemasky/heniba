@@ -4,10 +4,13 @@
  * @author YEMASKY  yemasky@msn.com
  * Copyright 2015  
  */
+namespace supplier;
 
-class BemyguestTool extends BaseTool {
+class BemyguestTool extends \BaseTool {
 	public function parserTourProduct() {
-        $arrarTourProduct = $this->objProcess->BemyguestDao()->getSimpleBemyguestTour();
+        $objBemyguestDao = new BemyguestDao();
+        $objTourismDao = new TourismDao();
+        $arrarTourProduct = $objBemyguestDao->getSimpleBemyguestTour();
         foreach($arrarTourProduct as $k => $v) {
             //print_r($v);exit;
             $arrayPhoto = json_decode($v['photos'], true);
@@ -21,10 +24,10 @@ class BemyguestTool extends BaseTool {
             $arrayTagData =  array();
             if(!empty($categories)) {
 	            foreach($categories as $kc => $categorie) {
-	                $arrayTagData[$categorie['name']]['tt_id'] = $this->objProcess->TourismDao()->getTagIdByName($categorie['name']);
+	                $arrayTagData[$categorie['name']]['tt_id'] = $objTourismDao->getTagIdByName($categorie['name']);
 	                if(empty($arrayTagData[$categorie['name']]['tt_id'])) {
 	                    $sql = "INSERT INTO tourism_tag (tt_name) VALUES ('".addslashes($categorie['name'])."')";
-	                    $arrayTagData[$categorie['name']]['tt_id'] = $this->objProcess->TourismDao()->insertCountry($sql);
+	                    $arrayTagData[$categorie['name']]['tt_id'] = $objTourismDao->insertCountry($sql);
 	                }
 	                //*echo "tag over:".$arrayTagData[$categorie['name']]['tt_id']."\r\n<br>";
 	            }
@@ -34,17 +37,17 @@ class BemyguestTool extends BaseTool {
             //exit();
             $arrayData['t_images'] = json_encode($arrayData['t_images']);
             $tc_name = $v['typeName'];
-            $arrayData['tc_id'] = $this->objProcess->TourismDao()->getTCategoryIdByName($tc_name);
+            $arrayData['tc_id'] = $objTourismDao->getTCategoryIdByName($tc_name);
             if(empty($arrayData['tc_id'])) {
-                $arrayData['tc_id'] = $this->objProcess->TourismDao()->insertTCategory($tc_name);
+                $arrayData['tc_id'] = $objTourismDao->insertTCategory($tc_name);
             }
             //*echo "Category over:".$arrayData['tc_id']."\r\n<br>";
             //
             $arrayLocations = json_decode($v['locations'], true);
-            $destinationAliasConfig = DestinationAliasConfig::$destinationAliasConfig;
+            $destinationAliasConfig = \DestinationAliasConfig::$destinationAliasConfig;
             $arrayLocations[0]['country'] = isset($destinationAliasConfig[$arrayLocations[0]['country']]) ? $destinationAliasConfig[$arrayLocations[0]['country']] : $arrayLocations[0]['country'];
             $conditions = array('c_name'=>$arrayLocations[0]['country']);
-            $arrayResult = $this->objProcess->TourismDao()->getCountryIdByName($conditions);
+            $arrayResult = $objTourismDao->getCountryIdByName($conditions);
             $arrayData['c_country_id'] = $arrayResult['c_id'];
             $arrayData['c_continent_id'] = $arrayResult['c_continent_id'];
             //print_r($arrayData);
@@ -55,17 +58,17 @@ class BemyguestTool extends BaseTool {
             }
 
             $conditions = array('c_name'=>addslashes($arrayLocations[0]['state']), 'c_country_id'=>$arrayData['c_country_id']);
-            $arrayResult = $this->objProcess->TourismDao()->getCountryIdByName($conditions);
+            $arrayResult = $objTourismDao->getCountryIdByName($conditions);
             $arrayData['c_state_id'] = $arrayResult['c_id'];
             if(empty($arrayData['c_state_id'])) {
                 $sql = 'INSERT INTO country (c_name, c_country_id, c_continent_id, c_type) VALUES(\''.addslashes($arrayLocations[0]['state']).'\',\''
                       .$arrayData['c_country_id'].'\',\''.$arrayData['c_continent_id'].'\',\'State\')';
-                $arrayData['c_state_id'] = $this->objProcess->TourismDao()->insertCountry($sql);
+                $arrayData['c_state_id'] = $objTourismDao->insertCountry($sql);
                 //echo $sql;
             }
             //*echo "c_state_id over:".$arrayData['c_state_id']."\r\n<br>";
             $conditions = array('c_name'=>addslashes($arrayLocations[0]['city']), 'c_country_id'=>$arrayData['c_country_id'], 'c_state_id'=>$arrayData['c_state_id']);
-            $arrayResult = $this->objProcess->TourismDao()->getCountryIdByName($conditions);
+            $arrayResult = $objTourismDao->getCountryIdByName($conditions);
             //*echo $arrayLocations[0]['city'] . "<br>";
             //*print_r($arrayResult);
             //print_r($v);
@@ -74,10 +77,10 @@ class BemyguestTool extends BaseTool {
             if(empty($arrayData['c_city_id'])) {
                 $sql = 'INSERT INTO country (c_name, c_country_id, c_continent_id, c_state_id, c_type) VALUES(\''.addslashes($arrayLocations[0]['city']).'\','
                       .$arrayData['c_country_id'].','.$arrayData['c_continent_id'].','.$arrayData['c_state_id'].',\'City\')';
-                $arrayData['c_city_id'] = $this->objProcess->TourismDao()->insertCountry($sql);
+                $arrayData['c_city_id'] = $objTourismDao->insertCountry($sql);
             } elseif(empty($arrayResult['c_state_id'])) {
                 $sql = 'UPDATE country SET c_state_id=' .$arrayData['c_state_id'] . ' WHERE c_city_id = ' . $arrayData['c_city_id'];
-                $this->objProcess->TourismDao()->insertCountry($sql);
+                $objTourismDao->insertCountry($sql);
                 //*echo "UPDATE over:".$arrayData['c_state_id']."\r\n<br>";
             }
             //*echo "c_city_id over:".$arrayData['c_city_id']."\r\n<br>";
@@ -110,13 +113,13 @@ class BemyguestTool extends BaseTool {
             $arrayData['t_add_date'] = getDateTime();
             unset($arrayData['c_continent_id']);
             //print_r($arrayData);exit;
-            $t_id = $this->objProcess->TourismDao()->insertTourism($arrayData);
+            $t_id = $objTourismDao->insertTourism($arrayData);
             if(empty($t_id)) {
-                $t_id = $this->objProcess->TourismDao()->getTourismT_idByCode($v['uuid']);
+                $t_id = $objTourismDao->getTourismT_idByCode($v['uuid']);
             }
             if(!empty($arrayTagData)) {
 	            foreach($arrayTagData as $tagk => $tagv) {
-	                $this->objProcess->TourismDao()->insertTourismTagProduct(array('tt_id'=>$tagv['tt_id'], 't_id'=>$t_id));
+                    $objTourismDao->insertTourismTagProduct(array('tt_id'=>$tagv['tt_id'], 't_id'=>$t_id));
 	            }
             }
             //echo "over :" . $t_id .  "\r\n<br>";

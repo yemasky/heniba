@@ -6,9 +6,10 @@
  * Date: 2015/12/13
  * Time: 20:34
  */
-class SupplierAction extends BaseAction {
+namespace merchant;
+class SupplierAction extends \BaseAction {
     protected function check($objRequest, $objResponse) {
-        $objResponse->arrUserInfo = $this->objProcess->CommonService($this->objProcess)->checkLoginUser();
+        $objResponse->arrUserInfo = CommonService::checkLoginUser();
     }
 
     protected function service($objRequest, $objResponse) {
@@ -33,11 +34,12 @@ class SupplierAction extends BaseAction {
         $this->setDisplay();
         $t_id = $this->check_int($objRequest->id, 'id');
         $checkdate = $this->check_null($objRequest->checkdate, 'checkdate');
-        $conditions = DbConfig::$db_query_conditions;
+        $conditions = \DbConfig::$db_query_conditions;
         $conditions['condition']['t_id'] = $t_id;
-        $supplierCode = $this->objProcess->TourismService($this->objProcess)->getTourism($conditions, 't_supplier, t_supplier_code');
+        $objTourismService = new TourismService();
+        $supplierCode = $objTourismService->getTourism($conditions, 't_supplier, t_supplier_code');
         if(!empty($supplierCode)) {
-            BaseTourismTemplaceService::instance($this->objProcess)->tourismSourceProductTemplace($supplierCode[0], $checkdate);
+            \BaseTourismTemplaceService::instance()->tourismSourceProductTemplace($supplierCode[0], $checkdate);
         }
 
     }

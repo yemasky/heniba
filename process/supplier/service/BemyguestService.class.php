@@ -4,6 +4,7 @@
  * @author YEMASKY  yemasky@msn.com
  * Copyright 2015  
  */
+namespace supplier;
 class BemyguestService{
 	private $objWSClient;
 	private $arrayHeader = '';
@@ -12,14 +13,9 @@ class BemyguestService{
 	private $time_out = 1800;
 	private $objBemyguestConfig = "";
 
-	public function __construct($objProcess = NULL){
-		if(is_array($objProcess)) {
-			$this->objProcess = $objProcess[0];
-		} elseif(is_object($objProcess)) {
-			$this->objProcess = $objProcess;
-		}
-		$this->objWSClient = new WebServiceClient();
-		$this->objBemyguestConfig = $this->objProcess->BemyguestConfig($this->objProcess);
+	public function __construct(){
+		$this->objWSClient = new \WebServiceClient();
+		$this->objBemyguestConfig = new BemyguestConfig();
 
 		$this->arrayHeader = $this->objBemyguestConfig->arrayHeader;
 	}
@@ -54,7 +50,7 @@ class BemyguestService{
 
 	public function checkSaveProduct($arrData, $updateCondition = NULL){
 		if(!empty($arrData)) {
-			$objBemyguestDao = $this->objProcess->BemyguestDao();
+			$objBemyguestDao = new BemyguestDao();
 			if(isset($arrData['0'])) {
 				foreach($arrData as $k => $v) { // print_r($v);
 					foreach($v as $kk => $vv) {
@@ -131,9 +127,10 @@ class BemyguestService{
 	}
 
 	public function resolveProductTypesByUuid($uuid) {
-		$conditions = DbConfig::$db_query_conditions;
+		$conditions = \DbConfig::$db_query_conditions;
 		$conditions['condition']['uuid'] = $uuid;
-		$arrayResult = $this->objProcess->BemyguestDao()->getBemyguestTour($conditions, 'productTypes');
+		$objBemyguestDao = new BemyguestDao();
+		$arrayResult = $objBemyguestDao->getBemyguestTour($conditions, 'productTypes');
 		if(!empty($productTypes)) {
 			return $this->resolveProductTypes($arrayResult[0]['productTypes']);
 		}

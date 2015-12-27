@@ -6,12 +6,13 @@
  * Date: 2015/12/6
  * Time: 10:30
  */
-class CommonService extends BaseService
-{
+namespace merchant;
+
+class CommonService extends \BaseService {
 
     public static function getLoginUser($objCookie = NULL, $isSession = false) {
         if(!is_object($objCookie) && $isSession == false){
-            $objCookie = new Cookie;
+            $objCookie = new \Cookie;
         }
         $loginKey = 'loginuser' . date("z");
         if($isSession == false) {
@@ -21,7 +22,7 @@ class CommonService extends BaseService
                 $loginuser = $objCookie -> $loginKey;
             }
         } else {
-            $objSession = new Session();
+            $objSession = new \Session();
             $loginuser = $objSession -> $loginKey;
         }
 
@@ -38,7 +39,7 @@ class CommonService extends BaseService
 
     public static function checkLoginUser($objCookie = NULL, $isSession = false) {
         if(!is_object($objCookie) && $isSession == false){
-            $objCookie = new Cookie();
+            $objCookie = new \Cookie();
         }
         if($isSession == false) {
             $arrUserInfo = self::getLoginUser($objCookie);
@@ -49,9 +50,9 @@ class CommonService extends BaseService
         return $arrUserInfo;
     }
     
-    public function setLoginUserCookie($arrayLoginUserInfo, $remember_me = false) {
+    public static function setLoginUserCookie($arrayLoginUserInfo, $remember_me = false) {
     	$cookieUser = $arrayLoginUserInfo['mu_id'] . "\t" . $arrayLoginUserInfo['m_id'] . "\t" . $arrayLoginUserInfo['mu_login_email'] . "\t" . $arrayLoginUserInfo['mu_nickname'];
-    	$objCookie = new Cookie();
+    	$objCookie = new \Cookie();
     	$time = NULL;
     	$key = date("z");
     	if($remember_me) {
@@ -61,27 +62,29 @@ class CommonService extends BaseService
     	$objCookie->setCookie('loginuser' . $key, $cookieUser, $time);
     }
     
-    public function logout() {
-    	$objCookie = new Cookie();
+    public static function logout() {
+    	$objCookie = new \Cookie();
     	$loginKey = 'loginuser' . 2592000;//一个月
     	unset($objCookie->$loginKey);
     	$loginKey = 'loginuser' . date("z");
     	unset($objCookie->$loginKey);
     }
 
-    public function getMerchantUserAuthorize($mu_id) {
-        return $this->objProcess->ModulesAuthorizeDao()->DBCache(1800)->getMerchantUserAuthorize($mu_id);
+    public static function getMerchantUserAuthorize($mu_id) {
+        $objModulesAuthorizeDao = new ModulesAuthorizeDao();
+        return $objModulesAuthorizeDao->DBCache(1800)->getMerchantUserAuthorize($mu_id);
     }
 
-    public function getMerchantMenu($mu_id) {
+    public static function getMerchantMenu($mu_id) {
         $arrayUserModels = NULL;
-        $arrayAuthorize = $this->getMerchantUserAuthorize($mu_id);
+        $arrayAuthorize = self::getMerchantUserAuthorize($mu_id);
         if(!empty($arrayAuthorize)) {
             $arrayMc_id = array();
             foreach($arrayAuthorize as $k => $v) {
                 $arrayMc_id[] = $v['mc_id'];
             }
-            $arrayUserModels = $this->objProcess->ModulesAuthorizeDao()->DBCache(1800)->getMerchantUserModules($arrayMc_id);
+            $objModulesAuthorizeDao = new ModulesAuthorizeDao();
+            $arrayUserModels = $objModulesAuthorizeDao->DBCache(1800)->getMerchantUserModules($arrayMc_id);
         }
         return $arrayUserModels;
     }

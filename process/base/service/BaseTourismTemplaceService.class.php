@@ -9,16 +9,16 @@
 class BaseTourismTemplaceService extends BaseService {
     private static $objBaseTourismTemplaceService = null;
 
-    public static function instance($objProcess = NULL) {
+    public static function instance() {
         if(is_object(self::$objBaseTourismTemplaceService)) return self::$objBaseTourismTemplaceService;
-        self::$objBaseTourismTemplaceService = new BaseTourismTemplaceService($objProcess);
+        self::$objBaseTourismTemplaceService = new BaseTourismTemplaceService();
         return self::$objBaseTourismTemplaceService;
     }
 
     public function tourismTemplace($supplierCode, $objResponse) {
         switch($supplierCode['t_supplier']) {
             case 'bemyguest':
-                BaseBemyguestTool::instance($this->objProcess)->tourismTemplace($supplierCode, $objResponse);
+                BaseBemyguestTool::instance()->tourismTemplace($supplierCode, $objResponse);
                 break;
             default:
                 break;
@@ -28,7 +28,7 @@ class BaseTourismTemplaceService extends BaseService {
     public function tourismSourceProductTemplace($supplierCode, $checkdate) {
         switch($supplierCode['t_supplier']) {
             case 'bemyguest':
-                return BaseBemyguestTool::instance($this->objProcess)->tourismSourceProductDatePrice($supplierCode, $checkdate);
+                return BaseBemyguestTool::instance()->tourismSourceProductDatePrice($supplierCode, $checkdate);
                 break;
             default:
                 break;

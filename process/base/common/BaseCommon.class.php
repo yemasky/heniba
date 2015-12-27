@@ -3,7 +3,6 @@
 	auther: cooc 
 	email:yemasky@msn.com
 */
-
 class BaseCommon {
 	public function __construct() {
 	}

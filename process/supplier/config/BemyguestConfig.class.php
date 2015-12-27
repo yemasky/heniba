@@ -6,6 +6,7 @@
  * Date: 2015/12/12
  * Time: 1:06
  */
+namespace supplier;
 class BemyguestConfig {
 	public $config_url = "https://api.bemyguest.com.sg/v1/config";
 	public $allproduct_url = "https://api.bemyguest.com.sg/v1/products?language=en&currency=CNY&per_page=100&page=";

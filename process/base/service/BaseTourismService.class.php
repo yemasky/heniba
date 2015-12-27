@@ -9,24 +9,20 @@
 class BaseTourismService extends  BaseService{
     private static $objBaseTourismService = null;
 
-    public static function instance($objProcess = NULL) {
+    public static function instance() {
         if(is_object(self::$objBaseTourismService)) return self::$objBaseTourismService;
-        self::$objBaseTourismService = new BaseTourismService($objProcess);
+        self::$objBaseTourismService = new BaseTourismService();
         return self::$objBaseTourismService;
     }
 
     public function getSupplierTourism($supplierCode) {
-        if($this->objProcess->getProcessKey() == 'supplier') {
-            $objProcess = $this->objProcess;
-        } else {
-            $objProcess = new Process('supplier');
-        }
         $arraySupplierTourism = null;
         $conditions = DbConfig::$db_query_conditions;
         switch ($supplierCode['t_supplier']) {
             case 'bemyguest':
                 $conditions['condition']['uuid'] = $supplierCode['t_supplier_code'];
-                $arraySupplierTourism = $objProcess->BemyguestDao()->getBemyguestTour($conditions);
+                $objBemyguestDao = new \supplier\BemyguestDao();
+                $arraySupplierTourism = $objBemyguestDao->getBemyguestTour($conditions);
                 break;
             default:
                 break;

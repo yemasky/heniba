@@ -4,17 +4,18 @@
  * @author YEMASKY  yemasky@msn.com
  * Copyright 2015  
  */
+namespace supplier;
 
 class BemyguestDao {
 
 	public function insertProduct($arrData) {
-		return DBQuery::instance(DbConfig::supplier_dsn)->setTable('bemyguest_tour')->insert($arrData, 'INSERT IGNORE')->getInsertId();
+		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('bemyguest_tour')->insert($arrData, 'INSERT IGNORE')->getInsertId();
 	}
 	
 	public function getSimpleBemyguestTour() {
 		$field = 'typeName, locations, title, titleTranslated, description, descriptionTranslated, photosUrl, photos, latitude, '
 				.'longitude, currency, basePrice, reviewCount, reviewAverageScore, categories, uuid';
-		return DBQuery::instance(DbConfig::supplier_dsn)->setTable('bemyguest_tour')->getList(array('is_delete'=>'0'), $field);
+		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('bemyguest_tour')->getList(array('is_delete'=>'0'), $field);
 	}
 
 	public function getBemyguestTour($conditions, $fileid = NULL) {
@@ -25,11 +26,11 @@ class BemyguestDao {
 					. 'businessHoursFrom, businessHoursTo, meetingTime, meetingLocation, meetingLocationTranslated, photos, categories, productTypes, addons,'
 					. 'locations, update_date';
 		}
-		return DBQuery::instance(DbConfig::supplier_dsn)->setTable('bemyguest_tour')->setKey('id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['condition'], $fileid);
+		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('bemyguest_tour')->setKey('id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['condition'], $fileid);
 	}
 
 	public function updateBemyguestTour($conditions, $arrarRow) {
-		return DBQuery::instance(DbConfig::supplier_dsn)->setTable('bemyguest_tour')->update($conditions, $arrarRow);
+		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('bemyguest_tour')->update($conditions, $arrarRow);
 	}
 	
 }

@@ -11,20 +11,14 @@ class BaseBookTouricoService extends BaseService {
     private $objTouricoConfig = '';
     private $objWSClient;
 
-    public function __construct($objProcess){
-        parent::__construct($objProcess);
+    public function __construct(){
         $this->objWSClient = new WebServiceClient();
-        if($this->objProcess->getProcessKey() == 'supplier') {
-            $this->objTouricoConfig = $this->objProcess->TouricoConfig();
-        } else {
-            $objProcess = new Process('supplier');
-            $this->objTouricoConfig = $objProcess->TouricoConfig();
-        }
+            $this->objTouricoConfig = new \supplier\TouricoConfig();
     }
 
-    public static function instance($objProcess = NULL) {
+    public static function instance() {
         if(is_object(self::$objBaseBookTouricoService)) return self::$objBaseBookTouricoService;
-        self::$objBaseBookTouricoService = new BaseBookTouricoService($objProcess);
+        self::$objBaseBookTouricoService = new BaseBookTouricoService();
         return self::$objBaseBookTouricoService;
     }
 

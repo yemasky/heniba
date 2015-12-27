@@ -4,11 +4,10 @@
  * email:yemasky@msn.com
  */
 try {
-	require_once ("config.php");	
-
-	$model = 'IndexAction';
+	require_once ("config.php");
+	$model = '\merchant\IndexAction';
 	if(isset($_REQUEST['model']))
-		$model = ucwords($_REQUEST['model']) . 'Action';
+		$model = '\merchant\\' . ucwords($_REQUEST['model']) . 'Action';
 	$action = NULL;
 	if(isset($_REQUEST['action']))
 		$action = $_REQUEST['action'];
@@ -18,10 +17,8 @@ try {
 }
 
 try {
-	$process_key = 'merchant';
-	$objProcess = new Process($process_key);
-	$objAction = $objProcess->$model();
-	$objAction->execute($action, $process_key);//
+	$objAction = new $model();
+	$objAction->execute($action);//
 } catch(Exception $e) {
 	logError($e->getMessage(),__MODEL_EXCEPTION);
 	logError($e->getTraceAsString(),__MODEL_EMPTY);

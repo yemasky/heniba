@@ -1,4 +1,6 @@
 <?php
+namespace supplier;
+
 class TouricoConfig {
 	private $username = 'UBtour15';
 	private $password = 'UBT@th2015';

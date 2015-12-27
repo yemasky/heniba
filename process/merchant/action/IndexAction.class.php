@@ -4,12 +4,13 @@
  * @author YEMASKY  yemasky@msn.com
  * Copyright 2015  
  */
+namespace merchant;
 
-class IndexAction extends BaseAction {
+class IndexAction extends \BaseAction {
 	protected function check($objRequest, $objResponse) {
 		if($objRequest->getAction() != 'login') {
-			$objResponse->arrUserInfo = $this->objProcess->CommonService($this->objProcess)->checkLoginUser();
-			$objResponse->arrMerchantMenu = $this->objProcess->CommonService($this->objProcess)->getMerchantMenu($objResponse->arrUserInfo['mu_id']);
+			$objResponse->arrUserInfo = CommonService::checkLoginUser();
+			$objResponse->arrMerchantMenu = CommonService::getMerchantMenu($objResponse->arrUserInfo['mu_id']);
 		}
 	}
 	
@@ -42,13 +43,13 @@ class IndexAction extends BaseAction {
 		$objResponse -> nav = 'index';
 		$objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);
 		//设置Meta(共通)
-		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
+		$objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
 		$objResponse -> setTplName("merchant/base");
 	}
 
 	protected function admin_content($objRequest, $objResponse) {
 		//设置Meta(共通)
-		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
+		$objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
 		$objResponse -> setTplName("merchant/admin_content");
 	}
 
@@ -58,15 +59,16 @@ class IndexAction extends BaseAction {
 		$remember_me = $objRequest->remember_me;
 		$method = $objRequest->method;
 		if($method == 'logout') {
-			$this->objProcess->CommonService($this->objProcess)->logout();
+			CommonService::logout();
 			redirect(__WEB);
 		}
 		$error_login = 0;
 		if(!empty($arrayLoginInfo['mu_login_email']) && !empty($arrayLoginInfo['mu_login_password'])) {
-			$arrayUserInfo = $this->objProcess->MerchantUserService($this->objProcess)->getLoginUser($arrayLoginInfo);
+			$ojbMerchantUserService = new MerchantUserService();
+			$arrayUserInfo = $ojbMerchantUserService->getLoginUser($arrayLoginInfo);
 			if(!empty($arrayUserInfo)) {
 				$arrayUserInfo['mu_login_email'] = $arrayLoginInfo['mu_login_email'];
-				$this->objProcess->CommonService($this->objProcess)->setLoginUserCookie($arrayUserInfo, $remember_me);
+				CommonService::setLoginUserCookie($arrayUserInfo, $remember_me);
 				redirect(__WEB);
 			} else {
 				$error_login = 1;
@@ -74,7 +76,7 @@ class IndexAction extends BaseAction {
 		}
 		$objResponse -> setTplValue('error_login', $error_login);
 		//设置Meta(共通)
-		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
+		$objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
 		$objResponse -> setTplName("merchant/admin_login");
 	}
 

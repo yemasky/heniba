@@ -9,9 +9,9 @@
 class BaseTourismDao extends BaseDao{
     private static $objBaseTourismDao = null;
 
-    public static function instance($objProcess = NULL) {
+    public static function instance() {
         if(is_object(self::$objBaseTourismDao)) return self::$objBaseTourismDao;
-        self::$objBaseTourismDao = new BaseTourismDao($objProcess);
+        self::$objBaseTourismDao = new BaseTourismDao();
         return self::$objBaseTourismDao;
     }
 

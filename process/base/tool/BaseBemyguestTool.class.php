@@ -9,20 +9,20 @@
 class BaseBemyguestTool extends BaseTool {
     private static $objBaseBemyguestTool = null;
 
-    public static function instance($objProcess = NULL) {
+    public static function instance() {
         if(is_object(self::$objBaseBemyguestTool)) return self::$objBaseBemyguestTool;
-        self::$objBaseBemyguestTool = new BaseBemyguestTool($objProcess);
+        self::$objBaseBemyguestTool = new BaseBemyguestTool();
         return self::$objBaseBemyguestTool;
     }
 
     public function tourismTemplace($supplierCode, $objResponse) {
-        $tourism_product = BaseTourismService::instance($this->objProcess)->getSupplierTourism($supplierCode);
+        $tourism_product = BaseTourismService::instance()->getSupplierTourism($supplierCode);
         $arrayProductPrice = $arrayProductPrice = $productTypeNum = $tourismAttr = $arrayMaxPax = NULL;
         $arrayCurrency['code'] = '';
-        $supplier = ucfirst($supplierCode['t_supplier']) . 'Config';
+        $class_supplier = '\supplier\\' . ucfirst($supplierCode['t_supplier']) . 'Config';
         if(!empty($tourism_product)) {
-            $objProcess = new Process('supplier');
-            $field_config = $objProcess->$supplier()->tour_field;
+            $objSupplier = new $class_supplier;
+            $field_config = $objSupplier->tour_field;
             $i = 0;
             foreach ($tourism_product[0] as $k => $v) {
                 if(isset($field_config[$k]) && !empty($v)) {
@@ -81,8 +81,8 @@ class BaseBemyguestTool extends BaseTool {
     public function tourismSourceProductDatePrice($supplierCode, $checkdate) {
         $arrayDate['date_start'] = $checkdate;
         $arrayDate['date_end'] = $checkdate;
-        $objProcess = new Process('supplier');
-        $arrayResult = $objProcess->BemyguestService($objProcess)->product($supplierCode['t_supplier_code'], $arrayDate);
+        $objBemyguestService = new \supplier\BemyguestService;
+        $arrayResult = $objBemyguestService->product($supplierCode['t_supplier_code'], $arrayDate);
         if($arrayResult['httpcode'] != 200) {
             throw new Exception('get bemyguest product error: uuid ' . $supplierCode['t_supplier_code']);
         } else {

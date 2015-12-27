@@ -4,13 +4,14 @@
  * @author YEMASKY  yemasky@msn.com
  * Copyright 2015  
  */
+namespace merchant;
 
-class TourismService extends BaseService {
+class TourismService extends \BaseService {
 	public function getTourism($conditions, $fileid = NULL) {
-        return BaseTourismDao::instance()->DBCache(1800)->getTourism($conditions, $fileid);
+        return \BaseTourismDao::instance()->DBCache(1800)->getTourism($conditions, $fileid);
     }
 
     public function getTourismCount($conditions) {
-        return BaseTourismDao::instance()->DBCache(1800)->getTourismCount($conditions);
+        return \BaseTourismDao::instance()->DBCache(1800)->getTourismCount($conditions);
     }
 }

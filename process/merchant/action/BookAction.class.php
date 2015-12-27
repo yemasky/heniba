@@ -6,9 +6,10 @@
  * Date: 2015/12/10
  * Time: 17:04
  */
-class BookAction extends BaseAction {
+namespace merchant;
+class BookAction extends \BaseAction {
     protected function check($objRequest, $objResponse) {
-        $objResponse->arrUserInfo = $this->objProcess->CommonService($this->objProcess)->checkLoginUser();
+        $objResponse->arrUserInfo = CommonService::checkLoginUser();
     }
 
     protected function service($objRequest, $objResponse) {
@@ -39,7 +40,7 @@ class BookAction extends BaseAction {
         $id_card_no = null;
         try{
             $id_card_no = $this->check_numeric($objRequest->id_card_no, 'id_card_no');
-            $arrayResult['error'] = Utilities::checkIdentity($id_card_no) ? 0 : 1;
+            $arrayResult['error'] = \Utilities::checkIdentity($id_card_no) ? 0 : 1;
         } catch (Exception $e) {
             $arrayResult['error'] = 1;
         }

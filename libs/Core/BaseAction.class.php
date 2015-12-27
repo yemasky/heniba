@@ -221,8 +221,6 @@ abstract class BaseAction{
 	private $_create_html = false;
 	private $_html_name = '';
 	private $_html_dir = __HTML;
-	protected $process_key = NULL;
-	protected $objProcess = NULL;
 
 	/**
 	 * 检查入力参数,若是系统错误(严重错误,则抛出异常)
@@ -338,7 +336,7 @@ abstract class BaseAction{
 	/**
 	 * Controller层的调用入口函数,在scripts中调用
 	 */
-	public function execute($action = NULL, $process_key = NULL){
+	public function execute($action = NULL){
 		$startTime = getMicrotime();
 		try {
 			$error_handler = set_error_handler("ErrorHandler");
@@ -348,11 +346,7 @@ abstract class BaseAction{
 			if($action != NULL) {
 				$objRequest->setAction($action);
 			}
-			
-			if($process_key != NULL) {
-				$this->process_key = $process_key;
-				$this->objProcess = new Process($process_key);
-			}
+
 			// 入力检查
 			$this->check($objRequest, $objResponse);
 			$isCacheValid = false;
@@ -887,12 +881,12 @@ class Session{
 	}
 
 	public function __set($name, $value){
-		$_SESSION[md5(__WEB . $name)] = encode($value);
+		$_SESSION[md5(__WEB . $name)] = $value;
 	}
 
 	public function __get($name){
 		if(isset($_SESSION[md5(__WEB . $name)])) {
-			return decode($_SESSION[md5(__WEB . $name)]);
+			return $_SESSION[md5(__WEB . $name)];
 		}
 		return NULL;
 	}
@@ -976,86 +970,5 @@ class Cookie{
 			return $_COOKIE[$name];
 		}
 	}
-}
-class Process{
-	private static $objProcess;
-	protected $process_key;
-
-	public function __call($class, $arguments = array()){
-		$class = $this->process_key . $class;
-		$len = strlen($class) - 1;
-		for($loop = $len; $loop >= 0; $loop--) {
-			if($class[$loop] >= 'A' && $class[$loop] <= 'Z') {
-				break;
-			}
-		}
-		$execute_type = substr($class, $loop);
-		$execute_dir = 'base/';
-		$strpos = strpos($class, '/');
-		$execute_sub_dir = $lib_sub_dir = '';
-		if($strpos !== false) {
-			$execute_dir = $lib_sub_dir = substr($class, 0, $strpos + 1);
-			$class = substr($class, $strpos + 1);
-			$strrpos = strrpos($class, '/');
-			if($strrpos > 0) {
-				$execute_sub_dir = substr($class, 0, $strrpos + 1);
-				$class = substr($class, $strrpos + 1);
-			}
-		}
-		
-		switch($execute_type){
-			case "Action" :
-				$execute_dir = "process/" . $execute_dir . "action/";
-				break;
-			case "Dao" :
-				$execute_dir = "process/" . $execute_dir . "dao/";
-				break;
-			case "Common" :
-				$execute_dir = "process/" . $execute_dir . "common/";
-				break;
-			case "Service" :
-				$execute_dir = "process/" . $execute_dir . "service/";
-				break;
-			case "Util" :
-				$execute_dir = "process/" . $execute_dir . "utils/";
-				break;
-			case "Tool" :
-				$execute_dir = "process/" . $execute_dir . "tool/";
-				break;
-			case "Config" :
-				$execute_dir = "process/" . $execute_dir . "config/";
-				break;
-			default :
-				throw new Exception("unable to suppore type: $class");
-				break;
-		}
-		$classes_file = __ROOT_PATH . $execute_dir . $execute_sub_dir . $class . ".class.php";
-		
-		if(isset(self::$objProcess[$classes_file]) && is_object(self::$objProcess[$classes_file])) {
-			//return new self::$objProcess[$classes_file]($arguments);
-			return self::$objProcess[$classes_file];
-		}
-		if(file_exists($classes_file)) {
-			include ($classes_file);
-			$obj = new $class($arguments);
-			self::$objProcess[$classes_file] = $obj;
-			return $obj;
-		} else {
-			throw new Exception("process->unable to load class: $class ,file:" . $classes_file);
-		}
-	}
-
-	public function __construct($process_key){
-		$this->process_key = $process_key . '/';
-	}
-	
-	public function setProcessKey($process_key){
-		$this->process_key = $process_key . '/';
-	}
-
-	public function getProcessKey(){
-		return trim($this->process_key, '/');
-	}
-	
 }
 ?>
