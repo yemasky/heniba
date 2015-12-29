@@ -17,8 +17,8 @@ class BookAction extends \BaseAction {
             case 'ajax_check_identity':
                 $this->ajax_check_identity($objRequest, $objResponse);
                 break;
-            case 'ajax_check_booking':
-                $this->ajax_create_booking($objRequest, $objResponse);
+            case 'savebookinfo':
+                $this->create_booking($objRequest, $objResponse);
                 break;
             default:
                 $this->doBase($objRequest, $objResponse);
@@ -30,8 +30,7 @@ class BookAction extends \BaseAction {
      * 首页显示
      */
     protected function doBase($objRequest, $objResponse) {
-        $book_type = $this->check_null($objRequest->book_type);
-        $book_id = $this->check_int($objRequest->id);
+        $this->setDisplay();
     }
 
     public function ajax_check_identity($objRequest, $objResponse) {
@@ -48,6 +47,13 @@ class BookAction extends \BaseAction {
             $arrayResult['error_message'] = "身份证号码:".$id_card_no." 错误，请重新填写！";
         }
         echo json_encode($arrayResult);
+    }
+
+    public function create_booking($objRequest, $objResponse) {
+        $this->setDisplay();
+print_r($_REQUEST);
+        $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
+        $objResponse -> setTplName("merchant/book/");
     }
 
 }

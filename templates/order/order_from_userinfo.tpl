@@ -5,15 +5,14 @@
             <span data-am-modal-close class="am-close">&times;</span>
         </div>
         <div class="am-popup-bd">
-            <div>
+            <div id="id_card_no_div">
                 <span class="am-input-group-labe">身份证</span>
                 <div class="am-form-group am-form-icon">
                     <i class="am-icon-newspaper-o"></i>
-                    <input name="id_card_no" id="id_card_no" type="text" placeholder="身份证，必填" class="am-form-field" minlength="10" maxlength="18" required/>
+                    <input name="id_card_no" id="id_card_no" type="text" placeholder="身份证，必填，18位" class="am-form-field" minlength="10" maxlength="18" required pattern="(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)"/>
                 </div>
-                <div class="am-center am-padding"><button class="am-btn am-btn-primary am-center" type="submit">下一步 <i class="am-icon-check-circle"></i></button></div>
             </div>
-            <div class="am-hide">
+            <div id="orther_info_div">
                 <span class="am-input-group-labe">请选择称呼</span>
                 <div class="am-form-group am-form-select">
                     <select name="salutation" class="am-input-sm" required>
@@ -45,12 +44,20 @@
     </div>
 </div>
 <script language="JavaScript">
+    function check_id_card_no() {
+        var id_card_no_val =  $('#id_card_no').val();
+        if(id_card_no_val != '') {
+            $.getJSON('index.php?model=book&action=ajax_check_identity', {id_card_no:$('#id_card_no').val()}, function(result){
+                if(result.error == 1) {
+                    alert(result.error_message);
+                } else {
+
+                }
+            });
+        }
+    }
     $('#id_card_no').blur(function(){
-        $.getJSON('index.php?model=book&action=ajax_check_identity', {id_card_no:$('#id_card_no').val()}, function(result){
-            if(result.error == 1) {
-                alert(result.error_message);
-            }
-        });
+        check_id_card_no();
     });
     $('#form-book').submit(function(){
     });
