@@ -34,6 +34,7 @@ class Encrypt {
 	public $_mcrypt_exists = FALSE;
 	public $_mcrypt_cipher;
 	public $_mcrypt_mode;
+	public static $objEncrypt = null;
 
 	/**
 	 * Constructor
@@ -46,6 +47,13 @@ class Encrypt {
 		$this->_mcrypt_exists = ( ! function_exists('mcrypt_encrypt')) ? FALSE : TRUE;
 	}
 
+	public static function instance(){
+		if(is_object(self::$objEncrypt)) {
+			return self::$objEncrypt;
+		}
+		self::$objEncrypt = new Encrypt();
+		return self::$objEncrypt;
+	}
 	// --------------------------------------------------------------------
 
 	/**

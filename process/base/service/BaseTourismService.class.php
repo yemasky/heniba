@@ -29,4 +29,6 @@ class BaseTourismService extends  BaseService{
         }
         return $arraySupplierTourism;
     }
+
+
 }

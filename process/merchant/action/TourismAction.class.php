@@ -66,6 +66,7 @@ class TourismAction extends \BaseAction {
         $relation_tourism = $objTourismService->getTourism($conditions, 't_id, t_title, t_title_cn, t_images');
         $objResponse -> setTplValue('tourism_supplier_tpl', 'tour_' . $supplierCode[0]['t_supplier']);
         $objResponse -> setTplValue('t_id', $t_id);
+        $objResponse -> setTplValue('supplierCode', \Encrypt::instance()->encode($t_id));
         $objResponse -> setTplValue('today', substr(getDateTime(), 0, 10));
         $objResponse -> setTplValue('relation_tourism', $relation_tourism);
         $objResponse -> setTplName("merchant/tourism_product");

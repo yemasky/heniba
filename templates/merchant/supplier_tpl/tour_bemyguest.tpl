@@ -125,7 +125,8 @@
             </div>
           </div>
         <%include file="order/order_from_userinfo.tpl"%>
-        </form>
+        <input type="hidden" name="supplierCode" value="<%$supplierCode%>">
+      </form>
     </div>
     <article class="blog-main">
         <div class="am-panel am-panel-default">

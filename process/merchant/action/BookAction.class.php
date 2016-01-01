@@ -53,7 +53,7 @@ class BookAction extends \BaseAction {
         $this->setDisplay();
 print_r($_REQUEST);
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
-        $objResponse -> setTplName("merchant/book/");
+        $objResponse -> setTplName("merchant/book/create_book");
     }
 
 }

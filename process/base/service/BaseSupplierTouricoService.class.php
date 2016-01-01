@@ -6,7 +6,7 @@
  * Date: 2015/12/10
  * Time: 17:35
  */
-class BaseBookTouricoService extends BaseService {
+class BaseSupplierTouricoService extends BaseService {
     private static $objBaseBookTouricoService = null;
     private $objTouricoConfig = '';
     private $objWSClient;

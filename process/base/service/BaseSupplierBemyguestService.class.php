@@ -6,7 +6,7 @@
  * Date: 2015/12/10
  * Time: 17:20
  */
-class BaseBookBemyguestService extends BaseService {
+class BaseSupplierBemyguestService extends BaseService {
     /*
      * 创建预订 创建一个新的预订.
      * 新创建的预订状态为 reserved。这意味着它尚未支付也未经合伙人确认但它已创建，并保留在BeMyGuest数据库.
