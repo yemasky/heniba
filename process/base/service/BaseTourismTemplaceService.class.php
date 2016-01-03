@@ -9,7 +9,7 @@
 class BaseTourismTemplaceService extends BaseService {
     private static $objBaseTourismTemplaceService = null;
 
-    public static function instance() {
+    public static function instance($objClass = '') {
         if(is_object(self::$objBaseTourismTemplaceService)) return self::$objBaseTourismTemplaceService;
         self::$objBaseTourismTemplaceService = new BaseTourismTemplaceService();
         return self::$objBaseTourismTemplaceService;
@@ -23,6 +23,21 @@ class BaseTourismTemplaceService extends BaseService {
             default:
                 break;
         }
+    }
+
+    public function getSupplierTourism($supplierCode) {
+        $arraySupplierTourism = null;
+        $conditions = DbConfig::$db_query_conditions;
+        switch ($supplierCode['t_supplier']) {
+            case 'bemyguest':
+                $conditions['condition']['uuid'] = $supplierCode['t_supplier_code'];
+                $objBemyguestDao = new \supplier\BemyguestDao();
+                $arraySupplierTourism = $objBemyguestDao->getBemyguestTour($conditions);
+                break;
+            default:
+                break;
+        }
+        return $arraySupplierTourism;
     }
 
     public function tourismSourceProductTemplace($supplierCode, $checkdate) {

@@ -50,8 +50,23 @@ class BookAction extends \BaseAction {
     }
 
     public function create_booking($objRequest, $objResponse) {
-        $this->setDisplay();
-print_r($_REQUEST);
+        $supplierCode = $this->check_int(\Encrypt::instance()->decode($objRequest->supplierCode));
+        //$this->check_numeric($objRequest->id_card_no);
+        if(empty($supplierCode)) {
+            throw new \Exception('supplierCode is null');
+        }
+        $tour_type = $objRequest->tour_type;
+        switch($tour_type) {
+            case 'tourism':
+                \BaseBookTourismService::instance('\BaseBookTourismService')->create_book($objRequest, $objResponse);
+                break;
+            case 'hotel':
+                break;
+            case 'hotel':
+                break;
+            default:
+                break;
+        }
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/book/create_book");
     }

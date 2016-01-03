@@ -16,7 +16,7 @@ class BaseSupplierTouricoService extends BaseService {
             $this->objTouricoConfig = new \supplier\TouricoConfig();
     }
 
-    public static function instance() {
+    public static function instance($objClass = '') {
         if(is_object(self::$objBaseBookTouricoService)) return self::$objBaseBookTouricoService;
         self::$objBaseBookTouricoService = new BaseBookTouricoService();
         return self::$objBaseBookTouricoService;

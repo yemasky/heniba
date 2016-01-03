@@ -7,5 +7,12 @@
  * Time: 10:58
  */
 abstract class BaseService{
-
+    public static $objBaseService = null;
+    public static function instance($objClass = ''){
+        if(isset(self::$objBaseService[$objClass]) && is_object(self::$objBaseService[$objClass])) {
+            return self::$objBaseService[$objClass];
+        }
+        self::$objBaseService[$objClass] = new $objClass();
+        return self::$objBaseService[$objClass];
+    }
 }

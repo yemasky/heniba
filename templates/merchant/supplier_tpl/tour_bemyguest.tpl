@@ -63,7 +63,7 @@
       </div>
 	<div class="am-panel am-panel-default">
         <div class="am-panel-hd">游玩类型：</div>
-      <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=book&action=savebookinfo" method="post">
+      <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=book&action=savebookinfo&tour_type=tourism" method="post">
         <div class="am-panel-bd am-padding-bottom-0 am-margin-0">
           <div class="am-form-group am-padding-0 am-margin-0">
             <label class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="arrivalDate"></label>
