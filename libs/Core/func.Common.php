@@ -24,8 +24,8 @@ if(!defined("INC_FUNC_COMMON")) {
 		}
 		$_REQUEST = $arrParameter;
 	}
-	function __autoload($class){
-	//function process_autoload($class){
+	//function __autoload($class){
+	function process_autoload($class){
 		$len = strlen($class) - 1;
 		for($loop = $len; $loop >= 0; $loop--) {
 			if($class[$loop] >= 'A' && $class[$loop] <= 'Z') {
@@ -76,7 +76,7 @@ if(!defined("INC_FUNC_COMMON")) {
 			// }
 		}
 	}
-	//spl_autoload_register("process_autoload");
+	spl_autoload_register("process_autoload");
 
 	function getDateTime($d = 0){
 		return date("Y-m-d H:i:s", strtotime("$d HOUR")); // GMT+8
