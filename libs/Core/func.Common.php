@@ -37,7 +37,7 @@ if(!defined("INC_FUNC_COMMON")) {
 		$pos = strpos($class, '\\');
 		if($pos != false) {
 			$execute_dir = substr($class, 0, $pos) . '/';
-			$class =  substr($class, $pos);
+			$class = '/' . substr($class, $pos + 1);
 		}
 
 		switch($execute_type){
