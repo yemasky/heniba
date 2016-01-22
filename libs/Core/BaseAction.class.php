@@ -221,6 +221,7 @@ abstract class BaseAction{
 	private $_create_html = false;
 	private $_html_name = '';
 	private $_html_dir = __HTML;
+	private $redirect_url = array();
 
 	/**
 	 * 检查入力参数,若是系统错误(严重错误,则抛出异常)
@@ -333,6 +334,13 @@ abstract class BaseAction{
 		return $numeric;
 	}
 
+	protected function redirect($url, $status = '302', $time = 0) {
+		$this->setDisplay();
+		$this->redirect_url['url'] = $url;
+		$this->redirect_url['status'] = $status;
+		$this->redirect_url['time'] = $time;
+	}
+
 	/**
 	 * Controller层的调用入口函数,在scripts中调用
 	 */
@@ -411,6 +419,9 @@ abstract class BaseAction{
 			$endTime = getMicrotime();
 			$useTime = $endTime - $startTime;
 			logDebug("excute time $useTime s");
+		}
+		if(!empty($this->redirect_url)) {
+			redirect($this->redirect_url['url'], $this->redirect_url['status'], $this->redirect_url['time']);
 		}
 	}
 

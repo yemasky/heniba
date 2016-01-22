@@ -20,6 +20,9 @@ class BookAction extends \BaseAction {
             case 'savebookinfo':
                 $this->create_booking($objRequest, $objResponse);
                 break;
+            case 'success':
+                $this->book_save_success($objRequest, $objResponse);
+                break;
             default:
                 $this->doBase($objRequest, $objResponse);
                 break;
@@ -67,6 +70,11 @@ class BookAction extends \BaseAction {
             default:
                 break;
         }
+        $this->redirect('index.php?model=book&action=success&supplierCode=' . $objRequest->supplierCode);
+
+    }
+
+    public function book_save_success($objRequest, $objResponse) {
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/book/create_book");
     }
