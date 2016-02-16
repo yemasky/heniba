@@ -6,13 +6,13 @@
  * Date: 2015/12/13
  * Time: 20:46
  */
-class BaseTourismTemplaceService extends BaseService {
-    private static $objBaseTourismTemplaceService = null;
+class BaseTourismService extends BaseService {
+    private static $objBaseTourismService = null;
 
     public static function instance($objClass = '') {
-        if(is_object(self::$objBaseTourismTemplaceService)) return self::$objBaseTourismTemplaceService;
-        self::$objBaseTourismTemplaceService = new BaseTourismTemplaceService();
-        return self::$objBaseTourismTemplaceService;
+        if(is_object(self::$objBaseTourismService)) return self::$objBaseTourismService;
+        self::$objBaseTourismService = new BaseTourismService();
+        return self::$objBaseTourismService;
     }
 
     public function tourismTemplace($supplierCode, $objResponse) {
