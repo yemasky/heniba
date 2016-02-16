@@ -57,7 +57,7 @@ class TourismAction extends \BaseAction {
         $objTourismService = new TourismService();
         $supplierCode = $objTourismService->getTourism($conditions, 't_supplier, t_supplier_code');
         if(!empty($supplierCode)) {
-            \BaseTourismTemplaceService::instance()->tourismTemplace($supplierCode[0], $objResponse);
+            \BaseTourismService::instance()->tourismTemplace($supplierCode[0], $objResponse);
         }
 
         $conditions = \DbConfig::$db_query_conditions;

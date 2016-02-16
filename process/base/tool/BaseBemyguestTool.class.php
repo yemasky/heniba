@@ -16,7 +16,7 @@ class BaseBemyguestTool extends BaseTool {
     }
 
     public function tourismTemplace($supplierCode, $objResponse) {
-        $tourism_product = BaseTourismTemplaceService::instance()->getSupplierTourism($supplierCode);
+        $tourism_product = BaseTourismService::instance()->getSupplierTourism($supplierCode);
         $arrayProductPrice = $arrayProductPrice = $productTypeNum = $tourismAttr = $arrayMaxPax = NULL;
         $arrayCurrency['code'] = '';
         $class_supplier = '\supplier\\' . ucfirst($supplierCode['t_supplier']) . 'Config';
