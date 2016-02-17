@@ -14,7 +14,7 @@ class BaseBookTourismService extends BaseService {
             $arrayUser[0]['u_email'] = $objRequest->email;
             $arrayUser[0]['u_mobile'] = $objRequest->mobile;
         }
-
+        return $arrayUser;
     }
 
 }

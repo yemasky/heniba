@@ -14,7 +14,7 @@ class BaseBookUserDao {
      * return u_id
      */
     public static function createUser($arrayUserData) {
-        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('user')->insert($arrayUserData)->getInsertId();
+        return DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('user')->insert($arrayUserData)->getInsertId();
     }
 
 }

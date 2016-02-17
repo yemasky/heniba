@@ -27,7 +27,7 @@ class SupplierAction extends \BaseAction {
      * 首页显示
      */
     protected function doBase($objRequest, $objResponse) {
-
+        $this->setDisplay();
     }
 
     protected function getTourism($objRequest, $objResponse) {
