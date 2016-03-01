@@ -73,7 +73,7 @@ class Utilities {
 
 	public static function getOrderNumber($id, $length = 12) {
 		$id_lenght = strlen($id);
-		
+
 	}
 }
 ?>

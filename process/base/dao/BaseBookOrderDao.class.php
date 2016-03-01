@@ -14,7 +14,10 @@ class BaseBookOrderDao {
         $arrayOrderData['o_price_market'] =  $o_price_market;
         $arrayOrderData['o_price_sell'] =  $o_price_sell;
         $o_id = DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('order')->insert($arrayOrderData)->getInsertId();
-        $o_order_number = '';
+        $o_order_number = $o_id.'0';
+        for($i = strlen($o_order_number) + 1; $i<=12; $i++) {
+            $o_order_number = rand(1, 9) . '' . $o_order_number;
+        }
         DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('order')->update(array('o_id'=>$o_id), array('o_order_number'=>$o_order_number));
         return $o_id;
     }

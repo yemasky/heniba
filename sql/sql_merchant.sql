@@ -30,6 +30,9 @@ CREATE TABLE `merchant` (
   `m_city_id` mediumint(8) DEFAULT NULL,
   `m_county_id` mediumint(8) DEFAULT NULL,
   `m_address` varchar(255) DEFAULT NULL COMMENT '商户地址',
+  `m_rate_tourism` float NOT NULL DEFAULT '1' COMMENT '商户基本利率 旅游产品',
+  `m_rate_hotel` float NOT NULL DEFAULT '1' COMMENT '商户基本利率 酒店',
+  `m_rate_air ticket` float NOT NULL DEFAULT '1' COMMENT '商户基本利率 机票',
   `m_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `m_add_date` datetime NOT NULL,
   PRIMARY KEY (`m_id`)

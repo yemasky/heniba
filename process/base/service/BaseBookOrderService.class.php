@@ -8,7 +8,7 @@
  */
 class BaseBookOrderService extends BaseService {
 
-    public function createOrder() {
+    public function createOrder($objRequest, $arrayUser) {
 
         return BaseBookOrderDao::createOrder();
     }

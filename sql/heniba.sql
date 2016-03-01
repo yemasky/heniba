@@ -238,7 +238,7 @@ CREATE TABLE `order_info` (
   `oi_price_sell` float DEFAULT NULL COMMENT '售卖价格，用户实际支付价格',
   `oi_price_real` float DEFAULT NULL COMMENT '真实价格,供货商价格',
   `oi_pay` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 未支付 1已支付',
-  `oi_type` enum('tourism','hotel','ticket') DEFAULT NULL COMMENT '旅游 机票 酒店',
+  `oi_type` enum('tourism','hotel','air_ticket') DEFAULT NULL COMMENT '旅游 机票 酒店',
   `oi_product_id` bigint(19) DEFAULT NULL COMMENT '提供的商品ID',
   `oi_add_date` datetime DEFAULT NULL COMMENT '订单产生时间',
   `oi_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '订单修改时间',
