@@ -14,6 +14,9 @@ class BaseBookTourismService extends BaseService {
             $arrayUser[0]['u_email'] = $objRequest->email;
             $arrayUser[0]['u_mobile'] = $objRequest->mobile;
         }
+        if(!empty($arrayUser)) {
+            BaseBookOrderService::instance('BaseBookOrderService')->createOrder();
+        }
         return $arrayUser;
     }
 

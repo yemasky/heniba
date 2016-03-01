@@ -212,18 +212,53 @@ DROP TABLE IF EXISTS `order`;
 
 CREATE TABLE `order` (
   `o_id` bigint(19) NOT NULL AUTO_INCREMENT,
-  `u_id` bigint(19) DEFAULT NULL,
-  `m_id` int(11) DEFAULT NULL COMMENT '下单的企业',
-  `mu_id` int(11) DEFAULT NULL COMMENT '下单的企业的用户',
+  `u_id` bigint(19) NOT NULL COMMENT '订单用户ID',
+  `m_id` int(11) NOT NULL DEFAULT '0' COMMENT '下单的企业',
+  `mu_id` int(11) NOT NULL DEFAULT '0' COMMENT '下单的企业的用户',
   `o_order_number` bigint(19) DEFAULT NULL COMMENT '订单号',
   `o_price_market` float DEFAULT NULL COMMENT '网站上售卖的价格',
   `o_price_sell` float DEFAULT NULL COMMENT '售卖价格，用户实际支付价格',
-  `o_price_real` float DEFAULT NULL COMMENT '真实价格,供货商价格',
   `o_pay` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 未支付 1已支付',
   `o_add_date` datetime DEFAULT NULL COMMENT '订单产生时间',
   `o_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '订单修改时间',
   PRIMARY KEY (`o_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Table structure for table `order_info` */
+
+DROP TABLE IF EXISTS `order_info`;
+
+CREATE TABLE `order_info` (
+  `oi_id` bigint(19) NOT NULL AUTO_INCREMENT,
+  `o_id` bigint(19) DEFAULT NULL COMMENT '订单号',
+  `u_id` bigint(19) DEFAULT NULL,
+  `m_id` int(11) DEFAULT NULL COMMENT '下单的企业',
+  `mu_id` int(11) DEFAULT NULL COMMENT '下单的企业的用户',
+  `oi_price_market` float DEFAULT NULL COMMENT '网站上售卖的价格',
+  `oi_price_sell` float DEFAULT NULL COMMENT '售卖价格，用户实际支付价格',
+  `oi_price_real` float DEFAULT NULL COMMENT '真实价格,供货商价格',
+  `oi_pay` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 未支付 1已支付',
+  `oi_type` enum('tourism','hotel','ticket') DEFAULT NULL COMMENT '旅游 机票 酒店',
+  `oi_product_id` bigint(19) DEFAULT NULL COMMENT '提供的商品ID',
+  `oi_add_date` datetime DEFAULT NULL COMMENT '订单产生时间',
+  `oi_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '订单修改时间',
+  `oi_status` enum('确认中','已确认','已完成','已退款','申请退款') DEFAULT NULL COMMENT '订单状态',
+  PRIMARY KEY (`oi_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Table structure for table `order_info_log` */
+
+DROP TABLE IF EXISTS `order_info_log`;
+
+CREATE TABLE `order_info_log` (
+  `oil_id` bigint(19) NOT NULL AUTO_INCREMENT,
+  `oi_id` bigint(19) DEFAULT NULL COMMENT '订单详细编号',
+  `o_id` bigint(19) DEFAULT NULL COMMENT '订单编号',
+  `title` varchar(200) DEFAULT NULL,
+  `centents` text,
+  `add_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`oil_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `order_user_info` */
 
@@ -231,6 +266,7 @@ DROP TABLE IF EXISTS `order_user_info`;
 
 CREATE TABLE `order_user_info` (
   `oui_id` bigint(19) NOT NULL AUTO_INCREMENT,
+  `o_id` bigint(19) DEFAULT NULL COMMENT '订单自增ID',
   `u_id` bigint(19) NOT NULL,
   `oui_moblie` int(11) DEFAULT NULL,
   `oui_email` varchar(50) DEFAULT NULL,

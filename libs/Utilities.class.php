@@ -70,5 +70,10 @@ class Utilities {
 		$mode=$sum%11;
 		return $validate[$mode] == $arrayIdentity[17];
 	}
+
+	public static function getOrderNumber($id, $length = 12) {
+		$id_lenght = strlen($id);
+		
+	}
 }
 ?>
