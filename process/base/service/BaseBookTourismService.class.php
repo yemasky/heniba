@@ -29,26 +29,23 @@ class BaseBookTourismService extends BaseService {
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['condition'] = array('m_id'=>$arrLoginUser['m_id']);
         $arrMerchant = \merchant\MerchantService::instance('TourismService')->getMerchant($conditions);
-        $tour_type = $objRequest->tour_type;
+
+        //获取用户递交信息
         switch($arrayTourism[0]['t_supplier']) {
-            case 'tourism':
-                break;
-            case 'hotel':
-                break;
-            case 'hotel':
+            case 'bemyguest':
+                $arrayUserBookInfo['arrivalDate'] = $objRequest->arrivalDate;
+                $arrayUserBookInfo['options'] = $objRequest->options;
+                $arrayUserBookInfo['pax'] = $objRequest->pax;
+                $arrayUserBookInfo['salutation'] = $objRequest->salutation;
+                $arrayUserBookInfo['lastName_firstName'] = $objRequest->lastName_firstName;
+                $arrayUserBookInfo['email'] = $objRequest->email;
+                $arrayUserBookInfo['mobile'] = $objRequest->mobile;
+                $arrayUserBookInfo['message'] = $objRequest->message;
                 break;
             default:
                 break;
         }
-        //获取用户递交信息
-        $arrayUserBookInfo['arrivalDate'] = $objRequest->arrivalDate;
-        $arrayUserBookInfo['options'] = $objRequest->options;
-        $arrayUserBookInfo['pax'] = $objRequest->pax;
-        $arrayUserBookInfo['salutation'] = $objRequest->salutation;
-        $arrayUserBookInfo['lastName_firstName'] = $objRequest->lastName_firstName;
-        $arrayUserBookInfo['email'] = $objRequest->email;
-        $arrayUserBookInfo['mobile'] = $objRequest->mobile;
-        $arrayUserBookInfo['message'] = $objRequest->message;
+
 
         if(!empty($arrayUser)) {
             BaseBookOrderService::instance('BaseBookOrderService')->createOrder($objRequest, $arrayUser);

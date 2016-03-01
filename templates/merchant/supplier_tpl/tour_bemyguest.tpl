@@ -84,7 +84,7 @@
                 <div class="am-u-sm-8 am-padding-left-0 am-padding-right-sm">
                   <div class="am-form-group am-padding-0 am-margin-0 am-btn-group">
                     <div data-am-button class="am-btn-group">
-                      <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o"><input type="radio" id="option<%$smarty.section.i.index%>" value="选项 <%$smarty.section.i.index%>" name="options">套餐<%$smarty.section.i.index+1%></label>
+                      <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o"><input type="radio" id="option<%$smarty.section.i.index%>" value="<%$smarty.section.i.index%>" name="options">套餐<%$smarty.section.i.index+1%></label>
                     </div>
                     <div class="am-input-group am-input-group-sm am-form-select am-u-sm-4 am-padding-0">
                       <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i> 人数</span>
