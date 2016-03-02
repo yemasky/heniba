@@ -48,5 +48,6 @@ class BaseTourismService extends BaseService {
             default:
                 break;
         }
+        return null;
     }
 }

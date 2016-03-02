@@ -79,7 +79,7 @@ class BaseBemyguestTool extends BaseTool {
     }
 
     public function tourismSourceProductDatePrice($supplierCode, $checkdate) {
-        $arrayDate['date_start'] = $checkdate;
+        $arrayDate['date_start'] = $checkdate;//date("Y-m-d");//
         $arrayDate['date_end'] = $checkdate;
         $objBemyguestService = new \supplier\BemyguestService;
         $arrayResult = $objBemyguestService->product($supplierCode['t_supplier_code'], $arrayDate);
