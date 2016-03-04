@@ -89,4 +89,33 @@ class CommonService extends \BaseService {
         return $arrayUserModels;
     }
 
+    public static function getMerchantRate($m_id) {
+        $conditions = \DbConfig::$db_query_conditions;
+        $conditions['condition']['m_id'] = $m_id;
+        $fileid = 'm_rate_tourism, m_rate_hotel, m_rate_air_ticket, m_rate_tourism_sell, m_rate_hotel_sell, m_rate_air_ticket_sell';
+        $objMerchantDao = new MerchantDao();
+        $arrarMerchantRate = $objMerchantDao->DBCache(0)->getMerchant($conditions, $fileid);
+        return $arrarMerchantRate[0];
+    }
+
+    public static function getMerchantRatePrice($m_id, $price_source, $type) {
+        $arrarMerchantRate = self::getMerchantRate($m_id);
+        switch ($type) {
+            case 'tourism':
+                $price['source'] = $price_source . $arrarMerchantRate['m_rate_tourism'];
+                $price['sell'] = $price_source . $arrarMerchantRate['m_rate_tourism_sell'];
+                break;
+            case 'hotel':
+                $price['source'] = $price_source . $arrarMerchantRate['m_rate_hotel'];
+                $price['sell'] = $price_source . $arrarMerchantRate['m_rate_hotel_sell'];
+                break;
+            case 'air_ticket':
+                $price['source'] = $price_source . $arrarMerchantRate['m_rate_air_ticket'];
+                $price['sell'] = $price_source . $arrarMerchantRate['m_rate_air_ticket_sell'];
+                break;
+        }
+        return $price;
+    }
+
+
 }

@@ -37,10 +37,15 @@ class TourismAction extends \BaseAction {
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
         $objTourismService = new TourismService();
-        $objResponse -> setTplValue('tourism', $objTourismService->getTourism($conditions));
         $tourismCount = $objTourismService->getTourismCount($conditions['condition']);
+        $arrayTourism = $objTourismService->getTourism($conditions);
+        for($i = 0; $i < $tourismCount; $i++) {
+            $arrayRatePrice = CommonService::getMerchantRatePrice();
+            $arrayTourism[$i][''] =
+        }
         //
         $objResponse -> nav = 'index';
+        $objResponse -> setTplValue('tourism', $arrayTourism);
         $objResponse -> setTplValue('page', page($pn, ceil($tourismCount/$list_count)));
         $objResponse -> setTplValue('pn', $pn);
         $objResponse -> setTplValue('show_pages', 10);
