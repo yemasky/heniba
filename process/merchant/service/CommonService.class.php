@@ -9,6 +9,7 @@
 namespace merchant;
 
 class CommonService extends \BaseService {
+    private static $arrayMerchantRate = null;
 
     public static function getLoginUser($objCookie = NULL, $isSession = false) {
         if(!is_object($objCookie) && $isSession == false){
@@ -90,28 +91,30 @@ class CommonService extends \BaseService {
     }
 
     public static function getMerchantRate($m_id) {
+        if(!empty(self::$arrayMerchantRate[$m_id])) return self::$arrayMerchantRate[$m_id];
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['condition']['m_id'] = $m_id;
         $fileid = 'm_rate_tourism, m_rate_hotel, m_rate_air_ticket, m_rate_tourism_sell, m_rate_hotel_sell, m_rate_air_ticket_sell';
         $objMerchantDao = new MerchantDao();
-        $arrarMerchantRate = $objMerchantDao->DBCache(0)->getMerchant($conditions, $fileid);
-        return $arrarMerchantRate[0];
+        $arrarRates = $objMerchantDao->DBCache(0)->getMerchant($conditions, $fileid);
+        self::$arrayMerchantRate[$m_id] = $arrarRates[0];
+        return self::$arrayMerchantRate[$m_id];
     }
 
     public static function getMerchantRatePrice($m_id, $price_source, $type) {
-        $arrarMerchantRate = self::getMerchantRate($m_id);
+        $arrayMerchantRate = self::getMerchantRate($m_id);
         switch ($type) {
             case 'tourism':
-                $price['source'] = $price_source . $arrarMerchantRate['m_rate_tourism'];
-                $price['sell'] = $price_source . $arrarMerchantRate['m_rate_tourism_sell'];
+                $price['source'] = ceil($price_source * $arrayMerchantRate['m_rate_tourism']);
+                $price['sell'] = ceil($price_source * $arrayMerchantRate['m_rate_tourism_sell']);
                 break;
             case 'hotel':
-                $price['source'] = $price_source . $arrarMerchantRate['m_rate_hotel'];
-                $price['sell'] = $price_source . $arrarMerchantRate['m_rate_hotel_sell'];
+                $price['source'] = ceil($price_source * $arrayMerchantRate['m_rate_hotel']);
+                $price['sell'] = ceil($price_source * $arrayMerchantRate['m_rate_hotel_sell']);
                 break;
             case 'air_ticket':
-                $price['source'] = $price_source . $arrarMerchantRate['m_rate_air_ticket'];
-                $price['sell'] = $price_source . $arrarMerchantRate['m_rate_air_ticket_sell'];
+                $price['source'] = ceil($price_source * $arrayMerchantRate['m_rate_air_ticket']);
+                $price['sell'] = ceil($price_source * $arrayMerchantRate['m_rate_air_ticket_sell']);
                 break;
         }
         return $price;

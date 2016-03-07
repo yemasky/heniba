@@ -38,11 +38,7 @@ class TourismAction extends \BaseAction {
         $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
         $objTourismService = new TourismService();
         $tourismCount = $objTourismService->getTourismCount($conditions['condition']);
-        $arrayTourism = $objTourismService->getTourism($conditions);
-        for($i = 0; $i < $tourismCount; $i++) {
-            $arrayRatePrice = CommonService::getMerchantRatePrice();
-            $arrayTourism[$i][''] =
-        }
+        $arrayTourism = $objTourismService->getTourism($conditions, $objResponse->arrUserInfo['m_id']);
         //
         $objResponse -> nav = 'index';
         $objResponse -> setTplValue('tourism', $arrayTourism);
@@ -62,7 +58,7 @@ class TourismAction extends \BaseAction {
         $objTourismService = new TourismService();
         $supplierCode = $objTourismService->getTourism($conditions, 't_supplier, t_supplier_code');
         if(!empty($supplierCode)) {
-            \BaseTourismService::instance()->tourismTemplace($supplierCode[0], $objResponse);
+            \BaseTourismService::instance()->tourismTemplace($supplierCode[0], $objResponse, $objResponse->arrUserInfo['m_id']);
         }
 
         $conditions = \DbConfig::$db_query_conditions;

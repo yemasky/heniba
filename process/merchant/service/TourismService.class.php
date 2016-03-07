@@ -7,8 +7,17 @@
 namespace merchant;
 
 class TourismService extends \BaseService {
-	public function getTourism($conditions, $fileid = NULL) {
-        return \BaseTourismDao::instance()->DBCache(1800)->getTourism($conditions, $fileid);
+	public function getTourism($conditions, $fileid = NULL, $m_id = null) {
+        $arrayTourism = \BaseTourismDao::instance()->DBCache(1800)->getTourism($conditions, $fileid);
+        if($m_id > 0) {
+            $tourism_num = count($arrayTourism);
+            for($i = 0; $i < $tourism_num; $i++) {
+                $arrayRatePrice = CommonService::getMerchantRatePrice($m_id, $arrayTourism[$i]['t_price'], 'tourism');
+                $arrayTourism[$i]['source'] = $arrayRatePrice['source'];
+                $arrayTourism[$i]['sell'] = $arrayRatePrice['sell'];
+            }
+        }
+        return $arrayTourism;
     }
 
     public function getTourismCount($conditions) {

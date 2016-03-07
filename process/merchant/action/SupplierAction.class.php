@@ -39,7 +39,7 @@ class SupplierAction extends \BaseAction {
         $objTourismService = new TourismService();
         $supplierCode = $objTourismService->getTourism($conditions, 't_supplier, t_supplier_code');
         if(!empty($supplierCode)) {
-            \BaseTourismService::instance()->tourismSourceProductTemplace($supplierCode[0], $checkdate);
+            \BaseTourismService::instance()->tourismSourceProductTemplace($supplierCode[0], $checkdate, $objResponse->arrUserInfo['m_id']);
         }
 
     }

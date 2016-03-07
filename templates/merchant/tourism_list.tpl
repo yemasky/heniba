@@ -65,7 +65,7 @@
                       });
                   </script>
                   </td><td><%$tourism[i].t_title%><br><%$tourism[i].t_title_cn%></td>
-              <td><a href="#"><%$tourism[i].t_currency%>:<%$tourism[i].t_price|ceil%></a></td>
+              <td><a href="#"><%$tourism[i].t_currency%>:(原价)<%$tourism[i].source%> (售价)<%$tourism[i].sell%></a></td>
               <td><span class="am-badge am-badge-success">+20</span></td>
               <td>
                   <a href="index.php?model=tourism&action=product&id=<%$tourism[i].t_id%>" target="_blank">
