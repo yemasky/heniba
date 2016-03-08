@@ -18,7 +18,7 @@ class BaseTourismService extends BaseService {
     public function tourismTemplace($supplierCode, $objResponse, $m_id) {
         switch($supplierCode['t_supplier']) {
             case 'bemyguest':
-                BaseBemyguestTool::instance()->tourismTemplace($supplierCode, $objResponse, $m_id);
+                BaseBemyguestImpl::instance()->tourismTemplace($supplierCode, $objResponse, $m_id);
                 break;
             default:
                 break;
@@ -43,7 +43,7 @@ class BaseTourismService extends BaseService {
     public function tourismSourceProductTemplace($supplierCode, $checkdate, $m_id) {
         switch($supplierCode['t_supplier']) {
             case 'bemyguest':
-                return BaseBemyguestTool::instance()->tourismSourceProductDatePrice($supplierCode, $checkdate, $m_id);
+                return BaseBemyguestImpl::instance()->tourismSourceProductDatePrice($supplierCode, $checkdate, $m_id);
                 break;
             default:
                 break;

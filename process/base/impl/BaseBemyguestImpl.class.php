@@ -6,13 +6,13 @@
  * Date: 2015/12/13
  * Time: 21:20
  */
-class BaseBemyguestTool extends BaseTool {
-    private static $objBaseBemyguestTool = null;
+class BaseBemyguestImpl extends BaseService {
+    private static $objBaseBemyguestImpl = null;
 
     public static function instance() {
-        if(is_object(self::$objBaseBemyguestTool)) return self::$objBaseBemyguestTool;
-        self::$objBaseBemyguestTool = new BaseBemyguestTool();
-        return self::$objBaseBemyguestTool;
+        if(is_object(self::$objBaseBemyguestImpl)) return self::$objBaseBemyguestImpl;
+        self::$objBaseBemyguestImpl = new BaseBemyguestImpl();
+        return self::$objBaseBemyguestImpl;
     }
 
     //取得售卖价格
@@ -105,8 +105,4 @@ class BaseBemyguestTool extends BaseTool {
         }
     }
 
-    //取得付款价格
-    public function createOrder($arrival_date) {
-
-    }
 }
