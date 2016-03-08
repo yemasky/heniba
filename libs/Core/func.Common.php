@@ -394,5 +394,13 @@ if(!defined("INC_FUNC_COMMON")) {
 			return $uuid;
 		}
 	}
+
+	function order_number($order_number, $len = 12) {
+		$order_number = '0' . $order_number;
+		for($i = strlen($order_number) + 1; $i<=$len; $i++) {
+			$order_number = rand(1, 9) . $order_number;
+		}
+		return $order_number;
+	}
 }
 ?>

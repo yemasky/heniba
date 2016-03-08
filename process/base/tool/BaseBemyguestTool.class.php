@@ -15,6 +15,7 @@ class BaseBemyguestTool extends BaseTool {
         return self::$objBaseBemyguestTool;
     }
 
+    //取得售卖价格
     public function tourismTemplace($supplierCode, $objResponse, $m_id) {
         $tourism_product = BaseTourismService::instance()->getSupplierTourism($supplierCode);
         $arrayProductPrice = $arrayProductPrice = $productTypeNum = $tourismAttr = $arrayMaxPax = NULL;
@@ -41,7 +42,7 @@ class BaseBemyguestTool extends BaseTool {
                     if(isset($date['regular']['adult'])) {//人数
                         foreach ($date['regular']['adult'] as $kkk => $price) {
                             $arrayRatePrice = \merchant\CommonService::getMerchantRatePrice($m_id, $price, 'tourism');
-                            $arrayProductPrice[$kk][$kkk][$k] = $arrayRatePrice['sell'];;//价格
+                            $arrayProductPrice[$kk][$kkk][$k] = $arrayRatePrice['sell'];//价格
                         }
                     }
                 }
@@ -79,6 +80,7 @@ class BaseBemyguestTool extends BaseTool {
 		$objResponse -> setTplValue("__Meta", BaseCommon::getMeta('index', $tourism_product[0]['title'] . '-管理后台', '管理后台', '管理后台'));
     }
 
+    //取得售卖价格json 单个
     public function tourismSourceProductDatePrice($supplierCode, $checkdate, $m_id) {
         $arrayDate['date_start'] = $checkdate;//date("Y-m-d");//
         $arrayDate['date_end'] = $checkdate;
@@ -101,5 +103,10 @@ class BaseBemyguestTool extends BaseTool {
             }
             echo json_encode($arrayProductPrice);
         }
+    }
+
+    //取得付款价格
+    public function createOrder($arrival_date) {
+
     }
 }
