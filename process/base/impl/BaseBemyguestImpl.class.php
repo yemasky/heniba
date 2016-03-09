@@ -105,4 +105,33 @@ class BaseBemyguestImpl extends BaseService {
         }
     }
 
+    public function createOrder($objRequest, $u_id, $m_id, $mu_id, $supplierCode) {
+        $tourism_product = BaseTourismService::instance()->getSupplierTourism($supplierCode);
+        //用户订购信息
+        $arrayUserBookInfo['arrivalDate'] = $objRequest->arrivalDate;
+        $arrayUserBookInfo['options'] = $objRequest->options;
+        $arrayUserBookInfo['pax'] = $objRequest->pax;
+        $arrayUserBookInfo['salutation'] = $objRequest->salutation;
+        $arrayUserBookInfo['lastName_firstName'] = $objRequest->lastName_firstName;
+        $arrayUserBookInfo['email'] = $objRequest->email;
+        $arrayUserBookInfo['mobile'] = $objRequest->mobile;
+        $arrayUserBookInfo['message'] = $objRequest->message;
+        //取得支付价格
+        //$payPrice = $arrayTourism[0][''];
+
+        //其它信息
+        $arrayOrder['u_id'] = $u_id;
+        $arrayOrder['m_id'] = $m_id;
+        $arrayOrder['mu_id'] = $mu_id;
+        $arrayOrder['o_price_market'] = '';
+        $arrayOrder['o_price_sell'] = '';
+        $arrayOrder['o_add_date'] = getDateTime();
+        //$o_id = BaseBookUserService::instance('BaseBookUserService')->createUser($objRequest);
+        //产生订单号
+        //$o_order_number = order_number($o_id);
+        //$o_id = BaseBookUserService::instance('BaseBookUserService')->createUser($objRequest);
+
+
+    }
+
 }

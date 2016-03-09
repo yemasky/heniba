@@ -38,7 +38,7 @@ class TourismAction extends \BaseAction {
         $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
         $objTourismService = new TourismService();
         $tourismCount = $objTourismService->getTourismCount($conditions['condition']);
-        $arrayTourism = $objTourismService->getTourism($conditions, $objResponse->arrUserInfo['m_id']);
+        $arrayTourism = $objTourismService->getTourism($conditions, null, $objResponse->arrUserInfo['m_id']);
         //
         $objResponse -> nav = 'index';
         $objResponse -> setTplValue('tourism', $arrayTourism);
