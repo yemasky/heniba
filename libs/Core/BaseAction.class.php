@@ -542,7 +542,7 @@ class DBQuery{
 	}
 
 	public function setTable($table){
-		$this->table_name = $table;
+		$this->table_name = '`'. $table . '`';
 		return $this;
 	}
 

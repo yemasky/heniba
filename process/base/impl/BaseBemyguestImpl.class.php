@@ -16,11 +16,11 @@ class BaseBemyguestImpl extends BaseService {
     }
 
     //取得售卖价格
-    public function tourismTemplace($supplierCode, $objResponse, $m_id) {
-        $tourism_product = BaseTourismService::instance()->getSupplierTourism($supplierCode);
+    public function tourismTemplace($arraySupplierCode, $objResponse, $m_id) {
+        $tourism_product = BaseTourismService::instance()->getSupplierTourism($arraySupplierCode);
         $arrayProductPrice = $arrayProductPrice = $productTypeNum = $tourismAttr = $arrayMaxPax = NULL;
         $arrayCurrency['code'] = '';
-        $class_supplier = '\supplier\\' . ucfirst($supplierCode['t_supplier']) . 'Config';
+        $class_supplier = '\supplier\\' . ucfirst($arraySupplierCode['t_supplier']) . 'Config';
         if(!empty($tourism_product)) {
             $objSupplier = new $class_supplier;
             $field_config = $objSupplier->tour_field;
@@ -35,7 +35,7 @@ class BaseBemyguestImpl extends BaseService {
             }
             $tourism_product[0]['productTypes'] = json_decode($tourism_product[0]['productTypes'], true);
             if(empty($tourism_product[0]['productTypes'])) {
-                throw new Exception('productTypes is null. t_supplier:' . $supplierCode['t_supplier'] . "; code:" . $supplierCode['t_supplier_code']);
+                throw new Exception('productTypes is null. t_supplier:' . $arraySupplierCode['t_supplier'] . "; code:" . $arraySupplierCode['t_supplier_code']);
             }
             foreach($tourism_product[0]['productTypes'] as $k => $prices) {
                 foreach($prices['prices'] as $kk => $date) {//日期
@@ -81,16 +81,20 @@ class BaseBemyguestImpl extends BaseService {
     }
 
     //取得售卖价格json 单个
-    public function tourismSourceProductDatePrice($supplierCode, $checkdate, $m_id) {
+    public function tourismSourceProductDatePrice($arraySupplierCode, $checkdate, $m_id, $result_single = false) {
         $arrayDate['date_start'] = $checkdate;//date("Y-m-d");//
         $arrayDate['date_end'] = $checkdate;
         $objBemyguestService = new \supplier\BemyguestService;
-        $arrayResult = $objBemyguestService->product($supplierCode['t_supplier_code'], $arrayDate);
+        $arrayResult = $objBemyguestService->product($arraySupplierCode['t_supplier_code'], $arrayDate);
         if($arrayResult['httpcode'] != 200) {
-            throw new Exception('get bemyguest product error: uuid ' . $supplierCode['t_supplier_code']);
+            throw new Exception('get bemyguest product error: uuid ' . $arraySupplierCode['t_supplier_code']);
         } else {
             $arrayProductPrice = '';
             $tourism_product = json_decode($arrayResult['result'], true);
+            if(!isset($tourism_product['data']['productTypes'])) {
+                //return json_encode(array());
+            }
+            if($result_single) return $tourism_product['data']['productTypes'];
             foreach($tourism_product['data']['productTypes'] as $k => $prices) {
                 foreach($prices['prices'] as $kk => $date) {
                     if(isset($date['regular']['adult'])) {
@@ -105,33 +109,74 @@ class BaseBemyguestImpl extends BaseService {
         }
     }
 
-    public function createOrder($objRequest, $u_id, $m_id, $mu_id, $supplierCode) {
-        $tourism_product = BaseTourismService::instance()->getSupplierTourism($supplierCode);
+    public function createOrder($objRequest, $u_id, $m_id, $mu_id, $arraySupplierCode) {
         //用户订购信息
-        $arrayUserBookInfo['arrivalDate'] = $objRequest->arrivalDate;
-        $arrayUserBookInfo['options'] = $objRequest->options;
-        $arrayUserBookInfo['pax'] = $objRequest->pax;
-        $arrayUserBookInfo['salutation'] = $objRequest->salutation;
-        $arrayUserBookInfo['lastName_firstName'] = $objRequest->lastName_firstName;
-        $arrayUserBookInfo['email'] = $objRequest->email;
-        $arrayUserBookInfo['mobile'] = $objRequest->mobile;
-        $arrayUserBookInfo['message'] = $objRequest->message;
+        $arrayUserBookInfo['oi_user_arrival_date'] = $objRequest->arrivalDate;
+        $arrayUserBookInfo['oi_user_options'] = $objRequest->options;
+        $arrayUserBookInfo['oi_user_pax'] = $objRequest->pax;
+        $arrayUserBookInfo['oi_user_salutation'] = $objRequest->salutation;
+        $arrayUserBookInfo['oi_user_firstname'] = $objRequest->firstName;
+        $arrayUserBookInfo['oi_user_lastname'] = $objRequest->lastName;
+        $arrayUserBookInfo['oi_user_email'] = $objRequest->email;
+        $arrayUserBookInfo['oi_user_moblie'] = $objRequest->mobile;
+        $arrayUserBookInfo['oi_user_message'] = $objRequest->message;
         //取得支付价格
-        //$payPrice = $arrayTourism[0][''];
+        $tourism_product = BaseTourismService::instance()->getSupplierTourism($arraySupplierCode);
+        $tourism_product[0]['productTypes'] = json_decode($tourism_product[0]['productTypes'], true);
+        if(empty($tourism_product[0]['productTypes'])) {
+            throw new Exception('productTypes is null. t_supplier:' . $arraySupplierCode['t_supplier'] . "; code:" . $arraySupplierCode['t_supplier_code']);
+        }
+        $arraySelectTourism = $tourism_product[0]['productTypes'][$arrayUserBookInfo['oi_user_options']];
+        if(isset($arraySelectTourism['prices'][$arrayUserBookInfo['oi_user_arrival_date']]['regular']['adult'][$arrayUserBookInfo['oi_user_pax']])) {
+            $price = $arraySelectTourism['prices'][$arrayUserBookInfo['oi_user_arrival_date']]['regular']['adult'][$arrayUserBookInfo['oi_user_pax']];
+            $arrayRatePrice = \merchant\CommonService::getMerchantRatePrice($m_id, $price, 'tourism');
+        } else {
+            $arraySelectTourism = $this->tourismSourceProductDatePrice($arraySupplierCode, $arrayUserBookInfo['oi_user_arrival_date'], $m_id, true);
+            $arraySelectTourism = $arraySelectTourism[$arrayUserBookInfo['oi_user_options']];
+            if(isset($arraySelectTourism['prices'][$arrayUserBookInfo['oi_user_arrival_date']]['regular']['adult'][$arrayUserBookInfo['oi_user_pax']])) {
+                $price = $arraySelectTourism['prices'][$arrayUserBookInfo['oi_user_arrival_date']]['regular']['adult'][$arrayUserBookInfo['oi_user_pax']];
+                $arrayRatePrice = \merchant\CommonService::getMerchantRatePrice($m_id, $price, 'tourism');
+            }
+        }
 
-        //其它信息
+        //订单信息
         $arrayOrder['u_id'] = $u_id;
         $arrayOrder['m_id'] = $m_id;
         $arrayOrder['mu_id'] = $mu_id;
-        $arrayOrder['o_price_market'] = '';
-        $arrayOrder['o_price_sell'] = '';
+        $arrayOrder['o_price_market'] = $arrayRatePrice['sell'];//网上售卖价格
+        $arrayOrder['o_price_sell'] = $arrayRatePrice['sell'];//售卖价格 成交价
+        $arrayOrder['o_price_wholesale'] = $arrayRatePrice['wholesale'];//批发价
+        $arrayOrder['o_price_original'] = $price;//进货价
         $arrayOrder['o_add_date'] = getDateTime();
-        //$o_id = BaseBookUserService::instance('BaseBookUserService')->createUser($objRequest);
-        //产生订单号
-        //$o_order_number = order_number($o_id);
-        //$o_id = BaseBookUserService::instance('BaseBookUserService')->createUser($objRequest);
+        $arrayOrderResult = BaseBookOrderDao::createOrder($arrayOrder);
+        //
+        $arrayUserBookInfo['o_id'] = $arrayOrderResult[0];
+        $arrayUserBookInfo['u_id'] = $u_id;
+        $arrayUserBookInfo['m_id'] = $m_id;
+        $arrayUserBookInfo['mu_id'] = $mu_id;
+        $arrayUserBookInfo['oi_price_market'] = $arrayRatePrice['sell'];
+        $arrayUserBookInfo['oi_price_sell'] = $arrayRatePrice['sell'];
+        $arrayUserBookInfo['oi_price_wholesale'] = $arrayRatePrice['wholesale'];
+        $arrayUserBookInfo['oi_price_original'] = $price;
+        $arrayUserBookInfo['oi_type'] = 'tourism';
+        $arrayUserBookInfo['oi_product_id'] = \Encrypt::instance()->decode($objRequest->supplierCode);
+        $arrayUserBookInfo['oi_price_market'] = $objRequest->arrivalDate;
+        $arrayUserBookInfo['oi_price_market'] = $objRequest->arrivalDate;
+        $arrayUserBookInfo['oi_add_date'] = getDateTime();
+        $oi_id = BaseBookOrderDao::createOrderInfo($arrayUserBookInfo);
+        //
+        $arrayUserBookInfo['o_order_number'] = $arrayOrderResult[1];
+        $objBaseSupplierBemyguestService = new BaseSupplierBemyguestService();
+        $arraySupplierResult = $objBaseSupplierBemyguestService->createBooking($arrayUserBookInfo);
+        print_r($arraySupplierResult);exit();
+        $arrarOrderReturnLog['oi_id'] = $oi_id;
+        $arrarOrderReturnLog['o_id'] = $arrayUserBookInfo['o_id'];
+        $arrarOrderReturnLog['title'] = '订购旅游产品';
+        $arrarOrderReturnLog['centents'] = $arraySupplierResult[0];
+        $arrarOrderReturnLog['http_response_header'] = $arraySupplierResult[1];
+        BaseBookOrderDao::insertOrderReturnlog($arrarOrderReturnLog);
 
-
+        return $arrayOrderResult;
     }
 
 }

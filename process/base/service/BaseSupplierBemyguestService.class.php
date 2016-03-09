@@ -7,6 +7,13 @@
  * Time: 17:20
  */
 class BaseSupplierBemyguestService extends BaseService {
+    private $time_out = 120;
+    private $objWSClient;
+
+    public function __construct(){
+        $this->objWSClient = new WebServiceClient();
+        $this->objBemyguestConfig = new \supplier\BemyguestConfig();
+    }
     /*
      * 创建预订 创建一个新的预订.
      * 新创建的预订状态为 reserved。这意味着它尚未支付也未经合伙人确认但它已创建，并保留在BeMyGuest数据库.
@@ -16,16 +23,16 @@ class BaseSupplierBemyguestService extends BaseService {
      * 如果你尝试使用之前相同的partnerReference值来检查新的预订， 你会得到 GEN-FORBIDDEN / 403 / Booking with this partnerReference already exists （此partnerReference的预订已经存在）错误响应信息.
      * 请注意所有的预订请求都需要提供正确的 Content-Type header.
      */
-    public function createBooking() {
+    public function createBooking($arrayUserBookInfo) {
         set_time_limit($this->time_out);
-        $arrData['salutation'] = "Mr.";
-        $arrData['firstName'] = 'firstName';
-        $arrData['lastName'] = 'lastName';
-        $arrData['email'] = 'kefu@yelove.cn';
-        $arrData['phone'] = '+6591591923';
-        $arrData['message'] = 'message';
+        $arrData['salutation'] = $arrayUserBookInfo['oi_user_salutation'];//"Mr.";
+        $arrData['firstName'] = $arrayUserBookInfo['oi_user_firstname'];//'firstName';
+        $arrData['lastName'] = $arrayUserBookInfo['oi_user_lastname'];//'lastName';
+        $arrData['email'] = $arrayUserBookInfo['oi_user_email'];//'kefu@yelove.cn';
+        $arrData['phone'] = $arrayUserBookInfo['oi_user_moblie'];//''+6591591923';
+        $arrData['message'] = $arrayUserBookInfo['oi_user_message'];//'message';
         $arrData['productTypeUuid'] = "";
-        $arrData['pax'] = '2';
+        $arrData['pax'] = $arrayUserBookInfo['oi_user_pax'];//'2';
         $arrData['children'] = '0';
         $productTypeUuid = '';
         if(!empty($timeSlotUuid)) {
@@ -39,20 +46,27 @@ class BaseSupplierBemyguestService extends BaseService {
         } else {
             // $arrData['addons'] = "";
         }
-        $arrData['arrivalDate'] = '2015-12-07';
-        $arrData['partnerReference'] = time() . "";
+        $arrData['arrivalDate'] = $arrayUserBookInfo['oi_user_arrival_date'];//'2015-12-07';
+        $arrData['partnerReference'] = $arrayUserBookInfo['o_order_number'];
         $arrData['usePromotion'] = false;
         $postData = json_encode($arrData);
+        //---------url-----------//
+        $bookings_url = $this->objBemyguestConfig->bookings_url;
 
+        //------------------------------//
+        $arrayHeader = $this->objBemyguestConfig->arrayHeader;
+        $this->objWSClient->post($postData)->header($arrayHeader)->url($bookings_url);
+        $arrayResult = $this->objWSClient->execute_cUrl();
+        print_r($arrayResult);exit();
+        //return $this->parserXml($arrayResult);
+        //--------------------------------------//
         // $url = "https://private-anon-de10e2970-bemyguest.apiary-mock.com/v1/bookings";
-        $url = "https://apidemo.bemyguest.com.sg/v1/bookings";
+
 
         $header = "POST: HTTP/1.1\r\n";
         $header .= "X-Authorization: e8a00fcac36a19e53c6dc9b1a87aa2c5051f571f\r\n";
         $header .= "Content-Type: application/json\r\n";
         $header .= "Content-Length: " . strlen($postData) . "\r\n";
-
-        echo $arrData['partnerReference'] . ":" . $url . "\r\n";
 
         $opts = array (
             'http' => array (
@@ -63,7 +77,7 @@ class BaseSupplierBemyguestService extends BaseService {
         );
 
         $context = stream_context_create($opts);
-        $string = file_get_contents($url, "r", $context);
+        $string = file_get_contents($bookings_url, "r", $context);
         print_r($http_response_header);
         var_dump($string);
         print_r($postData);
@@ -71,8 +85,10 @@ class BaseSupplierBemyguestService extends BaseService {
         $createbookuuid = $string['data']['uuid'];
         $param = "productTypeUuid/$productTypeUuid/timeSlotUuid/$timeSlotUuid/addonsuuid/$addonsuuid/partnerReference/" . $arrData['partnerReference'] . "/createbookuuid/" . $createbookuuid;
         $url = __ROOT__ . "/index.php/Viator/BemyguestDemo/checkbooking/" . $param;
-
+        //return array($string, json_encode($http_response_header));
         echo "\r\n<br>click  <a href='$url'>here</a> checkbooking.\r\n<br>";
+        //-----------------------//
+
     }
 
     /*

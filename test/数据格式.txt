@@ -1,0 +1,2198 @@
+Array
+(
+    [0] => Array
+        (
+            [uuid] => c8776e9c-b1d4-5271-b7cb-ee6141a7e38a
+            [title] => Siem Reap Food Tour
+            [titleTranslated] => Siem Reap Food Tour
+            [description] => 
+            [descriptionTranslated] => 
+            [durationDays] => 
+            [durationHours] => 5
+            [durationMinutes] => 0
+            [paxMin] => 1
+            [paxMax] => 8
+            [daysInAdvance] => 0
+            [isNonRefundable] => 
+            [hasChildPrice] => 1
+            [instantConfirmation] => 
+            [voucherUse] => You will receive a voucher by email. It contains all the information for this activity. You will need to present this voucher.
+            [voucherUseTranslated] => You will receive a voucher by email. It contains all the information for this activity. You will need to present this voucher.
+            [voucherRedemptionAddress] => 
+            [voucherRedemptionAddressTranslated] => 
+            [prices] => Array
+                (
+                    [2015-12-13] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-14] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-15] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-16] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-17] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-18] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-19] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-20] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-21] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-22] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-23] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-24] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-25] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-26] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-27] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-28] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-29] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-30] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-31] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-01] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-02] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-03] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-04] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-05] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-06] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-07] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-08] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-09] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-10] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-11] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-12] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-13] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-14] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [1] => 392.5
+                                            [2] => 392.5
+                                            [3] => 392.5
+                                            [4] => 392.5
+                                            [5] => 392.5
+                                            [6] => 392.5
+                                            [7] => 392.5
+                                            [8] => 392.5
+                                        )
+
+                                    [child] => 392.5
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 2
+                                                    [refundPercentage] => 95
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                )
+
+            [timeSlots] => Array
+                (
+                    [0] => Array
+                        (
+                            [uuid] => c038d2bb-9c57-5bb9-a2d7-91a6c20fcbab
+                            [startTime] => 10:00:00
+                            [endTime] => 18:00:00
+                        )
+
+                )
+
+        )
+
+)
+
+
+=============
+
+Array
+(
+    [0] => Array
+        (
+            [uuid] => 8ec4430b-7d36-5cae-b1b7-73386df3b16e
+            [title] => Standard
+            [titleTranslated] => Standard
+            [description] => 
+            [descriptionTranslated] => 
+            [durationDays] => 0
+            [durationHours] => 0
+            [durationMinutes] => 
+            [paxMin] => 2
+            [paxMax] => 2
+            [daysInAdvance] => 0
+            [isNonRefundable] => 
+            [hasChildPrice] => 
+            [instantConfirmation] => 
+            [voucherUse] => 
+            [voucherUseTranslated] => 
+            [voucherRedemptionAddress] => 
+            [voucherRedemptionAddressTranslated] => 
+            [prices] => Array
+                (
+                    [2015-12-13] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-14] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-15] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-16] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-17] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-18] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-19] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-20] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-21] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-22] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-23] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-24] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-25] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-26] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-27] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-28] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-29] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-30] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-31] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2016-01-01] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-02] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-03] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-04] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-05] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-06] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-07] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-08] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-09] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-10] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-11] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-12] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-13] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-14] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2195.2
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                )
+
+        )
+
+    [1] => Array
+        (
+            [uuid] => 38142204-c105-5f97-bb18-b523ba6cf4c8
+            [title] => Premium
+            [titleTranslated] => Premium
+            [description] => 
+            [descriptionTranslated] => 
+            [durationDays] => 0
+            [durationHours] => 0
+            [durationMinutes] => 
+            [paxMin] => 2
+            [paxMax] => 2
+            [daysInAdvance] => 0
+            [isNonRefundable] => 
+            [hasChildPrice] => 
+            [instantConfirmation] => 
+            [voucherUse] => 
+            [voucherUseTranslated] => 
+            [voucherRedemptionAddress] => 
+            [voucherRedemptionAddressTranslated] => 
+            [prices] => Array
+                (
+                    [2015-12-13] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-14] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-15] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2015-12-16] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-17] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-18] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-19] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-20] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-21] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-22] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-23] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-24] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-25] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-26] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-27] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-28] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-29] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-30] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2015-12-31] => Array
+                        (
+                            [regular] => 
+                            [promotion] => 
+                        )
+
+                    [2016-01-01] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-02] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-03] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-04] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-05] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-06] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-07] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-08] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-09] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-10] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-11] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-12] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-13] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                    [2016-01-14] => Array
+                        (
+                            [regular] => Array
+                                (
+                                    [adult] => Array
+                                        (
+                                            [2] => 2926.99
+                                        )
+
+                                    [child] => 0
+                                    [cancellationPolicy] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [numberOfDays] => 45
+                                                    [refundPercentage] => 70
+                                                )
+
+                                        )
+
+                                )
+
+                            [promotion] => 
+                        )
+
+                )
+
+        )
+
+)
+

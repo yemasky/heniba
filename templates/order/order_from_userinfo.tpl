@@ -22,9 +22,14 @@
                         <option value="Mrs.">夫人</option>
                     </select>
                 </div>
-                <span class="am-input-group-labe">姓名</span>
-                <div class="am-form-group am-form-icon"><i class="am-icon-male"></i>
-                    <input name="lastName_firstName" type="text" placeholder="姓名，必填" class="am-form-field" minlength="3" required/>
+                <span class="am-input-group-labe ">姓名(英文)</span>
+                <div class="am-form-inline">
+                    <div class="am-form-group am-form-icon"><i class="am-icon-male"></i>
+                        <input name="lastName" type="text" placeholder="姓(英文)，必填" class="am-form-field" minlength="2" required/>
+                    </div>
+                    <div class="am-form-group am-form-icon"><i class="am-icon-male"></i>
+                        <input name="firstName" type="text" placeholder="名(英文)，必填" class="am-form-field" minlength="2" required/>
+                    </div>
                 </div>
                 <span class="am-input-group-labe">电子邮件</span>
                 <div class="am-form-group am-form-icon"><i class="am-icon-envelope"></i>

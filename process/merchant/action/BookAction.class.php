@@ -58,10 +58,11 @@ class BookAction extends \BaseAction {
         if(empty($supplierCode)) {
             throw new \Exception('supplierCode is null');
         }
+        $arrayOrderResult = null;
         $tour_type = $objRequest->tour_type;
         switch($tour_type) {
             case 'tourism':
-                \BaseBookTourismService::instance('\BaseBookTourismService')->create_book($objRequest, $objResponse);
+                $arrayOrderResult = \BaseBookTourismService::instance('\BaseBookTourismService')->create_book($objRequest, $objResponse);
                 break;
             case 'hotel':
                 break;
@@ -70,7 +71,8 @@ class BookAction extends \BaseAction {
             default:
                 break;
         }
-        $this->redirect('index.php?model=book&action=success&supplierCode=' . $objRequest->supplierCode);
+        exit();
+        $this->redirect('index.php?model=book&action=success&successCode=' . \Encrypt::instance()->encode($arrayOrderResult[1]));
 
     }
 

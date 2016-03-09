@@ -73,7 +73,7 @@
             </div>
           </div>
         </div>
-          <ul class="am-list am-list-static">
+          <ul class="am-list am-list-static"> <!--取消政策cancellationPolicy  孩子价格child（最多2哦个小孩） 推广价格promotion-->
             <%section name=i loop=$tourism_product.productTypes%>
             <li>
               <div class="am-g am-margin-left-0">

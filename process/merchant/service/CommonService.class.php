@@ -105,16 +105,16 @@ class CommonService extends \BaseService {
         $arrayMerchantRate = self::getMerchantRate($m_id);
         switch ($type) {
             case 'tourism':
-                $price['source'] = ceil($price_source * $arrayMerchantRate['m_rate_tourism']);
-                $price['sell'] = ceil($price_source * $arrayMerchantRate['m_rate_tourism_sell']);
+                $price['wholesale'] = ceil($price_source * $arrayMerchantRate['m_rate_tourism']);//批发价
+                $price['sell'] = ceil($price_source * $arrayMerchantRate['m_rate_tourism_sell']);//售卖价
                 break;
             case 'hotel':
-                $price['source'] = ceil($price_source * $arrayMerchantRate['m_rate_hotel']);
-                $price['sell'] = ceil($price_source * $arrayMerchantRate['m_rate_hotel_sell']);
+                $price['wholesale'] = ceil($price_source * $arrayMerchantRate['m_rate_hotel']);//批发价
+                $price['sell'] = ceil($price_source * $arrayMerchantRate['m_rate_hotel_sell']);//售卖价
                 break;
             case 'air_ticket':
-                $price['source'] = ceil($price_source * $arrayMerchantRate['m_rate_air_ticket']);
-                $price['sell'] = ceil($price_source * $arrayMerchantRate['m_rate_air_ticket_sell']);
+                $price['wholesale'] = ceil($price_source * $arrayMerchantRate['m_rate_air_ticket']);//批发价
+                $price['sell'] = ceil($price_source * $arrayMerchantRate['m_rate_air_ticket_sell']);//售卖价
                 break;
         }
         return $price;

@@ -25,12 +25,12 @@ class BaseTourismService extends BaseService {
         }
     }
 
-    public function getSupplierTourism($supplierCode) {
+    public function getSupplierTourism($arraySupplierCode) {
         $arraySupplierTourism = null;
         $conditions = DbConfig::$db_query_conditions;
-        switch ($supplierCode['t_supplier']) {
+        switch ($arraySupplierCode['t_supplier']) {
             case 'bemyguest':
-                $conditions['condition']['uuid'] = $supplierCode['t_supplier_code'];
+                $conditions['condition']['uuid'] = $arraySupplierCode['t_supplier_code'];
                 $objBemyguestDao = new \supplier\BemyguestDao();
                 $arraySupplierTourism = $objBemyguestDao->getBemyguestTour($conditions);
                 break;
@@ -40,10 +40,10 @@ class BaseTourismService extends BaseService {
         return $arraySupplierTourism;
     }
 
-    public function tourismSourceProductTemplace($supplierCode, $checkdate, $m_id) {
-        switch($supplierCode['t_supplier']) {
+    public function tourismSourceProductTemplace($arraySupplierCode, $checkdate, $m_id) {
+        switch($arraySupplierCode['t_supplier']) {
             case 'bemyguest':
-                return BaseBemyguestImpl::instance()->tourismSourceProductDatePrice($supplierCode, $checkdate, $m_id);
+                return BaseBemyguestImpl::instance()->tourismSourceProductDatePrice($arraySupplierCode, $checkdate, $m_id);
                 break;
             default:
                 break;

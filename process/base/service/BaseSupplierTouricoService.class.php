@@ -13,7 +13,7 @@ class BaseSupplierTouricoService extends BaseService {
 
     public function __construct(){
         $this->objWSClient = new WebServiceClient();
-            $this->objTouricoConfig = new \supplier\TouricoConfig();
+        $this->objTouricoConfig = new \supplier\TouricoConfig();
     }
 
     public static function instance($objClass = '') {
