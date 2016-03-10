@@ -31,7 +31,7 @@ class BaseSupplierBemyguestService extends BaseService {
         $arrData['email'] = $arrayUserBookInfo['oi_user_email'];//'kefu@yelove.cn';
         $arrData['phone'] = $arrayUserBookInfo['oi_user_moblie'];//''+6591591923';
         $arrData['message'] = $arrayUserBookInfo['oi_user_message'];//'message';
-        $arrData['productTypeUuid'] = $arrayUserBookInfo['t_supplier_code'];;
+        $arrData['productTypeUuid'] = $arrayUserBookInfo['productTypeUuid'];;
         $arrData['pax'] = $arrayUserBookInfo['oi_user_pax'];//'2';
         $arrData['children'] = '0';
 

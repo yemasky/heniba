@@ -138,6 +138,7 @@ class BaseBemyguestImpl extends BaseService {
                 $arrayRatePrice = \merchant\CommonService::getMerchantRatePrice($m_id, $price, 'tourism');
             }
         }
+        $tourism_uuid = $arraySelectTourism['uuid'];
 
         //订单信息
         $arrayOrder['u_id'] = $u_id;
@@ -166,6 +167,7 @@ class BaseBemyguestImpl extends BaseService {
         $oi_id = BaseBookOrderDao::createOrderInfo($arrayUserBookInfo);
         //
         $arrayUserBookInfo['o_order_number'] = $arrayOrderResult[1];
+        $arrayUserBookInfo['productTypeUuid'] = $tourism_uuid;
         $objBaseSupplierBemyguestService = new BaseSupplierBemyguestService();
         $arraySupplierResult = $objBaseSupplierBemyguestService->createBooking($arrayUserBookInfo);
         print_r($arraySupplierResult);exit();

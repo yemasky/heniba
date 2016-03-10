@@ -28,7 +28,6 @@ class BaseBookTourismService extends BaseService {
         //登录用户
         $arrLoginUser = \merchant\CommonService::getLoginUser();
 
-
         //获取用户递交信息
         $arrayOrderResult = null;
         switch($arrayTourismSupplier[0]['t_supplier']) {

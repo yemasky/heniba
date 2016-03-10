@@ -78,6 +78,13 @@ class BookAction extends \BaseAction {
     }
 
     public function book_success($objRequest, $objResponse) {
+        $successCode = $objRequest->successCode;
+        $successCode = \Encrypt::instance()->decode($successCode);
+        if(empty($successCode)) {
+            $this->redirect('index.php');
+        }
+        $arrayOrderInfo = \BaseBookOrderService::instance('\BaseBookOrderService')->getOrder(array('o_order_number'=>$successCode));
+        $objResponse -> setTplValue("order", $arrayOrderInfo);
         $objResponse -> setTplValue("nav", 'book_success');
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/book/create_book");

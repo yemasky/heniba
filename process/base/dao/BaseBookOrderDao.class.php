@@ -25,4 +25,8 @@ class BaseBookOrderDao {
         return DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('order_return_log')->insert($arrarOrderReturnLog)->getInsertId();
     }
 
+    public static function getOrder($conditions, $fields = '*') {
+        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('order')->getRow($conditions, $fields);
+    }
+
 }

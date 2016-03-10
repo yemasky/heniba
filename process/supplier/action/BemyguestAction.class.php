@@ -66,6 +66,9 @@ class BemyguestAction extends \BaseAction {
 		for($i = $pn; $i <= $total_pages; $i++ ) {
 			$result = $objBemyguestService->allproducts($i);
 			$result = json_decode($result['result'], true);
+			if(empty($result) || !isset($result['data'])) {
+				throw new \Exception('result is empty');
+			}
 			foreach ($result['data'] as $k => $v) {
 				$product = $objBemyguestService->product($v['uuid']);
 				$product = json_decode($product['result'], true);
