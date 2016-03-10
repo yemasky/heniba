@@ -17,9 +17,6 @@ class IndexAction extends \BaseAction {
 
 	protected function service($objRequest, $objResponse) {
 		switch($objRequest->getAction()) {
-			case 'writereview':
-				$this->doWriteReview($objRequest, $objResponse);
-			break;
 			default:
 				$this->doBase($objRequest, $objResponse);
 			break;

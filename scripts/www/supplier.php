@@ -19,7 +19,7 @@ try {
 
 try {
 	$objAction = new $model();
-	$objAction->execute($action, $process_key);//
+	$objAction->execute($action);//
 } catch(Exception $e) {
 	logError($e->getMessage(),__MODEL_EXCEPTION);
 	logError($e->getTraceAsString(),__MODEL_EMPTY);
