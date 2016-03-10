@@ -21,7 +21,7 @@ class BookAction extends \BaseAction {
                 $this->create_booking($objRequest, $objResponse);
                 break;
             case 'success':
-                $this->book_save_success($objRequest, $objResponse);
+                $this->book_success($objRequest, $objResponse);
                 break;
             default:
                 $this->doBase($objRequest, $objResponse);
@@ -72,11 +72,13 @@ class BookAction extends \BaseAction {
                 break;
         }
         exit();
+        header('Cache-Control: no-cache');
         $this->redirect('index.php?model=book&action=success&successCode=' . \Encrypt::instance()->encode($arrayOrderResult[1]));
 
     }
 
-    public function book_save_success($objRequest, $objResponse) {
+    public function book_success($objRequest, $objResponse) {
+        $objResponse -> setTplValue("nav", 'book_success');
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/book/create_book");
     }
