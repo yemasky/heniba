@@ -218,11 +218,13 @@ CREATE TABLE `order` (
   `o_order_number` bigint(19) DEFAULT NULL COMMENT '订单号',
   `o_price_market` float DEFAULT NULL COMMENT '网站上售卖的价格',
   `o_price_sell` float DEFAULT NULL COMMENT '售卖价格，用户实际支付价格',
+  `o_price_wholesale` float DEFAULT NULL COMMENT '批发价',
+  `o_price_original` float DEFAULT NULL COMMENT '进货价',
   `o_pay` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 未支付 1已支付',
   `o_add_date` datetime DEFAULT NULL COMMENT '订单产生时间',
   `o_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '订单修改时间',
   PRIMARY KEY (`o_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `order_info` */
 
@@ -236,45 +238,41 @@ CREATE TABLE `order_info` (
   `mu_id` int(11) DEFAULT NULL COMMENT '下单的企业的用户',
   `oi_price_market` float DEFAULT NULL COMMENT '网站上售卖的价格',
   `oi_price_sell` float DEFAULT NULL COMMENT '售卖价格，用户实际支付价格',
-  `oi_price_real` float DEFAULT NULL COMMENT '真实价格,供货商价格',
+  `oi_price_wholesale` float DEFAULT NULL COMMENT '批发价',
+  `oi_price_original` float DEFAULT NULL COMMENT '进货价',
   `oi_pay` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 未支付 1已支付',
   `oi_type` enum('tourism','hotel','air_ticket') DEFAULT NULL COMMENT '旅游 机票 酒店',
   `oi_product_id` bigint(19) DEFAULT NULL COMMENT '提供的商品ID',
-  `oi_add_date` datetime DEFAULT NULL COMMENT '订单产生时间',
-  `oi_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '订单修改时间',
   `oi_status` enum('确认中','已确认','已完成','已退款','申请退款') DEFAULT NULL COMMENT '订单状态',
+  `oi_user_moblie` int(11) DEFAULT NULL COMMENT '用户手机',
+  `oi_user_email` varchar(50) DEFAULT NULL COMMENT '用户email',
+  `oi_user_salutation` enum('Mr.','Ms.','Mrs.') DEFAULT NULL COMMENT '用户称呼',
+  `oi_user_arrival_date` datetime NOT NULL COMMENT '到达时间',
+  `oi_user_message` varchar(200) DEFAULT NULL COMMENT '用户刘阳',
+  `oi_user_options` varchar(10) DEFAULT NULL,
+  `oi_user_pax` varchar(5) DEFAULT NULL COMMENT '人数',
+  `oi_user_firstname` varchar(50) DEFAULT NULL,
+  `oi_user_lastname` varchar(50) DEFAULT NULL,
+  `oi_book_status` enum('0','1','2') DEFAULT NULL COMMENT '预定成功1 失败2',
+  `oi_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '订单修改时间',
+  `oi_add_date` datetime DEFAULT NULL COMMENT '订单产生时间',
   PRIMARY KEY (`oi_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
-/*Table structure for table `order_info_log` */
+/*Table structure for table `order_return_log` */
 
-DROP TABLE IF EXISTS `order_info_log`;
+DROP TABLE IF EXISTS `order_return_log`;
 
-CREATE TABLE `order_info_log` (
+CREATE TABLE `order_return_log` (
   `oil_id` bigint(19) NOT NULL AUTO_INCREMENT,
   `oi_id` bigint(19) DEFAULT NULL COMMENT '订单详细编号',
   `o_id` bigint(19) DEFAULT NULL COMMENT '订单编号',
   `title` varchar(200) DEFAULT NULL,
   `centents` text,
+  `http_response_header` text,
   `add_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`oil_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Table structure for table `order_user_info` */
-
-DROP TABLE IF EXISTS `order_user_info`;
-
-CREATE TABLE `order_user_info` (
-  `oui_id` bigint(19) NOT NULL AUTO_INCREMENT,
-  `o_id` bigint(19) DEFAULT NULL COMMENT '订单自增ID',
-  `u_id` bigint(19) NOT NULL,
-  `oui_moblie` int(11) DEFAULT NULL,
-  `oui_email` varchar(50) DEFAULT NULL,
-  `oui_salutation` enum('Mr.','Ms.','Mrs.') NOT NULL COMMENT '称呼',
-  `oui_add_date` date NOT NULL,
-  `oui_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`oui_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tourism` */
 
@@ -336,7 +334,7 @@ CREATE TABLE `tourism` (
   PRIMARY KEY (`t_id`),
   UNIQUE KEY `t_supplier_code` (`t_supplier`,`t_supplier_code`),
   KEY `location` (`tc_id`,`c_country_id`,`c_state_id`,`c_city_id`,`c_county_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11488 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tourism_attribute` */
 
@@ -381,6 +379,68 @@ CREATE TABLE `tourism_category` (
   UNIQUE KEY `tc_name` (`tc_name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
+/*Table structure for table `tourism_copy` */
+
+DROP TABLE IF EXISTS `tourism_copy`;
+
+CREATE TABLE `tourism_copy` (
+  `t_id` bigint(19) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `tc_id` int(11) DEFAULT NULL COMMENT '类别id',
+  `c_country_id` int(11) DEFAULT NULL COMMENT '国家',
+  `c_state_id` int(11) DEFAULT NULL COMMENT '州省',
+  `c_city_id` int(11) DEFAULT NULL COMMENT '城市',
+  `c_county_id` int(11) DEFAULT NULL COMMENT '县、郡；直辖市的区',
+  `t_title` varchar(200) NOT NULL COMMENT '标题',
+  `t_title_cn` varchar(200) DEFAULT NULL COMMENT '中文标题',
+  `t_description` text COMMENT '短描述',
+  `t_description_cn` text COMMENT '短中文描述',
+  `t_images` text COMMENT '图片数组',
+  `t_latitude` varchar(100) DEFAULT NULL COMMENT '纬度',
+  `t_longitude` varchar(100) DEFAULT NULL COMMENT '经度',
+  `t_currency` varchar(50) DEFAULT NULL COMMENT '货币',
+  `t_price` float DEFAULT NULL COMMENT '价格',
+  `t_review_count` mediumint(8) DEFAULT NULL COMMENT '评论数',
+  `t_review_average_score` mediumint(8) DEFAULT NULL COMMENT '平均分',
+  `t_supplier` varchar(50) DEFAULT NULL COMMENT '供应商',
+  `t_supplier_code` varchar(100) DEFAULT NULL,
+  `t_attr1` int(11) DEFAULT NULL,
+  `t_attr1_value` varchar(100) DEFAULT NULL,
+  `t_attr2` int(11) DEFAULT NULL,
+  `t_attr2_value` varchar(100) DEFAULT NULL,
+  `t_attr3` int(11) DEFAULT NULL,
+  `t_attr3_value` varchar(100) DEFAULT NULL,
+  `t_attr4` int(11) DEFAULT NULL,
+  `t_attr4_value` varchar(100) DEFAULT NULL,
+  `t_attr5` int(11) DEFAULT NULL,
+  `t_attr5_value` varchar(100) DEFAULT NULL,
+  `t_attr6` int(11) DEFAULT NULL,
+  `t_attr6_value` varchar(100) DEFAULT NULL,
+  `t_attr7` int(11) DEFAULT NULL,
+  `t_attr7_value` varchar(100) DEFAULT NULL,
+  `t_attr8` int(11) DEFAULT NULL,
+  `t_attr8_value` varchar(100) DEFAULT NULL,
+  `t_attr9` int(11) DEFAULT NULL,
+  `t_attr9_value` varchar(100) DEFAULT NULL,
+  `t_attr10` int(11) DEFAULT NULL,
+  `t_attr10_value` varchar(100) DEFAULT NULL,
+  `t_attr11` int(11) DEFAULT NULL,
+  `t_attr11_value` varchar(100) DEFAULT NULL,
+  `t_attr12` int(11) DEFAULT NULL,
+  `t_attr12_value` varchar(100) DEFAULT NULL,
+  `t_attr13` int(11) DEFAULT NULL,
+  `t_attr13_value` varchar(100) DEFAULT NULL,
+  `t_attr14` int(11) DEFAULT NULL,
+  `t_attr14_value` varchar(100) DEFAULT NULL,
+  `t_attr15` int(11) DEFAULT NULL,
+  `t_attr15_value` varchar(100) DEFAULT NULL,
+  `t_is_valid` enum('0','1') DEFAULT NULL COMMENT '是否有效',
+  `t_add_date` datetime NOT NULL COMMENT '添加时间',
+  `t_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`t_id`),
+  UNIQUE KEY `t_supplier_code` (`t_supplier`,`t_supplier_code`),
+  KEY `location` (`tc_id`,`c_country_id`,`c_state_id`,`c_city_id`,`c_county_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11488 DEFAULT CHARSET=utf8;
+
 /*Table structure for table `tourism_review` */
 
 DROP TABLE IF EXISTS `tourism_review`;
@@ -419,6 +479,16 @@ CREATE TABLE `tourism_tag` (
 DROP TABLE IF EXISTS `tourism_tag_product`;
 
 CREATE TABLE `tourism_tag_product` (
+  `t_id` bigint(19) NOT NULL,
+  `tt_id` int(11) NOT NULL,
+  UNIQUE KEY `t_t_product` (`t_id`,`tt_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Table structure for table `tourism_tag_product_copy` */
+
+DROP TABLE IF EXISTS `tourism_tag_product_copy`;
+
+CREATE TABLE `tourism_tag_product_copy` (
   `t_id` bigint(19) NOT NULL,
   `tt_id` int(11) NOT NULL,
   UNIQUE KEY `t_t_product` (`t_id`,`tt_id`)

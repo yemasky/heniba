@@ -41,34 +41,67 @@ if($verify_result) {//验证成功
 	$trade_status = $_POST['trade_status'];
 
 
-    if($_POST['trade_status'] == 'TRADE_FINISHED') {
+	if($_POST['trade_status'] == 'WAIT_BUYER_PAY') {
+	//该判断表示买家已在支付宝交易管理中产生了交易记录，但没有付款
+	
 		//判断该笔订单是否在商户网站中已经做过处理
 			//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-			//请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
+		    	//请务必判断请求时的price、quantity、seller_id与通知时获取的price、quantity、seller_id为一致的
 			//如果有做过处理，不执行商户的业务程序
-				
-		//注意：
-		//退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
+			
+        echo "success";		//请不要修改或删除
 
         //调试用，写文本函数记录程序运行情况是否正常
         //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
     }
-    else if ($_POST['trade_status'] == 'TRADE_SUCCESS') {
+	else if($_POST['trade_status'] == 'WAIT_SELLER_SEND_GOODS') {
+	//该判断表示买家已在支付宝交易管理中产生了交易记录且付款成功，但卖家没有发货
+	
 		//判断该笔订单是否在商户网站中已经做过处理
 			//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-			//请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
+		    	//请务必判断请求时的price、quantity、seller_id与通知时获取的price、quantity、seller_id为一致的
 			//如果有做过处理，不执行商户的业务程序
-				
-		//注意：
-		//付款完成后，支付宝系统发送该交易状态通知
+			
+        echo "success";		//请不要修改或删除
 
         //调试用，写文本函数记录程序运行情况是否正常
         //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
+    }
+	else if($_POST['trade_status'] == 'WAIT_BUYER_CONFIRM_GOODS') {
+	//该判断表示卖家已经发了货，但买家还没有做确认收货的操作
+	
+		//判断该笔订单是否在商户网站中已经做过处理
+			//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+		    	//请务必判断请求时的price、quantity、seller_id与通知时获取的price、quantity、seller_id为一致的
+			//如果有做过处理，不执行商户的业务程序
+			
+        echo "success";		//请不要修改或删除
+
+        //调试用，写文本函数记录程序运行情况是否正常
+        //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
+    }
+	else if($_POST['trade_status'] == 'TRADE_FINISHED') {
+	//该判断表示买家已经确认收货，这笔交易完成
+	
+		//判断该笔订单是否在商户网站中已经做过处理
+			//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+		    	//请务必判断请求时的price、quantity、seller_id与通知时获取的price、quantity、seller_id为一致的
+			//如果有做过处理，不执行商户的业务程序
+			
+        echo "success";		//请不要修改或删除
+
+        //调试用，写文本函数记录程序运行情况是否正常
+        //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
+    }
+    else {
+		//其他状态判断
+        echo "success";
+
+        //调试用，写文本函数记录程序运行情况是否正常
+        //logResult ("这里写入想要调试的代码变量值，或其他运行的结果记录");
     }
 
 	//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-        
-	echo "success";		//请不要修改或删除
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

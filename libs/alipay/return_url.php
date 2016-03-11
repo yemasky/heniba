@@ -41,7 +41,7 @@ if($verify_result) {//验证成功
 	$trade_status = $_GET['trade_status'];
 
 
-    if($_GET['trade_status'] == 'TRADE_FINISHED' || $_GET['trade_status'] == 'TRADE_SUCCESS') {
+    if($_GET['trade_status'] == 'WAIT_SELLER_SEND_GOODS') {
 		//判断该笔订单是否在商户网站中已经做过处理
 			//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
 			//如果有做过处理，不执行商户的业务程序
@@ -51,6 +51,7 @@ if($verify_result) {//验证成功
     }
 		
 	echo "验证成功<br />";
+	echo "trade_no=".$trade_no;
 
 	//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 	
@@ -62,7 +63,7 @@ else {
     echo "验证失败";
 }
 ?>
-        <title>支付宝即时到账交易接口</title>
+        <title>支付宝纯担保交易接口</title>
 	</head>
     <body>
     </body>

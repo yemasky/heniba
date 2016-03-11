@@ -71,7 +71,6 @@ class BookAction extends \BaseAction {
             default:
                 break;
         }
-        exit();
         header('Cache-Control: no-cache');
         $this->redirect('index.php?model=book&action=success&successCode=' . \Encrypt::instance()->encode($arrayOrderResult[0]));
 
@@ -84,12 +83,34 @@ class BookAction extends \BaseAction {
             $this->redirect('index.php');
         }
         $arrayOrderInfo = \BaseBookOrderService::instance('\BaseBookOrderService')->getOrder(array('o_order_number'=>$successCode));//o_id
-        $payButtom = \Alipay::payButtom($arrayOrderInfo['o_order_number'], '旅游产品', $arrayOrderInfo['o_price_sell'], '', '');
+        $payButtom = \Alipay::payButtom($arrayOrderInfo['o_order_number'], '旅游产品', 0.01, '', '');
         $objResponse -> setTplValue("order", $arrayOrderInfo);
         $objResponse -> setTplValue("payButtom", $payButtom);
         $objResponse -> setTplValue("nav", 'book_success');
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/book/create_book");
+    }
+
+    //confirm_book 确认预订
+    public function ajax_confirm_book($objRequest, $objResponse) {
+        $this->setDisplay();
+        $supplierCode = $this->check_int(\Encrypt::instance()->decode($objRequest->supplierCode));
+        if(empty($supplierCode)) {
+            throw new \Exception('supplierCode is null');
+        }
+        $arrayOrderResult = null;
+        $tour_type = $objRequest->tour_type;
+        switch($tour_type) {
+            case 'tourism':
+                break;
+            case 'hotel':
+                break;
+            case 'hotel':
+                break;
+            default:
+                break;
+        }
+
     }
 
 }
