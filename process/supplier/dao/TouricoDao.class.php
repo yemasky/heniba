@@ -15,5 +15,10 @@ class TouricoDao {
 	public function insertHotel($arrData) {
 		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('tourico_hotel')->insert($arrData, 'INSERT IGNORE');
 	}
+
+	public function getTouricoHotel($pn) {
+		$fileid = '*';
+		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('tourico_hotel')->getList(NULL, $fileid);
+	}
 	
 }

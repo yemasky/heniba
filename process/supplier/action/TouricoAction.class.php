@@ -17,8 +17,6 @@ class TouricoAction extends \BaseAction{
 			case 'config' :
 				$this->getConfig($objRequest, $objResponse);
 				break;
-			case 'allproducts' :
-				$this->getProducts($objRequest, $objResponse);
 			case 'parserdestination' :
 				$this->parserDestination($objRequest, $objResponse);
 				break;
@@ -64,6 +62,11 @@ class TouricoAction extends \BaseAction{
 	protected function insertCountry($objRequest, $objResponse) {
 		$objTouricoTool = new TouricoTool();
 		$objTouricoTool->insertCountryFromTouricoDestination();
+	}
+
+	protected function insertToHotel($objRequest, $objResponse) {
+		$objTouricoTool = new TouricoTool();
+		$objTouricoTool->insertToHotelFromTourico($objRequest, $objResponse);
 	}
 }
 

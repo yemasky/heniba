@@ -162,4 +162,13 @@ class TouricoTool extends \BaseTool {
 		}
 		echo "over.";
 	}
+
+	public function insertToHotelFromTourico($objRequest, $objResponse) {
+		$pn = $objRequest->pn;
+		$list_count = 1000;
+		$conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
+
+		$objTouricoDao = new TouricoDao();
+
+	}
 }
