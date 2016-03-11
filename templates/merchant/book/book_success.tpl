@@ -77,6 +77,7 @@
             </div>
           </div>
         </form>
+        <%$payButtom%>
       </div>
     </div>
   </div>

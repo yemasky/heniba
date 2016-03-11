@@ -73,7 +73,7 @@ class BookAction extends \BaseAction {
         }
         exit();
         header('Cache-Control: no-cache');
-        $this->redirect('index.php?model=book&action=success&successCode=' . \Encrypt::instance()->encode($arrayOrderResult[1]));
+        $this->redirect('index.php?model=book&action=success&successCode=' . \Encrypt::instance()->encode($arrayOrderResult[0]));
 
     }
 
@@ -83,8 +83,10 @@ class BookAction extends \BaseAction {
         if(empty($successCode)) {
             $this->redirect('index.php');
         }
-        $arrayOrderInfo = \BaseBookOrderService::instance('\BaseBookOrderService')->getOrder(array('o_order_number'=>$successCode));
+        $arrayOrderInfo = \BaseBookOrderService::instance('\BaseBookOrderService')->getOrder(array('o_order_number'=>$successCode));//o_id
+        $payButtom = \Alipay::payButtom($arrayOrderInfo['o_order_number'], '旅游产品', $arrayOrderInfo['o_price_sell'], '', '');
         $objResponse -> setTplValue("order", $arrayOrderInfo);
+        $objResponse -> setTplValue("payButtom", $payButtom);
         $objResponse -> setTplValue("nav", 'book_success');
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/book/create_book");
