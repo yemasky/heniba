@@ -26,7 +26,7 @@ class BemyguestDao {
 					. 'businessHoursFrom, businessHoursTo, meetingTime, meetingLocation, meetingLocationTranslated, photos, categories, productTypes, addons,'
 					. 'locations, update_date';
 		}
-		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('bemyguest_tour')->setKey('id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['condition'], $fileid);
+		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('bemyguest_tour')->setKey('id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['where'], $fileid);
 	}
 
 	public function updateBemyguestTour($conditions, $arrarRow) {

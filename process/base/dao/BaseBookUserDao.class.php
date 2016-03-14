@@ -8,7 +8,7 @@
  */
 class BaseBookUserDao {
     public static function getUserInfo($conditions, $fileid = 'u_id, u_email, u_mobile') {
-        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('user')->setKey('u_id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['condition'], $fileid);
+        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('user')->setKey('u_id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['where'], $fileid);
     }
     /*
      * return u_id

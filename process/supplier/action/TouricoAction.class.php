@@ -26,6 +26,9 @@ class TouricoAction extends \BaseAction{
 			case 'insertcountry' :
 				$this->insertCountry($objRequest, $objResponse);
 				break;
+			case 'insertToHotel':
+				$this->insertToHotel($objRequest, $objResponse);
+				break;
 			default :
 				$this->doBase($objRequest, $objResponse);
 				break;
@@ -36,6 +39,7 @@ class TouricoAction extends \BaseAction{
 	 * 首页显示
 	 */
 	protected function doBase($objRequest, $objResponse){
+		return;
 		$objTouricoService = new TouricoService();
 		//$result = $this->objProcess->TouricoService($this->objProcess)->GetDestination('Asia/Far East', 'China');
 		$result = $objTouricoService->GetHotelsByDestination('Africa');

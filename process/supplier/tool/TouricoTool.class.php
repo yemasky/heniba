@@ -164,11 +164,24 @@ class TouricoTool extends \BaseTool {
 	}
 
 	public function insertToHotelFromTourico($objRequest, $objResponse) {
-		$pn = $objRequest->pn;
-		$list_count = 1000;
+		$pn = $objRequest->pn > 0 ? $objRequest->pn : 1;
+		$list_count = 10;
+		$conditions = \DbConfig::$db_query_conditions;
 		$conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
-
 		$objTouricoDao = new TouricoDao();
-
+		$arrayTouricoHotel = $objTouricoDao->getTouricoHotel($conditions);
+		//brand
+		$conditions = \DbConfig::$db_query_conditions;
+		$conditions['where'] = '';
+		$arrayBrand = \BaseHotelDao::instance()->getHotelBrand($conditions);
+		$arrayHotel['hb_id'] = $arrayBrand[0]['hb_id'];
+		print_r($arrayTouricoHotel);
+		print_r(json_decode($arrayTouricoHotel[0]['RoomType'], true));
+		print_r(json_decode($arrayTouricoHotel[0]['Location'], true));
+		print_r(json_decode($arrayTouricoHotel[0]['RefPoints'], true));
+		print_r(json_decode($arrayTouricoHotel[0]['Descriptions'], true));
+		print_r(json_decode($arrayTouricoHotel[0]['Media'], true));
+		print_r(json_decode($arrayTouricoHotel[0]['Amenities'], true));
+		print_r(json_decode($arrayTouricoHotel[0]['Home'], true));
 	}
 }

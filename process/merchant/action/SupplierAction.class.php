@@ -35,7 +35,7 @@ class SupplierAction extends \BaseAction {
         $t_id = $this->check_int($objRequest->id, 'id');
         $checkdate = $this->check_null($objRequest->checkdate, 'checkdate');
         $conditions = \DbConfig::$db_query_conditions;
-        $conditions['condition']['t_id'] = $t_id;
+        $conditions['where']['t_id'] = $t_id;
         $objTourismService = new TourismService();
         $supplierCode = $objTourismService->getTourism($conditions, 't_supplier, t_supplier_code');
         if(!empty($supplierCode)) {

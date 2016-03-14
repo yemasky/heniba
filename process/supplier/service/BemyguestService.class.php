@@ -128,7 +128,7 @@ class BemyguestService{
 
 	public function resolveProductTypesByUuid($uuid) {
 		$conditions = \DbConfig::$db_query_conditions;
-		$conditions['condition']['uuid'] = $uuid;
+		$conditions['where']['uuid'] = $uuid;
 		$objBemyguestDao = new BemyguestDao();
 		$arrayResult = $objBemyguestDao->getBemyguestTour($conditions, 'productTypes');
 		if(!empty($productTypes)) {

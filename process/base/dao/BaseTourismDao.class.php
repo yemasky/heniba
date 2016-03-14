@@ -25,7 +25,7 @@ class BaseTourismDao extends BaseDao{
                 . 't_description_cn, t_images, t_latitude, t_longitude, t_currency, t_price, t_review_count, '
                 . 't_review_average_score, t_supplier, t_supplier_code';
         }
-        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('tourism')->setKey('t_id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['condition'], $fileid);
+        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('tourism')->setKey('t_id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['where'], $fileid);
     }
 
     public function getTourismCount($conditions) {

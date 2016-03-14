@@ -136,7 +136,7 @@ class BemyguestTool extends \BaseTool {
         $objBemyguestDao = new BemyguestDao();
         $BemyguestService = new BemyguestService();
         $conditions = \DbConfig::$db_query_conditions;
-        $conditions['condition'] = "locations = '' OR locations IS NULL OR currency = '' OR currency IS NULL OR minPax = '' OR minPax IS NULL OR maxPax = '' OR maxPax IS NULL";
+        $conditions['where'] = "locations = '' OR locations IS NULL OR currency = '' OR currency IS NULL OR minPax = '' OR minPax IS NULL OR maxPax = '' OR maxPax IS NULL";
         $arrayErrorProduct = $objBemyguestDao->getBemyguestTour($conditions, 'uuid, id');
         //print_r($arrayErrorProduct);
         if(!empty($arrayErrorProduct)) {

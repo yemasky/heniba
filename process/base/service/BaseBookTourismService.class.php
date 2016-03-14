@@ -22,7 +22,7 @@ class BaseBookTourismService extends BaseService {
         }
 
         $conditions = \DbConfig::$db_query_conditions;
-        $conditions['condition'] = array('t_id'=>$supplierCode);
+        $conditions['where'] = array('t_id'=>$supplierCode);
         //取得经销商及经销商的唯一编号
         $arrayTourismSupplier = \merchant\TourismService::instance('\merchant\TourismService')->getTourism($conditions, 't_supplier, t_supplier_code');
         //登录用户

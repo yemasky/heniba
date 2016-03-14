@@ -9,7 +9,7 @@
 class BaseBookUserService extends BaseService {
     public function getUserByCard_no($id_card_no) {
         $conditions = DbConfig::$db_query_conditions;
-        $conditions['condition'] = array('u_id_card_no'=>$id_card_no);
+        $conditions['where'] = array('u_id_card_no'=>$id_card_no);
         return BaseBookUserDao::getUserInfo($conditions);
     }
 

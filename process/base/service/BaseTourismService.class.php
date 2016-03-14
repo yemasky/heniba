@@ -30,7 +30,7 @@ class BaseTourismService extends BaseService {
         $conditions = DbConfig::$db_query_conditions;
         switch ($arraySupplierCode['t_supplier']) {
             case 'bemyguest':
-                $conditions['condition']['uuid'] = $arraySupplierCode['t_supplier_code'];
+                $conditions['where']['uuid'] = $arraySupplierCode['t_supplier_code'];
                 $objBemyguestDao = new \supplier\BemyguestDao();
                 $arraySupplierTourism = $objBemyguestDao->getBemyguestTour($conditions);
                 break;

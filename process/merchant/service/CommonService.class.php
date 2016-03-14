@@ -93,7 +93,7 @@ class CommonService extends \BaseService {
     public static function getMerchantRate($m_id) {
         if(!empty(self::$arrayMerchantRate[$m_id])) return self::$arrayMerchantRate[$m_id];
         $conditions = \DbConfig::$db_query_conditions;
-        $conditions['condition']['m_id'] = $m_id;
+        $conditions['where']['m_id'] = $m_id;
         $fileid = 'm_rate_tourism, m_rate_hotel, m_rate_air_ticket, m_rate_tourism_sell, m_rate_hotel_sell, m_rate_air_ticket_sell';
         $objMerchantDao = new MerchantDao();
         $arrarRates = $objMerchantDao->DBCache(0)->getMerchant($conditions, $fileid);

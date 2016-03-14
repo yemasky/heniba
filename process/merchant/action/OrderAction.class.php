@@ -37,7 +37,7 @@ class OrderAction extends \BaseAction {
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
         $objHotelService = new HotelService();
-        $count = $objHotelService->getHotelCount($conditions['condition']);
+        $count = $objHotelService->getHotelCount($conditions['where']);
         $arrayListData = $objHotelService->getHotel($conditions, null, $objResponse->arrUserInfo['m_id']);
         //
         $objResponse -> nav = 'index';
@@ -54,7 +54,7 @@ class OrderAction extends \BaseAction {
     protected function hotel_product($objRequest, $objResponse) {
         $t_id = $this->check_int($objRequest->id, 'id');
         $conditions = \DbConfig::$db_query_conditions;
-        $conditions['condition']['t_id'] = $t_id;
+        $conditions['where']['t_id'] = $t_id;
         $objTourismService = new TourismService();
         $supplierCode = $objTourismService->getHotel($conditions, 't_supplier, t_supplier_code');
         if(!empty($supplierCode)) {
@@ -62,7 +62,7 @@ class OrderAction extends \BaseAction {
         }
 
         $conditions = \DbConfig::$db_query_conditions;
-        $conditions['condition'] = "t_id > ".($t_id - 5)." AND t_id < " . ($t_id + 50) . ' AND t_id != ' . $t_id;
+        $conditions['where'] = "t_id > ".($t_id - 5)." AND t_id < " . ($t_id + 50) . ' AND t_id != ' . $t_id;
         $conditions['limit'] = "0, 10";
         $relation_tourism = $objTourismService->getTourism($conditions, 't_id, t_title, t_title_cn, t_images');
         $objResponse -> setTplValue('tourism_supplier_tpl', 'tour_' . $supplierCode[0]['t_supplier']);

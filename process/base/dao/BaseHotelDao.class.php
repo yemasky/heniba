@@ -23,12 +23,23 @@ class BaseHotelDao extends BaseDao{
         if(empty($fileid)) {
             $fileid = '*';
         }
-        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('hotel')->setKey('h_id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['condition'], $fileid);
+        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('hotel')->setKey('h_id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['where'], $fileid);
     }
 
     public function getHotelCount($conditions) {
         $fileid = 'COUNT(h_id)';
         return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('hotel')->getOne($conditions, $fileid);
+    }
+
+    public function getHotelBrand($conditions, $fileid = NULL) {
+        if(empty($fileid)) {
+            $fileid = '*';
+        }
+        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('hotel_brand')->setKey('hb_id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['where'], $fileid);
+    }
+
+    public function insertHotelBrand($arrData) {
+        return DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('hotel_brand')->insert($arrData, 'INSERT IGNORE')->getInsertId();
     }
 
 }

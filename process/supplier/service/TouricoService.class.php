@@ -57,7 +57,7 @@ class TouricoService{
 	//
 	public function parserXml($arrayResult) {
 		if($arrayResult['httpcode'] == 200 && empty($arrayResult['error'])) {
-			$objXML = new XML();
+			$objXML = new \XML();
 			$arrayXML = $objXML->parseToArray($arrayResult['result']);
 			return $arrayXML;
 		} else {
