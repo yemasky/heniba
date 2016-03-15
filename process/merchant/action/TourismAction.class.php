@@ -36,6 +36,7 @@ class TourismAction extends \BaseAction {
         $list_count = empty($list_count) ? 20 : $list_count;
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
+        $conditions['where'] = null;
         $objTourismService = new TourismService();
         $tourismCount = $objTourismService->getTourismCount($conditions['where']);
         $arrayTourism = $objTourismService->getTourism($conditions, null, $objResponse->arrUserInfo['m_id']);
@@ -44,6 +45,7 @@ class TourismAction extends \BaseAction {
         $objResponse -> setTplValue('tourism', $arrayTourism);
         $objResponse -> setTplValue('page', page($pn, ceil($tourismCount/$list_count)));
         $objResponse -> setTplValue('pn', $pn);
+        $objResponse -> setTplValue('model', 'tourism');
         $objResponse -> setTplValue('show_pages', 10);
         $objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);
         //设置Meta

@@ -69,8 +69,10 @@ class TouricoAction extends \BaseAction{
 	}
 
 	protected function insertToHotel($objRequest, $objResponse) {
+		$pn = $objRequest->pn > 0 ? $objRequest->pn : 1;
 		$objTouricoTool = new TouricoTool();
 		$objTouricoTool->insertToHotelFromTourico($objRequest, $objResponse);
+		$this->redirect('http://localhost/heniba/scripts/www/supplier.php?model=tourico&action=insertToHotel&pn=' . ($pn + 1));
 	}
 }
 

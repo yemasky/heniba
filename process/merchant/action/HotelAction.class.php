@@ -36,41 +36,43 @@ class HotelAction extends \BaseAction {
         $list_count = empty($list_count) ? 20 : $list_count;
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
+        $conditions['where'] = null;
         $objHotelService = new HotelService();
         $count = $objHotelService->getHotelCount($conditions['where']);
         $arrayListData = $objHotelService->getHotel($conditions, null, $objResponse->arrUserInfo['m_id']);
         //
         $objResponse -> nav = 'index';
-        $objResponse -> setTplValue('hotel', $arrayListData);
+        $objResponse -> setTplValue('hotel_list', $arrayListData);
         $objResponse -> setTplValue('page', page($pn, ceil($count/$list_count)));
         $objResponse -> setTplValue('pn', $pn);
+        $objResponse -> setTplValue('model', 'hotel');
         $objResponse -> setTplValue('show_pages', 10);
         $objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);
         //设置Meta
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
-        $objResponse -> setTplName("merchant/tourism_list");
+        $objResponse -> setTplName("merchant/hotel_list");
     }
 
     protected function hotel_product($objRequest, $objResponse) {
-        $t_id = $this->check_int($objRequest->id, 'id');
+        $h_id = $this->check_int($objRequest->id, 'id');
         $conditions = \DbConfig::$db_query_conditions;
-        $conditions['where']['t_id'] = $t_id;
-        $objTourismService = new TourismService();
-        $supplierCode = $objTourismService->getHotel($conditions, 't_supplier, t_supplier_code');
+        $conditions['where']['h_id'] = $h_id;
+        $objHotelService = new HotelService();
+        $supplierCode = $objHotelService->getHotel($conditions, 'h_supplier, h_supplier_code');
         if(!empty($supplierCode)) {
-            \BaseTourismService::instance()->tourismTemplace($supplierCode[0], $objResponse, $objResponse->arrUserInfo['m_id']);
+            \BaseHotelService::instance()->hotelTemplace($supplierCode[0], $objResponse, $objResponse->arrUserInfo['m_id']);
         }
 
         $conditions = \DbConfig::$db_query_conditions;
-        $conditions['where'] = "t_id > ".($t_id - 5)." AND t_id < " . ($t_id + 50) . ' AND t_id != ' . $t_id;
+        $conditions['where'] = "t_id > ".($h_id - 5)." AND t_id < " . ($h_id + 50) . ' AND t_id != ' . $h_id;
         $conditions['limit'] = "0, 10";
-        $relation_tourism = $objTourismService->getTourism($conditions, 't_id, t_title, t_title_cn, t_images');
-        $objResponse -> setTplValue('tourism_supplier_tpl', 'tour_' . $supplierCode[0]['t_supplier']);
-        $objResponse -> setTplValue('t_id', $t_id);
-        $objResponse -> setTplValue('supplierCode', \Encrypt::instance()->encode($t_id));
+        $relation_hotel = $objHotelService->getHotel($conditions, 'h_id, h_name, h_images');
+        $objResponse -> setTplValue('hotel_supplier_tpl', 'hotel_' . $supplierCode[0]['h_supplier']);
+        $objResponse -> setTplValue('h_id', $h_id);
+        $objResponse -> setTplValue('supplierCode', \Encrypt::instance()->encode($h_id));
         $objResponse -> setTplValue('today', substr(getDateTime(), 0, 10));
-        $objResponse -> setTplValue('relation_tourism', $relation_tourism);
-        $objResponse -> setTplName("merchant/tourism_product");
+        $objResponse -> setTplValue('relation_hotel', $relation_hotel);
+        $objResponse -> setTplName("merchant/hotel_product");
     }
 
 }

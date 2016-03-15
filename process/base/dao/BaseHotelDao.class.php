@@ -39,7 +39,33 @@ class BaseHotelDao extends BaseDao{
     }
 
     public function insertHotelBrand($arrData) {
-        return DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('hotel_brand')->insert($arrData, 'INSERT IGNORE')->getInsertId();
+        return DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('hotel_brand')->insert($arrData)->getInsertId();
+    }
+
+    public function getCountry($conditions, $fileid = NULL) {
+        if(empty($fileid)) {
+            $fileid = '*';
+        }
+        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('country')->setKey('c_id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['where'], $fileid);
+    }
+
+    public function insertCountry($arrData) {
+        return DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('country')->insert($arrData)->getInsertId();
+    }
+
+    public function getAttribute($conditions, $fileid = NULL) {
+        if(empty($fileid)) {
+            $fileid = '*';
+        }
+        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('hotel_attribute')->setKey('ha_id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['where'], $fileid);
+    }
+
+    public function insertAttribute($arrData) {
+        return DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('hotel_attribute')->insert($arrData)->getInsertId();
+    }
+
+    public function insertAttributeValue($arrData) {
+        return DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('hotel_attribute_value')->insert($arrData, 'INSERT IGNORE')->getInsertId();
     }
 
 }

@@ -46,29 +46,22 @@
           </tr>
           </thead>
           <tbody>
-          <%section name=i loop=$tourism%>
+          <%section name=i loop=$hotel_list%>
           <tr>
-              <td><%$tourism[i].t_id%></td>
+              <td><%$hotel_list[i].h_id%></td>
               <td width="175">
-                  <a href="index.php?model=tourism&action=product&id=<%$tourism[i].t_id%>" target="_blank">
-                  <div class="am-slider am-slider-default" data-am-flexslider id="img-slider-<%$tourism[i].t_id%>">
-                      <ul class="am-slides" id="img-<%$tourism[i].t_id%>">
+                  <a href="index.php?model=<%$model%>&action=product&id=<%$hotel_list[i].h_id%>" target="_blank">
+                  <div class="am-slider am-slider-default" data-am-flexslider id="img-slider-<%$hotel_list[i].h_id%>">
+                      <ul class="am-slides" id="img-<%$hotel_list[i].h_id%>">
+                          <li><img src="<%$hotel_list[i].h_images%>" /> </li>
                       </ul>
                   </div>
                   </a>
-                  <script language="JavaScript">
-                      obj = jQuery.parseJSON('<%$tourism[i].t_images%>');
-                      img = '';
-                      $.each(obj, function(i, item){
-                          img += '<li><img src="'+item+'"></li>';
-                          $('#img-<%$tourism[i].t_id%>').html(img);
-                      });
-                  </script>
-                  </td><td><%$tourism[i].t_title%><br><%$tourism[i].t_title_cn%></td>
-              <td><a href="#"><%$tourism[i].t_currency%>:(原价)<%$tourism[i].wholesale%> (售价)<%$tourism[i].sell%></a></td>
+                  </td><td><%$hotel_list[i].h_name%></td>
+              <td><a href="#"><%$hotel_list[i].h_currency%>:(原价)<%$hotel_list[i].wholesale%> (售价)<%$hotel_list[i].sell%></a></td>
               <td><span class="am-badge am-badge-success">+20</span></td>
               <td>
-                  <a href="index.php?model=tourism&action=product&id=<%$tourism[i].t_id%>" target="_blank">
+                  <a href="index.php?model=hotel&action=product&id=<%$hotel_list[i].h_id%>" target="_blank">
                   <div class="am-dropdown" data-am-dropdown>
                       <button class="am-btn am-btn-warning am-round" type="button"><i class="am-icon-shopping-cart"></i>　预 定</button>
                   </div>

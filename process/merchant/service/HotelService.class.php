@@ -8,16 +8,16 @@ namespace merchant;
 
 class HotelService extends \BaseService {
 	public function getHotel($conditions, $fileid = NULL, $m_id = null) {
-        $arrayTourism = \BaseHotelDao::instance()->DBCache(1800)->getHotel($conditions, $fileid);
+        $arrayhotel = \BaseHotelDao::instance()->getHotel($conditions, $fileid);
         if($m_id > 0) {
-            $tourism_num = count($arrayTourism);
-            for($i = 0; $i < $tourism_num; $i++) {
-                $arrayRatePrice = CommonService::getMerchantRatePrice($m_id, $arrayTourism[$i]['t_price'], 'tourism');
-                $arrayTourism[$i]['source'] = $arrayRatePrice['source'];
-                $arrayTourism[$i]['sell'] = $arrayRatePrice['sell'];
+            $hotel_num = count($arrayhotel);
+            for($i = 0; $i < $hotel_num; $i++) {
+                $arrayRatePrice = CommonService::getMerchantRatePrice($m_id, $arrayhotel[$i]['h_price'], 'hotel');
+                $arrayhotel[$i]['wholesale'] = $arrayRatePrice['wholesale'];
+                $arrayhotel[$i]['sell'] = $arrayRatePrice['sell'];
             }
         }
-        return $arrayTourism;
+        return $arrayhotel;
     }
 
     public function getHotelCount($conditions) {

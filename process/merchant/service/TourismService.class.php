@@ -13,7 +13,7 @@ class TourismService extends \BaseService {
             $tourism_num = count($arrayTourism);
             for($i = 0; $i < $tourism_num; $i++) {
                 $arrayRatePrice = CommonService::getMerchantRatePrice($m_id, $arrayTourism[$i]['t_price'], 'tourism');
-                $arrayTourism[$i]['source'] = $arrayRatePrice['source'];
+                $arrayTourism[$i]['wholesale'] = $arrayRatePrice['wholesale'];//批发价
                 $arrayTourism[$i]['sell'] = $arrayRatePrice['sell'];
             }
         }

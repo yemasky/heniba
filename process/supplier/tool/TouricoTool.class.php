@@ -168,20 +168,99 @@ class TouricoTool extends \BaseTool {
 		$list_count = 10;
 		$conditions = \DbConfig::$db_query_conditions;
 		$conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
+		$conditions['where'] = '';
 		$objTouricoDao = new TouricoDao();
 		$arrayTouricoHotel = $objTouricoDao->getTouricoHotel($conditions);
+		if(empty($arrayTouricoHotel)) {
+			exit('over!');
+		}
 		//brand
 		$conditions = \DbConfig::$db_query_conditions;
-		$conditions['where'] = '';
-		$arrayBrand = \BaseHotelDao::instance()->getHotelBrand($conditions);
-		$arrayHotel['hb_id'] = $arrayBrand[0]['hb_id'];
-		print_r($arrayTouricoHotel);
+		$num = count($arrayTouricoHotel);
+		for($i = 0; $i < $num; $i++) {
+			//brand
+			$arrayTouricoHotel[$i]['brand'] = trim($arrayTouricoHotel[$i]['brand']);
+			$conditions['where'] = array('hb_name'=>$arrayTouricoHotel[$i]['brand']);
+			$arrayBrand = \BaseHotelDao::instance()->getHotelBrand($conditions);
+			if(empty($arrayBrand) && !empty($arrayTouricoHotel[$i]['brand'])) {
+				$arrayBrandData['hb_name'] = $arrayTouricoHotel[$i]['brand'];
+				$arrayBrand[0]['hb_id']  = \BaseHotelDao::instance()->insertHotelBrand($arrayBrandData);
+			}
+			if(isset($arrayBrand[0]['hb_id']) && $arrayBrand[0]['hb_id'] > 0)
+				$arrayHotel['hb_id'] = $arrayBrand[0]['hb_id'];
+			//c_country_id
+			$arrayLocation = json_decode($arrayTouricoHotel[$i]['Location'], true);
+			$conditions['where'] = array('c_name'=>$arrayLocation[0]['country']);
+			$arrayCountry = \BaseHotelDao::instance()->getCountry($conditions);
+			if(empty($arrayCountry)) {
+				throw new \Exception('$arrayCountry country is null');
+			}
+			$arrayHotel['c_country_id'] = $arrayCountry[0]['c_id'];
+			//c_city_id
+			$conditions['where'] = array('c_name'=>$arrayLocation[0]['city']);
+			$arrayCountry = \BaseHotelDao::instance()->getCountry($conditions);
+			if(empty($arrayCountry)) {
+				throw new \Exception('$arrayCountry city is null');
+			}
+			$arrayHotel['c_city_id'] = $arrayCountry[0]['c_id'];
+			//h_rooms
+			$arrayHotel['h_rooms'] = $arrayTouricoHotel[$i]['rooms'];
+			//h_check_in h_check_out
+			$arrayHotel['h_check_in'] = $arrayTouricoHotel[$i]['checkInTime'];
+			$arrayHotel['h_check_out'] = $arrayTouricoHotel[$i]['checkOutTime'];
+			$arrayHotel['h_currency'] = $arrayTouricoHotel[$i]['currency'];
+			$arrayHotel['h_images'] = $arrayTouricoHotel[$i]['thumb'];
+			$arrayHotel['h_phone'] = $arrayTouricoHotel[$i]['hotelPhone'];
+			$arrayHotel['h_fax'] = $arrayTouricoHotel[$i]['hotelFax'];
+			$arrayHotel['h_address'] = addslashes($arrayLocation[0]['address']);
+			$arrayHotel['h_zip'] = $arrayLocation[0]['zip'];
+			$arrayHotel['h_start_level'] = $arrayTouricoHotel[$i]['starLevel'];
+			$arrayHotel['h_rank'] = $arrayTouricoHotel[$i]['ranking'];
+			$arrayHotel['h_latitude'] = $arrayLocation[0]['latitude'];
+			$arrayHotel['h_longitude'] = $arrayLocation[0]['longitude'];
+			//PropertyType
+			$arrayPropertyType = json_decode($arrayTouricoHotel[$i]['Home'], true);
+			$arrayHotel['h_hotel_type'] = $arrayPropertyType['PropertyType'][0];
+			$arrayHotel['h_add_date'] = getDateTime();
+			$arrayHotel['h_supplier'] = 'tourico';
+			$arrayHotel['h_supplier_code'] = $arrayTouricoHotel[$i]['hotelID'];
+			$arrayDescription = json_decode($arrayTouricoHotel[$i]['Descriptions'], true);
+			if(isset($arrayDescription[0]['FreeTextShortDescription'][0]['desc'])) {
+				$arrayHotel['h_description'] = addslashes($arrayDescription[0]['FreeTextShortDescription'][0]['desc']);
+			}
+			$arrayHotel['h_name'] = addslashes($arrayTouricoHotel[$i]['name']);
+			$h_id = \BaseHotelDao::instance()->insertHotel($arrayHotel);
+
+			$arrayAttributeValue = json_decode($arrayTouricoHotel[$i]['Amenities'], true);
+			$conditions['where'] = array('ha_name'=>'Amenityes');
+			$arrayAttribute = \BaseHotelDao::instance()->getAttribute($conditions);
+			if(empty($arrayAttribute)) {
+				$ha_id = \BaseHotelDao::instance()->insertAttribute(array('ha_name'=>'Amenityes'));
+			} else {
+				$ha_id = $arrayAttribute[0]['ha_id'];
+			}
+			//insert hotel_attribute_value
+			$attr_num = count($arrayAttributeValue[0]['Amenity']);
+			$arrayAttributeData['h_id'] = $h_id;
+			$arrayAttributeData['ha_id'] = $ha_id;
+			//echo $attr_num;
+			//print_r($arrayAttributeValue[0]['Amenity']);
+			for($j = 0; $j < $attr_num; $j++) {
+				$arrayAttributeData['hav_value'] = addslashes($arrayAttributeValue[0]['Amenity'][$j]['name']);
+				//echo $arrayAttributeData['hav_value'] . "<br>\r\n";
+				\BaseHotelDao::instance()->insertAttributeValue($arrayAttributeData);
+			}
+
+
+		}
+
+		/*print_r($arrayTouricoHotel);
 		print_r(json_decode($arrayTouricoHotel[0]['RoomType'], true));
 		print_r(json_decode($arrayTouricoHotel[0]['Location'], true));
 		print_r(json_decode($arrayTouricoHotel[0]['RefPoints'], true));
 		print_r(json_decode($arrayTouricoHotel[0]['Descriptions'], true));
 		print_r(json_decode($arrayTouricoHotel[0]['Media'], true));
 		print_r(json_decode($arrayTouricoHotel[0]['Amenities'], true));
-		print_r(json_decode($arrayTouricoHotel[0]['Home'], true));
+		print_r(json_decode($arrayTouricoHotel[0]['Home'], true));*/
 	}
 }

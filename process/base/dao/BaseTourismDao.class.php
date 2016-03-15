@@ -33,4 +33,6 @@ class BaseTourismDao extends BaseDao{
         return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('tourism')->getOne($conditions, $fileid);
     }
 
+
+
 }
