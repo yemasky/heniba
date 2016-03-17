@@ -18,6 +18,9 @@ class HotelAction extends \BaseAction {
             case 'product':
                 $this->hotel_product($objRequest, $objResponse);
                 break;
+            case 'ajax_get_place':
+                $this->ajax_getPlace($objRequest, $objResponse);
+                break;
             default:
                 $this->doBase($objRequest, $objResponse);
                 break;
@@ -74,6 +77,14 @@ class HotelAction extends \BaseAction {
         $objResponse -> setTplValue('today', substr(getDateTime(), 0, 10));
         $objResponse -> setTplValue('relation_hotel', $relation_hotel);
         $objResponse -> setTplName("merchant/hotel_product");
+    }
+
+    protected function ajax_getPlace($objRequest, $objResponse) {
+        $this->setDisplay();
+        $keywork = $objRequest->keywork;
+        if(!empty($keywork)) {
+
+        }
     }
 
 }

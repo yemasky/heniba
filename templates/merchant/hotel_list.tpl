@@ -20,9 +20,7 @@
 .am-popover{background:#999; border:1px solid #CCC;}
 
 body,form,ul,li,input{margin:0;padding:0;}
-body{font:12px/1.5 Arial;}
-.title{padding:0;margin:10px 0;font:700 18px/1.5 \5fae\8f6f\96c5\9ed1;text-align:center;}
-.title a{font:400 14px/1.5 Tahoma;margin-left:20px;}
+
 #search input{background:#FFF url(http://img02.taobaocdn.com/tps/i2/T122NIXoBAXXXXXXXX-200-200.png) 0 0 no-repeat;}
 #search{width:350px;margin:20px auto 0;border:1px solid #C4E6F1;}
 #search form{color:#666;border:2px solid #78B1C8;}
@@ -58,7 +56,7 @@ YUI({
     });
     
     //校验
-    Y.one('#J_Search').on('submit', function(e) {
+    Y.one('#form-book').on('submit', function(e) {
         e.halt();
         var rDate    = /^((19|2[01])\d{2})-(0?[1-9]|1[012])-(0?[1-9]|[12]\d|3[01])$/;
             oDepDate = Y.one('#J_DepDate'),
@@ -118,15 +116,7 @@ YUI({
     </ul>
 	<%/if%>
 
-<div id="search">
-    <form id="J_Search" target="_blank">
-        <ul>
-            <li><label class="tit" for="J_DepDate">出发时间：</label><input id="J_DepDate" type="text" class="f-text" value="" /></li>
-            <li><label class="tit" for="J_EndDate">返程时间：</label><input id="J_EndDate" type="text" class="f-text" value="" /></li>
-            <li><label class="tit"></label><input id="J_search_btn" type="submit" class="f-btn" value="" /></li>
-        </ul>
-    </form>
-</div>
+
 
     <div class="am-g">
       <div class="am-u-sm-12">
@@ -142,9 +132,9 @@ YUI({
                           </div>
                           <div class="am-input-group am-input-group-sm am-u-sm-6">
                               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 入住时间</span>
-                              <input type="text" readonly placeholder="2016-03-16" value="2016-03-22" class="am-form-field" name="arrivalDate">
+                              <input type="text" readonly placeholder="2016-03-16" value="2016-03-22" class="am-form-field" name="arrivalDate" id="J_DepDate">
                               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 退房时间</span>
-                              <input type="text" readonly placeholder="2016-03-16" value="2016-03-22" class="am-form-field" name="arrivalDate">
+                              <input type="text" readonly placeholder="2016-03-16" value="2016-03-22" class="am-form-field" name="arrivalDate" id="J_EndDate">
                           </div>
                       </div>
                       <div class="am-form-group">
@@ -224,10 +214,13 @@ YUI({
 $(function() {
   var place = $('#place');
   place.keyup(function(){
-	 place.popover({
-		trigger: 'focus',
-		content: ''
-	  }).popover('open');
+	  $.getJSON('index.php?model=hotel&action=ajax_get_place', function(result){
+		  	place.popover({
+				trigger: 'focus',
+				content: ''
+			  }).popover('open');
+	   });
+	 
   
   });
 });
