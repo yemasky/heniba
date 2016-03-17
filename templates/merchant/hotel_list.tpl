@@ -3,6 +3,7 @@
 <head>
   <%include file="merchant/inc/head.tpl"%>
   <link rel="stylesheet" href="<%$__RESOURCE%>assets/css/admin.css">
+  <link rel="stylesheet" href="<%$__RESOURCE%>assets/css/trip-calendar.css">
     <!--[if lt IE 9]>
     <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.1.11.1.js"></script>
     <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
@@ -14,17 +15,96 @@
     <!--<![endif]-->
     <script src="<%$__RESOURCE%>assets/js/amazeui.min.js"></script>
     <script src="<%$__RESOURCE%>assets/js/app.js"></script>
+<style type="text/css">
+.am-popover-inner{background:#FFF;}
+.am-popover{background:#999; border:1px solid #CCC;}
 
+body,form,ul,li,input{margin:0;padding:0;}
+body{font:12px/1.5 Arial;}
+.title{padding:0;margin:10px 0;font:700 18px/1.5 \5fae\8f6f\96c5\9ed1;text-align:center;}
+.title a{font:400 14px/1.5 Tahoma;margin-left:20px;}
+#search input{background:#FFF url(http://img02.taobaocdn.com/tps/i2/T122NIXoBAXXXXXXXX-200-200.png) 0 0 no-repeat;}
+#search{width:350px;margin:20px auto 0;border:1px solid #C4E6F1;}
+#search form{color:#666;border:2px solid #78B1C8;}
+#search ul{padding:10px 20px;vertical-align:top;}
+#search li{padding:5px 0;list-style:none;line-height:25px;zoom:1;}
+#search li:after{content:".";clear:both;display:block;height:0;	visibility:hidden;}
+#search label,#search input,#search span{float:left;}
+#search .tit{width:60px;min-height:25px;height:auto!important;height:25px;}
+#search .f-text{padding:3px;width:179px;height:18px;color:#666;line-height:18px;font-family:inherit;border-color:#AFAFAF #DCDCDC #DCDCDC #AFAFAF;border-width:0 1px 1px 0;background-position:0 -100px;}
+#search .f-btn{border:0;width:85px;height:31px;cursor:pointer;}
+#search .f-btn:hover{background-position:-86px 0;}
+</style>
+<script src="<%$__RESOURCE%>assets/js/yui-min.js"></script>
+<script language="javascript">
+YUI({
+    modules: {
+        'trip-calendar': {
+            fullpath: '<%$__RESOURCE%>assets/js/trip-calendar.js',
+            type    : 'js',
+            requires: ['<%$__RESOURCE%>assets/css/trip-calendar-css']
+        },
+        'trip-calendar-css': {
+            fullpath: '<%$__RESOURCE%>assets/css/trip-calendar.css',
+            type    : 'css'
+        }
+    }
+}).use('trip-calendar', function(Y) {
+    
+    var oCal = new Y.TripCalendar({
+        minDate         : new Date,     //最小时间限制
+        triggerNode     : '#J_DepDate', //第一个触节点
+        finalTriggerNode: '#J_EndDate'  //最后一个触发节点
+    });
+    
+    //校验
+    Y.one('#J_Search').on('submit', function(e) {
+        e.halt();
+        var rDate    = /^((19|2[01])\d{2})-(0?[1-9]|1[012])-(0?[1-9]|[12]\d|3[01])$/;
+            oDepDate = Y.one('#J_DepDate'),
+            oEndDate = Y.one('#J_EndDate'),
+            sDepDate = oDepDate.get('value'),
+            sEndDate = oEndDate.get('value'), 
+            aMessage = ['请选择出发日期', '请选择返程日期', '返程时间不能早于出发时间，请重新选择', '日期格式错误'],
+            iError   = -1;   
+            switch(!0) {
+                case !sDepDate:
+                    oDepDate.focus();
+                    iError = 0;
+                    break;
+                case !rDate.test(sDepDate):
+                    oDepDate.focus();
+                    iError = 3;
+                    break;
+                case !sEndDate:
+                    oEndDate.focus();
+                    iError = 1;
+                    break;
+                case !rDate.test(sEndDate):
+                    oEndDate.focus();
+                    iError = 3;
+                    break;
+                case sDepDate.replace(/-/g, '') > sEndDate.replace(/-/g, ''):
+                    oEndDate.focus();
+                    iError = 2;
+                    break;
+            };
+            if(iError > -1) {
+                this.set('message', aMessage[iError]).showMessage();                
+            }
+            else {
+                alert('开始时间：' + sDepDate + '\n返程时间：' + sEndDate);
+            }
+    }, oCal);
+});
+</script>
 </head>
 <body>
 <!--[if lte IE 9]>
 <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，现在网站暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
   以获得更好的体验！</p>
 <![endif]-->
-<script language="JavaScript">
-    var obj;
-    var img
-</script>
+
 <div class="admin-content">
     <div class="am-cf am-padding">
       <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">管理模块</strong> / <small>旅游产品</small></div>
@@ -38,7 +118,15 @@
     </ul>
 	<%/if%>
 
-
+<div id="search">
+    <form id="J_Search" target="_blank">
+        <ul>
+            <li><label class="tit" for="J_DepDate">出发时间：</label><input id="J_DepDate" type="text" class="f-text" value="" /></li>
+            <li><label class="tit" for="J_EndDate">返程时间：</label><input id="J_EndDate" type="text" class="f-text" value="" /></li>
+            <li><label class="tit"></label><input id="J_search_btn" type="submit" class="f-btn" value="" /></li>
+        </ul>
+    </form>
+</div>
 
     <div class="am-g">
       <div class="am-u-sm-12">
@@ -48,47 +136,44 @@
               <form method="post" action="" id="form-book" class="am-form am-form-horizontal">
                   <div class="am-panel-bd am-padding-bottom-0 am-margin-0">
                       <div class="am-form-group">
-                          <div class="am-input-group am-input-group-sm am-u-md-3 am-padding-left-0 am-padding-right-0">
-                              <span id="currency" class="am-input-group-label am-icon-rmb"> 酒店名称地址</span>
-                              <input type="text" readonly="" class="am-form-field am-input-sm" value="" id="product_all">
-                              <span class="am-input-group-label">总共</span>
+                          <div class="am-input-group am-input-group-sm am-u-md-6">
+                              <span  class="am-input-group-label am-icon-home"> 地方、酒店名称</span>
+                              <input id="place" type="text" class="am-form-field am-input-sm" value="">
                           </div>
-                          <label for="arrivalDate" class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm"></label>
-                          <div class="am-input-group am-input-group-sm am-u-sm-3">
-                              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 入住日期</span>
-                              <input type="text" readonly="" placeholder="2016-03-16" value="2016-03-22" id="arrivalDate" class="am-form-field" name="arrivalDate">
-                          </div>
-                          <div class="am-input-group am-input-group-sm am-u-sm-3">
-                              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 入住日期</span>
-                              <input type="text" readonly="" placeholder="2016-03-16" value="2016-03-22" id="arrivalDate" class="am-form-field" name="arrivalDate">
-                          </div>
-                          <div class="am-form-group am-btn-group">
-                              <div class="am-input-group am-input-group-sm am-form-select am-u-sm-4 am-padding-0">
-                                  <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i> 人数</span>
-                                  <select onchange="setProductPrice($('#arrivalDate').val(), 0)" id="pax_0" class="am-form-field am-input-sm" name="pax">
-                                      <option value="1">1 人</option>
-                                      <option value="2">2 人</option>
-                                  </select>
-                              </div>
-                              <div class="am-input-group am-input-group-sm am-u-md-6 am-padding-left-0 am-padding-right-xl">
-                                  <span id="currency" class="am-input-group-label am-icon-rmb"> CNY</span>
-                                  <input type="text" readonly="" class="am-form-field am-input-sm" value="" id="product_0">
-                                  <span class="am-input-group-label">每人</span>
-                              </div>
+                          <div class="am-input-group am-input-group-sm am-u-sm-6">
+                              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 入住时间</span>
+                              <input type="text" readonly placeholder="2016-03-16" value="2016-03-22" class="am-form-field" name="arrivalDate">
+                              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 退房时间</span>
+                              <input type="text" readonly placeholder="2016-03-16" value="2016-03-22" class="am-form-field" name="arrivalDate">
                           </div>
                       </div>
-                  </div>
-                  <div class="am-panel-bd am-cf">
-                      <div class="am-g am-margin-left-0 am-padding-bottom">
-                          <div class="am-u-sm-7">
+                      <div class="am-form-group">
+                      	<div class="am-input-group am-input-group-sm am-form-select am-u-sm-2">
+                              <span class="am-input-group-label"><i class="am-icon-bed am-icon-fw"></i> 客房</span>
+                              <select onchange="setProductPrice($('#arrivalDate').val(), 0)" id="pax_0" class="am-form-field am-input-sm" name="pax">
+                                  <option value="1">1 人</option>
+                                  <option value="2">2 人</option>
+                              </select>
                           </div>
-                          <div class="am-u-sm-6 am-padding-left-0 am-padding-right-0">
-
+                          <div class="am-input-group am-input-group-sm am-form-select am-u-sm-2">
+                              <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i> 成人</span>
+                              <select onchange="setProductPrice($('#arrivalDate').val(), 0)" id="pax_0" class="am-form-field am-input-sm" name="pax">
+                                  <option value="1">1 人</option>
+                                  <option value="2">2 人</option>
+                              </select>
                           </div>
-                      </div>
-
-                      <div data-am-dropdown="" class="am-cf am-padding-right">
-                          <button type="button" id="order-popup-button" class="am-btn am-btn-warning am-round am-fr"><i class="am-icon-shopping-cart"></i>&#12288;预&#12288;定</button>
+                          <div class="am-input-group am-input-group-sm am-form-select am-u-sm-2">
+                              <span class="am-input-group-label"><i class="am-icon-child am-icon-fw"></i> 儿童</span>
+                              <select onchange="setProductPrice($('#arrivalDate').val(), 0)" id="pax_0" class="am-form-field am-input-sm" name="pax">
+                                  <option value="1">1 人</option>
+                                  <option value="2">2 人</option>
+                              </select>
+                          </div>
+                          <div class="am-input-group am-input-group-sm am-u-md-6 am-padding-left-0 am-padding-right-xl">
+                              <div data-am-dropdown="" class="am-cf am-padding-right">
+                                  <button type="button" id="order-popup-button" class="am-btn am-btn-warning am-round am-fr"><i class="am-icon-shopping-cart"></i>&#12288;查&#12288;看</button>
+                              </div>
+                          </div>
                       </div>
                   </div>
               </form>
@@ -135,5 +220,18 @@
       <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
     </footer>
   </div>
+<script language="javascript">
+$(function() {
+  var place = $('#place');
+  place.keyup(function(){
+	 place.popover({
+		trigger: 'focus',
+		content: ''
+	  }).popover('open');
+  
+  });
+});
+</script>
+
 </body>
 </html>

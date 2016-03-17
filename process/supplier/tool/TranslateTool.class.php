@@ -14,7 +14,7 @@ class TranslateTool {
         set_time_limit(0);
         $conditions = \DbConfig::$db_query_conditions;
         $fileid = 'c_id, c_name';
-        $conditions['where'] = "c_name_cn != ''";
+        $conditions['where'] = "c_name_cn IS NULL";
         $arrayPlace = \BasePlaceDao::getPlace($conditions, $fileid);
         $num = count($arrayPlace);
         for($i = 0; $i < $num; $i++) {
