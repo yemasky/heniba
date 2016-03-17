@@ -30,20 +30,20 @@ class BaseHotelService extends BaseService {
         $conditions = DbConfig::$db_query_conditions;
         switch ($arraySupplierCode['t_supplier']) {
             case 'tourico':
-                $conditions['where']['uuid'] = $arraySupplierCode['t_supplier_code'];
-                $objBemyguestDao = new \supplier\BemyguestDao();
-                $arraySupplierTourism = $objBemyguestDao->getBemyguestTour($conditions);
+                $conditions['where']['hotelID'] = $arraySupplierCode['t_supplier_code'];
+                $objTouricDao = new \supplier\TouricoDao();
+                $arraySupplierHotel = $objTouricDao->getTouricoHotel($conditions);
                 break;
             default:
                 break;
         }
-        return $arraySupplierTourism;
+        return $arraySupplierHotel;
     }
 
-    public function tourismSourceProductTemplace($arraySupplierCode, $checkdate, $m_id) {
+    public function hotelSourceProductTemplace($arraySupplierCode, $checkdate, $m_id) {
         switch($arraySupplierCode['t_supplier']) {
-            case 'bemyguest':
-                return BaseBemyguestImpl::instance()->tourismSourceProductDatePrice($arraySupplierCode, $checkdate, $m_id);
+            case 'tourico':
+                return BaseTouricoImpl::instance()->hotelSourceProductDatePrice($arraySupplierCode, $checkdate, $m_id);
                 break;
             default:
                 break;

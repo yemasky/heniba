@@ -748,7 +748,7 @@ class DBQuery{
 		if(empty($row))
 			return false;
 		foreach($row as $key => $value) {
-			$vals[] = "{$key} = '{$value}'";
+			$vals[] = "`{$key}` = '{$value}'";
 		}
 		$values = join(", ", $vals);
 		$sql = "UPDATE {$this->table_name } SET {$values} {$where}";

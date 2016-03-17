@@ -37,8 +37,63 @@
       <li><a href="#" class="am-text-secondary"><span class="am-icon-btn am-icon-user-md"></span><br/>在线用户<br/>3000</a></li>
     </ul>
 	<%/if%>
+
+
+
     <div class="am-g">
       <div class="am-u-sm-12">
+
+          <div class="am-panel am-panel-default">
+              <div class="am-panel-hd">搜索酒店：</div>
+              <form method="post" action="" id="form-book" class="am-form am-form-horizontal">
+                  <div class="am-panel-bd am-padding-bottom-0 am-margin-0">
+                      <div class="am-form-group">
+                          <div class="am-input-group am-input-group-sm am-u-md-3 am-padding-left-0 am-padding-right-0">
+                              <span id="currency" class="am-input-group-label am-icon-rmb"> 酒店名称地址</span>
+                              <input type="text" readonly="" class="am-form-field am-input-sm" value="" id="product_all">
+                              <span class="am-input-group-label">总共</span>
+                          </div>
+                          <label for="arrivalDate" class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm"></label>
+                          <div class="am-input-group am-input-group-sm am-u-sm-3">
+                              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 入住日期</span>
+                              <input type="text" readonly="" placeholder="2016-03-16" value="2016-03-22" id="arrivalDate" class="am-form-field" name="arrivalDate">
+                          </div>
+                          <div class="am-input-group am-input-group-sm am-u-sm-3">
+                              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 入住日期</span>
+                              <input type="text" readonly="" placeholder="2016-03-16" value="2016-03-22" id="arrivalDate" class="am-form-field" name="arrivalDate">
+                          </div>
+                          <div class="am-form-group am-btn-group">
+                              <div class="am-input-group am-input-group-sm am-form-select am-u-sm-4 am-padding-0">
+                                  <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i> 人数</span>
+                                  <select onchange="setProductPrice($('#arrivalDate').val(), 0)" id="pax_0" class="am-form-field am-input-sm" name="pax">
+                                      <option value="1">1 人</option>
+                                      <option value="2">2 人</option>
+                                  </select>
+                              </div>
+                              <div class="am-input-group am-input-group-sm am-u-md-6 am-padding-left-0 am-padding-right-xl">
+                                  <span id="currency" class="am-input-group-label am-icon-rmb"> CNY</span>
+                                  <input type="text" readonly="" class="am-form-field am-input-sm" value="" id="product_0">
+                                  <span class="am-input-group-label">每人</span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="am-panel-bd am-cf">
+                      <div class="am-g am-margin-left-0 am-padding-bottom">
+                          <div class="am-u-sm-7">
+                          </div>
+                          <div class="am-u-sm-6 am-padding-left-0 am-padding-right-0">
+
+                          </div>
+                      </div>
+
+                      <div data-am-dropdown="" class="am-cf am-padding-right">
+                          <button type="button" id="order-popup-button" class="am-btn am-btn-warning am-round am-fr"><i class="am-icon-shopping-cart"></i>&#12288;预&#12288;定</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+
         <table class="am-table am-table-bd am-table-striped admin-content-table">
           <thead>
           <tr>

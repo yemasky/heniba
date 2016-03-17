@@ -37,7 +37,7 @@ if(!defined("INC_FUNC_COMMON")) {
 		$pos = strpos($class, '\\');
 		if($pos != false) {
 			$execute_dir = substr($class, 0, $pos) . '/';
-			$class = '/' . substr($class, $pos + 1);
+			$class = '' . substr($class, $pos + 1);
 		}
 
 		switch($execute_type){
@@ -73,7 +73,7 @@ if(!defined("INC_FUNC_COMMON")) {
 		if(file_exists($classes_file)) {
 			include_once ($classes_file);
 		} else {
-			//throw new Exception("unable to load class: $class in $classes_file");
+			throw new Exception("unable to load class: $class in $classes_file");
 			// trigger_error("unable to load class: $class", E_USER_ERROR);
 			// class $class extends BaseAction; //{
 			// }

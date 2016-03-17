@@ -17,6 +17,9 @@ class IndexAction extends \BaseAction {
 
 	protected function service($objRequest, $objResponse) {
 		switch($objRequest->getAction()) {
+			case 'translatePlace':
+				$this->translatePlace($objRequest, $objResponse);
+				break;
 			default:
 				$this->doBase($objRequest, $objResponse);
 			break;
@@ -34,6 +37,15 @@ class IndexAction extends \BaseAction {
 		$objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '我的网站', '我的网站', '我的网站'));
 		$objResponse -> setTplName("www/base");
 	}
+
+	protected function translatePlace($objRequest, $objResponse) {
+		$this->setDisplay();
+		$ojbTranslateTool = new TranslateTool();
+		$ojbTranslateTool->translatePlace();
+
+	}
+
+
 	
 
 

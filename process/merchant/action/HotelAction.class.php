@@ -37,6 +37,7 @@ class HotelAction extends \BaseAction {
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
         $conditions['where'] = null;
+        $conditions['order'] = 'h_images DESC, h_id DESC';
         $objHotelService = new HotelService();
         $count = $objHotelService->getHotelCount($conditions['where']);
         $arrayListData = $objHotelService->getHotel($conditions, null, $objResponse->arrUserInfo['m_id']);
@@ -64,7 +65,7 @@ class HotelAction extends \BaseAction {
         }
 
         $conditions = \DbConfig::$db_query_conditions;
-        $conditions['where'] = "t_id > ".($h_id - 5)." AND t_id < " . ($h_id + 50) . ' AND t_id != ' . $h_id;
+        $conditions['where'] = "h_id > ".($h_id - 5)." AND h_id < " . ($h_id + 50) . ' AND h_id != ' . $h_id;
         $conditions['limit'] = "0, 10";
         $relation_hotel = $objHotelService->getHotel($conditions, 'h_id, h_name, h_images');
         $objResponse -> setTplValue('hotel_supplier_tpl', 'hotel_' . $supplierCode[0]['h_supplier']);
