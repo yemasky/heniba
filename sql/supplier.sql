@@ -75,7 +75,7 @@ CREATE TABLE `bemyguest_tour` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uuid` (`uuid`),
   KEY `is_delete` (`is_delete`)
-) ENGINE=MyISAM AUTO_INCREMENT=419 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1098 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `bemyguest_tour_copy` */
 

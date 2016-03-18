@@ -31,6 +31,7 @@ class HotelAction extends \BaseAction {
      * 首页显示
      */
     protected function doBase($objRequest, $objResponse) {
+        $place = $objRequest->place;
         //
         //设置类别
         $pn = $objRequest->pn;
@@ -46,6 +47,7 @@ class HotelAction extends \BaseAction {
         $arrayListData = $objHotelService->getHotel($conditions, null, $objResponse->arrUserInfo['m_id']);
         //
         $objResponse -> nav = 'index';
+        $objResponse -> setTplValue('place', $place);
         $objResponse -> setTplValue('hotel_list', $arrayListData);
         $objResponse -> setTplValue('page', page($pn, ceil($count/$list_count)));
         $objResponse -> setTplValue('pn', $pn);
@@ -58,6 +60,7 @@ class HotelAction extends \BaseAction {
     }
 
     protected function hotel_product($objRequest, $objResponse) {
+
         $h_id = $this->check_int($objRequest->id, 'id');
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['where']['h_id'] = $h_id;
@@ -80,11 +83,14 @@ class HotelAction extends \BaseAction {
     }
 
     protected function ajax_getPlace($objRequest, $objResponse) {
-        $this->setDisplay();
-        $keywork = $objRequest->keywork;
-        if(!empty($keywork)) {
-
+        $place = trim($objRequest->place);
+        $arrayPlace = NULL;
+        if(!empty($place)) {
+            $arrayPlace = \BaseCommonService::instance('BaseCommonService')->searchPlace($place, 1);
         }
+        $objResponse -> setTplValue('arrayPlace', $arrayPlace);
+        $objResponse -> setTplName("merchant/supplier_tpl/place_list");
+
     }
 
 }

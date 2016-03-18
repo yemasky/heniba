@@ -16,6 +16,16 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`heniba` /*!40100 DEFAULT CHARACTER SET 
 
 USE `heniba`;
 
+/*Table structure for table `address` */
+
+DROP TABLE IF EXISTS `address`;
+
+CREATE TABLE `address` (
+  `address` char(80) NOT NULL,
+  `address_loc` point NOT NULL,
+  PRIMARY KEY (`address`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Table structure for table `country` */
 
 DROP TABLE IF EXISTS `country`;
@@ -35,8 +45,9 @@ CREATE TABLE `country` (
   `c_longitude` varchar(50) DEFAULT NULL COMMENT '经度',
   `c_type` enum('Continent','Country','State','City','CityLocation','Towns','Region') DEFAULT NULL COMMENT '类型',
   PRIMARY KEY (`c_id`),
-  UNIQUE KEY `country` (`c_continent_id`,`c_country_id`,`c_state_id`,`c_city_id`,`c_name`,`c_type`)
-) ENGINE=MyISAM AUTO_INCREMENT=5472 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `country` (`c_continent_id`,`c_country_id`,`c_state_id`,`c_city_id`,`c_name`,`c_type`),
+  FULLTEXT KEY `c_name` (`c_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=5475 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `hotel` */
 
@@ -51,8 +62,8 @@ CREATE TABLE `hotel` (
   `c_county_id` int(11) DEFAULT NULL COMMENT '市的区 或县',
   `h_name` varchar(100) NOT NULL COMMENT '酒店名称',
   `h_rooms` tinyint(5) DEFAULT NULL COMMENT '房间数',
-  `h_check_in` datetime NOT NULL,
-  `h_check_out` datetime DEFAULT NULL,
+  `h_check_in` varchar(20) NOT NULL,
+  `h_check_out` varchar(20) DEFAULT NULL,
   `h_currency` varchar(10) DEFAULT NULL,
   `h_price` float DEFAULT NULL,
   `h_price_low` float DEFAULT NULL COMMENT '最低价格',
@@ -63,11 +74,11 @@ CREATE TABLE `hotel` (
   `h_zip` varchar(10) DEFAULT NULL,
   `h_start_level` tinyint(4) DEFAULT NULL COMMENT '星级',
   `h_rank` float DEFAULT NULL COMMENT '评分 排名 等级',
-  `h_latitude` float DEFAULT NULL COMMENT '纬度',
-  `h_longitude` float DEFAULT NULL COMMENT '经度',
+  `h_latitude` varchar(50) DEFAULT NULL COMMENT '纬度',
+  `h_longitude` varchar(50) DEFAULT NULL COMMENT '经度',
   `h_description` text,
   `h_description_cn` text,
-  `h_hotel_type` enum('hotel','home') NOT NULL DEFAULT 'hotel',
+  `h_hotel_type` varchar(50) NOT NULL DEFAULT 'hotel',
   `h_supplier` varchar(50) DEFAULT NULL,
   `h_supplier_code` varchar(100) DEFAULT NULL,
   `h_attr1` int(11) DEFAULT NULL,
@@ -100,12 +111,13 @@ CREATE TABLE `hotel` (
   `h_attr14_value` varchar(100) DEFAULT NULL,
   `h_attr15` int(11) DEFAULT NULL,
   `h_attr15_value` varchar(100) DEFAULT NULL,
-  `h_is_valid` enum('0','1') DEFAULT NULL COMMENT '是否有效',
+  `h_is_valid` enum('0','1') NOT NULL DEFAULT '1' COMMENT '是否有效',
   `h_add_date` datetime NOT NULL,
   `h_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`h_id`,`h_check_in`),
+  UNIQUE KEY `h_supplier` (`h_supplier`,`h_supplier_code`),
   FULLTEXT KEY `hotel` (`h_name`,`h_attr1_value`,`h_attr2_value`,`h_attr3_value`,`h_attr4_value`,`h_attr5_value`,`h_attr6_value`,`h_attr7_value`,`h_attr8_value`,`h_attr9_value`,`h_attr10_value`,`h_attr11_value`,`h_attr12_value`,`h_attr13_value`,`h_attr14_value`,`h_attr15_value`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=211 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `hotel_attribute` */
 
@@ -121,7 +133,7 @@ CREATE TABLE `hotel_attribute` (
   `ha_order` int(11) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`ha_id`),
   UNIQUE KEY `ta_name` (`hc_id`,`ha_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `hotel_attribute_value` */
 
@@ -133,7 +145,7 @@ CREATE TABLE `hotel_attribute_value` (
   `ha_id` int(11) DEFAULT NULL COMMENT '属性ID',
   `hav_value` varchar(100) DEFAULT NULL COMMENT '属性值',
   `hav_value_cn` varchar(100) DEFAULT NULL,
-  UNIQUE KEY `pid` (`h_id`,`ha_id`),
+  UNIQUE KEY `h_id_ha_id_value` (`h_id`,`ha_id`,`hav_value`),
   KEY `atrid` (`ha_id`),
   KEY `hav_value` (`hav_value`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -144,10 +156,11 @@ DROP TABLE IF EXISTS `hotel_brand`;
 
 CREATE TABLE `hotel_brand` (
   `hb_id` int(11) NOT NULL AUTO_INCREMENT,
-  `hb_name` varchar(100) DEFAULT NULL COMMENT '品牌名称',
+  `hb_name` varchar(100) NOT NULL COMMENT '品牌名称',
   `hb_name_cn` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`hb_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`hb_id`),
+  UNIQUE KEY `hb_name` (`hb_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `hotel_category` */
 
@@ -275,6 +288,19 @@ CREATE TABLE `order_return_log` (
   PRIMARY KEY (`oil_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
+/*Table structure for table `search_keywork` */
+
+DROP TABLE IF EXISTS `search_keywork`;
+
+CREATE TABLE `search_keywork` (
+  `sk_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sk_keywork` varchar(200) DEFAULT NULL,
+  `sk_keywork_cn` varchar(200) DEFAULT NULL,
+  `sk_type` varchar(50) DEFAULT NULL,
+  `sk_keywork_id` bigint(19) DEFAULT NULL,
+  PRIMARY KEY (`sk_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 /*Table structure for table `tourism` */
 
 DROP TABLE IF EXISTS `tourism`;
@@ -336,7 +362,7 @@ CREATE TABLE `tourism` (
   PRIMARY KEY (`t_id`),
   UNIQUE KEY `t_supplier_code` (`t_supplier`,`t_supplier_code`),
   KEY `location` (`tc_id`,`c_country_id`,`c_state_id`,`c_city_id`,`c_county_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1098 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tourism_attribute` */
 

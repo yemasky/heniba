@@ -18,20 +18,6 @@
 <style type="text/css">
 .am-popover-inner{background:#FFF;}
 .am-popover{background:#999; border:1px solid #CCC;}
-
-body,form,ul,li,input{margin:0;padding:0;}
-
-#search input{background:#FFF url(http://img02.taobaocdn.com/tps/i2/T122NIXoBAXXXXXXXX-200-200.png) 0 0 no-repeat;}
-#search{width:350px;margin:20px auto 0;border:1px solid #C4E6F1;}
-#search form{color:#666;border:2px solid #78B1C8;}
-#search ul{padding:10px 20px;vertical-align:top;}
-#search li{padding:5px 0;list-style:none;line-height:25px;zoom:1;}
-#search li:after{content:".";clear:both;display:block;height:0;	visibility:hidden;}
-#search label,#search input,#search span{float:left;}
-#search .tit{width:60px;min-height:25px;height:auto!important;height:25px;}
-#search .f-text{padding:3px;width:179px;height:18px;color:#666;line-height:18px;font-family:inherit;border-color:#AFAFAF #DCDCDC #DCDCDC #AFAFAF;border-width:0 1px 1px 0;background-position:0 -100px;}
-#search .f-btn{border:0;width:85px;height:31px;cursor:pointer;}
-#search .f-btn:hover{background-position:-86px 0;}
 </style>
 <script src="<%$__RESOURCE%>assets/js/yui-min.js"></script>
 <script language="javascript">
@@ -128,7 +114,7 @@ YUI({
                       <div class="am-form-group">
                           <div class="am-input-group am-input-group-sm am-u-md-6">
                               <span  class="am-input-group-label am-icon-home"> 地方、酒店名称</span>
-                              <input id="place" type="text" class="am-form-field am-input-sm" value="">
+                              <input id="place" type="text" class="am-form-field am-input-sm" autocomplete="off" value="<%$place%>">
                           </div>
                           <div class="am-input-group am-input-group-sm am-u-sm-6">
                               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 入住时间</span>
@@ -136,8 +122,16 @@ YUI({
                               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 退房时间</span>
                               <input type="text" readonly placeholder="2016-03-16" value="2016-03-22" class="am-form-field" name="arrivalDate" id="J_EndDate">
                           </div>
+                          <div id="doc-dropdown-justify-js" style="margin-left: 160px;">
+                              <div class="am-dropdown am-u-sm-400" id="doc-dropdown-js">
+                                  <div class="am-dropdown-content am-padding-0" id="place_content">...</div>
+                              </div>
+                          </div>
+
                       </div>
+
                       <div class="am-form-group">
+
                       	<div class="am-input-group am-input-group-sm am-form-select am-u-sm-2">
                               <span class="am-input-group-label"><i class="am-icon-bed am-icon-fw"></i> 客房</span>
                               <select onchange="setProductPrice($('#arrivalDate').val(), 0)" id="pax_0" class="am-form-field am-input-sm" name="pax">
@@ -212,17 +206,35 @@ YUI({
   </div>
 <script language="javascript">
 $(function() {
-  var place = $('#place');
-  place.keyup(function(){
-	  $.getJSON('index.php?model=hotel&action=ajax_get_place', function(result){
-		  	place.popover({
-				trigger: 'focus',
-				content: ''
-			  }).popover('open');
-	   });
-	 
-  
-  });
+    var $dropdown = $('#doc-dropdown-js'),
+        data_place = $dropdown.data('amui.dropdown');
+    var $place = $('#place');
+	var is_en = false;
+    $place.keyup(function(e) {
+		var re=/[^\u4e00-\u9fa5]/; 
+		is_en = re.test($place.val());
+        if((is_en && $place.val().length >= 2) || is_en == false) {
+            $.get('index.php?model=hotel&action=ajax_get_place&place=' + $place.val(), function (result) {
+                $('#place_content').html(result);
+                $dropdown.dropdown('open');
+                $place.focus();
+                $('#place_content').find('a').click(function(e){
+                    $place.val($(this).html());
+                    $dropdown.dropdown('close');
+                });
+            });
+        }
+    });
+
+    /*var place = $('#place');
+    place.keyup(function(){
+        $.getJSON('index.php?model=hotel&action=ajax_get_place', function(result){
+            place.popover({
+                trigger: 'focus',
+                content: ''
+            }).popover('open');
+        });
+    });*/
 });
 </script>
 
