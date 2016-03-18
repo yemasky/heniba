@@ -43,42 +43,43 @@ YUI({
     
     //校验
     Y.one('#form-book').on('submit', function(e) {
-        e.halt();
+        //e.halt();
         var rDate    = /^((19|2[01])\d{2})-(0?[1-9]|1[012])-(0?[1-9]|[12]\d|3[01])$/;
-            oDepDate = Y.one('#J_DepDate'),
-            oEndDate = Y.one('#J_EndDate'),
-            sDepDate = oDepDate.get('value'),
-            sEndDate = oEndDate.get('value'), 
-            aMessage = ['请选择出发日期', '请选择返程日期', '返程时间不能早于出发时间，请重新选择', '日期格式错误'],
-            iError   = -1;   
-            switch(!0) {
-                case !sDepDate:
-                    oDepDate.focus();
-                    iError = 0;
-                    break;
-                case !rDate.test(sDepDate):
-                    oDepDate.focus();
-                    iError = 3;
-                    break;
-                case !sEndDate:
-                    oEndDate.focus();
-                    iError = 1;
-                    break;
-                case !rDate.test(sEndDate):
-                    oEndDate.focus();
-                    iError = 3;
-                    break;
-                case sDepDate.replace(/-/g, '') > sEndDate.replace(/-/g, ''):
-                    oEndDate.focus();
-                    iError = 2;
-                    break;
-            };
-            if(iError > -1) {
-                this.set('message', aMessage[iError]).showMessage();                
-            }
-            else {
-                alert('开始时间：' + sDepDate + '\n返程时间：' + sEndDate);
-            }
+        oDepDate = Y.one('#J_DepDate'),
+        oEndDate = Y.one('#J_EndDate'),
+        sDepDate = oDepDate.get('value'),
+        sEndDate = oEndDate.get('value'),
+        aMessage = ['请选择出发日期', '请选择返程日期', '返程时间不能早于出发时间，请重新选择', '日期格式错误'],
+        iError   = -1;
+        switch(!0) {
+            case !sDepDate:
+                oDepDate.focus();
+                iError = 0;
+                break;
+            case !rDate.test(sDepDate):
+                oDepDate.focus();
+                iError = 3;
+                break;
+            case !sEndDate:
+                oEndDate.focus();
+                iError = 1;
+                break;
+            case !rDate.test(sEndDate):
+                oEndDate.focus();
+                iError = 3;
+                break;
+            case sDepDate.replace(/-/g, '') > sEndDate.replace(/-/g, ''):
+                oEndDate.focus();
+                iError = 2;
+                break;
+        };
+        if(iError > -1) {
+            this.set('message', aMessage[iError]).showMessage();
+        }
+        else {
+            //alert('开始时间：' + sDepDate + '\n返程时间：' + sEndDate);
+            //e.submit();
+        }
     }, oCal);
 });
 </script>
@@ -109,7 +110,7 @@ YUI({
 
           <div class="am-panel am-panel-default">
               <div class="am-panel-hd">搜索酒店：</div>
-              <form method="post" action="" id="form-book" class="am-form am-form-horizontal">
+              <form method="post" action="index.php?model=hotel&action=search" id="form-book" class="am-form am-form-horizontal">
                   <div class="am-panel-bd am-padding-bottom-0 am-margin-0">
                       <div class="am-form-group">
                           <div class="am-input-group am-input-group-sm am-u-md-6">
@@ -155,7 +156,7 @@ YUI({
                           </div>
                           <div class="am-input-group am-input-group-sm am-u-md-6 am-padding-left-0 am-padding-right-xl">
                               <div data-am-dropdown="" class="am-cf am-padding-right">
-                                  <button type="button" id="order-popup-button" class="am-btn am-btn-warning am-round am-fr"><i class="am-icon-shopping-cart"></i>&#12288;查&#12288;看</button>
+                                  <button type="submit" id="order-popup-button" class="am-btn am-btn-warning am-round am-fr"><i class="am-icon-shopping-cart"></i>&#12288;查&#12288;看</button>
                               </div>
                           </div>
                       </div>
