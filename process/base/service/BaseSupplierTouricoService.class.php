@@ -7,7 +7,7 @@
  * Time: 17:35
  */
 class BaseSupplierTouricoService extends BaseService {
-    private static $objBaseBookTouricoService = null;
+    private static $objBaseSupplierTouricoServicee = null;
     private $objTouricoConfig = '';
     private $objWSClient;
 
@@ -17,9 +17,9 @@ class BaseSupplierTouricoService extends BaseService {
     }
 
     public static function instance($objClass = '') {
-        if(is_object(self::$objBaseBookTouricoService)) return self::$objBaseBookTouricoService;
-        self::$objBaseBookTouricoService = new BaseBookTouricoService();
-        return self::$objBaseBookTouricoService;
+        if(is_object(self::$objBaseSupplierTouricoServicee)) return self::$objBaseSupplierTouricoServicee;
+        self::$objBaseSupplierTouricoServicee = new BaseSupplierTouricoService();
+        return self::$objBaseSupplierTouricoServicee;
     }
 
     //hotel部分

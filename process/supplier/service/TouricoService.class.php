@@ -51,7 +51,7 @@ class TouricoService{
 	}
 
 	public function GetHotelDetailsV3($arrayHotelIds) {
-		return \BaseBookTouricoService::instance($this->objProcess)->GetHotelDetailsV3($arrayHotelIds);
+		return \BaseSupplierTouricoService::instance()->GetHotelDetailsV3($arrayHotelIds);
 	}
 
 	//
