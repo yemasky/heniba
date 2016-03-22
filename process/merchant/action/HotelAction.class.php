@@ -63,7 +63,6 @@ class HotelAction extends \BaseAction {
     }
 
     protected function hotel_product($objRequest, $objResponse) {
-
         $h_id = $this->check_int($objRequest->id, 'id');
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['where']['h_id'] = $h_id;
@@ -89,7 +88,13 @@ class HotelAction extends \BaseAction {
         $place = trim($objRequest->place);
         $arrayPlace = NULL;
         if(!empty($place)) {
-            $arrayPlace = \BaseCommonService::instance('BaseCommonService')->searchPlace($place, 1);
+            $pn = $objRequest->pn;
+            $pn = empty($pn) ? 1 : $pn;
+            $list_count = 50;
+            $conditions = \DbConfig::$db_query_conditions;
+            $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
+            $conditions['where'] = "c_name_cn like  '%" . $place . "%' AND c_country_id > 0";
+            $arrayPlace = \BaseCommonService::instance('BaseCommonService')->searchPlace($conditions);
         }
         $objResponse -> setTplValue('arrayPlace', $arrayPlace);
         $objResponse -> setTplName("merchant/supplier_tpl/place_list");
@@ -98,23 +103,44 @@ class HotelAction extends \BaseAction {
 
     protected function searchHotel($objRequest, $objResponse) {
         $place = $objRequest->place;
-        $
+        $arraySearchData['c_city_id'] = $objRequest->city;
+        $arraySearchData['place_type'] = $objRequest->place_type;
+        $arraySearchData['place_en_name'] = $objRequest->place_en_name;
+        $arraySearchData['CheckIn'] = $objRequest->CheckIn;
+        $arraySearchData['CheckOut'] = $objRequest->CheckOut;
+        $arraySearchData['AdultNum'] = $objRequest->AdultNum;
+        $arraySearchData['ChildNum'] = $objRequest->ChildNum;
+        $arraySearchData['ChildAge'] = $objRequest->ChildAge > 0 ? $objRequest->ChildAge : 5;
+
         //
         //设置类别
+        $arrayListData = null;
         $pn = $objRequest->pn;
         $pn = empty($pn) ? 1 : $pn;
         $list_count = $objRequest->list_count;
         $list_count = empty($list_count) ? 20 : $list_count;
-        $conditions = \DbConfig::$db_query_conditions;
-        $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
-        $conditions['where'] = null;
-        $conditions['order'] = 'h_images DESC, h_id DESC';
+
         $objHotelService = new HotelService();
-        $count = $objHotelService->getHotelCount($conditions['where']);
-        $arrayListData = $objHotelService->getHotel($conditions, null, $objResponse->arrUserInfo['m_id']);
+        $arrayTouricoListData = $objHotelService->searchHotel('tourico', $arraySearchData);
+        $tourico = 0;
+        if(!empty($arrayTouricoListData)) {
+            if(isset($arrayTouricoListData['httpcode']) && $arrayTouricoListData['httpcode'] != 200) {
+                $arrayListData = $arrayTouricoListData['result']['s:Body']['0']['s:Fault']['0']['faultstring'];
+                $tourico = '-1';
+            } else {
+                $tourico = '1';
+                $arrayListData = \BaseTouricoImpl::instance()->formatSearchHotelList($arrayTouricoListData);
+            }
+        }
+        //print_r($arrayListData);
+        $count = count($arrayListData);
         //
         $objResponse -> nav = 'index';
+        //产品模板
+        $objResponse -> setTplValue('tourico', $tourico);
+        //
         $objResponse -> setTplValue('place', $place);
+        $objResponse -> setTplValue('arraySearchData', $arraySearchData);
         $objResponse -> setTplValue('hotel_list', $arrayListData);
         $objResponse -> setTplValue('page', page($pn, ceil($count/$list_count)));
         $objResponse -> setTplValue('pn', $pn);
@@ -123,7 +149,7 @@ class HotelAction extends \BaseAction {
         $objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);
         //设置Meta
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
-        $objResponse -> setTplName("merchant/hotel_list");
+        $objResponse -> setTplName("merchant/hotel_list_search");
     }
 
 }

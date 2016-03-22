@@ -28,7 +28,36 @@ class BaseSupplierTouricoService extends BaseService {
          *
          * Methods included in the Hotel V3 WS
          */
-    public function SearchHotels(){
+    public function SearchHotels($arraySearchData){
+        $arraySearchInformation = array (
+            "Destination" => $arraySearchData['Destination'],
+            "HotelCityName" => $arraySearchData['HotelCityName'],
+            "HotelLocationName" => $arraySearchData['HotelLocationName'],
+            "HotelName" => $arraySearchData['HotelName']
+        );
+        $arrayCheckData = array (
+            'CheckIn' => $arraySearchData['CheckIn'],
+            'CheckOut' => $arraySearchData['CheckOut']
+        );
+        $arrayRoomsInformation = array(
+            'AdultNum' => $arraySearchData['AdultNum'],
+            'ChildNum' => $arraySearchData['ChildNum'],
+            'ChildAge' => $arraySearchData['ChildAge']
+        );
+        $postData = $this->objTouricoConfig->SearchHotelsXml($arraySearchInformation, $arrayCheckData, $arrayRoomsInformation);
+        $arrayHeader = array (
+            "SOAPAction" => $this->objTouricoConfig->SOAPActionSearchHotels,
+            "Content-type" => "text/xml",
+            "Content-length" => strlen($postData)
+        );
+        $requestUrl = $this->objTouricoConfig->hotelV3WSUrl;
+
+        $this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
+        $arrayResult = $this->objWSClient->execute_cUrl();
+        // $arrayResult['httpcode'] = 200;
+        // $arrayResult['result'] = '<Rooms><Room seqNum="2"><AdultNum>1</AdultNum><ChildNum>0</ChildNum><ChildAges><ChildAge age="0"/></ChildAges></Room></Rooms>';
+        return $this->parserXml($arrayResult);
+
     }
 
     public function SearchHotelsById(){
@@ -233,7 +262,12 @@ class BaseSupplierTouricoService extends BaseService {
             $arrayXML = $objXML->parseToArray($arrayResult['result']);
             return $arrayXML;
         } else {
-            throw new Exception(json_encode($arrayResult));
+            errorLog(json_encode($arrayResult));
+            //throw new Exception(json_encode($arrayResult));
+            $objXML = new XML();
+            $arrayXML = $objXML->parseToArray($arrayResult['result']);
+            $arrayResult['result'] = $arrayXML;
+            return $arrayResult;
         }
     }
 }

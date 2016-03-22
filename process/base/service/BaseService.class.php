@@ -16,4 +16,10 @@ abstract class BaseService{
         self::$objBaseService[$objClass] = new $objClass();
         return self::$objBaseService[$objClass];
     }
+
+    public function __call($name, $args){
+        $objCallName = new $name($args);
+        $objCallName->setCallObj($this, $args);
+        return $objCallName;
+    }
 }

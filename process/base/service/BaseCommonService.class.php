@@ -8,14 +8,8 @@
  */
 class BaseCommonService extends BaseService{
 
-    public function searchPlace($place, $pn) {
-        $conditions = DbConfig::$db_query_conditions;
-        $pn = empty($pn) ? 1 : $pn;
-        $list_count = 50;
-        $conditions = \DbConfig::$db_query_conditions;
-        $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
-        $conditions['where'] = "c_name_cn like  '%" . $place . "%'";
-        $fileid = 'c_id, c_name, c_name_cn, c_type';
+    public function searchPlace($conditions, $fileid = '') {
+        if(empty($fileid)) $fileid = 'c_id, c_city_id, c_name, c_name_cn, c_type';
         return BasePlaceDao::getPlace($conditions, $fileid);
     }
 

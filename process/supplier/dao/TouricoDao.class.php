@@ -19,5 +19,9 @@ class TouricoDao {
 	public function getTouricoHotel($conditions, $fileid = '*') {
 		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('tourico_hotel')->limit($conditions['limit'])->getList($conditions['where'], $fileid);
 	}
+
+	public function getDestination($conditions, $fileid = '*') {
+		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('tourico_destination')->setKey('id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['where'], $fileid);
+	}
 	
 }

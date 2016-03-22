@@ -114,15 +114,15 @@ YUI({
                           <div class="am-input-group am-input-group-sm am-u-md-6">
                               <span  class="am-input-group-label am-icon-home"> 地方、酒店名称</span>
                               <input id="place" name="place" type="text" class="am-form-field am-input-sm" autocomplete="off" value="<%$place%>">
-                              <input type="hidden" name="place_type" id="place_type" value="">
-                              <input type="hidden" name="place_en_name" id="place_en_name" value="">
-                              <input type="hidden" name="city" id="city" value="">
+                              <input type="hidden" name="place_type" id="place_type" value="<%$arraySearchData.place_type%>">
+                              <input type="hidden" name="place_en_name" id="place_en_name" value="<%$arraySearchData.place_en_name%>">
+                              <input type="hidden" name="city" id="city" value="<%$arraySearchData.c_city_id%>">
                           </div>
                           <div class="am-input-group am-input-group-sm am-u-sm-6">
                               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 入住时间</span>
-                              <input type="text" readonly placeholder="2016-03-16" value="2016-03-22" class="am-form-field" name="CheckIn" id="J_DepDate">
+                              <input type="text" readonly placeholder="<%$arraySearchData.CheckIn%>" value="<%$arraySearchData.CheckIn%>" class="am-form-field" name="CheckIn" id="J_DepDate">
                               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 退房时间</span>
-                              <input type="text" readonly placeholder="2016-03-16" value="2016-03-22" class="am-form-field" name="CheckOut" id="J_EndDate">
+                              <input type="text" readonly placeholder="<%$arraySearchData.CheckOut%>" value="<%$arraySearchData.CheckOut%>" class="am-form-field" name="CheckOut" id="J_EndDate">
                           </div>
                           <div id="doc-dropdown-justify-js" style="margin-left: 160px;">
                               <div class="am-dropdown am-u-sm-400" id="doc-dropdown-js">
@@ -168,33 +168,17 @@ YUI({
         <table class="am-table am-table-bd am-table-striped admin-content-table">
           <thead>
           <tr>
-            <th>ID</th><th>图片</th><th>标题</th><th>基价</th><th>售价</th><th> </th>
+            <th>ID</th><th>图片</th><th></th><th>基价</th><th></th><th> </th>
           </tr>
           </thead>
           <tbody>
-          <%section name=i loop=$hotel_list%>
+          <%if $tourico==1%>
+          <%include file="merchant/book/search_hotel_tourico_list.tpl"%>
+          <%else%>
           <tr>
-              <td><%$hotel_list[i].h_id%></td>
-              <td width="175">
-                  <a href="index.php?model=<%$model%>&action=product&id=<%$hotel_list[i].h_id%>" target="_blank">
-                  <div class="am-slider am-slider-default" data-am-flexslider id="img-slider-<%$hotel_list[i].h_id%>">
-                      <ul class="am-slides" id="img-<%$hotel_list[i].h_id%>">
-                          <li><img src="<%$hotel_list[i].h_images%>" /> </li>
-                      </ul>
-                  </div>
-                  </a>
-                  </td><td><%$hotel_list[i].h_name%></td>
-              <td><a href="#"><%$hotel_list[i].h_currency%>:(原价)<%$hotel_list[i].wholesale%> (售价)<%$hotel_list[i].sell%></a></td>
-              <td><span class="am-badge am-badge-success">+20</span></td>
-              <td>
-                  <a href="index.php?model=hotel&action=product&id=<%$hotel_list[i].h_id%>" target="_blank">
-                  <div class="am-dropdown" data-am-dropdown>
-                      <button class="am-btn am-btn-warning am-round" type="button"><i class="am-icon-shopping-cart"></i>　预 定</button>
-                  </div>
-                  </a>
-              </td>
+              <th></th><th></th><th><font color="red"> 错误：<%$hotel_list[0]%>，请重新搜索！</font></th><th></th><th></th><th> </th>
           </tr>
-          <%/section%>
+          <%/if%>
           </tbody>
         </table>
           <%include file="merchant/inc/page.tpl"%>

@@ -18,6 +18,7 @@ class TouricoConfig {
 	public $SOAPActionGetDestination = 'http://touricoholidays.com/WSDestinations/2008/08/Contracts/IDestinationContracts/GetDestination';
 	public $SOAPActionGetHotelsByDestination = 'http://touricoholidays.com/WSDestinations/2008/08/Contracts/IDestinationContracts/GetHotelsByDestination';
 
+	public $SOAPActionSearchHotels = 'http://tourico.com/webservices/hotelv3/IHotelFlow/SearchHotels';
 	public $SOAPActionSearchHotelsById = 'http://tourico.com/webservices/hotelv3/IHotelFlow/SearchHotelsById';
 	public $SOAPActionGetHotelDetailsV3 = 'http://tourico.com/webservices/hotelv3/IHotelFlow/GetHotelDetailsV3';
 	public $SOAPActionGetCancellationPolicies = 'http://tourico.com/webservices/hotelv3/IHotelFlow/GetCancellationPolicies';
@@ -274,6 +275,37 @@ class TouricoConfig {
 			  .'<m0:CheckIn>'.$arrayCheckData['CheckIn'].'</m0:CheckIn><m0:CheckOut>'.$arrayCheckData['CheckOut'].'</m0:CheckOut><m0:RoomsInformation>'
 			  .$strRoomsInformation
 			  .'</m0:RoomsInformation><m0:MaxPrice>0</m0:MaxPrice><m0:StarLevel>0</m0:StarLevel><m0:AvailableOnly>true</m0:AvailableOnly>';
+		return $xml;
+	}
+
+	public function SearchHotelsRequestXml($arraySearchInformation, $arrayCheckData, $arrayRoomsInformation) {
+		$xml =   '<hot1:Destination>'.$arraySearchInformation['Destination'].'</hot1:Destination>'
+				.'<hot1:HotelCityName>'.$arraySearchInformation['HotelCityName'].'</hot1:HotelCityName>'
+				.'<hot1:HotelLocationName>'.$arraySearchInformation['HotelLocationName'].'</hot1:HotelLocationName>'
+				.'<hot1:HotelName>'.$arraySearchInformation['HotelName'].'</hot1:HotelName>'
+				.'<hot1:CheckIn>'.$arrayCheckData['CheckIn'].'</hot1:CheckIn>'
+				.'<hot1:CheckOut>'.$arrayCheckData['CheckOut'].'</hot1:CheckOut>'
+				.'<hot1:RoomsInformation>'
+					.'<hot1:RoomInfo>'
+						.'<hot1:AdultNum>'.$arrayRoomsInformation['AdultNum'].'</hot1:AdultNum>'
+						.'<hot1:ChildNum>'.$arrayRoomsInformation['ChildNum'].'</hot1:ChildNum>'
+						.'<hot1:ChildAges><hot1:ChildAge age="'.$arrayRoomsInformation['ChildAge'].'"/></hot1:ChildAges>'
+					.'</hot1:RoomInfo>'
+				.'</hot1:RoomsInformation>'
+				.'<hot1:MaxPrice>0</hot1:MaxPrice>'
+				.'<hot1:StarLevel>0</hot1:StarLevel>'
+				.'<hot1:AvailableOnly>true</hot1:AvailableOnly>'
+				.'<hot1:PropertyType>NotSet</hot1:PropertyType>'
+				.'<hot1:ExactDestination>true</hot1:ExactDestination>';
+		return $xml;
+	}
+
+	public function SearchHotelsXml($arraySearchInformation, $arrayCheckData, $arrayRoomsInformation) {
+		$xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:aut="http://schemas.tourico.com/webservices/authentication" xmlns:hot="http://tourico.com/webservices/hotelv3" xmlns:hot1="http://schemas.tourico.com/webservices/hotelv3">'
+			.$this->HotelV3WSAutHeader()
+			.'<soapenv:Body><hot:SearchHotels><hot:request>'
+			.$this->SearchHotelsRequestXml($arraySearchInformation, $arrayCheckData, $arrayRoomsInformation)
+			.'</hot:request></hot:SearchHotels></soapenv:Body></soapenv:Envelope>';
 		return $xml;
 	}
 

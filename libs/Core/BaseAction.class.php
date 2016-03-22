@@ -609,6 +609,9 @@ class DBQuery{
 			$groupby = "GROUP BY" . $this->groupby;
 		}
 		$sql = "SELECT {$fields} FROM {$this->table_name} {$where} {$groupby} {$order} ";
+		if(__Debug) {
+			writeLog('sql.debug', $sql);
+		}
 		if($this->limit_num != NULL)
 			$sql = $this->conn->setlimit($sql, $this->limit_num);
 		return $this->conn->getQueryArrayResult($sql);

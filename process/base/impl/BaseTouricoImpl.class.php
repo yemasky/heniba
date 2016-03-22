@@ -28,4 +28,13 @@ class BaseTouricoImpl extends BaseService {
 
     }
 
+    public function formatSearchHotelList($arrayTouricoListData) {
+        if(isset($arrayTouricoListData['s:Body']['0']['SearchHotelsResponse']['0']['SearchHotelsResult']['0']['HotelList'])) {
+            $arrayTouricoListData = $arrayTouricoListData['s:Body']['0']['SearchHotelsResponse']['0']['SearchHotelsResult']['0']['HotelList'];
+        } else {
+            return null;
+        }
+        return $arrayTouricoListData;
+    }
+
 }
