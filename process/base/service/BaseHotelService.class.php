@@ -28,9 +28,9 @@ class BaseHotelService extends BaseService {
     public function getSupplierHotel($arraySupplierCode) {
         $arraySupplierTourism = null;
         $conditions = DbConfig::$db_query_conditions;
-        switch ($arraySupplierCode['t_supplier']) {
+        switch ($arraySupplierCode['h_supplier']) {
             case 'tourico':
-                $conditions['where']['hotelID'] = $arraySupplierCode['t_supplier_code'];
+                $conditions['where']['hotelID'] = $arraySupplierCode['h_supplier_code'];
                 $objTouricDao = new \supplier\TouricoDao();
                 $arraySupplierHotel = $objTouricDao->getTouricoHotel($conditions);
                 break;

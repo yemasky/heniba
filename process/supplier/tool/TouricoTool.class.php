@@ -117,6 +117,13 @@ class TouricoTool extends \BaseTool {
 			flush();
 		}
 	}
+	public function disposeHotelsByHotelID($arrayHotelIds){
+		$objTouricoService = new TouricoService();
+		$arrayHotels = $objTouricoService->GetHotelDetailsV3($arrayHotelIds);
+		if($arrayHotels == false) return false;
+		$this->insertHotels($arrayHotels);
+		return true;
+	}
 
 	public function insertHotels($arrayHotels){
 		$objTouricoDao = new TouricoDao();
@@ -136,7 +143,7 @@ class TouricoTool extends \BaseTool {
 			}
 			$hotel['Home'] = addslashes(json_encode($arrayHotels['Home'][$k]));
 			$objTouricoDao->insertHotel($hotel);
-			echo "over hotel:" . $hotel['hotelID'] . " \r\n";
+			if(__Debug) echo "over hotel:" . $hotel['hotelID'] . " \r\n";
 			ob_flush();
 			flush();
 		}

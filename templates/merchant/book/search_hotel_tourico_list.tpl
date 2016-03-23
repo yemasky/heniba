@@ -3,7 +3,7 @@
 <tr>
   <td><%$hotel_list[i].Hotel[j].hotelId%></td>
   <td width="175">
-    <a href="index.php?model=<%$model%>&action=product&supplier_code=tourico&id=<%$hotel_list[i].Hotel[j].hotelId%>" target="_blank">
+    <a href="index.php?model=<%$model%>&action=product&supplier_code=tourico&id=<%$hotel_list[i].Hotel[j].hotelId%>&<%$search_data_url%>" target="_blank">
       <img src="<%$hotel_list[i].Hotel[j].thumb%>" />
     </a>
   </td><td>
@@ -18,7 +18,7 @@
   <td><a href="#"><%$hotel_list[i].Hotel[j].Location[0].countryCode%>:(原价)<%$hotel_list[i].Hotel[j].minAverPublishPrice%> (售价)<%$hotel_list[i].Hotel[j].minAverPublishPrice%></a></td>
   <td><span class="am-badge am-badge-success">+20</span></td>
   <td>
-    <a href="index.php?model=<%$model%>&action=product&supplier_code=tourico&id=<%$hotel_list[i].Hotel[j].hotelId%>" target="_blank">
+    <a href="index.php?model=<%$model%>&action=product&supplier_code=tourico&id=<%$hotel_list[i].Hotel[j].hotelId%>&<%$search_data_url%>" target="_blank">
       <div class="am-dropdown" data-am-dropdown>
         <button class="am-btn am-btn-warning am-round" type="button"><i class="am-icon-shopping-cart"></i>　预 定</button>
       </div>

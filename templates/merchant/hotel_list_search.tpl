@@ -116,7 +116,7 @@ YUI({
                               <input id="place" name="place" type="text" class="am-form-field am-input-sm" autocomplete="off" value="<%$place%>">
                               <input type="hidden" name="place_type" id="place_type" value="<%$arraySearchData.place_type%>">
                               <input type="hidden" name="place_en_name" id="place_en_name" value="<%$arraySearchData.place_en_name%>">
-                              <input type="hidden" name="city" id="city" value="<%$arraySearchData.c_city_id%>">
+                              <input type="hidden" name="city" id="city" value="<%$arraySearchData.city%>">
                           </div>
                           <div class="am-input-group am-input-group-sm am-u-sm-6">
                               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 入住时间</span>

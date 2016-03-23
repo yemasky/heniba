@@ -7,62 +7,46 @@
   <div class="am-u-md-8">
     <article class="blog-main am-cf">
       <h3 class="am-article-title blog-title">
-        <a href="#"><%$tourism_product.title%></a>
+        <a href="#"><%$data_product.name%></a>
       </h3>
-      <h4 class="am-article-meta blog-meta">最后更新时间 <a>北京时间</a> posted on <%$tourism_product.update_date%> </h4>
+      <h4 class="am-article-meta blog-meta">最后更新时间 <a>北京时间</a> posted on <%$data_product.update_date%> </h4>
 
       <div class="am-g blog-content am-u-sm-12">
         <div data-am-widget="slider" class="am-slider am-slider-d3" data-am-slider='{&quot;controlNav&quot;:&quot;thumbnails&quot;,&quot;directionNav&quot;:false}' >
         <ul class="am-slides">
           <li>
-            <img id="img-<%$tourism_product.id%>">
-            <div class="am-slider-desc"><h2 class="am-slider-title"><%$tourism_product.title%></p></div>
+            <img id="img-<%$data_product.hotelID%>">
+            <div class="am-slider-desc"><h2 class="am-slider-title"><%$data_product.name%></p></div>
 		  </li> 
         </ul>
       	</div>
         <!--div class="am-slider am-slider-default am-slider-carousel" data-am-flexslider="{itemWidth: 200, itemMargin: 5, slideshow: false}"-->
-   	  	<ul data-am-widget="gallery" class="am-slides am-avg-lg-8" data-am-gallery="{pureview: 1}" id="thumb_img-<%$tourism_product.id%>"></ul>
+   	  	<ul data-am-widget="gallery" class="am-slides am-avg-lg-8" data-am-gallery="{pureview: 1}" id="thumb_img-<%$data_product.hotelID%>"></ul>
         <!--/div-->
       </div>
       <script language="JavaScript">
-	    var product_price = eval('(<%$productprice%>)');
-        var obj = jQuery.parseJSON('<%$tourism_product.photos%>');
-        var html_masonry = '';
+        var obj = jQuery.parseJSON('<%$data_product_images%>');
         var thumb_img = '';
         var big_img = '';
         var error_img = '';
         var original = '';
         var html_img = '';
-        var path = '<%$tourism_product.photosUrl%>';
         $.each(obj, function(i, item){
-          $.each(item.paths, function(k, k_item) {
-	       	  if(k == '680x325') {
-	       		error_img = path + k_item;
-	       	  }
-	          if(k == '1280x720') {
-	            big_img = path + k_item;
-	          }
-	          if(k == '175x112') {
-	        	  thumb_img = path + k_item;
-	          }
-	          if(k == 'original') {
-	        	  original = path + k_item;
-	          }
-          })
+          thumb_img = item;
           html_img += '<li><div class="am-gallery-item"><img class="am-thumbnail" src="'
 	            + thumb_img + '" onerror="this.src=\''+error_img+'\'" '
-	            +'alt="<%$tourism_product.title%>" data-rel="'+original+'"/></div></li>';
-            $('#thumb_img-<%$tourism_product.id%>').html(html_img);
+	            +'alt="<%$data_product.name%>" data-rel="'+thumb_img+'"/></div></li>';
+            $('#thumb_img-<%$data_product.hotelID%>').html(html_img);
         });
-        $('#img-<%$tourism_product.id%>').attr('src', original);
+        $('#img-<%$data_product.hotelID%>').attr('src', thumb_img);
       </script>
     </article>
       <div class="am-panel am-panel-default">
-          <div class="am-panel-hd">景点特色</div>
-          <div class="am-panel-bd"><p><%$tourism_product.highlights%></p></div>
+          <div class="am-panel-hd">酒店特色</div>
+          <div class="am-panel-bd"><p><%$data_product.Descriptions[0].ShortDescription[0].desc%></p></div>
       </div>
 	<div class="am-panel am-panel-default">
-        <div class="am-panel-hd">游玩类型：</div>
+        <div class="am-panel-hd">客房类型：</div>
       <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=book&action=savebookinfo&tour_type=tourism" method="post">
         <div class="am-panel-bd am-padding-bottom-0 am-margin-0">
           <div class="am-form-group am-padding-0 am-margin-0">
@@ -72,32 +56,29 @@
               <input name="arrivalDate" type="text" class="am-form-field" id="arrivalDate" value="<%$today%>" placeholder="<%$today%>" readonly />
             </div>
           </div>
+          <div class="am-input-group am-input-group-sm am-form-select am-u-sm-4 am-padding-0">
+            <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i> 人数</span>
+            <select name="pax" class="am-form-field am-input-sm" id="pax_" onChange="setProductPrice($('#arrivalDate').val(), 1)">
+              <option value="">1 人</option>
+            </select>
+          </div>
         </div>
-          <ul class="am-list am-list-static"> <!--取消政策cancellationPolicy  孩子价格child（最多2哦个小孩） 推广价格promotion-->
-            <%section name=i loop=$tourism_product.productTypes%>
+          <ul class="am-list am-list-static">
+            <%section name=i loop=$data_product.RoomType%>
             <li>
               <div class="am-g am-margin-left-0">
                 <div class="am-u-sm-6">
-                  <div><%$tourism_product.productTypes[i].titleTranslated%></div>
-                  <div><%$tourism_product.productTypes[i].descriptionTranslated%></div>
+                  <div><%$data_product.RoomType[i].name%></div>
+                  <div></div>
                 </div>
                 <div class="am-u-sm-8 am-padding-left-0 am-padding-right-sm">
                   <div class="am-form-group am-padding-0 am-margin-0 am-btn-group">
                     <div data-am-button class="am-btn-group">
                       <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o"><input type="radio" id="option<%$smarty.section.i.index%>" value="<%$smarty.section.i.index%>" name="options">套餐<%$smarty.section.i.index+1%></label>
                     </div>
-                    <div class="am-input-group am-input-group-sm am-form-select am-u-sm-4 am-padding-0">
-                      <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i> 人数</span>
-                      <select name="pax" class="am-form-field am-input-sm" id="pax_<%$smarty.section.i.index%>" onChange="setProductPrice($('#arrivalDate').val(), <%$smarty.section.i.index%>)">
-                        <%section name=iPax loop=$tourism_product.productTypes[i].paxMax%>
-                          <%if ($smarty.section.iPax.index+$tourism_product.productTypes[i].paxMin) <=  $tourism_product.productTypes[i].paxMax%>
-                            <option value="<%$smarty.section.iPax.index+$tourism_product.productTypes[i].paxMin%>"><%$smarty.section.iPax.index+$tourism_product.productTypes[i].paxMin%> 人</option>
-                          <%/if%>
-                        <%/section%>
-                      </select>
-                    </div>
+
                     <div class="am-input-group am-input-group-sm am-u-md-6 am-padding-left-0 am-padding-right-xl">
-                      <span class="am-input-group-label<%if $currency=='CNY'%> am-icon-rmb<%/if%>" id="currency"> <%$currency%></span>
+                      <span class="am-input-group-label<%if ''=='CNY'%> am-icon-rmb<%/if%>" id="currency"> $</span>
                       <input id="product_<%$smarty.section.i.index%>" type="text" value="" class="am-form-field am-input-sm" readonly>
                       <span class="am-input-group-label">每人</span>
                     </div>
@@ -130,8 +111,8 @@
     </div>
     <article class="blog-main">
         <div class="am-panel am-panel-default">
-            <div class="am-panel-hd">景点介绍</div>
-            <div class="am-panel-bd"><p><%$tourism_product.description%></p></div>
+            <div class="am-panel-hd">酒店介绍</div>
+            <div class="am-panel-bd"><p><%$data_product.Descriptions[0].LongDescription[0].FreeTextLongDescription[0]%></p></div>
         </div>
     <div class="am-sticky-placeholder">
       <nav class="scrollspy-nav" data-am-scrollspy-nav="{offsetTop: 45}" data-am-sticky>
@@ -157,7 +138,7 @@
       <section class="am-panel am-panel-default">
           <div class="am-panel-hd">地图：</div>
           <div class="am-panel-bd am-padding-0">
-              <iframe src="http://www.google.cn/maps/embed?pb=!1m14!1m8!1m3!1d3668.6122398251186!2d<%$tourism_product.longitude%>!3d<%$tourism_product.latitude%>!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s!5e0!3m2!1szh-CN!2scn!4v1449945641309" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+              <iframe src="http://www.google.cn/maps/embed?pb=!1m14!1m8!1m3!1d3668.6122398251186!2d<%$data_product.Location[0].longitude%>!3d<%$data_product.Location[0].latitude%>!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s!5e0!3m2!1szh-CN!2scn!4v1449945641309" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
           </div>
       </section>
       <%include file="news/tour_product_news.tpl"%>
@@ -344,7 +325,7 @@
 <!--script>
 
     function initMap() {
-        var myLatLng = {lat: <%$tourism_product.longitude%>, lng: <%$tourism_product.latitude%>};
+        var myLatLng = {lat: <%$data_product.longitude%>, lng: <%$data_product.latitude%>};
 
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 4,
