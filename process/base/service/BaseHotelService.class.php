@@ -15,10 +15,10 @@ class BaseHotelService extends BaseService {
         return self::$objBaseHotelService;
     }
 
-    public function hotelTemplace($supplierCode, $objResponse, $m_id) {
+    public function hotelTemplace($supplierCode, $objResponse, $m_id, $arraySearchData = null) {
         switch($supplierCode['h_supplier']) {
             case 'tourico':
-                BaseTouricoImpl::instance()->touricoTemplace($supplierCode, $objResponse, $m_id);
+                BaseTouricoImpl::instance()->touricoTemplace($supplierCode, $objResponse, $m_id, $arraySearchData);
                 break;
             default:
                 break;

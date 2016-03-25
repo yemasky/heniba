@@ -66,6 +66,18 @@ class HotelAction extends \BaseAction {
         $supplierCode[0]['h_supplier'] = $objRequest->supplier_code;
         $h_id = $this->check_int($objRequest->id, 'id');
         //
+        $place = $objRequest->place;
+        $arraySearchData['city'] = $objRequest->city;//city_id
+        $arraySearchData['place_type'] = $objRequest->place_type;
+        $arraySearchData['place_en_name'] = $objRequest->place_en_name;
+        $arraySearchData['CheckIn'] = $objRequest->CheckIn;
+        $arraySearchData['CheckOut'] = $objRequest->CheckOut;
+        $arraySearchData['RoomsNum'] = $objRequest->RoomsNum;
+        $arraySearchData['AdultNum'] = $objRequest->AdultNum;
+        $arraySearchData['ChildNum'] = $objRequest->ChildNum;
+        $arraySearchData['ChildAge'] = $objRequest->ChildAge > 0 ? $objRequest->ChildAge : 15;
+        $arraySearchData['HotelId'][0] = $h_id;
+        //
         $conditions = \DbConfig::$db_query_conditions;
         $objHotelService = new HotelService();
         if(!empty($supplierCode[0]['h_supplier'])) {
@@ -75,7 +87,18 @@ class HotelAction extends \BaseAction {
             $supplierCode = $objHotelService->getHotel($conditions, 'h_supplier, h_supplier_code');
         }
         if(!empty($supplierCode)) {
-            \BaseHotelService::instance()->hotelTemplace($supplierCode[0], $objResponse, $objResponse->arrUserInfo['m_id']);
+            if(!empty($arraySearchData['CheckIn']) && !empty($arraySearchData['CheckOut']) && !empty($arraySearchData['AdultNum'])) {
+                $arraySearchData['RoomsInformation'][0]['AdultNum'] = $objRequest->AdultNum;
+                $arraySearchData['RoomsInformation'][0]['ChildNum'] = $objRequest->ChildNum;
+                $arraySearchData['RoomsInformation'][0]['ChildAge'][0] = $objRequest->ChildAge > 0 ? $objRequest->ChildAge : 15;
+                \BaseHotelService::instance()->hotelTemplace($supplierCode[0], $objResponse, $objResponse->arrUserInfo['m_id'], $arraySearchData);
+                //$arrayTouricoListData = $objHotelService->searchHotelInSupplier('tourico', $arraySearchData);
+                //if(isset($arrayTouricoListData['s:Body'][0]['SearchHotelsByIdResponse'][0]['SearchHotelsByIdResult'][0]['HotelList'][0]['Hotel']));
+                //print_r($arrayTouricoListData);
+                //exit();
+            } else {
+                \BaseHotelService::instance()->hotelTemplace($supplierCode[0], $objResponse, $objResponse->arrUserInfo['m_id']);
+            }
         }
 
         $conditions['where'] = "h_id > ".($h_id - 5)." AND h_id < " . ($h_id + 50) . ' AND h_id != ' . $h_id;
@@ -85,6 +108,7 @@ class HotelAction extends \BaseAction {
         $objResponse -> setTplValue('h_id', $h_id);
         $objResponse -> setTplValue('supplierCode', \Encrypt::instance()->encode($h_id));
         $objResponse -> setTplValue('today', substr(getDateTime(), 0, 10));
+        $objResponse -> setTplValue('arraySearchData', $arraySearchData);
         $objResponse -> setTplValue('relation_hotel', $relation_hotel);
         $objResponse -> setTplName("merchant/hotel_product");
     }
@@ -113,10 +137,16 @@ class HotelAction extends \BaseAction {
         $arraySearchData['place_en_name'] = $objRequest->place_en_name;
         $arraySearchData['CheckIn'] = $objRequest->CheckIn;
         $arraySearchData['CheckOut'] = $objRequest->CheckOut;
+        $arraySearchData['RoomsNum'] = $objRequest->RoomsNum;
         $arraySearchData['AdultNum'] = $objRequest->AdultNum;
         $arraySearchData['ChildNum'] = $objRequest->ChildNum;
         $arraySearchData['ChildAge'] = $objRequest->ChildAge > 0 ? $objRequest->ChildAge : 15;
         $search_data_url = http_build_query($arraySearchData);
+        //
+        $arraySearchData['RoomsInformation'][0]['AdultNum'] = $objRequest->AdultNum;
+        $arraySearchData['RoomsInformation'][0]['ChildNum'] = $objRequest->ChildNum;
+        $arraySearchData['RoomsInformation'][0]['ChildAge'][0] = $objRequest->ChildAge > 0 ? $objRequest->ChildAge : 15;
+
 
         //
         //设置类别
@@ -127,7 +157,7 @@ class HotelAction extends \BaseAction {
         $list_count = empty($list_count) ? 20 : $list_count;
 
         $objHotelService = new HotelService();
-        $arrayTouricoListData = $objHotelService->searchHotel('tourico', $arraySearchData);
+        $arrayTouricoListData = $objHotelService->searchHotelInSupplier('tourico', $arraySearchData);
         $tourico = 0;
         if(!empty($arrayTouricoListData)) {
             if(isset($arrayTouricoListData['httpcode']) && $arrayTouricoListData['httpcode'] != 200) {

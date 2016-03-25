@@ -26,7 +26,7 @@ class HotelService extends \BaseService {
         return \BaseHotelDao::instance()->DBCache(1800)->getHotelCount($conditions);
     }
 
-    public function searchHotel($supplier_code, $arraySearchData) {
+    public function searchHotelInSupplier($supplier_code, $arraySearchData) {
         $arraySearchResult = NULL;
         switch ($supplier_code) {
             case 'tourico':

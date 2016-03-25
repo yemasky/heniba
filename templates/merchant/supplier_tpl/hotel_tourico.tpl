@@ -16,7 +16,7 @@
         <ul class="am-slides">
           <li>
             <img id="img-<%$data_product.hotelID%>">
-            <div class="am-slider-desc"><h2 class="am-slider-title"><%$data_product.name%></p></div>
+            <div class="am-slider-desc"><h2 class="am-slider-title"><%$data_product.name%></h2></div>
 		  </li> 
         </ul>
       	</div>
@@ -27,9 +27,7 @@
       <script language="JavaScript">
         var obj = jQuery.parseJSON('<%$data_product_images%>');
         var thumb_img = '';
-        var big_img = '';
         var error_img = '';
-        var original = '';
         var html_img = '';
         $.each(obj, function(i, item){
           thumb_img = item;
@@ -43,44 +41,78 @@
     </article>
       <div class="am-panel am-panel-default">
           <div class="am-panel-hd">酒店特色</div>
-          <div class="am-panel-bd"><p><%$data_product.Descriptions[0].ShortDescription[0].desc%></p></div>
+          <div class="am-panel-bd am-text-break"><p><%$data_product.Descriptions[0].ShortDescription[0].desc%></p></div>
       </div>
-	<div class="am-panel am-panel-default">
+    <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=book&action=savebookinfo&tour_type=tourism" method="post">
+    <div class="am-panel am-panel-default">
         <div class="am-panel-hd">客房类型：</div>
-      <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=book&action=savebookinfo&tour_type=tourism" method="post">
-        <div class="am-panel-bd am-padding-bottom-0 am-margin-0">
-          <div class="am-form-group am-padding-0 am-margin-0">
-            <label class="am-form-label am-u-sm-1 am-padding-left-0 am-padding-right-0 am-text-sm" for="arrivalDate"></label>
+        <div class="am-panel-bd">
+          <div class="am-form-group">
             <div class="am-input-group am-input-group-sm am-u-sm-6">
-              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 选择日期</span>
-              <input name="arrivalDate" type="text" class="am-form-field" id="arrivalDate" value="<%$today%>" placeholder="<%$today%>" readonly />
+              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 入住日期</span>
+              <input name="CheckIn" type="text" class="am-form-field" id="CheckIn" value="<%$arraySearchData.CheckIn%>" placeholder="<%$arraySearchData.CheckIn%>" readonly />
+            </div>
+            <div class="am-input-group am-input-group-sm am-u-sm-6">
+              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 退房日期</span>
+              <input name="CheckOut" type="text" class="am-form-field" id="CheckOut" value="<%$arraySearchData.CheckOut%>" placeholder="<%$arraySearchData.CheckOut%>" readonly />
             </div>
           </div>
-          <div class="am-input-group am-input-group-sm am-form-select am-u-sm-4 am-padding-0">
-            <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i> 人数</span>
-            <select name="pax" class="am-form-field am-input-sm" id="pax_" onChange="setProductPrice($('#arrivalDate').val(), 1)">
-              <option value="">1 人</option>
-            </select>
+          <div class="am-form-group">
+            <div class="am-input-group am-input-group-sm am-form-select am-u-sm-3">
+              <span class="am-input-group-label"><i class="am-icon-bed am-icon-fw"></i> 客房</span>
+              <select class="am-form-field am-input-sm" name="RoomsNum">
+                <%section name=i loop=10%>
+                <option value="<%$smarty.section.i.index+1%>"<%if ($smarty.section.i.index+1)==$arraySearchData.RoomsNum%> selected<%/if%>><%$smarty.section.i.index+1%> 人</option>
+                <%/section%>
+              </select>
+            </div>
+            <div class="am-input-group am-input-group-sm am-form-select am-u-sm-3">
+              <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i> 成人</span>
+              <select class="am-form-field am-input-sm" name="AdultNum">
+                <%section name=i loop=10%>
+                <option value="<%$smarty.section.i.index+1%>"<%if ($smarty.section.i.index+1)==$arraySearchData.AdultNum%> selected<%/if%>><%$smarty.section.i.index+1%> 人</option>
+                <%/section%>
+              </select>
+            </div>
+            <div class="am-input-group am-input-group-sm am-form-select am-u-sm-3">
+              <span class="am-input-group-label"><i class="am-icon-child am-icon-fw"></i> 儿童</span>
+              <select class="am-form-field am-input-sm" name="ChildNum">
+                <%section name=i loop=10%>
+                <option value="<%$smarty.section.i.index+1%>"<%if ($smarty.section.i.index+1)==$arraySearchData.ChildNum%> selected<%/if%>><%$smarty.section.i.index+1%> 人</option>
+                <%/section%>
+              </select>
+            </div>
+            <div data-am-dropdown="" class="am-cf am-padding-right">
+              <button type="submit" id="order-popup-button" class="am-btn am-btn-warning am-round am-fr"><i class="am-icon-shopping-cart"></i> 查看空房</button>
+            </div>
+
           </div>
         </div>
+        <div class="am-panel-hd">客房类型：</div>
           <ul class="am-list am-list-static">
             <%section name=i loop=$data_product.RoomType%>
             <li>
               <div class="am-g am-margin-left-0">
-                <div class="am-u-sm-6">
+                <div class="am-u-sm">
                   <div><%$data_product.RoomType[i].name%></div>
-                  <div></div>
+                  <div>
+                    客房设施：
+                    <ul class="am-list am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-text-left">
+                      <%section name=j loop=$data_product.RoomType[i].Facilities[0].Facility%>
+                      <li class="am-btn am-btn-default am-btn-xs am-text-secondary am-text-left"><%$data_product.RoomType[i].Facilities[0].Facility[j].name%></li>
+                      <%/section%>
+                    </ul>
+                  </div>
                 </div>
-                <div class="am-u-sm-8 am-padding-left-0 am-padding-right-sm">
+                <div class="am-u-sm-5 am-padding-left-0 am-padding-right-sm">
                   <div class="am-form-group am-padding-0 am-margin-0 am-btn-group">
                     <div data-am-button class="am-btn-group">
-                      <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o"><input type="radio" id="option<%$smarty.section.i.index%>" value="<%$smarty.section.i.index%>" name="options">套餐<%$smarty.section.i.index+1%></label>
+                      <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o<%if $data_product.RoomType[i].is_can_book==0%> am-disabled<%/if%>"><input type="radio" id="option<%$smarty.section.i.index%>" value="<%$smarty.section.i.index%>" name="options"> 预订</label>
                     </div>
-
                     <div class="am-input-group am-input-group-sm am-u-md-6 am-padding-left-0 am-padding-right-xl">
                       <span class="am-input-group-label<%if ''=='CNY'%> am-icon-rmb<%/if%>" id="currency"> $</span>
                       <input id="product_<%$smarty.section.i.index%>" type="text" value="" class="am-form-field am-input-sm" readonly>
-                      <span class="am-input-group-label">每人</span>
+                      <span class="am-input-group-label">每晚</span>
                     </div>
                   </div>
                 </div>
@@ -94,7 +126,7 @@
               </div>
               <div class="am-u-sm-6 am-padding-left-0 am-padding-right-0">
                 <div class="am-input-group am-input-group-sm am-u-md-11 am-padding-left-0 am-padding-right-0">
-                  <span class="am-input-group-label<%if $currency=='CNY'%> am-icon-rmb<%/if%>" id="currency"> <%$currency%></span>
+                  <span class="am-input-group-label am-icon-rmb" id="currency"> ￥</span>
                   <input id="product_all" type="text" value="" class="am-form-field am-input-sm" readonly>
                   <span class="am-input-group-label">总共</span>
                 </div>
@@ -107,28 +139,23 @@
           </div>
         <%include file="order/order_from_userinfo.tpl"%>
         <input type="hidden" name="supplierCode" value="<%$supplierCode%>">
-      </form>
     </div>
+    </form>
     <article class="blog-main">
         <div class="am-panel am-panel-default">
             <div class="am-panel-hd">酒店介绍</div>
-            <div class="am-panel-bd"><p><%$data_product.Descriptions[0].LongDescription[0].FreeTextLongDescription[0]%></p></div>
+            <div class="am-panel-bd am-text-break"><p><%$data_product.Descriptions[0].LongDescription[0].FreeTextLongDescription[0]%></p></div>
         </div>
     <div class="am-sticky-placeholder">
       <nav class="scrollspy-nav" data-am-scrollspy-nav="{offsetTop: 45}" data-am-sticky>
 		  <ul>
-		  <%section name=i loop=$tourismAttr max=5%>
-		  <li><a href="#<%$tourismAttr[i].k%>"><%$tourismAttr[i].n%></a></li>
-		  <%/section%>
-		  </ul>
+		  <li><a href="">sss</a></li>
 	  </nav>
 	</div>
-	<%section name=i loop=$tourismAttr%>
-	<div id="<%$tourismAttr[i].k%>" class="am-panel am-panel-default">
-		<div class="am-panel-hd"><%$tourismAttr[i].n%></div>
-		<div class="am-panel-bd"><p><%$tourismAttr[i].v%></p></div>
+	<div id="s" class="am-panel am-panel-default">
+		<div class="am-panel-hd">s</div>
+		<div class="am-panel-bd"><p>s</p></div>
 	</div>
-	<%/section%>
     </article>
 
     <hr class="am-article-divider blog-hr">
@@ -177,9 +204,10 @@
     var nowDay = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0).valueOf();
     var nowMoth = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), 1, 0, 0, 0, 0).valueOf();
     var nowYear = new Date(nowTemp.getFullYear(), 0, 1, 0, 0, 0, 0).valueOf();
-    var $arrivalDate = $('#arrivalDate');
+    var $CheckIn = $('#CheckIn');
+    var $CheckOut = $('#CheckOut');
 
-    var checkin = $arrivalDate.datepicker({
+    var CheckIn = $CheckIn.datepicker({
       onRender: function(date, viewMode) {
         // 默认 days 视图，与当前日期比较
         var viewDate = nowDay;
@@ -194,12 +222,43 @@
             viewDate = nowYear;
             break;
         }
-
         return date.valueOf() < viewDate ? 'am-disabled' : '';
       }
     }).on('changeDate.datepicker.amui', function(ev) {
-      checkin.close();
-	  setProductPrice($('#arrivalDate').val(), -1);
+      if (ev.date.valueOf() > CheckOut.date.valueOf()) {
+        var newDate = new Date(ev.date)
+        newDate.setDate(newDate.getDate() + 1);
+        CheckOut.setValue(newDate);
+      }
+      CheckIn.close();
+      CheckOut.open();
+	  //setProductPrice($('#arrivalDate').val(), -1);
+    }).data('amui.datepicker');
+
+    var CheckOut = $CheckOut.datepicker({
+      onRender: function(date, viewMode) {
+        var inTime = CheckIn.date;
+        var inDay = inTime.valueOf();
+        var inMoth = new Date(inTime.getFullYear(), inTime.getMonth(), 1, 0, 0, 0, 0).valueOf();
+        var inYear = new Date(inTime.getFullYear(), 0, 1, 0, 0, 0, 0).valueOf();
+        // 默认 days 视图，与当前日期比较
+        var viewDate = inDay;
+
+        switch (viewMode) {
+          // moths 视图，与当前月份比较
+          case 1:
+            viewDate = inMoth;
+            break;
+          // years 视图，与当前年份比较
+          case 2:
+            viewDate = inYear;
+            break;
+        }
+        return date.valueOf() <= viewDate ? 'am-disabled' : '';
+      }
+    }).on('changeDate.datepicker.amui', function(ev) {
+      CheckOut.close();
+      //setProductPrice($('#arrivalDate').val(), -1);
     }).data('amui.datepicker');
   });
 </script>
@@ -265,7 +324,7 @@
   var today = new Date().Format("yyyy-MM-dd");
 </script>
 <script language="JavaScript">
-  setProductPrice($('#arrivalDate').val(), -1);
+  //setProductPrice($('#arrivalDate').val(), -1);
   //pax
   function setProductPrice(date, index) {
 	  if(product_price[date] == undefined) {

@@ -15,7 +15,7 @@ class BaseTouricoImpl extends BaseService {
         return self::$objBaseTouricoImpl;
     }
 
-    public function touricoTemplace($arraySupplierCode, $objResponse, $m_id) {
+    public function touricoTemplace($arraySupplierCode, $objResponse, $m_id, $arraySearchData = null) {
         $data_product = BaseHotelService::instance()->getSupplierHotel($arraySupplierCode);
         if(empty($data_product)) {
             $objTouricoTool = new \supplier\TouricoTool();
@@ -30,6 +30,31 @@ class BaseTouricoImpl extends BaseService {
             $data_product[0]['Amenities'] = json_decode($data_product[0]['Amenities'], true);
             $data_product[0]['RoomType'] = json_decode($data_product[0]['RoomType'], true);
             $data_product[0]['Home'] = json_decode($data_product[0]['Home'], true);
+        }
+        if(!empty($arraySearchData)) {
+            $objHotelService = new \merchant\HotelService();
+            $arrayTouricoListData = $objHotelService->searchHotelInSupplier('tourico', $arraySearchData);
+            $arrayRoomType = null;
+            if(isset($arrayTouricoListData['s:Body'][0]['SearchHotelsByIdResponse'][0]['SearchHotelsByIdResult'][0]['HotelList'][0]['Hotel'])) {
+                $arrayRoomType = $arrayTouricoListData['s:Body'][0]['SearchHotelsByIdResponse'][0]['SearchHotelsByIdResult'][0]['HotelList'][0]['Hotel'][0]['RoomTypes'][0]['RoomType'];
+            }
+            $arrayRoomTypeHash = null;
+            foreach($arrayRoomType as $k => $v) {
+                $arrayRoomTypeHash[$v['roomId']] = $v;
+            }
+            unset($arrayRoomType);
+            foreach($data_product[0]['RoomType'] as $k => $v) {
+                if(isset($arrayRoomTypeHash[$v['roomId']])) {
+                    $data_product[0]['RoomType'][$k]['is_can_book'] = 1;
+                    if(isset($arrayRoomTypeHash[$v['roomId']]['Discount'])) $data_product[0]['RoomType'][$k]['Discount'] = $arrayRoomTypeHash[$v['roomId']]['Discount'];
+                    $data_product[0]['RoomType'][$k]['Occupancies'] = $arrayRoomTypeHash[$v['roomId']]['Occupancies'];
+                } else {
+                    $data_product[0]['RoomType'][$k]['is_can_book'] = 0;
+                }
+            }
+            //print_r( $data_product[0]['RoomType']);
+            //print_r($arrayRoomType);
+
         }
         //print_r($data_product[0]['RoomType']);
         $arrayImages = $data_product[0]['Media'];

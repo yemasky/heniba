@@ -24,6 +24,8 @@ class TouricoConfig {
 	public $SOAPActionGetCancellationPolicies = 'http://tourico.com/webservices/hotelv3/IHotelFlow/GetCancellationPolicies';
 	public $SOAPActionCheckAvailabilityAndPrices = 'http://tourico.com/webservices/hotelv3/IHotelFlow/CheckAvailabilityAndPrices';
 
+	public $SOAPActionBookHotelV3 = 'http://tourico.com/webservices/hotelv3/IHotelFlow/BookHotelV3';
+
 	public $SOAPActionGetCancellationPoliciesWS = 'http://tourico.com/webservices/GetCancellationPolicies'; //ReservationsService
 
 	//searchHotels(SearchHotelsById, SearchHotelsByDestinationIds) -> GetHotelDetailsV3
@@ -279,19 +281,24 @@ class TouricoConfig {
 	}
 
 	public function SearchHotelsRequestXml($arraySearchInformation, $arrayCheckData, $arrayRoomsInformation) {
+		$strRoomsInformation = '';
+		foreach($arrayRoomsInformation as $k => $v) {
+			$strChildAge = '';
+			foreach ($v['ChildAge'] as $CAk => $CAv) {
+				$strChildAge .= '<hot1:ChildAge age="'.$CAv.'"/>';//'<m0:ChildAge age="' . $CAv . '"/>';
+			}
+			$strRoomsInformation .= '<hot1:RoomInfo><hot1:AdultNum>'.$v['AdultNum'].'</hot1:AdultNum>'
+				.'<hot1:ChildNum>'.$v['ChildNum'].'</hot1:ChildNum>'
+				.'<hot1:ChildAges>'.$strChildAge.'</hot1:ChildAges></hot1:RoomInfo>';
+		}
+
 		$xml =   '<hot1:Destination>'.$arraySearchInformation['Destination'].'</hot1:Destination>'
 				.'<hot1:HotelCityName>'.$arraySearchInformation['HotelCityName'].'</hot1:HotelCityName>'
 				.'<hot1:HotelLocationName>'.$arraySearchInformation['HotelLocationName'].'</hot1:HotelLocationName>'
 				.'<hot1:HotelName>'.$arraySearchInformation['HotelName'].'</hot1:HotelName>'
 				.'<hot1:CheckIn>'.$arrayCheckData['CheckIn'].'</hot1:CheckIn>'
 				.'<hot1:CheckOut>'.$arrayCheckData['CheckOut'].'</hot1:CheckOut>'
-				.'<hot1:RoomsInformation>'
-					.'<hot1:RoomInfo>'
-						.'<hot1:AdultNum>'.$arrayRoomsInformation['AdultNum'].'</hot1:AdultNum>'
-						.'<hot1:ChildNum>'.$arrayRoomsInformation['ChildNum'].'</hot1:ChildNum>'
-						.'<hot1:ChildAges><hot1:ChildAge age="'.$arrayRoomsInformation['ChildAge'].'"/></hot1:ChildAges>'
-					.'</hot1:RoomInfo>'
-				.'</hot1:RoomsInformation>'
+				.'<hot1:RoomsInformation>'. $strRoomsInformation .'</hot1:RoomsInformation>'
 				.'<hot1:MaxPrice>0</hot1:MaxPrice>'
 				.'<hot1:StarLevel>0</hot1:StarLevel>'
 				.'<hot1:AvailableOnly>true</hot1:AvailableOnly>'

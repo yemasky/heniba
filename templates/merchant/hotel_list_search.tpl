@@ -136,23 +136,26 @@ YUI({
 
                       	<div class="am-input-group am-input-group-sm am-form-select am-u-sm-2">
                               <span class="am-input-group-label"><i class="am-icon-bed am-icon-fw"></i> 客房</span>
-                              <select onchange="setProductPrice($('#arrivalDate').val(), 0)" id="pax_0" class="am-form-field am-input-sm" name="AdultNum">
-                                  <option value="1">1 人</option>
-                                  <option value="2">2 人</option>
-                              </select>
+                            <select class="am-form-field am-input-sm" name="RoomsNum">
+                                <%section name=i loop=10%>
+                                <option value="<%$smarty.section.i.index+1%>"<%if ($smarty.section.i.index+1)==$arraySearchData.RoomsNum%> selected<%/if%>><%$smarty.section.i.index+1%> 人</option>
+                                <%/section%>
+                            </select>
                           </div>
                           <div class="am-input-group am-input-group-sm am-form-select am-u-sm-2">
                               <span class="am-input-group-label"><i class="am-icon-users am-icon-fw"></i> 成人</span>
-                              <select onchange="setProductPrice($('#arrivalDate').val(), 0)" id="pax_0" class="am-form-field am-input-sm" name="AdultNum">
-                                  <option value="1">1 人</option>
-                                  <option value="2">2 人</option>
+                              <select class="am-form-field am-input-sm" name="AdultNum">
+                                  <%section name=i loop=10%>
+                                  <option value="<%$smarty.section.i.index+1%>"<%if ($smarty.section.i.index+1)==$arraySearchData.AdultNum%> selected<%/if%>><%$smarty.section.i.index+1%> 人</option>
+                                  <%/section%>
                               </select>
                           </div>
                           <div class="am-input-group am-input-group-sm am-form-select am-u-sm-2">
                               <span class="am-input-group-label"><i class="am-icon-child am-icon-fw"></i> 儿童</span>
-                              <select onchange="setProductPrice($('#arrivalDate').val(), 0)" id="pax_0" class="am-form-field am-input-sm" name="ChildNum">
-                                  <option value="1">1 人</option>
-                                  <option value="2">2 人</option>
+                              <select class="am-form-field am-input-sm" name="ChildNum">
+                                  <%section name=i loop=10%>
+                                  <option value="<%$smarty.section.i.index+1%>"<%if ($smarty.section.i.index+1)==$arraySearchData.ChildNum%> selected<%/if%>><%$smarty.section.i.index+1%> 人</option>
+                                  <%/section%>
                               </select>
                           </div>
                           <div class="am-input-group am-input-group-sm am-u-md-6 am-padding-left-0 am-padding-right-xl">
