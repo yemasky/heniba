@@ -34,15 +34,16 @@ class BaseTouricoImpl extends BaseService {
         if(!empty($arraySearchData)) {
             $objHotelService = new \merchant\HotelService();
             $arrayTouricoListData = $objHotelService->searchHotelInSupplier('tourico', $arraySearchData);
-            $arrayRoomType = null;
+            $arrayRoomType = $arrayRoomTypeHash = null;
             if(isset($arrayTouricoListData['s:Body'][0]['SearchHotelsByIdResponse'][0]['SearchHotelsByIdResult'][0]['HotelList'][0]['Hotel'])) {
                 $arrayRoomType = $arrayTouricoListData['s:Body'][0]['SearchHotelsByIdResponse'][0]['SearchHotelsByIdResult'][0]['HotelList'][0]['Hotel'][0]['RoomTypes'][0]['RoomType'];
+                $arrayRoomTypeHash = null;
+                foreach($arrayRoomType as $k => $v) {
+                    $arrayRoomTypeHash[$v['roomId']] = $v;
+                }
+                unset($arrayRoomType);
             }
-            $arrayRoomTypeHash = null;
-            foreach($arrayRoomType as $k => $v) {
-                $arrayRoomTypeHash[$v['roomId']] = $v;
-            }
-            unset($arrayRoomType);
+
             foreach($data_product[0]['RoomType'] as $k => $v) {
                 if(isset($arrayRoomTypeHash[$v['roomId']])) {
                     $data_product[0]['RoomType'][$k]['is_can_book'] = 1;
@@ -88,14 +89,55 @@ class BaseTouricoImpl extends BaseService {
         //print_r($objRequest);
         //预订数据
         $arraySearchData  = json_decode(\Encrypt::instance()->decode($objRequest->searchData), true);
-        //print_r($arraySearchData);
+        print_r($arraySearchData);
         $arraySearchData['HotelRoomTypeId'] = $objRequest->RoomType;
         $arraySearchData['RoomsInformation'][0]['RoomId'] = $objRequest->options;
         //CheckAvailabilityAndPrices
         $arrayCheckAvailabilityAndPrices = \BaseSupplierTouricoService::instance()->CheckAvailabilityAndPrices($arraySearchData);
-        //print_r($arrayCheckAvailabilityAndPrices);exit();
+        print_r($arrayCheckAvailabilityAndPrices);exit();
+        if(isset($arrayCheckAvailabilityAndPrices['s:Body'][0]['CheckAvailabilityAndPricesResponse']['0']['CheckAvailabilityAndPricesResult'][0]['HotelList'][0]['Hotel'])) {
+            $arrayHotel = $arrayCheckAvailabilityAndPrices['s:Body'][0]['CheckAvailabilityAndPricesResponse']['0']['CheckAvailabilityAndPricesResult'][0]['HotelList'][0]['Hotel'];
+            $arrayBookInfo['RecordLocatorId'] = '';
+            $arrayBookInfo['HotelId'] = '';
+            $arrayBookInfo['HotelRoomTypeId'] = '';
+            $arrayBookInfo['CheckIn'] = '';
+            $arrayBookInfo['CheckOut'] = '';
+            $arrayBookInfo['PaymentType'] = '';
+            $arrayBookInfo['AgentRefNumber'] = '';
+            $arrayBookInfo['ContactInfo'] = '';
+            $arrayBookInfo['RequestedPrice'] = '';
+            $arrayBookInfo['DeltaPrice'] = '';
+            $arrayBookInfo['Currency'] = '';
+            $arrayBookInfo['IsOnlyAvailable'] = '';
+            $arrayBookInfo['ConfirmationEmail'] = '';
+            $arrayBookInfo['ConfirmationLogo'] = '';
+            //RoomsInfo
+            $arrayBookInfo['ConfirmationLogo'][0]['RoomId'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['FirstName'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['MiddleName'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['LastName'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['HomePhone'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['MobilePhone'] = '';
+            //RoomsInfo SelectedBoardBase
+            $arrayBookInfo['ConfirmationLogo'][0]['Id'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['Price'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['suppId'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['supTotalPrice'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['suppType'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['suppFrom'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['suppTo'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['suppQuantity'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['suppPrice'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['Bedding'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['Note'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['AdultNum'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['ChildNum'] = '';
+            $arrayBookInfo['ConfirmationLogo'][0]['ChildAge'] = array();
+        }
+
+
         $arrayBookHotelV3 = \BaseSupplierTouricoService::instance()->BookHotelV3($arraySearchData);
-        print_r($arrayBookHotelV3);exit();
+        //print_r($arrayBookHotelV3);exit();
         //检查商户剩余资金
 
         //锁定资金

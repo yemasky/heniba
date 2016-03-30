@@ -208,37 +208,35 @@ class TouricoConfig {
 			foreach($v['ChildAge'] as $CAk => $VAv) {
 				$strChildAge .= '<hot1:ChildAge age="'.$VAv.'"/>';
 			}
-			$strRoomInfo .='<hot1:RoomReserveInfo><hot1:RoomId>'.$k.'</hot1:RoomId>'
-				         .'<hot1:ContactPassenger><hot1:FirstName>'.$v['FirstName'].'</hot1:FirstName>'
-						 .'<hot1:MiddleName>'.$v['FirstName'].'</hot1:MiddleName>'
-				         .'<hot1:MiddleName>'.$v['MiddleName'].'</hot1:MiddleName>'
-						 .'<hot1:LastName>'.$v['LastName'].'</hot1:LastName>'
-						 .'<hot1:HomePhone>'.$v['HomePhone'].'</hot1:HomePhone>'
-						 .'<hot1:MobilePhone>'.$v['MobilePhone'].'</hot1:MobilePhone>'
-						 .'<hot1:SelectedBoardBase><hot1:Id>'.$v['Id'].'</hot1:Id><hot1:Price>'.$v['Price'].'</hot1:Price></hot1:SelectedBoardBase>'
-						 .'<hot1:SelectedSupplements><hot1:SupplementInfo suppId="'.$v['suppId'].'" supTotalPrice="'.$v['supTotalPrice'].'" suppType="'.$v['suppType'].'">'
-						 .'<hot1:SupAgeGroup><hot1:SuppAges suppFrom="'.$v['suppFrom'].'" suppTo="'.$v['suppTo'].'" suppQuantity="'.$v['suppQuantity'].'" suppPrice="'.$v['suppPrice'].'"/></hot1:SupAgeGroup></hot1:SupplementInfo></hot1:SelectedSupplements>'
-						 .'<hot1:Bedding>'.$v['Bedding'].'</hot1:Bedding>'
-						 .'<hot1:Note>'.$v['Note'].'</hot1:Note>'
-						 .'<hot1:AdultNum>'.$v['AdultNum'].'</hot1:AdultNum><hot1:ChildNum>'.$v['ChildNum'].'</hot1:ChildNum>'
-						 .'<hot1:ChildAges>'.$strChildAge.'</hot1:ChildAges></hot1:RoomReserveInfo>';
+			$strRoomInfo .='<hot1:RoomReserveInfo><hot1:RoomId>'.$v['RoomId'].'</hot1:RoomId>'
+				.'<hot1:ContactPassenger><hot1:FirstName>'.$v['FirstName'].'</hot1:FirstName><hot1:MiddleName>'.$v['MiddleName'].'</hot1:MiddleName>'
+				.'<hot1:LastName>'.$v['LastName'].'</hot1:LastName>'
+				.'<hot1:HomePhone>'.$v['HomePhone'].'</hot1:HomePhone>'
+				.'<hot1:MobilePhone>'.$v['MobilePhone'].'</hot1:MobilePhone>'
+				.'<hot1:SelectedBoardBase><hot1:Id>'.$v['Id'].'</hot1:Id><hot1:Price>'.$v['Price'].'</hot1:Price></hot1:SelectedBoardBase>'
+				.'<hot1:SelectedSupplements><hot1:SupplementInfo suppId="'.$v['suppId'].'" supTotalPrice="'.$v['supTotalPrice'].'" suppType="'.$v['suppType'].'">'
+				.'<hot1:SupAgeGroup><hot1:SuppAges suppFrom="'.$v['suppFrom'].'" suppTo="'.$v['suppTo'].'" suppQuantity="'.$v['suppQuantity'].'" suppPrice="'.$v['suppPrice'].'"/></hot1:SupAgeGroup></hot1:SupplementInfo></hot1:SelectedSupplements>'
+				.'<hot1:Bedding>'.$v['Bedding'].'</hot1:Bedding>'
+				.'<hot1:Note>'.$v['Note'].'</hot1:Note>'
+				.'<hot1:AdultNum>'.$v['AdultNum'].'</hot1:AdultNum><hot1:ChildNum>'.$v['ChildNum'].'</hot1:ChildNum>'
+				.'<hot1:ChildAges>'.$strChildAge.'</hot1:ChildAges></hot1:RoomReserveInfo>';
 		}
 		$xml = '<hot1:RecordLocatorId>'.$arrayBookInfo['RecordLocatorId'].'</hot1:RecordLocatorId>'
 		      .'<hot1:HotelId>'.$arrayBookInfo['HotelId'].'</hot1:HotelId>'
 			  .'<hot1:HotelRoomTypeId>'.$arrayBookInfo['HotelRoomTypeId'].'</hot1:HotelRoomTypeId>'
 			  .'<hot1:CheckIn>'.$arrayBookInfo['CheckIn'].'</hot1:CheckIn>'
 			  .'<hot1:CheckOut>'.$arrayBookInfo['CheckOut'].'</hot1:CheckOut>'
+			  //RoomsInfo 信息
 			  .'<hot1:RoomsInfo>'.$strRoomInfo.'</hot1:RoomsInfo>'
+			  //其它信息
 			  .'<hot1:PaymentType>'.$arrayBookInfo['PaymentType'].'</hot1:PaymentType>'
 			  .'<hot1:AgentRefNumber>'.$arrayBookInfo['AgentRefNumber'].'</hot1:AgentRefNumber>'
 			  .'<hot1:ContactInfo>'.$arrayBookInfo['ContactInfo'].'</hot1:ContactInfo>'
 			  .'<hot1:RequestedPrice>'.$arrayBookInfo['RequestedPrice'].'</hot1:RequestedPrice><hot1:DeltaPrice>'.$arrayBookInfo['DeltaPrice'].'</hot1:DeltaPrice>'
 			  .'<hot1:Currency>'.$arrayBookInfo['Currency'].'</hot1:Currency>'
-			  .'<hot1:DeltaPrice>'.$arrayBookInfo['DeltaPrice'].'</hot1:DeltaPrice><hot1:Currency>'.$arrayBookInfo['Currency'].'</hot1:Currency>'
+			  .'<hot1:IsOnlyAvailable>'.$arrayBookInfo['IsOnlyAvailable'].'</hot1:IsOnlyAvailable>'
 			  .'<hot1:ConfirmationEmail>'.$arrayBookInfo['ConfirmationEmail'].'</hot1:ConfirmationEmail>'
-			  .'<hot1:ConfirmationLogo/>'.$arrayBookInfo['ConfirmationLogo'].'</hot1:ConfirmationLogo>'
-			  .'</hot:request></hot:BookHotelV3></soapenv:Body></soapenv:Envelope>';
-
+			  .'<hot1:ConfirmationLogo/>'.$arrayBookInfo['ConfirmationLogo'].'</hot1:ConfirmationLogo>';
 		;
 		return $xml;
 	}
