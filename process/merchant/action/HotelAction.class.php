@@ -107,8 +107,10 @@ class HotelAction extends \BaseAction {
         $objResponse -> setTplValue('hotel_supplier_tpl', 'hotel_' . $supplierCode[0]['h_supplier']);
         $objResponse -> setTplValue('h_id', $h_id);
         $objResponse -> setTplValue('supplierCode', \Encrypt::instance()->encode($h_id));
+        $objResponse -> setTplValue('supplier', \Encrypt::instance()->encode($supplierCode[0]['h_supplier']));
         $objResponse -> setTplValue('today', substr(getDateTime(), 0, 10));
         $objResponse -> setTplValue('arraySearchData', $arraySearchData);
+        $objResponse -> setTplValue('searchData', \Encrypt::instance()->encode(json_encode($arraySearchData)));
         $objResponse -> setTplValue('relation_hotel', $relation_hotel);
         $objResponse -> setTplName("merchant/hotel_product");
     }

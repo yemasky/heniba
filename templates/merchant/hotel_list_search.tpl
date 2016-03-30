@@ -19,70 +19,6 @@
 .am-popover-inner{background:#FFF;}
 .am-popover{background:#999; border:1px solid #CCC;}
 </style>
-<script src="<%$__RESOURCE%>assets/js/yui-min.js"></script>
-<script language="javascript">
-YUI({
-    modules: {
-        'trip-calendar': {
-            fullpath: '<%$__RESOURCE%>assets/js/trip-calendar.js',
-            type    : 'js',
-            requires: ['<%$__RESOURCE%>assets/css/trip-calendar-css']
-        },
-        'trip-calendar-css': {
-            fullpath: '<%$__RESOURCE%>assets/css/trip-calendar.css',
-            type    : 'css'
-        }
-    }
-}).use('trip-calendar', function(Y) {
-    
-    var oCal = new Y.TripCalendar({
-        minDate         : new Date,     //最小时间限制
-        triggerNode     : '#J_DepDate', //第一个触节点
-        finalTriggerNode: '#J_EndDate'  //最后一个触发节点
-    });
-    
-    //校验
-    Y.one('#form-book').on('submit', function(e) {
-        //e.halt();
-        var rDate    = /^((19|2[01])\d{2})-(0?[1-9]|1[012])-(0?[1-9]|[12]\d|3[01])$/;
-        oDepDate = Y.one('#J_DepDate'),
-        oEndDate = Y.one('#J_EndDate'),
-        sDepDate = oDepDate.get('value'),
-        sEndDate = oEndDate.get('value'),
-        aMessage = ['请选择出发日期', '请选择返程日期', '返程时间不能早于出发时间，请重新选择', '日期格式错误'],
-        iError   = -1;
-        switch(!0) {
-            case !sDepDate:
-                oDepDate.focus();
-                iError = 0;
-                break;
-            case !rDate.test(sDepDate):
-                oDepDate.focus();
-                iError = 3;
-                break;
-            case !sEndDate:
-                oEndDate.focus();
-                iError = 1;
-                break;
-            case !rDate.test(sEndDate):
-                oEndDate.focus();
-                iError = 3;
-                break;
-            case sDepDate.replace(/-/g, '') > sEndDate.replace(/-/g, ''):
-                oEndDate.focus();
-                iError = 2;
-                break;
-        };
-        if(iError > -1) {
-            this.set('message', aMessage[iError]).showMessage();
-        }
-        else {
-            //alert('开始时间：' + sDepDate + '\n返程时间：' + sEndDate);
-            //e.submit();
-        }
-    }, oCal);
-});
-</script>
 </head>
 <body>
 <!--[if lte IE 9]>
@@ -120,9 +56,9 @@ YUI({
                           </div>
                           <div class="am-input-group am-input-group-sm am-u-sm-6">
                               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 入住时间</span>
-                              <input type="text" readonly placeholder="<%$arraySearchData.CheckIn%>" value="<%$arraySearchData.CheckIn%>" class="am-form-field" name="CheckIn" id="J_DepDate">
+                              <input type="text" readonly placeholder="<%$arraySearchData.CheckIn%>" value="<%$arraySearchData.CheckIn%>" class="am-form-field" name="CheckIn" id="CheckIn">
                               <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 退房时间</span>
-                              <input type="text" readonly placeholder="<%$arraySearchData.CheckOut%>" value="<%$arraySearchData.CheckOut%>" class="am-form-field" name="CheckOut" id="J_EndDate">
+                              <input type="text" readonly placeholder="<%$arraySearchData.CheckOut%>" value="<%$arraySearchData.CheckOut%>" class="am-form-field" name="CheckOut" id="CheckOut">
                           </div>
                           <div id="doc-dropdown-justify-js" style="margin-left: 160px;">
                               <div class="am-dropdown am-u-sm-400" id="doc-dropdown-js">
@@ -229,6 +165,69 @@ $(function() {
     });*/
 });
 </script>
+<script language="javascript">
+    $(function() {
+        var nowTemp = new Date();
+        var nowDay = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0).valueOf();
+        var nowMoth = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), 1, 0, 0, 0, 0).valueOf();
+        var nowYear = new Date(nowTemp.getFullYear(), 0, 1, 0, 0, 0, 0).valueOf();
+        var $CheckIn = $('#CheckIn');
+        var $CheckOut = $('#CheckOut');
 
+        var CheckIn = $CheckIn.datepicker({
+            onRender: function(date, viewMode) {
+                // 默认 days 视图，与当前日期比较
+                var viewDate = nowDay;
+
+                switch (viewMode) {
+                    // moths 视图，与当前月份比较
+                    case 1:
+                        viewDate = nowMoth;
+                        break;
+                    // years 视图，与当前年份比较
+                    case 2:
+                        viewDate = nowYear;
+                        break;
+                }
+                return date.valueOf() < viewDate ? 'am-disabled' : '';
+            }
+        }).on('changeDate.datepicker.amui', function(ev) {
+            if (ev.date.valueOf() > CheckOut.date.valueOf()) {
+                var newDate = new Date(ev.date)
+                newDate.setDate(newDate.getDate() + 1);
+                CheckOut.setValue(newDate);
+            }
+            CheckIn.close();
+            CheckOut.open();
+            //setProductPrice($('#arrivalDate').val(), -1);
+        }).data('amui.datepicker');
+
+        var CheckOut = $CheckOut.datepicker({
+            onRender: function(date, viewMode) {
+                var inTime = CheckIn.date;
+                var inDay = inTime.valueOf();
+                var inMoth = new Date(inTime.getFullYear(), inTime.getMonth(), 1, 0, 0, 0, 0).valueOf();
+                var inYear = new Date(inTime.getFullYear(), 0, 1, 0, 0, 0, 0).valueOf();
+                // 默认 days 视图，与当前日期比较
+                var viewDate = inDay;
+
+                switch (viewMode) {
+                    // moths 视图，与当前月份比较
+                    case 1:
+                        viewDate = inMoth;
+                        break;
+                    // years 视图，与当前年份比较
+                    case 2:
+                        viewDate = inYear;
+                        break;
+                }
+                return date.valueOf() <= viewDate ? 'am-disabled' : '';
+            }
+        }).on('changeDate.datepicker.amui', function(ev) {
+            CheckOut.close();
+            //setProductPrice($('#arrivalDate').val(), -1);
+        }).data('amui.datepicker');
+    });
+</script>
 </body>
 </html>

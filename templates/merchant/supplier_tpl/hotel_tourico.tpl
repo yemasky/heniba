@@ -43,7 +43,7 @@
           <div class="am-panel-hd">酒店特色</div>
           <div class="am-panel-bd am-text-break"><p><%$data_product.Descriptions[0].ShortDescription[0].desc%></p></div>
       </div>
-    <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=book&action=savebookinfo&tour_type=tourism" method="post">
+    <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=book&action=savebookinfo&tour_type=hotel" method="post">
     <div class="am-panel am-panel-default">
         <div class="am-panel-hd">客房类型：</div>
         <div class="am-panel-bd">
@@ -83,7 +83,7 @@
               </select>
             </div>
             <div data-am-dropdown="" class="am-cf am-padding-right">
-              <button type="submit" id="order-popup-button" class="am-btn am-btn-warning am-round am-fr"><i class="am-icon-shopping-cart"></i> 查看空房</button>
+              <button type="submit" class="am-btn am-btn-warning am-round am-fr"><i class="am-icon-shopping-cart"></i> 查看空房</button>
             </div>
 
           </div>
@@ -104,16 +104,26 @@
                     </ul>
                   </div>
                 </div>
-                <div class="am-u-sm-5 am-padding-left-0 am-padding-right-sm">
+                <div class="am-u-sm-8 am-padding-left-0 am-padding-right-sm">
                   <div class="am-form-group am-padding-0 am-margin-0 am-btn-group">
                     <div data-am-button class="am-btn-group">
-                      <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o<%if $data_product.RoomType[i].is_can_book==0%> am-disabled<%/if%>"><input type="radio" id="option<%$smarty.section.i.index%>" value="<%$smarty.section.i.index%>" name="options"> 预订</label>
+                      <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o<%if $data_product.RoomType[i].is_can_book==0%> am-disabled<%/if%>"><input type="radio" id="option<%$smarty.section.i.index%>" data-RoomType="<%$data_product.RoomType[i].HotelRoomTypeIds[0].HotelRoomTypeId[0].ID%>" value="<%$data_product.RoomType[i].roomId%>" name="options"> 预订</label>
                     </div>
-                    <div class="am-input-group am-input-group-sm am-u-md-6 am-padding-left-0 am-padding-right-xl">
-                      <span class="am-input-group-label<%if ''=='CNY'%> am-icon-rmb<%/if%>" id="currency"> $</span>
-                      <input id="product_<%$smarty.section.i.index%>" type="text" value="" class="am-form-field am-input-sm" readonly>
-                      <span class="am-input-group-label">每晚</span>
+                    <%if $data_product.RoomType[i].is_can_book==1%>
+                    <div class="am-input-group am-input-group-sm am-u-md-7 am-padding-left-0 am-padding-right-xl">
+                      <span class="am-input-group-label<%if ''=='CNY'%> am-icon-rmb<%/if%>" id="currency"> $ 每晚</span>
+                      <input id="product_one_<%$smarty.section.i.index%>" type="text" value="<%$data_product.RoomType[i].Occupancies[0].Occupancy[0].avrNightPublishPrice%>" class="am-form-field am-input-sm" readonly>
+                      <span class="am-input-group-label">总共</span>
+                      <input id="product_<%$smarty.section.i.index%>" type="text" value="<%$data_product.RoomType[i].Occupancies[0].Occupancy[0].occupPublishPrice%>" class="am-form-field am-input-sm" readonly>
                     </div>
+                    <%else%>
+                      <div class="am-input-group am-input-group-sm am-u-md-7 am-padding-left-0 am-padding-right-xl">
+                          <span class="am-input-group-label<%if ''=='CNY'%> am-icon-rmb<%/if%>" id="currency"> $ 每晚</span>
+                          <input id="product_one_<%$smarty.section.i.index%>" type="text" value="不可预定" class="am-form-field am-input-sm" readonly>
+                          <span class="am-input-group-label">总共</span>
+                          <input id="product_<%$smarty.section.i.index%>" type="text" value="" class="am-form-field am-input-sm" readonly>
+                      </div>
+                    <%/if%>
                   </div>
                 </div>
               </div>
@@ -126,7 +136,7 @@
               </div>
               <div class="am-u-sm-6 am-padding-left-0 am-padding-right-0">
                 <div class="am-input-group am-input-group-sm am-u-md-11 am-padding-left-0 am-padding-right-0">
-                  <span class="am-input-group-label am-icon-rmb" id="currency"> ￥</span>
+                  <span class="am-input-group-label am-icon-rmb" id="currency"></span>
                   <input id="product_all" type="text" value="" class="am-form-field am-input-sm" readonly>
                   <span class="am-input-group-label">总共</span>
                 </div>
@@ -139,6 +149,9 @@
           </div>
         <%include file="order/order_from_userinfo.tpl"%>
         <input type="hidden" name="supplierCode" value="<%$supplierCode%>">
+        <input type="hidden" name="supplier" value="<%$supplier%>">
+        <input type="hidden" name="searchData" value="<%$searchData%>">
+        <input type="hidden" name="RoomType" value="" id="RoomType">
     </div>
     </form>
     <article class="blog-main">
@@ -170,7 +183,7 @@
       </section>
       <%include file="news/tour_product_news.tpl"%>
       <section class="am-panel am-panel-default">
-        <div class="am-panel-hd">推荐景点</div>
+        <div class="am-panel-hd">其它酒店</div>
         <div class="am-panel-bd">
           <ul class="am-avg-sm-2 blog-team">
             <%section name=i loop=$relation_tourism%>
@@ -273,11 +286,12 @@
         if($($radios[k]).is(':checked')) {
           //$($radios[k].parentElement).removeClass('am-icon-check-square-o');
           //$($radios[k].parentElement).addClass('am-icon-square-o');
-          $('#product_all').val($('#product_'+k).val() * $('#pax_'+k).val());
+          $('#product_all').val($('#product_'+k).val());
         }
       });
       $(this.parentElement).removeClass('am-icon-square-o');
       $(this.parentElement).addClass('am-icon-check-square-o');
+      $('#RoomType').val($(this).attr('data-roomtype'));
       $('#order-popup-button').popover('close');
     });
 
@@ -322,64 +336,6 @@
     return fmt;
   }
   var today = new Date().Format("yyyy-MM-dd");
-</script>
-<script language="JavaScript">
-  //setProductPrice($('#arrivalDate').val(), -1);
-  //pax
-  function setProductPrice(date, index) {
-	  if(product_price[date] == undefined) {
-		$('#my-modal-loading').modal('open');
-		$.getJSON('index.php?model=supplier&action=gettourism&id=<%$t_id%>&checkdate='+date,function(result){
-			$('#my-modal-loading').modal('close');
-			if(result == "") {
-				setPrice(result);
-				return;
-			}
-			$.each(result, function(k_date, k_pax){
-				product_price[k_date] = new Array();
-				$.each(k_pax, function(v_pax, prices){
-					product_price[k_date][v_pax] = new Array();
-					$.each(prices, function(id, price){
-						product_price[k_date][v_pax][id] = price;
-					});
-				});
-			});
-          setPrice(product_price[k_date], index);
-		});
-	  } else {
-          setPrice(product_price[date], index);
-	  }
-  }
-  function setPrice(prices, index) {
-    var pax;
-    if(prices == undefined || prices == "") {
-      for(var i = 0; i<= <%$productTypeNum%>; i++) {
-          $('#product_'+i).val('选其它日期/人数');
-      }
-      return;
-    }
-    for (var i = 0; i <= <%$productTypeNum%>; i++) {
-      pax = $('#pax_' + i).val();
-      if (prices[pax] == undefined || prices[pax] == "") {
-        $('#product_' + i).val('选其它日期/人数');
-      } else {
-        if (prices[pax][i] == 0 || prices[pax][i] == "" || prices[pax][i] == undefined) {
-          $('#product_' + i).val('选其它日期/人数');
-        } else {
-          $('#product_' + i).val(prices[pax][i]);
-        }
-      }
-    }
-    $radios_price = $('[name="options"]');
-    $.each($radios_price, function(k, item){
-      if($($radios_price[k]).is(':checked')) {
-        $('#product_all').val($('#product_'+k).val() * $('#pax_'+k).val());
-        return;
-      }
-    });
-  }
-
-
 </script>
 <!--script>
 

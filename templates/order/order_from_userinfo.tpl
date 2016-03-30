@@ -1,4 +1,4 @@
-<div class="am-popup am-radius" id="order-popup">
+<div class="am-popup" id="order-popup">
     <div class="am-popup-inner">
         <div class="am-popup-hd">
             <h4 class="am-popup-title">填写预订信息</h4>

@@ -192,11 +192,11 @@ class TouricoConfig {
 		return $xml;
 	}
 	
-	public function BookHotelV3Xml() {
+	public function BookHotelV3Xml($arrayBookInfo) {
 		$xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:aut="http://schemas.tourico.com/webservices/authentication" xmlns:hot="http://tourico.com/webservices/hotelv3" xmlns:hot1="http://schemas.tourico.com/webservices/hotelv3">'
 		         .$this->HotelV3WSAutHeader()
 		         .'<soapenv:Body><hot:BookHotelV3><hot:request>'
-                 .$this->BookHotelV3requestXml()
+                 .$this->BookHotelV3requestXml($arrayBookInfo)
 				 .'</hot:request><hot:BookHotelV3></soapenv:Body></soapenv:Envelope>';
 		return $xml;
 	}
@@ -240,6 +240,7 @@ class TouricoConfig {
 			  .'</hot:request></hot:BookHotelV3></soapenv:Body></soapenv:Envelope>';
 
 		;
+		return $xml;
 	}
 
 	public function SearchHotelsByIdXml($arrayHotelId, $RoomsInformation, $arrayCheckData) {

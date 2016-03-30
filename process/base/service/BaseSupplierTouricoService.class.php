@@ -65,18 +65,8 @@ class BaseSupplierTouricoService extends BaseService {
     public function SearchHotelsById($arraySearchData){
         $arrayHotelId = $arraySearchData['HotelId'];//array ('1216326'); // '1356675',
         $RoomsInformation = $arraySearchData['RoomsInformation'];
-        /*array (
-            array (
-                'AdultNum' => 2,
-                'ChildNum' => 1,
-                'ChildAge' => array (3)
-            ),
-            array (
-                'AdultNum' => 1,
-                'ChildNum' => 0,
-                'ChildAge' => array (0)
-            )
-        );*/
+        /*$RoomsInformation = array (array ('AdultNum' => 2,'ChildNum' => 1,'ChildAge' => array (3)),
+            array ('AdultNum' => 1,'ChildNum' => 0,'ChildAge' => array (0)));*/
         $arrayCheckData = array (
             'CheckIn' => $arraySearchData['CheckIn'],
             'CheckOut' => $arraySearchData['CheckOut']
@@ -164,30 +154,17 @@ class BaseSupplierTouricoService extends BaseService {
     }
 
     // 4、Verification
-    public function CheckAvailabilityAndPrices(){
-        $arrayHotelId = array (
-            '1216326'
-        ); // '1356675',
-        $RoomsInformation = array (
-            array (
-                'AdultNum' => 2,
-                'ChildNum' => 1,
-                'ChildAge' => array (
-                    3
-                )
-            ),
-            array (
-                'AdultNum' => 1,
-                'ChildNum' => 0,
-                'ChildAge' => array (
-                    0
-                )
-            )
-        );
+    public function CheckAvailabilityAndPrices($arraySearchData){
+        $arrayHotelId = $arraySearchData['HotelId'];//array ('1216326'); // '1356675',
+        $RoomsInformation = $arraySearchData['RoomsInformation'];
         $arrayCheckData = array (
-            'CheckIn' => '2015-12-24',
-            'CheckOut' => '2015-12-30'
+            'CheckIn' => $arraySearchData['CheckIn'],
+            'CheckOut' => $arraySearchData['CheckOut']
         );
+        //$arrayHotelId = array ('1216326'); // '1356675',
+        /*$RoomsInformation = array (array ('AdultNum' => 2,'ChildNum' => 1,'ChildAge' => array (3)),
+            array ('AdultNum' => 1,'ChildNum' => 0,'ChildAge' => array (0)));
+        $arrayCheckData = array ('CheckIn' => '2015-12-24','CheckOut' => '2015-12-30');*/
         $postData = $this->objTouricoConfig->CheckAvailabilityAndPricesXml($arrayHotelId, $RoomsInformation, $arrayCheckData);
         $arrayHeader = array (
             "SOAPAction" => $this->objTouricoConfig->SOAPActionCheckAvailabilityAndPrices,
@@ -203,30 +180,18 @@ class BaseSupplierTouricoService extends BaseService {
     // end Verification
 
     //
-    public function BookHotelV3(){
-        $arrayHotelId = array (
-            '1216326'
-        ); // '1356675',
-        $RoomsInformation = array (
-            array (
-                'AdultNum' => 2,
-                'ChildNum' => 1,
-                'ChildAge' => array (
-                    3
-                )
-            ),
-            array (
-                'AdultNum' => 1,
-                'ChildNum' => 0,
-                'ChildAge' => array (
-                    0
-                )
-            )
-        );
+    public function BookHotelV3($arraySearchData){
+        /*$arrayHotelId = array ('1216326'); // '1356675',
+        $RoomsInformation = array (array ('AdultNum' => 2,'ChildNum' => 1,'ChildAge' => array (3)),
+            array ('AdultNum' => 1,'ChildNum' => 0,'ChildAge' => array (0)));
+        $arrayCheckData = array ('CheckIn' => '2015-12-24','CheckOut' => '2015-12-30');*/
+        $arrayHotelId = $arraySearchData['HotelId'];//array ('1216326'); // '1356675',
+        $RoomsInformation = $arraySearchData['RoomsInformation'];
         $arrayCheckData = array (
-            'CheckIn' => '2015-12-24',
-            'CheckOut' => '2015-12-30'
+            'CheckIn' => $arraySearchData['CheckIn'],
+            'CheckOut' => $arraySearchData['CheckOut']
         );
+
         $postData = $this->objTouricoConfig->BookHotelV3Xml($arrayHotelId, $RoomsInformation, $arrayCheckData);
         $arrayHeader = array (
             "SOAPAction" => $this->objTouricoConfig->SOAPActionBookHotelV3,

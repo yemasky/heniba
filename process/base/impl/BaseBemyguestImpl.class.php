@@ -110,6 +110,10 @@ class BaseBemyguestImpl extends BaseService {
     }
 
     public function createOrder($objRequest, $u_id, $m_id, $mu_id, $arraySupplierCode) {
+        //检查商户剩余资金
+
+        //锁定资金
+
         //用户订购信息
         $arrayUserBookInfo['oi_user_arrival_date'] = $objRequest->arrivalDate;
         $arrayUserBookInfo['oi_user_options'] = $objRequest->options;
@@ -170,13 +174,19 @@ class BaseBemyguestImpl extends BaseService {
         $arrayUserBookInfo['productTypeUuid'] = $tourism_uuid;
         $objBaseSupplierBemyguestService = new BaseSupplierBemyguestService();
         $arraySupplierResult = $objBaseSupplierBemyguestService->createBooking($arrayUserBookInfo);
-        print_r($arraySupplierResult);exit();
+        //print_r($arraySupplierResult);exit();
         $arrarOrderReturnLog['oi_id'] = $oi_id;
         $arrarOrderReturnLog['o_id'] = $arrayUserBookInfo['o_id'];
         $arrarOrderReturnLog['title'] = '订购旅游产品';
         $arrarOrderReturnLog['centents'] = $arraySupplierResult[0];
         $arrarOrderReturnLog['http_response_header'] = $arraySupplierResult[1];
         BaseBookOrderDao::insertOrderReturnlog($arrarOrderReturnLog);
+
+        //订购
+
+
+        //扣除锁定资金
+
 
         return $arrayOrderResult;
     }

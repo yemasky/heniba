@@ -58,6 +58,7 @@ class BookAction extends \BaseAction {
         if(empty($supplierCode)) {
             throw new \Exception('supplierCode is null');
         }
+        //var_dump($supplierCode);
         $arrayOrderResult = null;
         $tour_type = $objRequest->tour_type;
         switch($tour_type) {
@@ -65,8 +66,9 @@ class BookAction extends \BaseAction {
                 $arrayOrderResult = \BaseBookTourismService::instance('\BaseBookTourismService')->create_book($objRequest, $objResponse);
                 break;
             case 'hotel':
+                $arrayOrderResult = \BaseBookHotelService::instance('\BaseBookHotelService')->create_book($objRequest, $objResponse);
                 break;
-            case 'hotel':
+            case 'air_ticket':
                 break;
             default:
                 break;

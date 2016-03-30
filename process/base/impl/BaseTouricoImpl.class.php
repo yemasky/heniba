@@ -84,4 +84,53 @@ class BaseTouricoImpl extends BaseService {
         return $arrayTouricoListData;
     }
 
+    public function createOrder($objRequest, $u_id, $m_id, $mu_id) {
+        //print_r($objRequest);
+        //预订数据
+        $arraySearchData  = json_decode(\Encrypt::instance()->decode($objRequest->searchData), true);
+        //print_r($arraySearchData);
+        $arraySearchData['HotelRoomTypeId'] = $objRequest->RoomType;
+        $arraySearchData['RoomsInformation'][0]['RoomId'] = $objRequest->options;
+        //CheckAvailabilityAndPrices
+        $arrayCheckAvailabilityAndPrices = \BaseSupplierTouricoService::instance()->CheckAvailabilityAndPrices($arraySearchData);
+        //print_r($arrayCheckAvailabilityAndPrices);exit();
+        $arrayBookHotelV3 = \BaseSupplierTouricoService::instance()->BookHotelV3($arraySearchData);
+        print_r($arrayBookHotelV3);exit();
+        //检查商户剩余资金
+
+        //锁定资金
+
+        //用户订购信息
+        //插入数据库
+        $arrayUserBookInfo['oi_user_arrival_date'] = $arraySearchData['CheckIn'];
+        $arrayUserBookInfo['oi_user_leave_date'] = $arraySearchData['CheckOut'];
+        $arrayUserBookInfo['oi_user_options'] = $objRequest->options;
+        $arrayUserBookInfo['oi_user_pax'] = $arraySearchData['AdultNum'];
+        $arrayUserBookInfo['oi_user_childen'] = $arraySearchData['AdultNum'];
+        $arrayUserBookInfo['oi_user_salutation'] = $objRequest->salutation;
+        $arrayUserBookInfo['oi_user_firstname'] = $objRequest->firstName;
+        $arrayUserBookInfo['oi_user_lastname'] = $objRequest->lastName;
+        $arrayUserBookInfo['oi_user_email'] = $objRequest->email;
+        $arrayUserBookInfo['oi_user_moblie'] = $objRequest->mobile;
+        $arrayUserBookInfo['oi_user_message'] = $objRequest->message;
+        //取得支付价格
+        //订单信息
+        $arrayOrder['u_id'] = $u_id;
+        $arrayOrder['m_id'] = $m_id;
+        $arrayOrder['mu_id'] = $mu_id;
+        $arrayOrder['o_price_market'] = '';//网上售卖价格
+        $arrayOrder['o_price_sell'] = '';//售卖价格 成交价
+        $arrayOrder['o_price_wholesale'] = '';//批发价
+        $arrayOrder['o_price_original'] = '';//进货价
+        $arrayOrder['o_add_date'] = getDateTime();
+
+        //订购
+
+
+        //扣除锁定资金
+
+
+        return $arrayOrderResult;
+    }
+
 }
