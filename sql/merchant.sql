@@ -41,6 +41,33 @@ CREATE TABLE `merchant` (
   PRIMARY KEY (`m_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
+/*Table structure for table `merchant_finace_log` */
+
+DROP TABLE IF EXISTS `merchant_finace_log`;
+
+CREATE TABLE `merchant_finace_log` (
+  `mfl_id` int(11) NOT NULL AUTO_INCREMENT,
+  `o_id` bigint(19) DEFAULT NULL,
+  `m_id` int(11) DEFAULT NULL,
+  `mu_id` int(11) DEFAULT NULL COMMENT '操作人',
+  `mfl_type` enum('recharge') DEFAULT NULL COMMENT 'consume 消费 recharge 充值',
+  `mfl_lock` enum('0','1','2') NOT NULL DEFAULT '0' COMMENT '0默认值 1锁定 2消费 3返回(未消费)',
+  `mfl_add_date` datetime NOT NULL,
+  `mfl_update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`mfl_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `merchant_finance` */
+
+DROP TABLE IF EXISTS `merchant_finance`;
+
+CREATE TABLE `merchant_finance` (
+  `mf_id` int(11) NOT NULL AUTO_INCREMENT,
+  `m_id` int(11) DEFAULT NULL,
+  `mf_account_fund` text COMMENT '账户资金',
+  PRIMARY KEY (`mf_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
 /*Table structure for table `merchant_user` */
 
 DROP TABLE IF EXISTS `merchant_user`;

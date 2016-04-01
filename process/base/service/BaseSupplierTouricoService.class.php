@@ -175,6 +175,7 @@ class BaseSupplierTouricoService extends BaseService {
 
         $this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
         $arrayResult = $this->objWSClient->DBCache(0)->execute_cUrl();
+        print_r($arrayResult);exit();
         return $this->parserXml($arrayResult);
     }
     // end Verification

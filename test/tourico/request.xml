@@ -1,0 +1,39 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:aut="http://schemas.tourico.com/webservices/authentication" xmlns:hot="http://tourico.com/webservices/hotelv3" xmlns:hot1="http://schemas.tourico.com/webservices/hotelv3">
+   <soapenv:Header>
+      <aut:AuthenticationHeader>
+         <aut:LoginName></aut:LoginName>
+         <aut:Password></aut:Password>
+         <aut:Culture>en_US</aut:Culture>
+         <aut:Version>7.123</aut:Version>
+      </aut:AuthenticationHeader>
+   </soapenv:Header>
+   <soapenv:Body>
+      <hot:SearchHotels>
+         <hot:request>
+            <hot1:Destination>NYC</hot1:Destination>
+            <hot1:HotelCityName>New York</hot1:HotelCityName>
+            <hot1:HotelLocationName></hot1:HotelLocationName>
+            <hot1:HotelName></hot1:HotelName>
+            <hot1:CheckIn>2013-11-15</hot1:CheckIn>
+            <hot1:CheckOut>2013-11-20</hot1:CheckOut>
+            <hot1:RoomsInformation>
+               <hot1:RoomInfo>
+                  <hot1:AdultNum>2</hot1:AdultNum>
+                  <hot1:ChildNum>0</hot1:ChildNum>
+                  <hot1:ChildAges>
+                     <hot1:ChildAge age="0"/>
+                  </hot1:ChildAges>
+               </hot1:RoomInfo>
+            </hot1:RoomsInformation>
+            <hot1:MaxPrice>0</hot1:MaxPrice>
+            <hot1:StarLevel>0</hot1:StarLevel>
+            <hot1:AvailableOnly>true</hot1:AvailableOnly>
+            <hot1:PropertyType>NotSet</hot1:PropertyType>
+            <hot1:ExactDestination>true</hot1:ExactDestination>
+         </hot:request>
+      </hot:SearchHotels>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+
+

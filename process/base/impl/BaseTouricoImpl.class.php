@@ -86,7 +86,7 @@ class BaseTouricoImpl extends BaseService {
     }
 
     public function createOrder($objRequest, $u_id, $m_id, $mu_id) {
-        //print_r($objRequest);
+        print_r($objRequest);
         //预订数据
         $arraySearchData  = json_decode(\Encrypt::instance()->decode($objRequest->searchData), true);
         print_r($arraySearchData);
@@ -96,47 +96,53 @@ class BaseTouricoImpl extends BaseService {
         $arrayCheckAvailabilityAndPrices = \BaseSupplierTouricoService::instance()->CheckAvailabilityAndPrices($arraySearchData);
         print_r($arrayCheckAvailabilityAndPrices);exit();
         if(isset($arrayCheckAvailabilityAndPrices['s:Body'][0]['CheckAvailabilityAndPricesResponse']['0']['CheckAvailabilityAndPricesResult'][0]['HotelList'][0]['Hotel'])) {
+            //酒店相关
             $arrayHotel = $arrayCheckAvailabilityAndPrices['s:Body'][0]['CheckAvailabilityAndPricesResponse']['0']['CheckAvailabilityAndPricesResult'][0]['HotelList'][0]['Hotel'];
-            $arrayBookInfo['RecordLocatorId'] = '';
-            $arrayBookInfo['HotelId'] = '';
-            $arrayBookInfo['HotelRoomTypeId'] = '';
-            $arrayBookInfo['CheckIn'] = '';
-            $arrayBookInfo['CheckOut'] = '';
-            $arrayBookInfo['PaymentType'] = '';
-            $arrayBookInfo['AgentRefNumber'] = '';
-            $arrayBookInfo['ContactInfo'] = '';
-            $arrayBookInfo['RequestedPrice'] = '';
-            $arrayBookInfo['DeltaPrice'] = '';
-            $arrayBookInfo['Currency'] = '';
-            $arrayBookInfo['IsOnlyAvailable'] = '';
-            $arrayBookInfo['ConfirmationEmail'] = '';
+            $arrayBookInfo['RecordLocatorId'] = '0';//订单号 记录号 $b_id;
+            $arrayBookInfo['HotelId'] = $arraySearchData['HotelId'][0];
+            $arrayBookInfo['HotelRoomTypeId'] = $arraySearchData['HotelRoomTypeId'];
+            $arrayBookInfo['CheckIn'] = $arraySearchData['CheckIn'];
+            $arrayBookInfo['CheckOut'] = $arraySearchData['CheckOut'];
+            //支付价格相关
+            $arrayBookInfo['PaymentType'] = 'Obligo';//支付方式
+            $arrayBookInfo['AgentRefNumber'] = BaseConfig::Agent;//代理号码
+            $arrayBookInfo['ContactInfo'] = BaseConfig::ContactMoblie;//代理联系方式
+            $arrayBookInfo['RequestedPrice'] = $arrayHotel['0']['RoomTypes'][0]['RoomType'][0]['Occupancies'][0]['Occupancy'][0]['occupPublishPrice'];
+            //应付代理总价 酒店预订的要求的价格。这个价格包括所有的酒店房间，boardbases，补充（除了直接支付给酒店的费用）
+            $arrayBookInfo['DeltaPrice'] = '0.01';
+            //小数-指定集本币金额你愿意让我们的系统调整requestedprice为了防止订票失败。我们建议使用一个deltaprice 1%。
+            //所以对于一个requestedprice 346美元预订，我们建议通过deltaprice 3.46美元。这就意味着requestedprice可以通过在349.46美元或342.54美元，和预约仍然会通过无错误。
+            $arrayBookInfo['Currency'] = $arrayHotel['0']['currency'];
+            $arrayBookInfo['IsOnlyAvailable'] = 'true';
+            $arrayBookInfo['ConfirmationEmail'] = BaseConfig::ContactEmail;
             $arrayBookInfo['ConfirmationLogo'] = '';
             //RoomsInfo
-            $arrayBookInfo['ConfirmationLogo'][0]['RoomId'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['FirstName'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['MiddleName'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['LastName'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['HomePhone'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['MobilePhone'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['RoomId'] = $arraySearchData['RoomsInformation'][0]['RoomId'];//可选
+            $arrayBookInfo['RoomsInfo'][0]['FirstName'] = $objRequest->firstName;
+            $arrayBookInfo['RoomsInfo'][0]['MiddleName'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['LastName'] = $objRequest->lastName;
+            $arrayBookInfo['RoomsInfo'][0]['HomePhone'] = $objRequest->mobile;
+            $arrayBookInfo['RoomsInfo'][0]['MobilePhone'] = $objRequest->mobile;
             //RoomsInfo SelectedBoardBase
-            $arrayBookInfo['ConfirmationLogo'][0]['Id'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['Price'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['suppId'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['supTotalPrice'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['suppType'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['suppFrom'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['suppTo'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['suppQuantity'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['suppPrice'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['Bedding'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['Note'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['AdultNum'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['ChildNum'] = '';
-            $arrayBookInfo['ConfirmationLogo'][0]['ChildAge'] = array();
+            $arrayBookInfo['RoomsInfo'][0]['Id'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['Price'] = '';
+            //RoomsInfo SelectedSupplement
+            $arrayBookInfo['RoomsInfo'][0]['suppId'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['supTotalPrice'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['suppType'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['suppFrom'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['suppTo'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['suppQuantity'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['suppPrice'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['Bedding'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['Note'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['AdultNum'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['ChildNum'] = '';
+            $arrayBookInfo['RoomsInfo'][0]['ChildAge'] = array();
         }
 
 
-        $arrayBookHotelV3 = \BaseSupplierTouricoService::instance()->BookHotelV3($arraySearchData);
+        $arrayBookHotelV3 = \BaseSupplierTouricoService::instance()->BookHotelV3($arrayBookInfo);
         //print_r($arrayBookHotelV3);exit();
         //检查商户剩余资金
 
