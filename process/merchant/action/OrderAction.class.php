@@ -41,7 +41,7 @@ class OrderAction extends \BaseAction {
         $arrayListData = $objHotelService->getOrder($conditions, null, $objResponse->arrUserInfo['m_id']);
         //
         $objResponse -> nav = 'index';
-        $objResponse -> setTplValue('hotel', $arrayListData);
+        $objResponse -> setTplValue('datalist', $arrayListData);//数据列表
         $objResponse -> setTplValue('page', page($pn, ceil($count/$list_count)));
         $objResponse -> setTplValue('pn', $pn);
         $objResponse -> setTplValue('show_pages', 10);

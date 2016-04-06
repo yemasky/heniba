@@ -19,12 +19,12 @@ class BaseOrderDao extends BaseDao{
         if(empty($fileid)) {
             $fileid = '*';
         }
-        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('order')->setKey('o_id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['where'], $fileid);
+        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('order_info')->setKey('oi_id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['where'], $fileid);
     }
 
     public function getOrderCount($conditions) {
         $fileid = 'COUNT(o_id)';
-        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('order')->getOne($conditions, $fileid);
+        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('order_info')->getOne($conditions, $fileid);
     }
 
 }

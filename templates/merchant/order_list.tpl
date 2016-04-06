@@ -42,33 +42,26 @@
         <table class="am-table am-table-bd am-table-striped admin-content-table">
           <thead>
           <tr>
-            <th>订单ID</th><th>三</th><th>标题</th><th>基价</th><th>售价</th><th> </th>
+            <th>订单号</th><th>类型</th><th>标题</th><th>基价</th><th>售价</th><th> </th>
           </tr>
           </thead>
           <tbody>
-          <%section name=i loop=$tourism%>
+          <%section name=i loop=$datalist%>
           <tr>
-              <td><%$tourism[i].t_id%></td>
+              <td><%$datalist[i].o_order_number%></td>
               <td width="175">
-                  <a href="index.php?model=tourism&action=product&id=<%$tourism[i].t_id%>" target="_blank">
-                  <div class="am-slider am-slider-default" data-am-flexslider id="img-slider-<%$tourism[i].t_id%>">
-                      <ul class="am-slides" id="img-<%$tourism[i].t_id%>">
+                  <a href="index.php?model=tourism&action=product&id=<%$datalist[i].o_order_number%>" target="_blank">
+                  <div class="am-slider am-slider-default" data-am-flexslider id="img-slider-<%$datalist[i].o_order_number%>">
+                      <ul class="am-slides" id="img-<%$datalist[i].o_order_number%>">
+                          <li><img src="'+item+'"></li>
                       </ul>
                   </div>
                   </a>
-                  <script language="JavaScript">
-                      obj = jQuery.parseJSON('<%$tourism[i].t_images%>');
-                      img = '';
-                      $.each(obj, function(i, item){
-                          img += '<li><img src="'+item+'"></li>';
-                          $('#img-<%$tourism[i].t_id%>').html(img);
-                      });
-                  </script>
-                  </td><td><%$tourism[i].t_title%><br><%$tourism[i].t_title_cn%></td>
-              <td><a href="#"><%$tourism[i].t_currency%>:(原价)<%$tourism[i].wholesale%> (售价)<%$tourism[i].sell%></a></td>
-              <td><span class="am-badge am-badge-success">+20</span></td>
+                  </td><td>标题</td>
+              <td><a href="#">t_currency:(原价) (售价)</a></td>
+              <td><span class="am-badge am-badge-success">20</span></td>
               <td>
-                  <a href="index.php?model=tourism&action=product&id=<%$tourism[i].t_id%>" target="_blank">
+                  <a href="index.php?model=tourism&action=product&id=<%$datalist[i].o_order_number%>" target="_blank">
                   <div class="am-dropdown" data-am-dropdown>
                       <button class="am-btn am-btn-warning am-round" type="button"><i class="am-icon-shopping-cart"></i>　预 定</button>
                   </div>
