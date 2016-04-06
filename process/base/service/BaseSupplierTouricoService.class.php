@@ -174,26 +174,27 @@ class BaseSupplierTouricoService extends BaseService {
         $requestUrl = $this->objTouricoConfig->hotelV3WSUrl;
 
         $this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
-        $arrayResult = $this->objWSClient->DBCache(0)->execute_cUrl();
-        print_r($arrayResult);exit();
+        $arrayResult = $this->objWSClient->DBCache(60)->execute_cUrl();
+        //print_r($arrayResult);
         return $this->parserXml($arrayResult);
     }
     // end Verification
 
     //
-    public function BookHotelV3($arraySearchData){
+    public function BookHotelV3($arrayBookInfo){
         /*$arrayHotelId = array ('1216326'); // '1356675',
         $RoomsInformation = array (array ('AdultNum' => 2,'ChildNum' => 1,'ChildAge' => array (3)),
             array ('AdultNum' => 1,'ChildNum' => 0,'ChildAge' => array (0)));
-        $arrayCheckData = array ('CheckIn' => '2015-12-24','CheckOut' => '2015-12-30');*/
+        $arrayCheckData = array ('CheckIn' => '2015-12-24','CheckOut' => '2015-12-30');
         $arrayHotelId = $arraySearchData['HotelId'];//array ('1216326'); // '1356675',
         $RoomsInformation = $arraySearchData['RoomsInformation'];
         $arrayCheckData = array (
             'CheckIn' => $arraySearchData['CheckIn'],
             'CheckOut' => $arraySearchData['CheckOut']
-        );
+        );*/
 
-        $postData = $this->objTouricoConfig->BookHotelV3Xml($arrayHotelId, $RoomsInformation, $arrayCheckData);
+        $postData = $this->objTouricoConfig->BookHotelV3Xml($arrayBookInfo);
+        echo $postData;
         $arrayHeader = array (
             "SOAPAction" => $this->objTouricoConfig->SOAPActionBookHotelV3,
             "Content-type" => "text/xml",
@@ -202,7 +203,7 @@ class BaseSupplierTouricoService extends BaseService {
         $requestUrl = $this->objTouricoConfig->hotelV3WSUrl;
 
         $this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
-        $arrayResult = $this->objWSClient->DBCache(0)->execute_cUrl();
+        $arrayResult = $this->objWSClient->DBCache(30)->execute_cUrl();
         return $this->parserXml($arrayResult);
     }
     //

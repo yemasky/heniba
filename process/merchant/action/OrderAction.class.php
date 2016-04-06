@@ -36,9 +36,9 @@ class OrderAction extends \BaseAction {
         $list_count = empty($list_count) ? 20 : $list_count;
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
-        $objHotelService = new HotelService();
-        $count = $objHotelService->getHotelCount($conditions['where']);
-        $arrayListData = $objHotelService->getHotel($conditions, null, $objResponse->arrUserInfo['m_id']);
+        $objHotelService = new OrderService();
+        $count = $objHotelService->getOrderCount($conditions['where']);
+        $arrayListData = $objHotelService->getOrder($conditions, null, $objResponse->arrUserInfo['m_id']);
         //
         $objResponse -> nav = 'index';
         $objResponse -> setTplValue('hotel', $arrayListData);
@@ -51,7 +51,7 @@ class OrderAction extends \BaseAction {
         $objResponse -> setTplName("merchant/tourism_list");
     }
 
-    protected function hotel_product($objRequest, $objResponse) {
+    protected function order_detail($objRequest, $objResponse) {
         $t_id = $this->check_int($objRequest->id, 'id');
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['where']['t_id'] = $t_id;

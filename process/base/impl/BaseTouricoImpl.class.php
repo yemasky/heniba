@@ -86,15 +86,15 @@ class BaseTouricoImpl extends BaseService {
     }
 
     public function createOrder($objRequest, $u_id, $m_id, $mu_id) {
-        print_r($objRequest);
+        //print_r($objRequest);
         //预订数据
         $arraySearchData  = json_decode(\Encrypt::instance()->decode($objRequest->searchData), true);
-        print_r($arraySearchData);
+        //print_r($arraySearchData);
         $arraySearchData['HotelRoomTypeId'] = $objRequest->RoomType;
         $arraySearchData['RoomsInformation'][0]['RoomId'] = $objRequest->options;
         //CheckAvailabilityAndPrices
         $arrayCheckAvailabilityAndPrices = \BaseSupplierTouricoService::instance()->CheckAvailabilityAndPrices($arraySearchData);
-        print_r($arrayCheckAvailabilityAndPrices);exit();
+        //print_r($arrayCheckAvailabilityAndPrices);exit();
         if(isset($arrayCheckAvailabilityAndPrices['s:Body'][0]['CheckAvailabilityAndPricesResponse']['0']['CheckAvailabilityAndPricesResult'][0]['HotelList'][0]['Hotel'])) {
             //酒店相关
             $arrayHotel = $arrayCheckAvailabilityAndPrices['s:Body'][0]['CheckAvailabilityAndPricesResponse']['0']['CheckAvailabilityAndPricesResult'][0]['HotelList'][0]['Hotel'];
@@ -136,14 +136,14 @@ class BaseTouricoImpl extends BaseService {
             $arrayBookInfo['RoomsInfo'][0]['suppPrice'] = '';
             $arrayBookInfo['RoomsInfo'][0]['Bedding'] = '';
             $arrayBookInfo['RoomsInfo'][0]['Note'] = '';
-            $arrayBookInfo['RoomsInfo'][0]['AdultNum'] = '';
-            $arrayBookInfo['RoomsInfo'][0]['ChildNum'] = '';
-            $arrayBookInfo['RoomsInfo'][0]['ChildAge'] = array();
+            $arrayBookInfo['RoomsInfo'][0]['AdultNum'] = $arraySearchData['AdultNum'];
+            $arrayBookInfo['RoomsInfo'][0]['ChildNum'] = $arraySearchData['ChildNum'];
+            $arrayBookInfo['RoomsInfo'][0]['ChildAge'] = array($arraySearchData['ChildAge']);
         }
 
 
         $arrayBookHotelV3 = \BaseSupplierTouricoService::instance()->BookHotelV3($arrayBookInfo);
-        //print_r($arrayBookHotelV3);exit();
+        print_r($arrayBookHotelV3['result']);exit();
         //检查商户剩余资金
 
         //锁定资金

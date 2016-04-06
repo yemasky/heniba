@@ -45,7 +45,7 @@
       </div>
     <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=book&action=savebookinfo&tour_type=hotel" method="post">
     <div class="am-panel am-panel-default">
-        <div class="am-panel-hd">客房类型：</div>
+        <div class="am-panel-hd">更改搜索条件：</div>
         <div class="am-panel-bd">
           <div class="am-form-group">
             <div class="am-input-group am-input-group-sm am-u-sm-6">
@@ -88,6 +88,10 @@
 
           </div>
         </div>
+      </div>
+      </form>
+      <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=book&action=savebookinfo&tour_type=hotel" method="post">
+      <div class="am-panel am-panel-default">
         <div class="am-panel-hd">客房类型：</div>
           <ul class="am-list am-list-static">
             <%section name=i loop=$data_product.RoomType%>

@@ -6,7 +6,15 @@
  * Date: 2016/1/3
  * Time: 16:42
  */
-class BaseBookOrderDao {
+class BaseBookOrderDao extends BaseDao{
+    private static $objDao = null;
+
+    public static function instance() {
+        if(is_object(self::$objDao)) return self::$objDao;
+        self::$objDao = new BaseBookOrderDao();
+        return self::$objDao;
+    }
+
     public static function createOrder($arrayOrder) {
         $o_id = DBQuery::instance(DbConfig::tourism_dsn_write)->setTable('order')->insert($arrayOrder)->getInsertId();
         $o_order_number = '0' . $o_id;
@@ -28,5 +36,11 @@ class BaseBookOrderDao {
     public static function getOrder($conditions, $fields = '*') {
         return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('order')->getRow($conditions, $fields);
     }
+
+    public function getOrderCount($conditions) {
+        $fileid = 'COUNT(o_id)';
+        return DBQuery::instance(DbConfig::tourism_dsn_read)->setTable('order')->getOne($conditions, $fileid);
+    }
+
 
 }

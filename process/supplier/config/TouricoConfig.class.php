@@ -197,7 +197,7 @@ class TouricoConfig {
 		         .$this->HotelV3WSAutHeader()
 		         .'<soapenv:Body><hot:BookHotelV3><hot:request>'
                  .$this->BookHotelV3requestXml($arrayBookInfo)
-				 .'</hot:request><hot:BookHotelV3></soapenv:Body></soapenv:Envelope>';
+				 .'</hot:request></hot:BookHotelV3></soapenv:Body></soapenv:Envelope>';
 		return $xml;
 	}
 	
@@ -212,7 +212,7 @@ class TouricoConfig {
 				.'<hot1:ContactPassenger><hot1:FirstName>'.$v['FirstName'].'</hot1:FirstName><hot1:MiddleName>'.$v['MiddleName'].'</hot1:MiddleName>'
 				.'<hot1:LastName>'.$v['LastName'].'</hot1:LastName>'
 				.'<hot1:HomePhone>'.$v['HomePhone'].'</hot1:HomePhone>'
-				.'<hot1:MobilePhone>'.$v['MobilePhone'].'</hot1:MobilePhone>'
+				.'<hot1:MobilePhone>'.$v['MobilePhone'].'</hot1:MobilePhone></hot1:ContactPassenger>'
 				.'<hot1:SelectedBoardBase><hot1:Id>'.$v['Id'].'</hot1:Id><hot1:Price>'.$v['Price'].'</hot1:Price></hot1:SelectedBoardBase>'
 				.'<hot1:SelectedSupplements><hot1:SupplementInfo suppId="'.$v['suppId'].'" supTotalPrice="'.$v['supTotalPrice'].'" suppType="'.$v['suppType'].'">'
 				.'<hot1:SupAgeGroup><hot1:SuppAges suppFrom="'.$v['suppFrom'].'" suppTo="'.$v['suppTo'].'" suppQuantity="'.$v['suppQuantity'].'" suppPrice="'.$v['suppPrice'].'"/></hot1:SupAgeGroup></hot1:SupplementInfo></hot1:SelectedSupplements>'
@@ -236,7 +236,7 @@ class TouricoConfig {
 			  .'<hot1:Currency>'.$arrayBookInfo['Currency'].'</hot1:Currency>'
 			  .'<hot1:IsOnlyAvailable>'.$arrayBookInfo['IsOnlyAvailable'].'</hot1:IsOnlyAvailable>'
 			  .'<hot1:ConfirmationEmail>'.$arrayBookInfo['ConfirmationEmail'].'</hot1:ConfirmationEmail>'
-			  .'<hot1:ConfirmationLogo/>'.$arrayBookInfo['ConfirmationLogo'].'</hot1:ConfirmationLogo>';
+			  .'<hot1:ConfirmationLogo>'.$arrayBookInfo['ConfirmationLogo'].'</hot1:ConfirmationLogo>';
 		;
 		return $xml;
 	}
