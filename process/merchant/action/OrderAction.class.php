@@ -48,7 +48,7 @@ class OrderAction extends \BaseAction {
         $objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);
         //设置Meta
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
-        $objResponse -> setTplName("merchant/tourism_list");
+        $objResponse -> setTplName("merchant/order_list");
     }
 
     protected function order_detail($objRequest, $objResponse) {

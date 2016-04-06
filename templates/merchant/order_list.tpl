@@ -27,14 +27,14 @@
 </script>
 <div class="admin-content">
     <div class="am-cf am-padding">
-      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">管理模块</strong> / <small>旅游产品</small></div>
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">管理模块</strong> / <small>订单管理</small></div>
     </div>
 	<%if $pn==1%>
     <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
-      <li><a href="#" class="am-text-success"><span class="am-icon-btn am-icon-file-text"></span><br/>新增页面<br/>2300</a></li>
+      <li><a href="#" class="am-text-success"><span class="am-icon-btn am-icon-file-text"></span><br/>新增订单<br/>2300</a></li>
       <li><a href="#" class="am-text-warning"><span class="am-icon-btn am-icon-briefcase"></span><br/>成交订单<br/>308</a></li>
-      <li><a href="#" class="am-text-danger"><span class="am-icon-btn am-icon-recycle"></span><br/>昨日访问<br/>80082</a></li>
-      <li><a href="#" class="am-text-secondary"><span class="am-icon-btn am-icon-user-md"></span><br/>在线用户<br/>3000</a></li>
+      <li><a href="#" class="am-text-danger"><span class="am-icon-btn am-icon-recycle"></span><br/>昨日订单<br/>80082</a></li>
+      <li><a href="#" class="am-text-secondary"><span class="am-icon-btn am-icon-user-md"></span><br/>退款订单<br/>3000</a></li>
     </ul>
 	<%/if%>
     <div class="am-g">
@@ -42,7 +42,7 @@
         <table class="am-table am-table-bd am-table-striped admin-content-table">
           <thead>
           <tr>
-            <th>ID</th><th>图片</th><th>标题</th><th>基价</th><th>售价</th><th> </th>
+            <th>订单ID</th><th>三</th><th>标题</th><th>基价</th><th>售价</th><th> </th>
           </tr>
           </thead>
           <tbody>

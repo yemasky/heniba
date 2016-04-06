@@ -62,10 +62,6 @@
   </div>
 </header>
 <%include file="merchant/supplier_tpl/$hotel_supplier_tpl.tpl"%>
-<footer class="blog-footer">
-  <p>blog template<br/>
-    <small>© Copyright XXX. by the AmazeUI Team.</small>
-  </p>
-</footer>
+<%include file="merchant/inc/footer.tpl"%>
 </body>
 </html>

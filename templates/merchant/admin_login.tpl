@@ -68,7 +68,7 @@
       </div>
     </form>
     <hr>
-    <p>© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+    <%include file="merchant/inc/footer.tpl"%>
   </div>
 </div>
 </body>

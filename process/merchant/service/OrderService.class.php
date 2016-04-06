@@ -8,16 +8,16 @@ namespace merchant;
 
 class OrderService extends \BaseService {
 	public function getOrder($conditions, $fileid = NULL, $m_id = null) {
-        $arrayhotel = \BaseOrderDao::instance()->getOrder($conditions, $fileid);
+        $arrayOrder = \BaseOrderDao::instance()->getOrder($conditions, $fileid);
         if($m_id > 0) {
-            $hotel_num = count($arrayhotel);
+            $hotel_num = count($arrayOrder);
             for($i = 0; $i < $hotel_num; $i++) {
-                $arrayRatePrice = CommonService::getMerchantRatePrice($m_id, $arrayhotel[$i]['h_price'], 'hotel');
-                $arrayhotel[$i]['wholesale'] = $arrayRatePrice['wholesale'];
-                $arrayhotel[$i]['sell'] = $arrayRatePrice['sell'];
+                //$arrayRatePrice = CommonService::getMerchantRatePrice($m_id, $arrayhotel[$i]['h_price'], 'hotel');
+                //$arrayhotel[$i]['wholesale'] = $arrayRatePrice['wholesale'];
+                //$arrayhotel[$i]['sell'] = $arrayRatePrice['sell'];
             }
         }
-        return $arrayhotel;
+        return $arrayOrder;
     }
 
     public function getOrderCount($conditions) {

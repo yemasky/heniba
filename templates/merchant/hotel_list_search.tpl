@@ -124,10 +124,7 @@
       </div>
     </div>
 
-   <footer>
-      <hr>
-      <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
-    </footer>
+    <%include file="merchant/inc/footer.tpl"%>
   </div>
 <script language="javascript">
 $(function() {
