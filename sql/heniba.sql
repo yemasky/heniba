@@ -226,6 +226,7 @@ DROP TABLE IF EXISTS `order_info`;
 
 CREATE TABLE `order_info` (
   `oi_id` bigint(19) NOT NULL AUTO_INCREMENT,
+  `o_order_number` bigint(19) DEFAULT NULL COMMENT '订单号',
   `o_id` bigint(19) DEFAULT NULL COMMENT '订单号',
   `u_id` bigint(19) DEFAULT NULL,
   `m_id` int(11) DEFAULT NULL COMMENT '下单的企业',
