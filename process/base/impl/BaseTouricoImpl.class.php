@@ -9,7 +9,7 @@
 class BaseTouricoImpl extends BaseService {
     private static $objBaseTouricoImpl = null;
 
-    public static function instance() {
+    public static function instance($objClass = '') {
         if(is_object(self::$objBaseTouricoImpl)) return self::$objBaseTouricoImpl;
         self::$objBaseTouricoImpl = new BaseTouricoImpl();
         return self::$objBaseTouricoImpl;

@@ -9,7 +9,7 @@
 class BaseBemyguestImpl extends BaseService {
     private static $objBaseBemyguestImpl = null;
 
-    public static function instance() {
+    public static function instance($objClass = '') {
         if(is_object(self::$objBaseBemyguestImpl)) return self::$objBaseBemyguestImpl;
         self::$objBaseBemyguestImpl = new BaseBemyguestImpl();
         return self::$objBaseBemyguestImpl;
