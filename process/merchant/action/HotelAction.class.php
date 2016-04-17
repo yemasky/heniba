@@ -222,7 +222,7 @@ class HotelAction extends \BaseAction {
         $relation_hotel = $objHotelService->getHotel($conditions, 'h_id, h_name, h_images');
         $objResponse -> setTplValue('hotel_supplier_tpl', 'hotel_' . $supplierCode[0]['h_supplier']);
         $objResponse -> setTplValue('h_id', $h_id);
-        $objResponse -> setTplValue('supplierCode', \Encrypt::instance()->encode($h_id));
+        $objResponse -> setTplValue('supplierCode', \Encrypt::instance()->encode($supplierCode[0]['h_supplier_code']));
         $objResponse -> setTplValue('supplier', \Encrypt::instance()->encode($supplierCode[0]['h_supplier']));
         $objResponse -> setTplValue('HotelId', $supplierCode[0]['h_supplier_code']);
         $objResponse -> setTplValue('today', substr(getDateTime(), 0, 10));
