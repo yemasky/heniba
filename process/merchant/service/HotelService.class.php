@@ -6,8 +6,6 @@
  */
 namespace merchant;
 
-use supplier\TouricoDao;
-
 class HotelService extends \BaseService {
 	public function getHotel($conditions, $fileid = NULL, $m_id = null) {
         $arrayhotel = \BaseHotelDao::instance()->getHotel($conditions, $fileid);
@@ -30,23 +28,25 @@ class HotelService extends \BaseService {
         $arraySearchResult = NULL;
         switch ($supplier_code) {
             case 'tourico':
-                $objTouricoDao = new TouricoDao();
-                $conditions = \DbConfig::$db_query_conditions;
-                $conditions['where'] = "`name` = '".$arraySearchData['place_en_name']."'";
-                $fileid = 'destinationCode';
-                $arrayDestinationCode = $objTouricoDao->getDestination($conditions, $fileid);
-                if(empty($arrayDestinationCode)) {
-                    return false;
-                }
-                $arraySearchData['HotelCityName'] = $arraySearchData['HotelLocationName'] = $arraySearchData['HotelName'] = null;
+                if(!isset($arraySearchData['HotelId'][0]) || empty($arraySearchData['HotelId'][0])) {
+                    $objTouricoDao = new \supplier\TouricoDao();
+                    $conditions = \DbConfig::$db_query_conditions;
+                    $conditions['where'] = "`name` = '".$arraySearchData['place_en_name']."'";
+                    $fileid = 'destinationCode';
+                    $arrayDestinationCode = $objTouricoDao->getDestination($conditions, $fileid);
+                    if(empty($arrayDestinationCode)) {
+                        return false;
+                    }
+                    $arraySearchData['HotelCityName'] = $arraySearchData['HotelLocationName'] = $arraySearchData['HotelName'] = null;
 
-                if($arraySearchData['place_type'] == 'CityLocation') {
-                    $arraySearchData['HotelLocationName'] = $arraySearchData['place_en_name'];
-                } else {
-                    $arraySearchData['HotelCityName'] = $arraySearchData['place_en_name'];
+                    if($arraySearchData['place_type'] == 'CityLocation') {
+                        $arraySearchData['HotelLocationName'] = $arraySearchData['place_en_name'];
+                    } else {
+                        $arraySearchData['HotelCityName'] = $arraySearchData['place_en_name'];
+                    }
+                    $arraySearchData['Destination'] = $arrayDestinationCode[0]['destinationCode'];
                 }
-                $arraySearchData['Destination'] = $arrayDestinationCode[0]['destinationCode'];
-                $arraySearchResult = \BaseSupplierTouricoService::instance()->DBCache(1800)->SearchHotels($arraySearchData);
+                $arraySearchResult = \BaseSupplierTouricoService::instance()->DBCache(1)->SearchHotels($arraySearchData);
                 break;
             default:
                 break;

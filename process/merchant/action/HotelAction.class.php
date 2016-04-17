@@ -188,12 +188,12 @@ class HotelAction extends \BaseAction {
                 //$arraySearchData['RoomsInformation'][0]['ChildAge'][0] = $objRequest->ChildAge > 0 ? $objRequest->ChildAge : 15;
                 //计算房间数
                 $avg_AdultNum = floor($arraySearchData['AdultNum'] / $arraySearchData['RoomsNum']);//平均每间房多少人住
-                $mod__AdultNum = $arraySearchData['AdultNum'] % $arraySearchData['RoomsNum'];//取余
+                $mod_AdultNum = $arraySearchData['AdultNum'] % $arraySearchData['RoomsNum'];//取余
                 $avg_ChildNum = $arraySearchData['ChildNum'];
                 for($i = 0; $i < $arraySearchData['RoomsNum']; $i++) {
-                    if($mod__AdultNum > 0) {
+                    if($mod_AdultNum > 0) {
                         $arraySearchData['RoomsInformation'][$i]['AdultNum'] = $avg_AdultNum + 1;
-                        $mod__AdultNum--;
+                        $mod_AdultNum--;
                     } else {
                         $arraySearchData['RoomsInformation'][$i]['AdultNum'] = $avg_AdultNum;
                     }
@@ -206,7 +206,6 @@ class HotelAction extends \BaseAction {
                         $arraySearchData['RoomsInformation'][$i]['ChildAge'][0] = 0;
                     }
                 }
-
                 \BaseHotelService::instance()->hotelTemplace($supplierCode[0], $objResponse, $objResponse->arrUserInfo['m_id'], $arraySearchData);
                 //$arrayTouricoListData = $objHotelService->searchHotelInSupplier('tourico', $arraySearchData);
                 //if(isset($arrayTouricoListData['s:Body'][0]['SearchHotelsByIdResponse'][0]['SearchHotelsByIdResult'][0]['HotelList'][0]['Hotel']));

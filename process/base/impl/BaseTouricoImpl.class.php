@@ -43,13 +43,15 @@ class BaseTouricoImpl extends BaseService {
                 }
                 unset($arrayRoomType);
             }
-            foreach($data_product[0]['RoomType'] as $k => $v) {
-                if(isset($arrayRoomTypeHash[$v['roomId']])) {
-                    $data_product[0]['RoomType'][$k]['is_can_book'] = 1;
-                    if(isset($arrayRoomTypeHash[$v['roomId']]['Discount'])) $data_product[0]['RoomType'][$k]['Discount'] = $arrayRoomTypeHash[$v['roomId']]['Discount'];
-                    $data_product[0]['RoomType'][$k]['Occupancies'] = $arrayRoomTypeHash[$v['roomId']]['Occupancies'];
-                } else {
-                    $data_product[0]['RoomType'][$k]['is_can_book'] = 0;
+            if(isset($data_product[0]['RoomType'])) {
+                foreach($data_product[0]['RoomType'] as $k => $v) {
+                    if(isset($arrayRoomTypeHash[$v['roomId']])) {
+                        $data_product[0]['RoomType'][$k]['is_can_book'] = 1;
+                        if(isset($arrayRoomTypeHash[$v['roomId']]['Discount'])) $data_product[0]['RoomType'][$k]['Discount'] = $arrayRoomTypeHash[$v['roomId']]['Discount'];
+                        $data_product[0]['RoomType'][$k]['Occupancies'] = $arrayRoomTypeHash[$v['roomId']]['Occupancies'];
+                    } else {
+                        $data_product[0]['RoomType'][$k]['is_can_book'] = 0;
+                    }
                 }
             }
             //print_r( $data_product[0]['RoomType']);

@@ -38,6 +38,11 @@ class TourismAction extends \BaseAction {
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
         $conditions['where'] = null;
+        $page_ext_url = '';
+        if(!empty($place)) {
+            $conditions['where'] = "t_title_cn like '%$place%'";
+            $page_ext_url = '&place=' . $place;
+        }
         $objTourismService = new TourismService();
         $tourismCount = $objTourismService->getTourismCount($conditions['where']);
         $arrayTourism = $objTourismService->getTourism($conditions, null, $objResponse->arrUserInfo['m_id']);
@@ -46,6 +51,7 @@ class TourismAction extends \BaseAction {
         $objResponse -> setTplValue('tourism', $arrayTourism);
         $objResponse -> setTplValue('page', page($pn, ceil($tourismCount/$list_count)));
         $objResponse -> setTplValue('pn', $pn);
+        $objResponse -> setTplValue('page_ext_url', $page_ext_url);
         $objResponse -> setTplValue('model', 'tourism');
         $objResponse -> setTplValue('show_pages', 10);
         $objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);

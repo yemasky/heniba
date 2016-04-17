@@ -7,8 +7,9 @@
   <div class="am-u-md-8">
     <article class="blog-main am-cf">
       <h3 class="am-article-title blog-title">
-        <a href="#"><%$tourism_product.title%></a>
+        <a href="#"><%$tourism_product.titleTranslated%></a>
       </h3>
+      <h4 class="am-article-meta blog-meta"><%$tourism_product.title%></h4>
       <h4 class="am-article-meta blog-meta">最后更新时间 <a>北京时间</a> posted on <%$tourism_product.update_date%> </h4>
 
       <div class="am-g blog-content am-u-sm-12">
@@ -16,7 +17,7 @@
         <ul class="am-slides">
           <li>
             <img id="img-<%$tourism_product.id%>">
-            <div class="am-slider-desc"><h2 class="am-slider-title"><%$tourism_product.title%></p></div>
+            <div class="am-slider-desc"><h2 class="am-slider-title"><%$tourism_product.title%></h2></div>
 		  </li> 
         </ul>
       	</div>
@@ -131,7 +132,7 @@
     <article class="blog-main">
         <div class="am-panel am-panel-default">
             <div class="am-panel-hd">景点介绍</div>
-            <div class="am-panel-bd"><p><%$tourism_product.description%></p></div>
+            <div class="am-panel-bd"><p><%$tourism_product.descriptionTranslated%></p><p><%$tourism_product.description%></p></div>
         </div>
     <div class="am-sticky-placeholder">
       <nav class="scrollspy-nav" data-am-scrollspy-nav="{offsetTop: 45}" data-am-sticky>

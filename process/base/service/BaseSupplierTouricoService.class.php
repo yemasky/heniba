@@ -82,7 +82,7 @@ class BaseSupplierTouricoService extends BaseService {
         $requestUrl = $this->objTouricoConfig->hotelV3WSUrl;
 
         $this->objWSClient->ssl()->post($postData)->header($arrayHeader)->url($requestUrl);
-        $arrayResult = $this->objWSClient->DBCache(0)->execute_cUrl();
+        $arrayResult = $this->objWSClient->DBCache(1800)->execute_cUrl();
         // $arrayResult['httpcode'] = 200;
         // $arrayResult['result'] = '<Rooms><Room seqNum="2"><AdultNum>1</AdultNum><ChildNum>0</ChildNum><ChildAges><ChildAge age="0"/></ChildAges></Room></Rooms>';
         return $this->parserXml($arrayResult);

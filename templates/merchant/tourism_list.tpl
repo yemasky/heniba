@@ -47,13 +47,7 @@
                           <div class="am-input-group am-input-group-sm am-u-md-4">
                               <span  class="am-input-group-label am-icon-home"> 地方、景点名称</span>
                               <input id="place" name="place" type="text" class="am-form-field am-input-sm" autocomplete="off" value="<%$place%>">
-                              <input type="hidden" name="place_type" id="place_type" value="">
-                              <input type="hidden" name="place_en_name" id="place_en_name" value="">
-                              <input type="hidden" name="city" id="city" value="">
-                          </div>
-                          <div class="am-input-group am-input-group-sm am-u-sm-4">
-                              <span class="am-input-group-label"><i class="am-icon-calendar am-icon-fw"></i> 时间</span>
-                              <input type="text" readonly placeholder="" value="" class="am-form-field" name="CheckIn" id="CheckIn">
+                              <input type="hidden" name="pn" id="pn" value="<%$pn%>">
                           </div>
                           <div class="am-input-group am-input-group-sm am-u-md-4 am-padding-left-0 am-padding-right-xl">
                               <div data-am-dropdown="" class="am-cf am-padding-right">

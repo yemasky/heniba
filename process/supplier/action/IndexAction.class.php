@@ -20,6 +20,12 @@ class IndexAction extends \BaseAction {
 			case 'translatePlace':
 				$this->translatePlace($objRequest, $objResponse);
 				break;
+			case 'translateTourism':
+				$this->translateTourism($objRequest, $objResponse);
+				break;
+			case 'translateBemyguest':
+				$this->translateBemyguest($objRequest, $objResponse);
+				break;
 			default:
 				$this->doBase($objRequest, $objResponse);
 			break;
@@ -42,6 +48,20 @@ class IndexAction extends \BaseAction {
 		$this->setDisplay();
 		$ojbTranslateTool = new TranslateTool();
 		$ojbTranslateTool->translatePlace();
+
+	}
+
+	protected function translateTourism($objRequest, $objResponse) {
+		$this->setDisplay();
+		$ojbTranslateTool = new TranslateTool();
+		$ojbTranslateTool->translateTourism();
+
+	}
+
+	protected function translateBemyguest($objRequest, $objResponse) {
+		$this->setDisplay();
+		$ojbTranslateTool = new TranslateTool();
+		$ojbTranslateTool->translateBemyguest();
 
 	}
 

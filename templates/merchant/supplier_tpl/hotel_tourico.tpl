@@ -111,6 +111,7 @@
                   </div>
                 </div>
                 <div class="am-u-sm-8 am-padding-left-0 am-padding-right-sm">
+                  <%if isset($data_product.RoomType[i].is_can_book)%>
                   <div class="am-form-group am-padding-0 am-margin-0 am-btn-group">
                     <div data-am-button class="am-btn-group">
                       <label class="am-btn am-btn-primary am-btn-sm am-icon-square-o<%if $data_product.RoomType[i].is_can_book==0%> am-disabled<%/if%>"><input type="radio" id="option<%$smarty.section.i.index%>" data-RoomType="<%$data_product.RoomType[i].HotelRoomTypeIds[0].HotelRoomTypeId[0].ID%>" value="<%$data_product.RoomType[i].roomId%>" name="options"> 预订</label>
@@ -131,6 +132,7 @@
                       </div>
                     <%/if%>
                   </div>
+                  <%/if%>
                 </div>
               </div>
             </li>
@@ -168,12 +170,12 @@
     <div class="am-sticky-placeholder">
       <nav class="scrollspy-nav" data-am-scrollspy-nav="{offsetTop: 45}" data-am-sticky>
 		  <ul>
-		  <li><a href="">sss</a></li>
+		  <li><a href="">注意事项</a></li>
 	  </nav>
 	</div>
 	<div id="s" class="am-panel am-panel-default">
-		<div class="am-panel-hd">s</div>
-		<div class="am-panel-bd"><p>s</p></div>
+		<div class="am-panel-hd">安全问题</div>
+		<div class="am-panel-bd"><p>暂无</p></div>
 	</div>
     </article>
 

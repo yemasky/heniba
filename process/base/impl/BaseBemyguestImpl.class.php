@@ -50,7 +50,7 @@ class BaseBemyguestImpl extends BaseService {
             $productTypeNum = $k;
             $tourism_product[0]['locations'] = json_decode($tourism_product[0]['locations'], true);
 
-            if(!empty($tourism_product[0]['titleTranslated']))
+            /*if(!empty($tourism_product[0]['titleTranslated']))
                 $tourism_product[0]['title'] = $tourism_product[0]['titleTranslated'];
             if(!empty($tourism_product[0]['descriptionTranslated']))
                 $tourism_product[0]['description'] = $tourism_product[0]['descriptionTranslated'];
@@ -69,7 +69,7 @@ class BaseBemyguestImpl extends BaseService {
             if(!empty($tourism_product[0]['safetyTranslated']))
                 $tourism_product[0]['safety'] = $tourism_product[0]['safetyTranslated'];
             if(!empty($tourism_product[0]['meetingLocationTranslated']))
-                $tourism_product[0]['meetingLocation'] = $tourism_product[0]['meetingLocationTranslated'];
+                $tourism_product[0]['meetingLocation'] = $tourism_product[0]['meetingLocationTranslated'];*/
             $arrayCurrency = json_decode($tourism_product[0]['currency'], true);
         }
         $objResponse -> setTplValue('tourism_product', $tourism_product[0]);

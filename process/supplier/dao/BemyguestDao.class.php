@@ -29,8 +29,8 @@ class BemyguestDao {
 		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('bemyguest_tour')->setKey('id')->order($conditions['order'])->limit($conditions['limit'])->getList($conditions['where'], $fileid);
 	}
 
-	public function updateBemyguestTour($conditions, $arrarRow) {
-		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('bemyguest_tour')->update($conditions, $arrarRow);
+	public function updateBemyguestTour($where, $arrarRow) {
+		return \DBQuery::instance(\DbConfig::supplier_dsn)->setTable('bemyguest_tour')->update($where, $arrarRow);
 	}
 	
 }

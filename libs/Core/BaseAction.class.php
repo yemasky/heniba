@@ -746,8 +746,8 @@ class DBQuery{
 	 *        	row 数组形式，修改的数据，
 	 *        	此参数的格式用法与insertData的$row是相同的。在符合条件的记录中，将对$row设置的字段的数据进行修改。
 	 */
-	public function update($conditions, $row){
-		$where = $this->where($conditions);
+	public function update($conditions_where, $row){
+		$where = $this->where($conditions_where);
 		if(empty($row))
 			return false;
 		foreach($row as $key => $value) {
