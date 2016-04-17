@@ -190,18 +190,7 @@
         <div class="am-panel-hd">其它酒店</div>
         <div class="am-panel-bd">
           <ul class="am-avg-sm-2 blog-team">
-            <%section name=i loop=$relation_tourism%>
-            <li><a href="index.php?model=tourism&action=product&id=<%$relation_tourism[i].t_id%>" target="_blank"><img class="am-thumbnail" id="relation_img_<%$relation_tourism[i].t_id%>" alt=""/></a>
-              <%if $relation_tourism[i].t_title_cn != ''%><%$relation_tourism[i].t_title_cn%><%else%><%$relation_tourism[i].t_title%><%/if%>
-            </li>
-            <script language="JavaScript">
-              obj = jQuery.parseJSON('<%$relation_tourism[i].t_images%>');
-              $.each(obj, function(k, item){
-                $('#relation_img_<%$relation_tourism[i].t_id%>').attr('src', item);
-                return true;
-              });
-            </script>
-            <%/section%>
+            <li></li>
           </ul>
         </div>
       </section>
