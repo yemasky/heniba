@@ -28,16 +28,8 @@
 
 <div class="admin-content">
     <div class="am-cf am-padding">
-      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">管理模块</strong> / <small>旅游产品</small></div>
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">管理模块</strong> / <small>世界地图</small></div>
     </div>
-	<%if $pn==1 && $place==''%>
-    <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
-      <li><a href="#" class="am-text-success"><span class="am-icon-btn am-icon-file-text"></span><br/>新增酒店<br/>2300</a></li>
-      <li><a href="#" class="am-text-warning"><span class="am-icon-btn am-icon-briefcase"></span><br/>成交订单<br/>308</a></li>
-      <li><a href="#" class="am-text-danger"><span class="am-icon-btn am-icon-recycle"></span><br/>昨日访问<br/>80082</a></li>
-      <li><a href="#" class="am-text-secondary"><span class="am-icon-btn am-icon-user-md"></span><br/>在线用户<br/>3000</a></li>
-    </ul>
-	<%/if%>
 
     <div class="am-g">
       <div class="am-u-sm-12">
@@ -104,39 +96,14 @@
               </form>
           </div>
 
-        <table class="am-table am-table-bd am-table-striped admin-content-table">
-          <thead>
-          <tr>
-            <th>ID</th><th>图片</th><th>标题</th><th>货币</th><th>售价</th><th> </th>
-          </tr>
-          </thead>
-          <tbody>
-          <%section name=i loop=$hotel_list%>
-          <tr>
-              <td><%$hotel_list[i].h_id%></td>
-              <td width="175">
-                  <a href="index.php?model=<%$model%>&action=product&id=<%$hotel_list[i].h_id%>" target="_blank">
-                  <div class="am-slider am-slider-default" data-am-flexslider id="img-slider-<%$hotel_list[i].h_id%>">
-                      <ul class="am-slides" id="img-<%$hotel_list[i].h_id%>">
-                          <li><img src="<%$hotel_list[i].h_images%>" /> </li>
-                      </ul>
-                  </div>
-                  </a>
-                  </td><td><%$hotel_list[i].h_name%></td>
-              <td><a href="#"><%$hotel_list[i].h_currency%></a></td>
-              <td><span class="am-badge am-badge-success"></span></td>
-              <td>
-                  <a href="index.php?model=hotel&action=product&id=<%$hotel_list[i].h_id%>" target="_blank">
-                  <div class="am-dropdown" data-am-dropdown>
-                      <button class="am-btn am-btn-warning am-round" type="button"><i class="am-icon-shopping-cart"></i>　预 定</button>
-                  </div>
-                  </a>
-              </td>
-          </tr>
-          <%/section%>
-          </tbody>
-        </table>
-          <%include file="merchant/inc/page.tpl"%>
+          <div class="am-g error-log">
+              <div class="am-u-sm-12 am-u-sm-centered">
+                <pre class="am-pre-scrollable">
+                    <iframe width="100%" height="800" frameborder="0" allowfullscreen="" style="border:0" src="http://www.google.cn/maps/embed?pb=!1m14!1m8!1m3!1d3668.6122398251186!2d110.0470650!3d25.2158800!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s!5e0!3m2!1szh-CN!2scn!4v1449945641309"></iframe>
+                </pre>
+                  <p>这里是静态页面展示，使用时结合代码高亮插件</p>
+              </div>
+          </div>
       </div>
     </div>
 

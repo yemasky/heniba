@@ -98,7 +98,7 @@
         </table>
       </div>
     </div>
-
+<!--
     <div class="am-g">
       <div class="am-u-md-6">
         <div class="am-panel am-panel-default">
@@ -249,6 +249,7 @@
         </div>
       </div>
     </div>
+    -->
   <%include file="merchant/inc/footer.tpl"%>
   </div>
 <!--[if lt IE 9]>

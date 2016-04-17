@@ -28,6 +28,7 @@ class MapsAction extends \BaseAction {
      * 首页显示
      */
     protected function doBase($objRequest, $objResponse) {
+        $place = $objRequest->place;
         //
         //设置类别
         $pn = $objRequest->pn;
@@ -36,19 +37,23 @@ class MapsAction extends \BaseAction {
         $list_count = empty($list_count) ? 20 : $list_count;
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
+        $conditions['where'] = null;
+        $conditions['order'] = 'h_images DESC, h_id DESC';
         $objHotelService = new HotelService();
         $count = $objHotelService->getHotelCount($conditions['where']);
         $arrayListData = $objHotelService->getHotel($conditions, null, $objResponse->arrUserInfo['m_id']);
         //
         $objResponse -> nav = 'index';
-        $objResponse -> setTplValue('hotel', $arrayListData);
+        $objResponse -> setTplValue('place', $place);
+        $objResponse -> setTplValue('hotel_list', $arrayListData);
         $objResponse -> setTplValue('page', page($pn, ceil($count/$list_count)));
         $objResponse -> setTplValue('pn', $pn);
+        $objResponse -> setTplValue('model', 'hotel');
         $objResponse -> setTplValue('show_pages', 10);
         $objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);
         //设置Meta
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
-        $objResponse -> setTplName("merchant/tourism_list");
+        $objResponse -> setTplName("merchant/maps_list");
     }
 
     protected function hotel_product($objRequest, $objResponse) {

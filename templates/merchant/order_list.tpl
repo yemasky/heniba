@@ -53,17 +53,17 @@
                   <a href="index.php?model=tourism&action=product&id=<%$datalist[i].o_order_number%>" target="_blank">
                   <div class="am-slider am-slider-default" data-am-flexslider id="img-slider-<%$datalist[i].o_order_number%>">
                       <ul class="am-slides" id="img-<%$datalist[i].o_order_number%>">
-                          <li><img src="'+item+'"></li>
+                          <li></li>
                       </ul>
                   </div>
                   </a>
                   </td><td>标题</td>
-              <td><a href="#">t_currency:(原价) (售价)</a></td>
+              <td><a href="#"></a></td>
               <td><span class="am-badge am-badge-success">20</span></td>
               <td>
-                  <a href="index.php?model=tourism&action=product&id=<%$datalist[i].o_order_number%>" target="_blank">
+                  <a href="">
                   <div class="am-dropdown" data-am-dropdown>
-                      <button class="am-btn am-btn-warning am-round" type="button"><i class="am-icon-shopping-cart"></i>　预 定</button>
+                      <button class="am-btn am-btn-warning am-round" type="button"><i class="am-icon-shopping-cart"></i>　查看</button>
                   </div>
                   </a>
               </td>

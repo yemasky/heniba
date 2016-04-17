@@ -107,7 +107,7 @@
         <table class="am-table am-table-bd am-table-striped admin-content-table">
           <thead>
           <tr>
-            <th>ID</th><th>图片</th><th></th><th>基价</th><th></th><th> </th>
+            <th>ID</th><th>图片</th><th></th><th>货币原价</th><th>售卖价格</th><th> </th>
           </tr>
           </thead>
           <tbody>

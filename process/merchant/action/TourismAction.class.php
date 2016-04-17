@@ -28,6 +28,7 @@ class TourismAction extends \BaseAction {
      * 首页显示
      */
     protected function doBase($objRequest, $objResponse) {
+        $place = $objRequest->place;
         //
         //设置类别
         $pn = $objRequest->pn;
@@ -48,6 +49,7 @@ class TourismAction extends \BaseAction {
         $objResponse -> setTplValue('model', 'tourism');
         $objResponse -> setTplValue('show_pages', 10);
         $objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);
+        $objResponse -> setTplValue('place', $place);
         //设置Meta
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
         $objResponse -> setTplName("merchant/tourism_list");
