@@ -43,7 +43,7 @@
           <div class="am-panel-hd">酒店特色</div>
           <div class="am-panel-bd am-text-break"><p><%$data_product.Descriptions[0].ShortDescription[0].desc%></p></div>
       </div>
-    <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=book&action=savebookinfo&tour_type=hotel" method="post">
+    <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=hotel&action=product&supplier_code=tourico&id=<%$h_id%>" method="post">
     <div class="am-panel am-panel-default">
         <div class="am-panel-hd">更改搜索条件：</div>
         <div class="am-panel-bd">
@@ -102,9 +102,11 @@
                   <div>
                     客房设施：
                     <ul class="am-list am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-text-left">
+                      <%if isset($data_product.RoomType[i].Facilities)%>
                       <%section name=j loop=$data_product.RoomType[i].Facilities[0].Facility%>
                       <li class="am-btn am-btn-default am-btn-xs am-text-secondary am-text-left"><%$data_product.RoomType[i].Facilities[0].Facility[j].name%></li>
                       <%/section%>
+                      <%/if%>
                     </ul>
                   </div>
                 </div>
