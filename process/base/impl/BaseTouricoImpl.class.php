@@ -43,7 +43,6 @@ class BaseTouricoImpl extends BaseService {
                 }
                 unset($arrayRoomType);
             }
-
             foreach($data_product[0]['RoomType'] as $k => $v) {
                 if(isset($arrayRoomTypeHash[$v['roomId']])) {
                     $data_product[0]['RoomType'][$k]['is_can_book'] = 1;

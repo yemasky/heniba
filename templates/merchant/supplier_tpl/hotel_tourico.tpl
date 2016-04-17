@@ -43,7 +43,7 @@
           <div class="am-panel-hd">酒店特色</div>
           <div class="am-panel-bd am-text-break"><p><%$data_product.Descriptions[0].ShortDescription[0].desc%></p></div>
       </div>
-    <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=hotel&action=product&supplier_code=tourico&id=<%$h_id%>" method="post">
+    <form class="am-form am-form-horizontal" id="form-book" action="index.php?model=hotel&action=product&supplier_code=tourico&id=<%$HotelId%>" method="post">
     <div class="am-panel am-panel-default">
         <div class="am-panel-hd">更改搜索条件：</div>
         <div class="am-panel-bd">
