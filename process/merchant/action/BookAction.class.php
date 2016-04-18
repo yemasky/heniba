@@ -74,7 +74,7 @@ class BookAction extends \BaseAction {
                 break;
         }
         header('Cache-Control: no-cache');
-        $this->redirect('index.php?model=book&action=success&successCode=' . \Encrypt::instance()->encode($arrayOrderResult[0]));
+        $this->redirect('index.php?model=book&action=success&successCode=' . \Encrypt::instance()->encode($arrayOrderResult[1]));
 
     }
 
