@@ -167,10 +167,10 @@ class BaseTouricoImpl extends BaseService {
         $arrayOrder['u_id'] = $u_id;
         $arrayOrder['m_id'] = $m_id;
         $arrayOrder['mu_id'] = $mu_id;
-        $arrayOrder['o_price_market'] = '';//网上售卖价格
-        $arrayOrder['o_price_sell'] = '';//售卖价格 成交价
-        $arrayOrder['o_price_wholesale'] = '';//批发价
-        $arrayOrder['o_price_original'] = '';//进货价
+        $arrayOrder['o_price_market'] = '1';//网上售卖价格
+        $arrayOrder['o_price_sell'] = '1';//售卖价格 成交价
+        $arrayOrder['o_price_wholesale'] = '1';//批发价
+        $arrayOrder['o_price_original'] = '1';//进货价
         $arrayOrder['o_add_date'] = getDateTime();
 
         //订购
