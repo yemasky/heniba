@@ -42,7 +42,7 @@
         <table class="am-table am-table-bd am-table-striped admin-content-table">
           <thead>
           <tr>
-            <th width="175">订单号</th><th>类型</th><th>名称</th><th>基价</th><th>售价</th><th> </th>
+            <th width="175">订单号</th><th>类型</th><th>名称</th><th>基价</th><th>售价</th><th>时间</th><th>操作</th>
           </tr>
           </thead>
           <tbody>
@@ -53,14 +53,17 @@
                   <%if $datalist[i].oi_type=='tourism'%>旅游<%elseif $datalist[i].oi_type=='hotel'%>酒店<%else%>机票<%/if%>
               </td>
               <td><%$datalist[i].oi_title%></td>
-              <td><a href="#"></a></td>
-              <td><span class="am-badge am-badge-success">20</span></td>
+              <td><a href="#"><%$datalist[i].oi_price_wholesale%></a></td>
+              <td><span class="am-badge am-badge-success">RMB <%$datalist[i].oi_price_sell%></span></td>
+              <td><%$datalist[i].oi_add_date%></td>
               <td>
-                  <a href="">
-                  <div class="am-dropdown" data-am-dropdown>
-                      <button class="am-btn am-btn-warning am-round" type="button"><i class="am-icon-shopping-cart"></i>　查看</button>
+                  <div class="am-btn-toolbar">
+                      <div class="am-btn-group am-btn-group-xs">
+                          <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
+                          <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 查看</button>
+                          <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                      </div>
                   </div>
-                  </a>
               </td>
           </tr>
           <%/section%>
