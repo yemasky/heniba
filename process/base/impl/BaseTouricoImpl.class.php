@@ -162,6 +162,8 @@ class BaseTouricoImpl extends BaseService {
         $arrayUserBookInfo['oi_user_email'] = $objRequest->email;
         $arrayUserBookInfo['oi_user_moblie'] = $objRequest->mobile;
         $arrayUserBookInfo['oi_user_message'] = $objRequest->message;
+        $arrayUserBookInfo['oi_type'] = 'hotel';
+        $arrayUserBookInfo['oi_product_id'] = \Encrypt::instance()->decode($objRequest->supplierCode);
         //取得支付价格
         //订单信息
         $arrayOrder['u_id'] = $u_id;
@@ -175,6 +177,10 @@ class BaseTouricoImpl extends BaseService {
 
         //订购
         $arrayOrderResult = BaseBookOrderDao::createOrder($arrayOrder);
+
+        //
+        $arrayUserBookInfo['o_order_number'] = $arrayOrderResult[1];
+        $oi_id = BaseBookOrderDao::createOrderInfo($arrayUserBookInfo);
 
         //扣除锁定资金
 

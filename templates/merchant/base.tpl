@@ -17,7 +17,8 @@
 
   <!-- content start -->
   <div class="admin-content" style="overflow-y: hidden;">
-  <iframe name="main_frame" src="index.php?action=admin_content" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%" allowtransparency="1"></iframe>
+  <!--<iframe name="main_frame" src="index.php?action=admin_content" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%" allowtransparency="1"></iframe>-->
+    <iframe name="main_frame" src="index.php?model=tourism" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%" allowtransparency="1"></iframe>
   </div>
   <!-- content end -->
 

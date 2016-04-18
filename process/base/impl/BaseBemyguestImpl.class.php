@@ -165,8 +165,8 @@ class BaseBemyguestImpl extends BaseService {
         $arrayUserBookInfo['oi_price_original'] = $price;
         $arrayUserBookInfo['oi_type'] = 'tourism';
         $arrayUserBookInfo['oi_product_id'] = \Encrypt::instance()->decode($objRequest->supplierCode);
-        $arrayUserBookInfo['oi_price_market'] = $objRequest->arrivalDate;
-        $arrayUserBookInfo['oi_price_market'] = $objRequest->arrivalDate;
+        $arrayUserBookInfo['oi_user_arrival_date'] = $objRequest->arrivalDate;
+        $arrayUserBookInfo['oi_user_leave_date'] = '';
         $arrayUserBookInfo['oi_add_date'] = getDateTime();
         $arrayUserBookInfo['o_order_number'] = $arrayOrderResult[1];
         $oi_id = BaseBookOrderDao::createOrderInfo($arrayUserBookInfo);

@@ -42,22 +42,17 @@
         <table class="am-table am-table-bd am-table-striped admin-content-table">
           <thead>
           <tr>
-            <th>订单号</th><th>类型</th><th>标题</th><th>基价</th><th>售价</th><th> </th>
+            <th width="175">订单号</th><th>类型</th><th>标题</th><th>基价</th><th>售价</th><th> </th>
           </tr>
           </thead>
           <tbody>
           <%section name=i loop=$datalist%>
           <tr>
               <td><%$datalist[i].o_order_number%></td>
-              <td width="175">
-                  <a href="index.php?model=tourism&action=product&id=<%$datalist[i].o_order_number%>" target="_blank">
-                  <div class="am-slider am-slider-default" data-am-flexslider id="img-slider-<%$datalist[i].o_order_number%>">
-                      <ul class="am-slides" id="img-<%$datalist[i].o_order_number%>">
-                          <li></li>
-                      </ul>
-                  </div>
-                  </a>
-                  </td><td>标题</td>
+              <td>
+                  <%if $datalist[i].oi_type=='tourism'%>旅游<%elseif $datalist[i].oi_type=='hotel'%>酒店<%else%>机票<%/if%>
+              </td>
+              <td>标题</td>
               <td><a href="#"></a></td>
               <td><span class="am-badge am-badge-success">20</span></td>
               <td>
