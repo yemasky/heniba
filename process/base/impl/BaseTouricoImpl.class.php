@@ -151,19 +151,6 @@ class BaseTouricoImpl extends BaseService {
 
         //用户订购信息
         //插入数据库
-        $arrayUserBookInfo['oi_user_arrival_date'] = $arraySearchData['CheckIn'];
-        $arrayUserBookInfo['oi_user_leave_date'] = $arraySearchData['CheckOut'];
-        $arrayUserBookInfo['oi_user_options'] = $objRequest->options;
-        $arrayUserBookInfo['oi_user_pax'] = $arraySearchData['AdultNum'];
-        $arrayUserBookInfo['oi_user_childen'] = $arraySearchData['AdultNum'];
-        $arrayUserBookInfo['oi_user_salutation'] = $objRequest->salutation;
-        $arrayUserBookInfo['oi_user_firstname'] = $objRequest->firstName;
-        $arrayUserBookInfo['oi_user_lastname'] = $objRequest->lastName;
-        $arrayUserBookInfo['oi_user_email'] = $objRequest->email;
-        $arrayUserBookInfo['oi_user_moblie'] = $objRequest->mobile;
-        $arrayUserBookInfo['oi_user_message'] = $objRequest->message;
-        $arrayUserBookInfo['oi_type'] = 'hotel';
-        $arrayUserBookInfo['oi_product_id'] = \Encrypt::instance()->decode($objRequest->supplierCode);
         //取得支付价格
         //订单信息
         $arrayOrder['u_id'] = $u_id;
@@ -179,7 +166,31 @@ class BaseTouricoImpl extends BaseService {
         $arrayOrderResult = BaseBookOrderDao::createOrder($arrayOrder);
 
         //
+        $arrayUserBookInfo['o_id'] = $arrayOrderResult[0];
         $arrayUserBookInfo['o_order_number'] = $arrayOrderResult[1];
+        $arrayUserBookInfo['u_id'] = $u_id;
+        $arrayUserBookInfo['m_id'] = $m_id;
+        $arrayUserBookInfo['mu_id'] = $mu_id;
+        $arrayUserBookInfo['oi_price_market'] = '';
+        $arrayUserBookInfo['oi_price_sell'] = '';
+        $arrayUserBookInfo['oi_price_wholesale'] = '';
+        $arrayUserBookInfo['oi_price_original'] = '';
+        $arrayUserBookInfo['oi_type'] = 'hotel';
+        $arrayUserBookInfo['oi_product_id'] = \Encrypt::instance()->decode($objRequest->supplierCode);
+        $arrayUserBookInfo['oi_user_arrival_date'] = $arraySearchData['CheckIn'];
+        $arrayUserBookInfo['oi_user_leave_date'] = $arraySearchData['CheckOut'];
+        $arrayUserBookInfo['oi_add_date'] = getDateTime();
+        $arrayUserBookInfo['oi_user_options'] = $objRequest->options;
+        $arrayUserBookInfo['oi_user_salutation'] = $objRequest->salutation;
+        $arrayUserBookInfo['oi_user_firstname'] = $objRequest->firstName;
+        $arrayUserBookInfo['oi_user_lastname'] = $objRequest->lastName;
+        $arrayUserBookInfo['oi_user_email'] = $objRequest->email;
+        $arrayUserBookInfo['oi_user_moblie'] = $objRequest->mobile;
+        $arrayUserBookInfo['oi_user_message'] = $objRequest->message;
+        $arrayUserBookInfo['oi_title'] = $arrayHotel['0']['name'];
+        $arrayUserBookInfo['oi_title_cn'] = '';
+        $arrayUserBookInfo['oi_user_pax'] = $arraySearchData['AdultNum'];
+        $arrayUserBookInfo['oi_user_childen'] = $arraySearchData['ChildNum'];
         $oi_id = BaseBookOrderDao::createOrderInfo($arrayUserBookInfo);
 
         //扣除锁定资金

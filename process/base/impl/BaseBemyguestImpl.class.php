@@ -156,6 +156,7 @@ class BaseBemyguestImpl extends BaseService {
         $arrayOrderResult = BaseBookOrderDao::createOrder($arrayOrder);
         //
         $arrayUserBookInfo['o_id'] = $arrayOrderResult[0];
+        $arrayUserBookInfo['o_order_number'] = $arrayOrderResult[1];
         $arrayUserBookInfo['u_id'] = $u_id;
         $arrayUserBookInfo['m_id'] = $m_id;
         $arrayUserBookInfo['mu_id'] = $mu_id;
@@ -165,10 +166,12 @@ class BaseBemyguestImpl extends BaseService {
         $arrayUserBookInfo['oi_price_original'] = $price;
         $arrayUserBookInfo['oi_type'] = 'tourism';
         $arrayUserBookInfo['oi_product_id'] = \Encrypt::instance()->decode($objRequest->supplierCode);
-        $arrayUserBookInfo['oi_user_arrival_date'] = $objRequest->arrivalDate;
+        //$arrayUserBookInfo['oi_user_arrival_date'] = $objRequest->arrivalDate;
         $arrayUserBookInfo['oi_user_leave_date'] = '';
         $arrayUserBookInfo['oi_add_date'] = getDateTime();
-        $arrayUserBookInfo['o_order_number'] = $arrayOrderResult[1];
+        //
+        $arrayUserBookInfo['oi_title'] = $tourism_product[0]['title'];
+        $arrayUserBookInfo['oi_title_cn'] = $tourism_product[0]['titleTranslated'];
         $oi_id = BaseBookOrderDao::createOrderInfo($arrayUserBookInfo);
         //
         $arrayUserBookInfo['productTypeUuid'] = $tourism_uuid;

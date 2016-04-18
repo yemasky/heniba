@@ -42,7 +42,7 @@
         <table class="am-table am-table-bd am-table-striped admin-content-table">
           <thead>
           <tr>
-            <th width="175">订单号</th><th>类型</th><th>标题</th><th>基价</th><th>售价</th><th> </th>
+            <th width="175">订单号</th><th>类型</th><th>名称</th><th>基价</th><th>售价</th><th> </th>
           </tr>
           </thead>
           <tbody>
@@ -52,7 +52,7 @@
               <td>
                   <%if $datalist[i].oi_type=='tourism'%>旅游<%elseif $datalist[i].oi_type=='hotel'%>酒店<%else%>机票<%/if%>
               </td>
-              <td>标题</td>
+              <td><%$datalist[i].oi_title%></td>
               <td><a href="#"></a></td>
               <td><span class="am-badge am-badge-success">20</span></td>
               <td>
