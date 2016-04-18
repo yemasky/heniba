@@ -144,7 +144,7 @@ class BaseTouricoImpl extends BaseService {
 
 
         $arrayBookHotelV3 = \BaseSupplierTouricoService::instance()->BookHotelV3($arrayBookInfo);
-        print_r($arrayBookHotelV3['result']);exit();
+        //print_r($arrayBookHotelV3['result']);exit();
         //检查商户剩余资金
 
         //锁定资金
@@ -174,7 +174,7 @@ class BaseTouricoImpl extends BaseService {
         $arrayOrder['o_add_date'] = getDateTime();
 
         //订购
-
+        $arrayOrderResult = BaseBookOrderDao::createOrder($arrayOrder);
 
         //扣除锁定资金
 
