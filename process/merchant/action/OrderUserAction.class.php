@@ -8,7 +8,7 @@
  */
 namespace merchant;
 
-class MemberAction extends \BaseAction {
+class OrderUserAction extends \BaseAction {
     protected function check($objRequest, $objResponse) {
         $objResponse->arrUserInfo = CommonService::checkLoginUser();
     }
@@ -36,19 +36,20 @@ class MemberAction extends \BaseAction {
         $list_count = empty($list_count) ? 20 : $list_count;
         $conditions = \DbConfig::$db_query_conditions;
         $conditions['limit'] = (($pn - 1) * $list_count) . ", $list_count";
-        $objHotelService = new HotelService();
-        $count = $objHotelService->getHotelCount($conditions['where']);
-        $arrayListData = $objHotelService->getHotel($conditions, null, $objResponse->arrUserInfo['m_id']);
+        $objUserService = new UserService();
+        $conditions['where'] = array('m_id'=>$objResponse->arrUserInfo['m_id']);
+        $count = $objUserService->getOrderInfoUserCount($conditions['where']);
+        $arrayListOrderUser = $objUserService->getOrderInfoUserList($conditions, null);
         //
         $objResponse -> nav = 'index';
-        $objResponse -> setTplValue('hotel', $arrayListData);
+        $objResponse -> setTplValue('arrayListOrderUser', $arrayListOrderUser);
         $objResponse -> setTplValue('page', page($pn, ceil($count/$list_count)));
         $objResponse -> setTplValue('pn', $pn);
         $objResponse -> setTplValue('show_pages', 10);
         $objResponse -> setTplValue('merchantMenu', $objResponse->arrMerchantMenu);
         //设置Meta
         $objResponse -> setTplValue("__Meta", \BaseCommon::getMeta('index', '管理后台', '管理后台', '管理后台'));
-        $objResponse -> setTplName("merchant/member_list");
+        $objResponse -> setTplName("merchant/order_user_list");
     }
 
     protected function hotel_product($objRequest, $objResponse) {

@@ -59,17 +59,18 @@
           <table class="am-table am-table-striped am-table-hover table-main">
               <thead>
               <tr>
-                  <th class="table-check"><input type="checkbox"></th><th class="table-id">ID</th><th class="table-title">标题</th><th class="table-type">类别</th><th class="table-author am-hide-sm-only">作者</th><th class="table-date am-hide-sm-only">修改日期</th><th class="table-set">操作</th>
+                  <th class="table-check"><input type="checkbox"></th><th class="table-id">ID</th><th class="table-title">名字</th><th class="table-type">手机</th><th class="table-author am-hide-sm-only">预定类型</th><th class="table-date am-hide-sm-only">预定时间</th><th class="table-set">操作</th>
               </tr>
               </thead>
               <tbody>
+              <%section name=i loop=$arrayListOrderUser%>
               <tr>
                   <td><input type="checkbox"></td>
-                  <td>1</td>
-                  <td><a href="#">Business management</a></td>
-                  <td>default</td>
-                  <td class="am-hide-sm-only">测试1号</td>
-                  <td class="am-hide-sm-only">2014年9月4日 7:28:47</td>
+                  <td><%$arrayListOrderUser[i].oi_id%></td>
+                  <td><a href="#"><%$arrayListOrderUser[i].oi_user_lastname%><%$arrayListOrderUser[i].oi_user_firstname%><%$arrayListOrderUser[i].oi_user_salutation%></a></td>
+                  <td><%$arrayListOrderUser[i].oi_user_moblie%></td>
+                  <td class="am-hide-sm-only"><%if $arrayListOrderUser[i].oi_type=='tourism'%>旅游<%elseif $arrayListOrderUser[i].oi_type=='hotel'%>酒店<%else%>机票<%/if%></td>
+                  <td class="am-hide-sm-only"><%$arrayListOrderUser[i].oi_add_date%></td>
                   <td>
                       <div class="am-btn-toolbar">
                           <div class="am-btn-group am-btn-group-xs">
@@ -80,6 +81,8 @@
                       </div>
                   </td>
               </tr>
+              <%/section%>
+              <!--
               <tr>
                   <td><input type="checkbox"></td>
                   <td>2</td>
@@ -317,7 +320,7 @@
                           </div>
                       </div>
                   </td>
-              </tr>
+              </tr>-->
               </tbody>
           </table>
           <%include file="merchant/inc/page.tpl"%>
